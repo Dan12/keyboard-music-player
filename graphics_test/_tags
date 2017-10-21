@@ -1,0 +1,3 @@
+true: package(Graphics)
+<test.ml> : thread
+<test.{native,byte}> : thread
