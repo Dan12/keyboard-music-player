@@ -7,24 +7,32 @@ let audio_freq    = 44100
 let audio_samples = 4096
 let time = ref 0
 
+let audiofile = ref None
+
 let audio_callback output =
   (* output is 2*audio samples *)
   let open Bigarray in
   (* generate the next audio sample *)
   (* output dim is 2*4096 *)
   for i = 0 to ((Array1.dim output / 2) - 1) do
-    let phase = ((float_of_int !time) /.
-                 (66100.0 +.
-                  1000.0 *. sin (0.0001 *. (float_of_int !time)))) *. 3000.0
+    let (samplel, sampler) = match !audiofile with
+    | Some arr when (!time*2+1 < Array1.dim arr) -> (Int32.of_int(arr.{!time*2} lsl 16), Int32.of_int(arr.{!time*2+1} lsl 16))
+    | Some arr -> let _ = Sdl.free_wav arr in let _ = audiofile := None in (Int32.of_int 0, Int32.of_int 0)
+    | None ->
+      let _ = ((float_of_int !time) /.
+                  (66100.0 +.
+                    1000.0 *. sin (0.0001 *. (float_of_int !time)))) *. 3000.0
+      in
+      let phase = (float_of_int !time) *. 0.03 in
+      (* 1073741823 = 2^30, amplitude, volume = 1.0 is 50% max volume *)
+      let volume = 1. in
+      let s = Int32.of_float ((sin phase) *. 1073741823.0 *. volume) in
+      (s,s)
     in
-    let _ = (float_of_int !time) *. 0.03 in
-    (* 1073741823 = 2^30, amplitude, volume = 1.0 is 50% max volume *)
-    let volume = 1. in
-    let sample = Int32.of_float ((sin phase) *. 1073741823.0 *. volume) in
     begin
       (* 2 channel audio, channels go next to each other *)
-      output.{ 2 * i     } <- sample;
-      output.{ 2 * i + 1 } <- sample;
+      output.{ 2 * i     } <- samplel;
+      output.{ 2 * i + 1 } <- sampler;
       time := !time + 1
     end
   done
@@ -33,6 +41,30 @@ let audio_callback =
   ref (Some (Sdl.audio_callback Bigarray.int32 audio_callback))
 
 let audio_setup () =
+  let wav_audio_spec = { Sdl.as_freq = audio_freq;
+    as_format = Sdl.Audio.f32;
+    Sdl.as_channels = 2;
+    Sdl.as_samples = audio_samples;
+    Sdl.as_silence = 0;
+    Sdl.as_size =
+      (* size of buffer in bytes (samples*channels*bytes per int) *)
+      Int32.of_int (audio_samples * 4 * 2);
+    (* set the audio callback to get the next chunk of the audio buffer *)
+    Sdl.as_callback = None; }
+  in 
+  let _ = 
+    match Sdl.rw_from_file "a0.wav" "r" with
+    | Error (_) -> print_endline "error reading file"
+    | Ok rw_ops -> 
+      match Sdl.load_wav_rw rw_ops wav_audio_spec Bigarray.int16_signed with
+      | Error (_) -> let _ = Sdl.rw_close rw_ops in print_endline "error parsing wav file"
+      | Ok (spec, bigarr) ->
+        let _ = Sdl.rw_close rw_ops in 
+        let _ = audiofile := Some bigarr in
+        (* let _ = print_endline (string_of_int (spec.as_format)) in
+        let _ = print_endline (string_of_int (Sdl.Audio.s32)) in *)
+        print_endline (string_of_int (Bigarray.Array1.dim bigarr))
+  in
   let desired_audiospec =
     { Sdl.as_freq = audio_freq;
       as_format = Sdl.Audio.s32;
@@ -76,8 +108,9 @@ let main () = match Sdl.init Sdl.Init.(audio + video) with
     | Ok () ->
         match Sdl.Event.(enum (get e typ)) with
         | `Quit ->
-            let _ = print_endline "safely exiting" in
+            let _ = print_endline "safely exiting and cleaning up" in
             Sdl.pause_audio_device device_id true;
+            Sdl.close_audio_device device_id;
             Sdl.destroy_window window;
             Sdl.quit()
         | _ -> loop ()
