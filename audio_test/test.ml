@@ -2,12 +2,17 @@
 
 open Tsdl
 open Result
+open Tsdl_ttf
 
 let audio_freq    = 44100
 let audio_samples = 4096
 let time = ref 0
 
 let audiofile = ref None
+
+let (>>=) o f =
+match o with | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
+             | Ok a -> f a
 
 let audio_callback output =
   (* output is 2*audio samples *)
@@ -80,7 +85,7 @@ let audio_setup () =
   | Error _ -> Sdl.log "Can't open audio device"; exit 1
   | Ok (device_id, _) -> device_id
 
-let video_setup () =
+let video_setup font =
   match Sdl.create_window_and_renderer ~w:640 ~h:480 Sdl.Window.opengl with
   | Error ( `Msg e ) -> Sdl.log "Create window error: %s" e; exit 1
   | Ok (w,r) -> 
@@ -91,6 +96,18 @@ let video_setup () =
     (* draw lines *)
     let _ = Sdl.render_draw_line r 50 50 100 100 in
     let _ = Sdl.render_draw_line r 150 50 100 100 in
+    let rect = Sdl.Rect.create 200 200 100 100 in
+    let _ = Sdl.render_fill_rect r (Some rect) in
+
+    (* text stuff *)
+    let fg_color = Sdl.Color.create 255 255 255 255 in
+    (* defines the bounds of the font *)
+    Ttf.size_utf8 font "foobar" >>= fun (text_w, text_h) ->
+    let text_rect = Sdl.Rect.create 100 100 text_w text_h in
+    Ttf.render_text_solid font "foobar" fg_color >>= fun (sface) ->
+    Sdl.create_texture_from_surface r sface >>= fun (font_texture) ->
+    let _ = Sdl.render_copy ~dst:text_rect r font_texture in
+    
     (* flush the buffer *)
     let _ = Sdl.render_present r in
     w
@@ -98,23 +115,28 @@ let video_setup () =
 let main () = match Sdl.init Sdl.Init.(audio + video) with
 | Error ( `Msg e ) -> Sdl.log "Init error: %s" e; exit 1
 | Ok () ->
-    let window = video_setup () in
-    let device_id = audio_setup () in
-    Gc.full_major ();
-    let () = Sdl.pause_audio_device device_id false in
-    let e = Sdl.Event.create () in
-    let rec loop () = match Sdl.wait_event (Some e) with
-    | Error ( `Msg err ) -> Sdl.log "Could not wait event: %s" err; ()
-    | Ok () ->
-        match Sdl.Event.(enum (get e typ)) with
-        | `Quit ->
-            let _ = print_endline "safely exiting and cleaning up" in
-            Sdl.pause_audio_device device_id true;
-            Sdl.close_audio_device device_id;
-            Sdl.destroy_window window;
-            Sdl.quit()
-        | _ -> loop ()
-    in
-    loop ()
+    (* init ttf *)
+    Ttf.init () >>= fun () ->
+    Ttf.open_font "agane.ttf" 72 >>= fun (font) ->
+      let window = video_setup font in
+      let device_id = audio_setup () in
+      Gc.full_major ();
+      let () = Sdl.pause_audio_device device_id false in
+      let e = Sdl.Event.create () in
+      let rec loop () = match Sdl.wait_event (Some e) with
+      | Error ( `Msg err ) -> Sdl.log "Could not wait event: %s" err; ()
+      | Ok () ->
+          match Sdl.Event.(enum (get e typ)) with
+          | `Quit ->
+              let _ = print_endline "safely exiting and cleaning up" in
+              Sdl.pause_audio_device device_id true;
+              Sdl.close_audio_device device_id;
+              Sdl.destroy_window window;
+              Sdl.quit()
+          | `Key_down -> print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
+          | `Key_up -> print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
+          | _ -> loop ()
+      in
+      loop ()
 
 let () = main ()
