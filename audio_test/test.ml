@@ -28,7 +28,7 @@ let audio_callback output =
                   (66100.0 +.
                     1000.0 *. sin (0.0001 *. (float_of_int !time)))) *. 3000.0
       in
-      let phase = (float_of_int !time) *. 0.03 in
+      let phase = (float_of_int !time) *. 0.06 in
       (* 1073741823 = 2^30, amplitude, volume = 1.0 is 50% max volume *)
       let volume = 1. in
       let s = Int32.of_float ((sin phase) *. 1073741823.0 *. volume) in
@@ -135,6 +135,8 @@ let main () = match Sdl.init Sdl.Init.(audio + video) with
               Sdl.quit()
           | `Key_down -> print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
           | `Key_up -> print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
+          | `Mouse_button_down -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y)))); loop()
+          | `Mouse_button_up -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y)))); loop()
           | _ -> loop ()
       in
       loop ()
