@@ -2,6 +2,13 @@
 sudo apt-get update
 sudo apt-get install libxext-dev libffi-dev
 
+# install ttf
+opam depext tsdl-ttf.0.2
+opam install tsdl-ttf
+
+# init alsa driver
+alsactl init
+
 # go to downloads folder
 cd ~/Downloads
 # download sdl 2.0.5
@@ -25,10 +32,3 @@ rm -rf SDL2-2.0.5
 
 # install tsdl
 opam install tsdl
-
-# init alsa driver
-alsactl init
-
-# install ttf
-opam depext tsdl-ttf.0.2
-opam install tsdl-ttf
