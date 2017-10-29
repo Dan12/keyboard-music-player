@@ -86,7 +86,7 @@ let audio_setup () =
   | Ok (device_id, _) -> device_id
 
 let video_setup font =
-  match Sdl.create_window_and_renderer ~w:640 ~h:480 Sdl.Window.opengl with
+  match Sdl.create_window_and_renderer ~w:640 ~h:480 Sdl.Window.windowed with
   | Error ( `Msg e ) -> Sdl.log "Create window error: %s" e; exit 1
   | Ok (w,r) -> 
     (* clear the buffer *)
