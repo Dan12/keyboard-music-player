@@ -47,13 +47,13 @@ let audio_callback =
 
 let audio_setup () =
   let wav_audio_spec = { Sdl.as_freq = audio_freq;
-    as_format = Sdl.Audio.f32;
+    as_format = Sdl.Audio.s16;
     Sdl.as_channels = 2;
     Sdl.as_samples = audio_samples;
     Sdl.as_silence = 0;
     Sdl.as_size =
       (* size of buffer in bytes (samples*channels*bytes per int) *)
-      Int32.of_int (audio_samples * 4 * 2);
+      Int32.of_int (audio_samples * 2 * 2);
     (* set the audio callback to get the next chunk of the audio buffer *)
     Sdl.as_callback = None; }
   in 
