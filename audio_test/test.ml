@@ -30,7 +30,7 @@ let audio_callback output =
       in
       let phase = (float_of_int !time) *. 0.06 in
       (* 1073741823 = 2^30, amplitude, volume = 1.0 is 50% max volume *)
-      let volume = 1. in
+      let volume = 0.2 in
       let s = Int32.of_float ((sin phase) *. 1073741823.0 *. volume) in
       (s,s)
     in
@@ -38,6 +38,7 @@ let audio_callback output =
       (* 2 channel audio, channels go next to each other *)
       output.{ 2 * i     } <- samplel;
       output.{ 2 * i + 1 } <- sampler;
+
       time := !time + 1
     end
   done
@@ -110,7 +111,7 @@ let video_setup font =
     
     (* flush the buffer *)
     let _ = Sdl.render_present r in
-    w
+    (w,r)
 
 let main () = match Sdl.init Sdl.Init.(audio + video) with
 | Error ( `Msg e ) -> Sdl.log "Init error: %s" e; exit 1
@@ -118,26 +119,29 @@ let main () = match Sdl.init Sdl.Init.(audio + video) with
     (* init ttf *)
     Ttf.init () >>= fun () ->
     Ttf.open_font "agane.ttf" 72 >>= fun (font) ->
-      let window = video_setup font in
+      let (window, renderer) = video_setup font in
       let device_id = audio_setup () in
       Gc.full_major ();
       let () = Sdl.pause_audio_device device_id false in
       let e = Sdl.Event.create () in
-      let rec loop () = match Sdl.wait_event (Some e) with
-      | Error ( `Msg err ) -> Sdl.log "Could not wait event: %s" err; ()
-      | Ok () ->
-          match Sdl.Event.(enum (get e typ)) with
-          | `Quit ->
-              let _ = print_endline "safely exiting and cleaning up" in
-              Sdl.pause_audio_device device_id true;
-              Sdl.close_audio_device device_id;
-              Sdl.destroy_window window;
-              Sdl.quit()
-          | `Key_down -> print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
-          | `Key_up -> print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
-          | `Mouse_button_down -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y)))); loop()
-          | `Mouse_button_up -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y)))); loop()
-          | _ -> loop ()
+      let rec loop () = 
+        Draw.draw renderer;
+        match Sdl.wait_event_timeout (Some e) 30 with
+        | true -> (
+            match Sdl.Event.(enum (get e typ)) with
+            | `Quit ->
+                let _ = print_endline "safely exiting and cleaning up" in
+                Sdl.pause_audio_device device_id true;
+                Sdl.close_audio_device device_id;
+                Sdl.destroy_window window;
+                Sdl.quit()
+            | `Key_down -> print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
+            | `Key_up -> print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
+            | `Mouse_button_down -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y)))); loop()
+            | `Mouse_button_up -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y)))); loop()
+            | `Mouse_motion -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y)))); loop()
+            | _ -> loop ())
+        | false -> loop()
       in
       loop ()
 
