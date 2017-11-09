@@ -14,6 +14,9 @@ let (>>=) o f =
 match o with | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
              | Ok a -> f a
 
+(* gets called every audio_samples/audio_freq seconds (rn ~ 0.093)
+ * and the whole loop only takes >1% of that^ time for simple stuff 
+ *)
 let audio_callback output =
   (* output is 2*audio samples *)
   let open Bigarray in
