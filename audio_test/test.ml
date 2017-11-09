@@ -5,10 +5,12 @@ open Result
 open Tsdl_ttf
 
 let audio_freq    = 44100
-let audio_samples = 4096
+let audio_samples = 1024 (* If set too below 1024, there is a race condition and close deadlocks inside of quit *)
 let time = ref 0
 
 let audiofile = ref None
+
+let play_audio_pos = ref (-1)
 
 let (>>=) o f =
 match o with | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
@@ -24,9 +26,12 @@ let audio_callback output =
   (* output dim is 2*4096 *)
   for i = 0 to ((Array1.dim output / 2) - 1) do
     let (samplel, sampler) = match !audiofile with
-    | Some arr when (!time*2+1 < Array1.dim arr) -> (Int32.of_int(arr.{!time*2} lsl 16), Int32.of_int(arr.{!time*2+1} lsl 16))
-    | Some arr -> let _ = Sdl.free_wav arr in let _ = audiofile := None in (Int32.of_int 0, Int32.of_int 0)
-    | None ->
+    | Some arr when (!play_audio_pos >= 0) -> 
+      if !time*2+1 - (!play_audio_pos) < Array1.dim arr then 
+        (Int32.of_int(arr.{!time*2 - (!play_audio_pos)} lsl 16), Int32.of_int(arr.{!time*2+1 - (!play_audio_pos)} lsl 16))
+      else
+        let _ = Sdl.free_wav arr in let _ = audiofile := None in (Int32.of_int 0, Int32.of_int 0)
+    | _ ->
       let _ = ((float_of_int !time) /.
                   (66100.0 +.
                     1000.0 *. sin (0.0001 *. (float_of_int !time)))) *. 3000.0
@@ -138,7 +143,12 @@ let main () = match Sdl.init Sdl.Init.(audio + video) with
                 Sdl.close_audio_device device_id;
                 Sdl.destroy_window window;
                 Sdl.quit()
-            | `Key_down -> print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
+            | `Key_down -> 
+
+              Sdl.lock_audio_device device_id;
+              play_audio_pos := !time*2; print_endline (string_of_int (!play_audio_pos)); 
+              Sdl.unlock_audio_device device_id;
+              print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
             | `Key_up -> print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
             | `Mouse_button_down -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y)))); loop()
             | `Mouse_button_up -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y)))); loop()
