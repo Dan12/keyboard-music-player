@@ -5,7 +5,7 @@ open Result
 open Tsdl_ttf
 
 let audio_freq    = 44100
-let audio_samples = 1024 (* If set too below 1024, there is a race condition and close deadlocks inside of quit *)
+let audio_samples = 1024 (* If set below 1024, there seems to be a race condition and close deadlocks inside of quit *)
 let time = ref 0
 
 let audiofile = ref None
