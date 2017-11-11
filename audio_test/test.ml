@@ -12,6 +12,11 @@ let audiofile = ref None
 
 let play_audio_pos = ref (-1)
 
+(* Need this cause sdl has crappy locks with race conditions.
+ * Its like a doctor having the plauge.
+ *)
+let m = Mutex.create ()
+
 let (>>=) o f =
 match o with | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
              | Ok a -> f a
@@ -20,6 +25,8 @@ match o with | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
  * and the whole loop only takes >1% of that^ time for simple stuff 
  *)
 let audio_callback output =
+  Mutex.lock m;
+
   (* output is 2*audio samples *)
   let open Bigarray in
   (* generate the next audio sample *)
@@ -49,7 +56,9 @@ let audio_callback output =
 
       time := !time + 1
     end
-  done
+  done;
+
+  Mutex.unlock m
 
 let audio_callback =
   ref (Some (Sdl.audio_callback Bigarray.int32 audio_callback))
@@ -132,30 +141,32 @@ let main () = match Sdl.init Sdl.Init.(audio + video) with
       Gc.full_major ();
       let () = Sdl.pause_audio_device device_id false in
       let e = Sdl.Event.create () in
-      let rec loop () = 
+      let running = ref true in
+      while !running do
         Draw.draw renderer;
-        match Sdl.wait_event_timeout (Some e) 30 with
-        | true -> (
-            match Sdl.Event.(enum (get e typ)) with
-            | `Quit ->
-                let _ = print_endline "safely exiting and cleaning up" in
-                Sdl.pause_audio_device device_id true;
-                Sdl.close_audio_device device_id;
-                Sdl.destroy_window window;
-                Sdl.quit()
-            | `Key_down -> 
-
-              Sdl.lock_audio_device device_id;
-              play_audio_pos := !time*2; print_endline (string_of_int (!play_audio_pos)); 
-              Sdl.unlock_audio_device device_id;
-              print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
-            | `Key_up -> print_endline (Sdl.get_key_name (Sdl.Event.(get e keyboard_keycode))); loop ()
-            | `Mouse_button_down -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y)))); loop()
-            | `Mouse_button_up -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y)))); loop()
-            | `Mouse_motion -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y)))); loop()
-            | _ -> loop ())
-        | false -> loop()
-      in
-      loop ()
+        Sdl.delay (Int32.of_int 30);
+        while !running && Sdl.poll_event (Some e) do
+              match Sdl.Event.(enum (get e typ)) with
+              | `Quit ->
+                  let _ = print_endline "safely exiting and cleaning up" in
+                  Sdl.pause_audio_device device_id true;
+                  Sdl.close_audio_device device_id;
+                  Sdl.destroy_window window;
+                  Sdl.quit();
+                  running := false;
+              | `Key_down -> 
+                Mutex.lock m;
+                play_audio_pos := !time*2;
+                Mutex.unlock m;
+                print_endline (string_of_int (!play_audio_pos)); 
+                print_endline (string_of_int (Sdl.Event.(get e keyboard_keycode)))
+              | `Key_up -> 
+                print_endline (string_of_int (Sdl.Event.(get e keyboard_keycode)))
+              | `Mouse_button_down -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y))))
+              | `Mouse_button_up -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y))))
+              | `Mouse_motion -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y))))
+              | _ -> ()
+        done
+      done
 
 let () = main ()
