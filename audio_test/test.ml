@@ -1,5 +1,3 @@
-(* Sample code provided by @psqu in issue #13. *)
-
 open Tsdl
 open Result
 open Tsdl_ttf
@@ -29,6 +27,7 @@ let audio_callback output =
 
   (* output is 2*audio samples *)
   let open Bigarray in
+
   (* generate the next audio sample *)
   (* output dim is 2*4096 *)
   for i = 0 to ((Array1.dim output / 2) - 1) do

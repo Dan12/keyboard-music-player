@@ -1,0 +1,3 @@
+true: package(tsdl), package(bigarray), package(tsdl_ttf)
+<tsdl_wrapper.ml> : thread
+<main.{native,byte}> : thread
