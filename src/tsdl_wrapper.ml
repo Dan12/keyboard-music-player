@@ -15,8 +15,8 @@ type tsdl_state = {
 let tsdl_state_singleton = ref None
 
 let (>>=) o f =
-  match o with 
-  | Error (`Msg e) -> 
+  match o with
+  | Error (`Msg e) ->
     failwith (Printf.sprintf "Error %s" e)
   | Ok a -> f a
 
@@ -35,14 +35,14 @@ let audio_callback output =
   | None -> ()
   | Some c ->
     c output);
-    
+
   Mutex.unlock audio_mutex
 
 let audio_callback_ref =
   ref (Some (Sdl.audio_callback Bigarray.int32 audio_callback))
 
 let audio_freq = 44100
-(* If set below 1024, there seems to be a race condition 
+(* If set below 1024, there seems to be a race condition
  * and close deadlocks inside of quit *)
 let audio_samples = 1024
 let audio_setup () =
@@ -60,15 +60,15 @@ let audio_setup () =
   Sdl.open_audio_device None false desired_audiospec 0 >>= fun (device_id, _) ->
   device_id
 
-let video_setup (w,h) = 
-  Sdl.create_window_and_renderer 
-    ~w:w 
-    ~h:h 
+let video_setup (w,h) =
+  Sdl.create_window_and_renderer
+    ~w:w
+    ~h:h
     Sdl.Window.windowed
   >>= fun window_renderer ->
   window_renderer
 
-let init window_dims = 
+let init window_dims =
   match !tsdl_state_singleton with
   | Some _ -> ()
   | None ->
@@ -85,7 +85,7 @@ let init window_dims =
       event_callback = ref None;
     }
 
-let quit () = 
+let quit () =
   test_state (fun s ->
     print_endline "Safely exiting and cleaning up";
     Mutex.lock audio_mutex;
@@ -138,8 +138,6 @@ let start_main_loop () =
     | Some draw_callback ->
       draw_callback s.renderer;
 
-    print_endline "drawing";
-
     (* get all of the events that happend while we were waiting *)
     while !running && Sdl.poll_event (Some e) do
           match Sdl.Event.(enum (get e typ)) with
@@ -151,15 +149,15 @@ let start_main_loop () =
             (* handle all other events through callback if it exists *)
             (match !(s.event_callback) with
             | None -> ()
-            | Some event_callback -> 
+            | Some event_callback ->
               Mutex.lock audio_mutex;
               event_callback e;
               Mutex.unlock audio_mutex)
     done
   done)
 
-let wav_audio_spec = 
-  { 
+let wav_audio_spec =
+  {
     Sdl.as_freq = audio_freq;
     as_format = Sdl.Audio.s16;
     Sdl.as_channels = 2;
@@ -173,15 +171,15 @@ let wav_audio_spec =
   }
 let load_wav filename =
   match Sdl.rw_from_file "a0.wav" "r" with
-  | Error (_) -> 
+  | Error (_) ->
     print_endline "error reading file";
     None
-  | Ok rw_ops -> 
+  | Ok rw_ops ->
     match Sdl.load_wav_rw rw_ops wav_audio_spec Bigarray.int16_signed with
-    | Error (_) -> 
+    | Error (_) ->
       let _ = Sdl.rw_close rw_ops in
       print_endline "error parsing wav file";
       None
     | Ok (spec, audio_arr) ->
-      let _ = Sdl.rw_close rw_ops in 
+      let _ = Sdl.rw_close rw_ops in
       Some audio_arr
