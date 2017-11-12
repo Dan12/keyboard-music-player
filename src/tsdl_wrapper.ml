@@ -60,21 +60,21 @@ let audio_setup () =
   Sdl.open_audio_device None false desired_audiospec 0 >>= fun (device_id, _) ->
   device_id
 
-let video_setup () = 
+let video_setup (w,h) = 
   Sdl.create_window_and_renderer 
-    ~w:640 
-    ~h:480 
+    ~w:w 
+    ~h:h 
     Sdl.Window.windowed
   >>= fun window_renderer ->
   window_renderer
 
-let init (w,h) = 
+let init window_dims = 
   match !tsdl_state_singleton with
   | Some _ -> ()
   | None ->
     Sdl.init Sdl.Init.(audio + video) >>= fun () ->
     Ttf.init () >>= fun () ->
-    let (window, renderer) = video_setup () in
+    let (window, renderer) = video_setup window_dims in
     let device_id = audio_setup () in
     tsdl_state_singleton := Some {
       window = window;
@@ -87,10 +87,13 @@ let init (w,h) =
 
 let quit () = 
   test_state (fun s ->
+    print_endline "Safely exiting and cleaning up";
+    Mutex.lock audio_mutex;
     Sdl.pause_audio_device s.audio_device true;
     Sdl.close_audio_device s.audio_device;
     Sdl.destroy_window s.window;
-    Sdl.quit())
+    Sdl.quit();
+    Mutex.unlock audio_mutex;)
 
 let set_draw_callback func =
   test_state (fun s ->
@@ -135,16 +138,14 @@ let start_main_loop () =
     | Some draw_callback ->
       draw_callback s.renderer;
 
+    print_endline "drawing";
+
     (* get all of the events that happend while we were waiting *)
     while !running && Sdl.poll_event (Some e) do
           match Sdl.Event.(enum (get e typ)) with
           | `Quit ->
               (* handle quit event internally *)
-              print_endline "safely exiting and cleaning up";
-              Sdl.pause_audio_device s.audio_device true;
-              Sdl.close_audio_device s.audio_device;
-              Sdl.destroy_window s.window;
-              Sdl.quit();
+              quit ();
               running := false;
           | _ ->
             (* handle all other events through callback if it exists *)
