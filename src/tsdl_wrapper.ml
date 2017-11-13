@@ -33,12 +33,6 @@ let audio_callback output =
   test_state (fun s ->
   match !(s.audio_callback) with
   | None ->
-    (* (let arr_len = ((Array1.dim output / 2) - 1) in
-    for i = 0 to arr_len do
-      let wave = (sin ((float_of_int i) *. 0.06)) *. 1073741823.0 in
-      output.{ 2 * i     } <- Int32.of_float wave;
-      output.{ 2 * i + 1 } <- Int32.of_float wave;
-    done) *)
     Array1.fill output (Int32.of_int 0)
   | Some c ->
     c output);
@@ -95,10 +89,10 @@ let init window_dims =
 let quit () =
   test_state (fun s ->
     print_endline "Safely exiting and cleaning up";
-    Mutex.lock audio_mutex;
-    (* Sdl.pause_audio_device s.audio_device true;
-    Sdl.close_audio_device s.audio_device;
     Sdl.destroy_window s.window;
+    (* Mutex.lock audio_mutex;
+    Sdl.pause_audio_device s.audio_device true;
+    Sdl.close_audio_device s.audio_device;
     Sdl.quit();
     Mutex.unlock audio_mutex; *))
 

@@ -81,3 +81,9 @@ let get_next_values sound =
     (0,0)
 
 let is_playing sound = sound.playing
+
+let is_hold_to_play sound = sound.hold_to_play
+
+let get_groups sound = sound.groups
+
+let in_group sound group = List.mem group sound.groups
