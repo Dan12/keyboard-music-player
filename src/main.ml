@@ -1,3 +1,5 @@
+Song.parse_song_file "eq.json";
+
 Tsdl_wrapper.init (1280,720);
 print_endline "starting";
 Tsdl_wrapper.set_draw_callback Gui.draw;

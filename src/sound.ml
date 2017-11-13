@@ -1,4 +1,5 @@
 open Bigarray
+open Tsdl
 
 type sound = {
   pitches: (int, Bigarray.int16_signed_elt) Tsdl.Sdl.bigarray list;
@@ -23,32 +24,28 @@ type sound_options = {
 
 let create files options = 
   let load_next_pitch file lst =
-    match lst with
-    | None -> None
-    | Some l ->
-      (match Tsdl_wrapper.load_wav file with
-      | None ->  print_endline ("Unable to load "^file); None
-      | Some arr -> Some (arr::l))
-  in match List.fold_right load_next_pitch files (Some []) with
-  | None -> None
-  | Some pitches ->
-    if List.length pitches = 0 then
-      None
-    else
-    let current_pitch = List.hd pitches in
-    let current_pitch_len = Array1.dim current_pitch in
-    Some {
-      pitches = pitches;
-      looping = options.loop;
-      hold_to_play = options.hold_to_play;
-      groups = options.groups;
-      quantization = options.quantization;
-      playing = false;
-      pitch_index = 0;
-      current_pitch = current_pitch;
-      current_pitch_len = current_pitch_len;
-      buffer_index = 0;
-    }
+    match Tsdl_wrapper.load_wav file with
+    | None ->  failwith ("Unable to load "^file)
+    | Some arr -> arr::lst
+  in 
+  let pitches = List.fold_right load_next_pitch files [] in
+  if List.length pitches = 0 then
+    failwith "Pitches length must be greater than 0"
+  else
+  let current_pitch = List.hd pitches in
+  let current_pitch_len = Array1.dim current_pitch in
+  {
+    pitches = pitches;
+    looping = options.loop;
+    hold_to_play = options.hold_to_play;
+    groups = options.groups;
+    quantization = options.quantization;
+    playing = false;
+    pitch_index = 0;
+    current_pitch = current_pitch;
+    current_pitch_len = current_pitch_len;
+    buffer_index = 0;
+  }
 
 let play_sound sound =
   sound.playing <- true
