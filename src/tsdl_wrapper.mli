@@ -3,9 +3,6 @@
  * registering event handlers, and loading and playing audio files
  *)
 
-(* Holds tsdl state information across function applications *)
-type tsdl_state
-
 (* [init width,height] initializes a new tsdl state with a window of the given
  * [width] and [height] and a new audio context. This call will only succeed once.
  *)

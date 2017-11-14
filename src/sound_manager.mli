@@ -6,15 +6,12 @@
  * because the internal state will be entirely mutable.
  *)
 
-type sound_manager
+val init : unit -> unit
 
-type sound_state = SSPressed | SSReleased
+val set_song : Song.song -> unit
 
-val init : unit -> sound_manager
+val key_pressed : int*int -> unit
 
-val set_song : Song.song -> sound_manager -> unit
+val key_released : int*int -> unit
 
-(* [get_drawable_state sound_manager] returns the state of the current song
- * as a 2D list of sound states and a sound_pack number
- *)
-val get_drawable_state : sound_manager -> sound_state list list*int
+val audio_callback : (int32, Bigarray.int32_elt, Bigarray.c_layout) Bigarray.Array1.t -> unit

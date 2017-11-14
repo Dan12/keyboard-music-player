@@ -17,7 +17,7 @@ type sound_options = {
 (* [get_next_value filenames options] create a sound with the given [options]
  * from [filenames] with pitches in the order given.
  *)
-val create : string list -> sound_options -> sound option
+val create : string list -> sound_options -> sound
 
 (* [play_sound sound] tell the sound to play the next pitch *)
 val play_sound : sound -> unit
@@ -38,3 +38,15 @@ val get_next_values : sound -> int*int
 
 (* [is_playing sound] returns true if the sound is playing *)
 val is_playing : sound -> bool
+
+(* [is_hold_to_play sound] returns true if [sound] is hold to play *)
+val is_hold_to_play : sound -> bool
+
+(* [get_groups sound] returns the groups that [sound] is part of *)
+val get_groups : sound -> int list
+
+(* [in_group sound group] returns true if [sound] is in [group] *)
+val in_group : sound -> int -> bool
+
+(* [free_sound sound] frees [sound]'s audio buffer *)
+(* val free_sound : sound -> unit *)
