@@ -32,7 +32,8 @@ let audio_callback output =
 
   test_state (fun s ->
   match !(s.audio_callback) with
-  | None -> ()
+  | None ->
+    Array1.fill output (Int32.of_int 0)
   | Some c ->
     c output);
 
@@ -88,12 +89,12 @@ let init window_dims =
 let quit () =
   test_state (fun s ->
     print_endline "Safely exiting and cleaning up";
-    Mutex.lock audio_mutex;
+    Sdl.destroy_window s.window;
+    (* Mutex.lock audio_mutex;
     Sdl.pause_audio_device s.audio_device true;
     Sdl.close_audio_device s.audio_device;
-    Sdl.destroy_window s.window;
     Sdl.quit();
-    Mutex.unlock audio_mutex;)
+    Mutex.unlock audio_mutex; *))
 
 let set_draw_callback func =
   test_state (fun s ->
@@ -108,7 +109,7 @@ let set_audio_callback func =
   s.audio_callback := Some func)
 
 let prev_time = ref 0.
-let refresh_wait_ms = 30.
+let refresh_wait_ms = 3000.
 let start_main_loop () =
   test_state (fun s ->
   (* IDK why this is necessary *)
