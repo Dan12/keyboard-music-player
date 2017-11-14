@@ -37,34 +37,57 @@ let set_color r color =
 let draw_text r x y font str =
   (* defines the bounds of the font *)
   Ttf.size_utf8 font str >>= fun (text_w, text_h) ->
-  let text_rect = Sdl.Rect.create (x - text_w / 2) (y - text_h / 2) text_w text_h in
+  (* 2/5 will lower the text by 10% *)
+  let text_rect = Sdl.Rect.create (x - text_w / 2) (y - 2 * text_h / 5) text_w text_h in
   Ttf.render_text_solid font str keyboard_text_color >>= fun (sface) ->
   Sdl.create_texture_from_surface r sface >>= fun (font_texture) ->
   let _ = Sdl.render_copy ~dst:text_rect r font_texture in
   let () = Sdl.free_surface sface in
   Sdl.destroy_texture font_texture
 
-let draw_key_text r x y width height font = function
-  | String s -> draw_text r (x + width / 2) (y + height / 2) font s
-  | Shift -> ()
-  | Enter -> ()
+let draw_shift r x y w h =
+  let _ = Sdl.render_draw_line r x (y + h / 2) (x + w / 2) y in
+  let _ = Sdl.render_draw_line r (x + w / 2) y (x + w) (y + h / 2) in
+  let _ = Sdl.render_draw_line r (x + w) (y + h / 2) (x + 3 * w / 4) (y + h / 2) in
+  let _ = Sdl.render_draw_line r (x + 3 * w / 4) (y + h / 2) (x + 3 * w / 4) (y + h) in
+  let _ = Sdl.render_draw_line r (x + 3 * w / 4) (y + h) (x + w / 4) (y + h) in
+  let _ = Sdl.render_draw_line r (x + w / 4) (y + h) (x + w / 4) (y + h / 2) in
+  let _ = Sdl.render_draw_line r (x + w / 4) (y + h / 2) x (y + h / 2) in
+  ()
+
+let draw_enter r x y w h =
+  let _ = Sdl.render_draw_line r x (y + 2 * h / 3) (x + w / 4) (y + h / 3) in
+  let _ = Sdl.render_draw_line r (x + w / 4) (y + h / 3) (x + w / 4) (y + h / 2) in
+  let _ = Sdl.render_draw_line r (x + w / 4) (y + h / 2) (x + 3 * w / 4) (y + h / 2) in
+  let _ = Sdl.render_draw_line r (x + 3 * w / 4) (y + h / 2) (x + 3 * w / 4) y in
+  let _ = Sdl.render_draw_line r (x + 3 * w / 4) y (x + w) y in
+  let _ = Sdl.render_draw_line r (x + w) y (x + w) (y + 5 * h / 6) in
+  let _ = Sdl.render_draw_line r (x + w) (y + 5 * h / 6) (x + w / 4) (y + 5 * h / 6) in
+  let _ = Sdl.render_draw_line r (x + w / 4) (y + 5 * h / 6) (x + w / 4) (y + h) in
+  let _ = Sdl.render_draw_line r (x + w / 4) (y + h) x (y + 2 * h / 3) in
+  ()
+
+let draw_key_text r x y w h font = function
+  | String s -> draw_text r (x + w / 2) (y + h / 2) font s
+  | Shift -> draw_shift r (x  + w / 4) (y + h / 4) (w / 2) (h / 2)
+  | Enter -> draw_enter r (x  + w / 4) (y + h / 4) (w / 2) (h / 2)
   | Empty -> ()
 
 
-let draw_key r x y width height font key =
+let draw_key r x y w h font key =
   set_color r keyboard_border_color;
-  let rect = Sdl.Rect.create x y width height in
+  let rect = Sdl.Rect.create x y w h in
   let _ = Sdl.render_draw_rect r (Some rect) in
-  draw_key_text r x y width height font key
+  draw_key_text r x y w h font key
 
 (*
  * Assumes the key list has length of [row] * [col]
  *)
-let draw_keyboard (renderer:Tsdl.Sdl.renderer) (x:int) (y:int) (width:int) (row:int) (col:int) (keys:key list) =
+let draw_keyboard renderer x y w row col keys =
   let next_key = ref keys in
   let curr_x = ref x in
   let curr_y = ref y in
-  let offset = width / col in
+  let offset = w / col in
   let key_size = (100 - percent_key_padding) * offset / 100 in
   let font = get_font (7 * key_size / 10) in
   for r = 1 to row do
