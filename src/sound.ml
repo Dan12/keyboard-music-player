@@ -14,12 +14,11 @@ type sound = {
   mutable buffer_index: int;
 }
 
-(* The options for a sound *)
 type sound_options = {
-  loop: bool;
-  hold_to_play: bool;
-  groups: int list;
-  quantization: int; 
+  loop_option: bool;
+  hold_to_play_option: bool;
+  groups_option: int list;
+  quantization_option: int; 
 }
 
 let create files options = 
@@ -36,10 +35,10 @@ let create files options =
   let current_pitch_len = Array1.dim current_pitch in
   {
     pitches = pitches;
-    looping = options.loop;
-    hold_to_play = options.hold_to_play;
-    groups = options.groups;
-    quantization = options.quantization;
+    looping = options.loop_option;
+    hold_to_play = options.hold_to_play_option;
+    groups = options.groups_option;
+    quantization = options.quantization_option;
     playing = false;
     pitch_index = 0;
     current_pitch = current_pitch;

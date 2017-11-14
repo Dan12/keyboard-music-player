@@ -8,10 +8,10 @@ type sound
 
 (* The options for a sound *)
 type sound_options = {
-  loop: bool;
-  hold_to_play: bool;
-  groups: int list;
-  quantization: int; 
+  loop_option: bool;
+  hold_to_play_option: bool;
+  groups_option: int list;
+  quantization_option: int; 
 }
 
 (* [get_next_value filenames options] create a sound with the given [options]
