@@ -85,5 +85,6 @@ let audio_callback output =
           let (sample_l, sample_r) = Sound.get_next_values sound in
           output.{2*i} <- Int32.of_int sample_l;
           output.{2*i + 1} <- Int32.of_int sample_r;
-        done
+        done;
+        (* TODO clean up sounds playing *)
       end
