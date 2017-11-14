@@ -1,13 +1,13 @@
 open Tsdl
 open Tsdl_ttf
 
+let fonts = Hashtbl.create 16
+
 let percent_key_padding = 10
 
 let background_color = Sdl.Color.create 255 255 255 255
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
-
-let create_font = Ttf.open_font "agane.ttf"
 
 type key =
   | String of string
@@ -19,6 +19,14 @@ let (>>=) o f = match o with
   | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
   | Ok a -> f a
 
+let get_font size =
+  match Hashtbl.find_opt fonts size with
+  | None -> Ttf.open_font "agane.ttf" size >>= fun font ->
+    Hashtbl.add fonts size font;
+    print_endline "here";
+    font
+  | Some font -> font
+
 let set_color r color =
   let red = Sdl.Color.r color in
   let green = Sdl.Color.g color in
@@ -29,14 +37,15 @@ let set_color r color =
 let draw_text r x y font str =
   (* defines the bounds of the font *)
   Ttf.size_utf8 font str >>= fun (text_w, text_h) ->
-  let text_rect = Sdl.Rect.create 100 100 text_w text_h in
+  let text_rect = Sdl.Rect.create (x - text_w / 2) (y - text_h / 2) text_w text_h in
   Ttf.render_text_solid font str keyboard_text_color >>= fun (sface) ->
   Sdl.create_texture_from_surface r sface >>= fun (font_texture) ->
   let _ = Sdl.render_copy ~dst:text_rect r font_texture in
-  ()
+  let () = Sdl.free_surface sface in
+  Sdl.destroy_texture font_texture
 
 let draw_key_text r x y width height font = function
-  | String s -> draw_text r x y font s
+  | String s -> draw_text r (x + width / 2) (y + height / 2) font s
   | Shift -> ()
   | Enter -> ()
   | Empty -> ()
@@ -57,7 +66,7 @@ let draw_keyboard (renderer:Tsdl.Sdl.renderer) (x:int) (y:int) (width:int) (row:
   let curr_y = ref y in
   let offset = width / col in
   let key_size = (100 - percent_key_padding) * offset / 100 in
-  create_font (7 * key_size / 10) >>= fun font ->
+  let font = get_font (7 * key_size / 10) in
   for r = 1 to row do
     for c = 1 to col do
       draw_key renderer !curr_x !curr_y key_size key_size font (List.hd !next_key);
@@ -79,8 +88,55 @@ let present r =
   ()
 
 let get_keyboard_keys () =
-  let rec es = (String "A")::es in
-  es
+  String "1"::
+  String "2"::
+  String "3"::
+  String "4"::
+  String "5"::
+  String "6"::
+  String "7"::
+  String "8"::
+  String "9"::
+  String "0"::
+  String "-"::
+  String "="::
+  String "Q"::
+  String "W"::
+  String "E"::
+  String "R"::
+  String "T"::
+  String "Y"::
+  String "U"::
+  String "I"::
+  String "O"::
+  String "P"::
+  String "["::
+  String "]"::
+  String "A"::
+  String "S"::
+  String "D"::
+  String "F"::
+  String "G"::
+  String "H"::
+  String "J"::
+  String "K"::
+  String "L"::
+  String ";"::
+  String "'"::
+  Enter::
+  String "Z"::
+  String "X"::
+  String "C"::
+  String "V"::
+  String "B"::
+  String "N"::
+  String "M"::
+  String ","::
+  String "."::
+  String "/"::
+  Shift::
+  Empty::
+  []
 
 let draw r =
   clear r;
