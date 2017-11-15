@@ -2,4 +2,7 @@
  * receive input events from the sound manager to update the draw state.
 *)
 
+(* [draw renderer] the draw callback that makes draw calls using
+ * [renderer] to display the state.
+ *)
 val draw : Tsdl.Sdl.renderer -> unit

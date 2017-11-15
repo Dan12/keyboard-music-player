@@ -6,12 +6,23 @@
  * because the internal state will be entirely mutable.
  *)
 
+(* [init] initialize the sound manager *)
 val init : unit -> unit
 
+(* [set_song song] set the sound manager's song *)
 val set_song : Song.song -> unit
 
+(* [key_pressed (r,c)] callback when key is pressed on the keyboard
+ * row [r] and column [c]
+ *)
 val key_pressed : int*int -> unit
 
+(* [key_released (r,c)] callback when key is released on the keyboard
+ * row [r] and column [c]
+ *)
 val key_released : int*int -> unit
 
+(* [audio_callback output] is the audio callback that populates [output]
+ * with audio data
+ *)
 val audio_callback : (int32, Bigarray.int32_elt, Bigarray.c_layout) Bigarray.Array1.t -> unit

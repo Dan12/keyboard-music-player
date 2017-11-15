@@ -4,3 +4,6 @@ main:
 clean:
 	rm -rf _build/
 	rm *.byte
+
+mli:
+	zip mli.zip *.mli
