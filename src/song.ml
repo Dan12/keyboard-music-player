@@ -23,10 +23,10 @@ let parse_sound s_json =
     let quantization = List.assoc "quantization" s |> to_int in
     let open Sound in
     let sound_options = {
-      loop = loop;
-      hold_to_play = hold_to_play;
-      groups = groups;
-      quantization = quantization;
+      loop_option = loop;
+      hold_to_play_option = hold_to_play;
+      groups_option = groups;
+      quantization_option = quantization;
     } in
     let sound = Sound.create pitches sound_options in
     Sound sound
