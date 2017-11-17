@@ -4,7 +4,7 @@ open GMain
 open GdkKeysyms
 open Graph
 
-let font_name = "-*-sans-medium-r-normal-*-120-*"
+let font_name = "-*-helvetica-bold-r-normal--*-120-*-*-*-*-iso8859-1"
 
 let locale = GtkMain.Main.init ()
 
