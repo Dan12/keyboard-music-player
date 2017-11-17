@@ -8,10 +8,10 @@ type key_state =
   | KSDown
   | KSUp
 
-(* [init (r,c)] initializes a keyboard with [r] rows and
+(* [create_keyboard (r,c)] initializes a keyboard with [r] rows and
  * and [c] cols with all keys in the [KSUp] state.
  *)
-val init : int*int -> keyboard
+val create_keyboard : int*int -> keyboard
 
 (* [process_event input keyboard] modifies [keyboard]'s internal
  * state based on [input]. If [input] does not modify [keyboard]'s

@@ -5,7 +5,7 @@ type key_state =
 
 type keyboard = key_state array array
 
-let init (rows, cols) = 
+let create_keyboard (rows, cols) = 
   Array.make_matrix rows cols KSUp
 
 let process_event ipt keyboard =

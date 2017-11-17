@@ -1,5 +1,16 @@
 open OUnit2
 
+let keyboard_tests =
+  let open Keyboard in
+  let keyboard = create_keyboard (4,4) in
+  [
+    "keyboard test 1" >:: (fun _ -> assert_equal KSUp (get_state (1,1) keyboard));
+    "keyboard test 1" >:: (fun _ -> assert_equal true (process_event (Keyboard_layout.KOKeydown (0,0)) keyboard));
+    "keyboard test 1" >:: (fun _ -> assert_equal false (process_event (Keyboard_layout.KOKeyup (0,0)) keyboard));
+    "keyboard test 1" >:: (fun _ -> assert_equal false (process_event (Keyboard_layout.KOUnmapped) keyboard));
+    "keyboard test 1" >:: (fun _ -> assert_equal false (process_event (Keyboard_layout.KOSoundpackSet 1) keyboard));
+  ]
+
 let layout_tests = 
   let open Keyboard_layout in
   let layout = parse_layout "standard_keyboard_layout.json" in
@@ -9,6 +20,6 @@ let layout_tests =
     "load test 2" >:: (fun _ -> assert_equal (KOSoundpackSet 1) (process_key (KIKeydown 1073741906) layout));
   ]
 
-let tests = layout_tests
+let tests = layout_tests @ keyboard_tests
 
 let _ = run_test_tt_main ("suite" >::: tests)
