@@ -1,3 +1,3 @@
-true: package(tsdl), package(bigarray), package(tsdl_ttf), package(yojson)
+true: package(tsdl), package(bigarray), package(tsdl_ttf), package(yojson), package(oUnit)
 <tsdl_wrapper.ml> : thread
 <main.{native,byte}> : thread

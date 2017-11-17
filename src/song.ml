@@ -9,13 +9,16 @@ type song = {
   mutable soundpack: int;
 }
 
-let parse_sound s_json =
+let parse_sound base s_json =
   let s = to_assoc s_json in
   if s = [] then
     Empty
   else
     let pitches_json = List.assoc "pitches" s |> to_list in
-    let pitches = List.map to_string pitches_json in
+    let json_pitches_fullname p =
+      p |> to_string |> Filename.concat base
+    in
+    let pitches = List.map json_pitches_fullname pitches_json in
     let hold_to_play = List.assoc "hold_to_play" s |> to_bool in
     let loop = List.assoc "loop" s |> to_bool in
     let groups_json = List.assoc "groups" s |> to_list in
@@ -31,22 +34,23 @@ let parse_sound s_json =
     let sound = Sound.create pitches sound_options in
     Sound sound
 
-let parse_sound_row r_json =
+let parse_sound_row base r_json =
   let r = to_list r_json in
-  let row_list = List.map parse_sound r in
+  let row_list = List.map (parse_sound base) r in
   Array.of_list row_list  
 
-let parse_soundpack s_json =
+let parse_soundpack base s_json =
   let s = to_list s_json in
-  let soundpack = List.map parse_sound_row s in
+  let soundpack = List.map (parse_sound_row base) s in
   Array.of_list soundpack
 
 let parse_song_file file = 
+  let base = Filename.dirname file in
   let json = to_assoc (Yojson.Basic.from_file file) in
   let name = List.assoc "name" json |> to_string in
   let bpm = List.assoc "bpm" json |> to_int in
   let sounds_json =  List.assoc "soundpacks" json |> to_list in
-  let soundpack_list = List.map parse_soundpack sounds_json in
+  let soundpack_list = List.map (parse_soundpack base) sounds_json in
   {
     name = name;
     bpm = bpm;

@@ -21,7 +21,7 @@ let (>>=) o f = match o with
 
 let get_font size =
   match Hashtbl.find_opt fonts size with
-  | None -> Ttf.open_font "agane.ttf" size >>= fun font ->
+  | None -> Ttf.open_font "resources/agane.ttf" size >>= fun font ->
     Hashtbl.add fonts size font;
     print_endline "here";
     font

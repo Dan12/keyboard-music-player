@@ -24,12 +24,13 @@ let test_manager f =
 
 let set_song song =
   test_manager (fun (s) ->
-  s.song <- song)
+  s.song <- Some song)
 
 let key_pressed row_col =
   test_manager 
   begin
   fun (s) ->
+    
     match s.song with
     | None -> ()
     | Some song ->
@@ -81,10 +82,13 @@ let audio_callback output =
       begin
         let arr_len = ((Array1.dim output / 2) - 1) in
         let sound = List.nth s.sounds_playing 0 in
+        (* TODO additive sounds *)
         for i = 0 to arr_len do
           let (sample_l, sample_r) = Sound.get_next_values sound in
-          output.{2*i} <- Int32.of_int sample_l;
-          output.{2*i + 1} <- Int32.of_int sample_r;
+          output.{2*i} <- Int32.of_int (sample_l lsl 16);
+          output.{2*i + 1} <- Int32.of_int (sample_r lsl 16);
         done;
-        (* TODO clean up sounds playing *)
+        (* Remove all sounds not being played anymore *)
+        let filtered_sounds = List.filter Sound.is_playing s.sounds_playing in
+        s.sounds_playing <- filtered_sounds
       end
