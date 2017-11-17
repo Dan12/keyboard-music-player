@@ -6,7 +6,7 @@
 (* [init keyboard keyboard_layout] Initialize the input manager
  * with [keyboad] and [keyboard_layout]
  *)
-val init : Ketboard.keyboard -> Keyboard_layout.keyboard_layout -> unit
+val init : Keyboard.keyboard -> Keyboard_layout.keyboard_layout -> unit
 
 (* [event_callback event] gets called whenever an event is registered.
  * This will parse the event and route it to the appropriate function

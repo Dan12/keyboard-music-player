@@ -40,10 +40,12 @@ let event_callback event =
   match enum (get event typ) with
   | `Key_down ->
     let keycode = get event keyboard_keycode in
-    print_endline (string_of_int keycode)
-  | `Key_up -> 
+    (* print_endline (string_of_int keycode); *)
+    handle_keyboard (Keyboard_layout.KIKeydown keycode)
+  | `Key_up ->
     let keycode = get event keyboard_keycode in
-    print_endline (string_of_int keycode)
+    (* print_endline (string_of_int keycode); *)
+    handle_keyboard (Keyboard_layout.KIKeyup keycode)
   | `Mouse_button_down -> 
     let mouse_x = get event mouse_button_x in
     let mouse_y = get event mouse_button_y in

@@ -109,7 +109,7 @@ let set_audio_callback func =
   s.audio_callback := Some func)
 
 let prev_time = ref 0.
-let refresh_wait_ms = 3000.
+let refresh_wait_ms = 40.
 let start_main_loop () =
   test_state (fun s ->
   (* IDK why this is necessary *)
