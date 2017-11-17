@@ -1,8 +1,8 @@
 Sound_manager.init ();
-let eq_song = Song.parse_song_file "eq.json" in
+let eq_song = Song.parse_song_file "resources/eq.json" in
 Sound_manager.set_song eq_song;
 
-let keyboard_layout = Keyboard_layout.parse_layout "standard_keyboard_layout.json" in
+let keyboard_layout = Keyboard_layout.parse_layout "resources/standard_keyboard_layout.json" in
 let keyboard = Keyboard.create_keyboard (4,12) in
 Input_event_manager.init keyboard keyboard_layout;
 

@@ -171,7 +171,7 @@ let wav_audio_spec =
     Sdl.as_callback = None;
   }
 let load_wav filename =
-  match Sdl.rw_from_file "a0.wav" "r" with
+  match Sdl.rw_from_file filename "r" with
   | Error (_) ->
     print_endline "error reading file";
     None
