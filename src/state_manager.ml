@@ -1,4 +1,4 @@
-type state = SKeyboard
+type state = SKeyboard | SFileChooser
 
 let current_state = ref SKeyboard
 

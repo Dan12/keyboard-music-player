@@ -20,6 +20,23 @@ let layout_tests =
     "load test 2" >:: (fun _ -> assert_equal (KOSoundpackSet 1) (process_key (KIKeydown 1073741906) layout));
   ]
 
-let tests = layout_tests @ keyboard_tests
+let state_tests =
+  let _ =
+    State_manager.set_state State_manager.SKeyboard;
+  in
+  let _ =
+    let open State_manager in
+    set_state SFileChooser;
+  in
+  let _ =
+    State_manager.set_state State_manager.SKeyboard;
+  in
+  let open State_manager in
+  [
+    "state test 1" >:: (fun _ -> assert_equal SKeyboard (get_state ()));
+  ]
+
+
+let tests = layout_tests @ keyboard_tests @ state_tests
 
 let _ = run_test_tt_main ("suite" >::: tests)
