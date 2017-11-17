@@ -9,7 +9,7 @@ Input_event_manager.init keyboard keyboard_layout;
 Tsdl_wrapper.init (1280,720);
 print_endline "starting";
 
-Tsdl_wrapper.set_draw_callback Gui.draw;
+Tsdl_wrapper.set_draw_callback (Gui.draw keyboard);
 Tsdl_wrapper.set_audio_callback Sound_manager.audio_callback;
 Tsdl_wrapper.set_event_callback Input_event_manager.event_callback;
 
