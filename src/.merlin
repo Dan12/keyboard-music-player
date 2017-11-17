@@ -2,3 +2,4 @@ B _build
 PKG tsdl
 PKG tsdl_ttf
 PKG yojson
+PKG oUnit
