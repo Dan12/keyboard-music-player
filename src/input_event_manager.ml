@@ -13,6 +13,13 @@ let init keyboard layout =
     layout = layout;
   }
 
+let handle_keyboard input_event =
+  match !input_event_singleton with
+  | None -> ()
+  | Some ie ->
+    let output = Keyboard_layout.process_key input_event ie.layout in
+    Keyboard.process_event output ie.keyboard
+
 let event_callback event =
   match enum (get event typ) with
   | `Key_down ->
