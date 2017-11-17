@@ -7,7 +7,6 @@ type keyboard
 type key_state = 
   | KSDown
   | KSUp
-  | KSDNE
 
 (* [init (r,c)] initializes a keyboard with [r] rows and
  * and [c] cols with all keys in the [KSUp] state.
@@ -18,7 +17,7 @@ val init : int*int -> keyboard
  * state based on [input]. If [input] does not modify [keyboard]'s
  * state, return false. Otherwise, return true.
  *)
-val process_event : Keyboard_layout.keyboard_input -> keyboard -> bool
+val process_event : Keyboard_layout.keyboard_output -> keyboard -> bool
 
 (* [get_state (r,c) keyboard] returns the state of the key at the given
  * row and column.
