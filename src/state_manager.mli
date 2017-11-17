@@ -3,10 +3,10 @@
 (* The different possible states. Input routing is determined
  * by which state the system is in.
  *)
-type state = SKeyboard
+type state = SKeyboard | SFileChooser
 
-(* [init] Initialize the state manager *)
-val init : unit -> unit
+(* [get_state] returns the current state *)
+val get_state : unit -> state
 
 (* [set_state state] set the state of the system *)
 val set_state : state -> unit
