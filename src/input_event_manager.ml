@@ -8,7 +8,7 @@ type input_event_state = {
 let input_event_singleton = ref None
 
 let init keyboard layout =
-  input_event_singleton := {
+  input_event_singleton := Some {
     keyboard = keyboard;
     layout = layout;
   }
@@ -17,8 +17,24 @@ let handle_keyboard input_event =
   match !input_event_singleton with
   | None -> ()
   | Some ie ->
-    let output = Keyboard_layout.process_key input_event ie.layout in
-    Keyboard.process_event output ie.keyboard
+    match State_manager.get_state () with
+    | State_manager.SKeyboard ->
+      (* get the mapped output *)
+      let output = Keyboard_layout.process_key input_event ie.layout in
+      (* pass it to the keyboard and check if it modifies state *)
+      if Keyboard.process_event output ie.keyboard then
+        (* if it does, pass it to the sound manager *)
+        begin
+          match output with
+          | Keyboard_layout.KOKeydown (r,c) ->
+            Sound_manager.key_pressed (r,c)
+          | Keyboard_layout.KOKeyup (r,c) ->
+            Sound_manager.key_released (r,c)
+          | _ -> ()
+        end
+      else
+        ()
+    | _ -> ()
 
 let event_callback event =
   match enum (get event typ) with
