@@ -20,7 +20,7 @@ let create_keyboard (rows, cols) =
   } in
   let arr = Array.make_matrix rows cols init in
   (* TODO load dynamically *)
-  let strs = "1234567890-=qwertyuiop[]asdfghjkl;'_zxcvbnm,./__    " in
+  let strs = "1234567890-=qwertyuiop[]asdfghjkl;'_zxcvbnm,./__" in
   for r = 0 to rows - 1 do
     for c = 0 to cols - 1 do
       let str = String.sub strs (r * cols + c) 1 in

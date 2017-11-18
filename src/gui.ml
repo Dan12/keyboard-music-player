@@ -9,6 +9,7 @@ let percent_key_padding = 10
 let background_color = Sdl.Color.create 255 255 255 255
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
+let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
 
 let (>>=) o f = match o with
   | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
@@ -68,11 +69,17 @@ let draw_key_text r x y w h font = function
   | Empty -> ()
 
 
-let draw_key r x y w h font key =
-  set_color r keyboard_border_color;
-  let rect = Sdl.Rect.create x y w h in
-  let _ = Sdl.render_draw_rect r (Some rect) in
-  draw_key_text r x y w h font key
+let draw_key r x y w h font key_visual key_state =
+  (match key_state with
+   | KSUp -> set_color r keyboard_border_color;
+     let rect = Sdl.Rect.create x y w h in
+     let _ = Sdl.render_draw_rect r (Some rect) in
+     ()
+   | KSDown -> set_color r keyboard_pressed_color;
+     let rect = Sdl.Rect.create x y w h in
+     let _ = Sdl.render_fill_rect r (Some rect) in
+     ());
+  draw_key_text r x y w h font key_visual
 
 (*
  * Assumes the key list has length of [row] * [col]
@@ -83,10 +90,11 @@ let draw_keyboard renderer keyboard x y w row col =
   let font = get_font (7 * key_size / 10) in
   for r = 0 to row - 1 do
     for c = 0 to col - 1 do
-      let key = Keyboard.get_visual (r, c) keyboard in
+      let key_visual = Keyboard.get_visual (r, c) keyboard in
+      let key_state = Keyboard.get_state (r, c) keyboard in
       let curr_x = c * offset + x in
       let curr_y = r * offset + y in
-      draw_key renderer curr_x curr_y key_size key_size font key;
+      draw_key renderer curr_x curr_y key_size key_size font key_visual key_state;
     done;
   done
 
