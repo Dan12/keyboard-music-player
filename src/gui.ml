@@ -1,5 +1,7 @@
 open Tsdl
 open Tsdl_ttf
+open Keyboard_layout
+open Keyboard
 
 let fonts = Hashtbl.create 16
 
@@ -8,12 +10,7 @@ let percent_key_padding = 10
 let background_color = Sdl.Color.create 255 255 255 255
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
-
-type key =
-  | String of string
-  | Shift
-  | Enter
-  | Empty
+let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
 
 let (>>=) o f = match o with
   | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
@@ -23,7 +20,6 @@ let get_font size =
   match Hashtbl.find_opt fonts size with
   | None -> Ttf.open_font "resources/agane.ttf" size >>= fun font ->
     Hashtbl.add fonts size font;
-    print_endline "here";
     font
   | Some font -> font
 
@@ -74,30 +70,33 @@ let draw_key_text r x y w h font = function
   | Empty -> ()
 
 
-let draw_key r x y w h font key =
+let draw_key r x y w h font key_visual key_state =
+  (match key_state with
+   | KSDown -> set_color r keyboard_pressed_color;
+     let rect = Sdl.Rect.create x y w h in
+     let _ = Sdl.render_fill_rect r (Some rect) in
+     ()
+   | _ -> ());
   set_color r keyboard_border_color;
   let rect = Sdl.Rect.create x y w h in
   let _ = Sdl.render_draw_rect r (Some rect) in
-  draw_key_text r x y w h font key
+  draw_key_text r x y w h font key_visual
 
 (*
  * Assumes the key list has length of [row] * [col]
  *)
-let draw_keyboard renderer x y w row col keys =
-  let next_key = ref keys in
-  let curr_x = ref x in
-  let curr_y = ref y in
+let draw_keyboard renderer keyboard_layout keyboard x y w row col =
   let offset = w / col in
   let key_size = (100 - percent_key_padding) * offset / 100 in
   let font = get_font (7 * key_size / 10) in
-  for r = 1 to row do
-    for c = 1 to col do
-      draw_key renderer !curr_x !curr_y key_size key_size font (List.hd !next_key);
-      next_key := List.tl !next_key;
-      curr_x := !curr_x + offset
+  for r = 0 to row - 1 do
+    for c = 0 to col - 1 do
+      let key_visual = Keyboard_layout.get_visual (r, c) keyboard_layout in
+      let key_state = Keyboard.get_state (r, c) keyboard in
+      let curr_x = c * offset + x in
+      let curr_y = r * offset + y in
+      draw_key renderer curr_x curr_y key_size key_size font key_visual key_state;
     done;
-    curr_x := x;
-    curr_y := !curr_y + offset
   done
 
 let clear r =
@@ -110,58 +109,7 @@ let present r =
   let _ = Sdl.render_present r in
   ()
 
-let get_keyboard_keys () =
-  String "1"::
-  String "2"::
-  String "3"::
-  String "4"::
-  String "5"::
-  String "6"::
-  String "7"::
-  String "8"::
-  String "9"::
-  String "0"::
-  String "-"::
-  String "="::
-  String "Q"::
-  String "W"::
-  String "E"::
-  String "R"::
-  String "T"::
-  String "Y"::
-  String "U"::
-  String "I"::
-  String "O"::
-  String "P"::
-  String "["::
-  String "]"::
-  String "A"::
-  String "S"::
-  String "D"::
-  String "F"::
-  String "G"::
-  String "H"::
-  String "J"::
-  String "K"::
-  String "L"::
-  String ";"::
-  String "'"::
-  Enter::
-  String "Z"::
-  String "X"::
-  String "C"::
-  String "V"::
-  String "B"::
-  String "N"::
-  String "M"::
-  String ","::
-  String "."::
-  String "/"::
-  Shift::
-  Empty::
-  []
-
-let draw r =
+let draw keyboard_layout keyboard r =
   clear r;
-  draw_keyboard r 20 20 1200 4 12 (get_keyboard_keys ());
+  draw_keyboard r keyboard_layout keyboard 20 20 1200 4 12;
   present r

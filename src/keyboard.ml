@@ -1,11 +1,12 @@
-(* These states are the various states a key can be in *)
-type key_state = 
+type key_state =
   | KSDown
   | KSUp
 
+(* These states are the various states a key can be in *)
+
 type keyboard = key_state array array
 
-let create_keyboard (rows, cols) = 
+let create_keyboard (rows, cols) =
   Array.make_matrix rows cols KSUp
 
 let process_event ipt keyboard =
