@@ -71,14 +71,14 @@ let draw_key_text r x y w h font = function
 
 let draw_key r x y w h font key_visual key_state =
   (match key_state with
-   | KSUp -> set_color r keyboard_border_color;
-     let rect = Sdl.Rect.create x y w h in
-     let _ = Sdl.render_draw_rect r (Some rect) in
-     ()
    | KSDown -> set_color r keyboard_pressed_color;
      let rect = Sdl.Rect.create x y w h in
      let _ = Sdl.render_fill_rect r (Some rect) in
-     ());
+     ()
+   | _ -> ());
+  set_color r keyboard_border_color;
+  let rect = Sdl.Rect.create x y w h in
+  let _ = Sdl.render_draw_rect r (Some rect) in
   draw_key_text r x y w h font key_visual
 
 (*
