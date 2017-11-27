@@ -1,0 +1,310 @@
+{
+  "name": "Part 2",
+  "song_data": [
+    {
+      "note": 48,
+      "beat": 1,
+      "length": 1
+    },
+    {
+      "note": 40,
+      "beat": 2,
+      "length": 0.5
+    },
+    {
+      "note": 0,
+      "beat": 2,
+      "length": 1
+    },
+    {
+      "note": 40,
+      "beat": 2.625,
+      "length": 0.25
+    },
+    {
+      "note": 12,
+      "beat": 2.625,
+      "length": 1
+    },
+    {
+      "note": 40,
+      "beat": 3,
+      "length": 0.25
+    },
+    {
+      "note": 24,
+      "beat": 3,
+      "length": 1
+    },
+    {
+      "note": 43,
+      "beat": 4,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 4,
+      "length": 1
+    },
+    {
+      "note": 43,
+      "beat": 5,
+      "length": 0.5
+    },
+    {
+      "note": 42,
+      "beat": 5.625,
+      "length": 0.5
+    },
+    {
+      "note": 43,
+      "beat": 6,
+      "length": 0.5
+    },
+    {
+      "note": 43,
+      "beat": 7,
+      "length": 0.5
+    },
+    {
+      "note": 43,
+      "beat": 8,
+      "length": 0.5
+    },
+    {
+      "note": 42,
+      "beat": 9.5,
+      "length": 0.5
+    },
+    {
+      "note": 40,
+      "beat": 10,
+      "length": 0.5
+    },
+    {
+      "note": 0,
+      "beat": 10,
+      "length": 1
+    },
+    {
+      "note": 40,
+      "beat": 10.625,
+      "length": 0.25
+    },
+    {
+      "note": 12,
+      "beat": 10.625,
+      "length": 1
+    },
+    {
+      "note": 40,
+      "beat": 11,
+      "length": 0.25
+    },
+    {
+      "note": 24,
+      "beat": 11,
+      "length": 1
+    },
+    {
+      "note": 43,
+      "beat": 12,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 12,
+      "length": 1
+    },
+    {
+      "note": 43,
+      "beat": 13,
+      "length": 0.5
+    },
+    {
+      "note": 42,
+      "beat": 13.625,
+      "length": 0.5
+    },
+    {
+      "note": 43,
+      "beat": 14,
+      "length": 0.5
+    },
+    {
+      "note": 43,
+      "beat": 15,
+      "length": 0.5
+    },
+    {
+      "note": 43,
+      "beat": 15.625,
+      "length": 0.5
+    },
+    {
+      "note": 41,
+      "beat": 16,
+      "length": 0.5
+    },
+    {
+      "note": 29,
+      "beat": 16.625,
+      "length": 0.5
+    },
+    {
+      "note": 30,
+      "beat": 17,
+      "length": 0.25
+    },
+    {
+      "note": 30,
+      "beat": 17.375,
+      "length": 0.25
+    },
+    {
+      "note": 28,
+      "beat": 17.625,
+      "length": 0.5
+    },
+    {
+      "note": 40,
+      "beat": 18,
+      "length": 0.5
+    },
+    {
+      "note": 0,
+      "beat": 18,
+      "length": 1
+    },
+    {
+      "note": 40,
+      "beat": 18.625,
+      "length": 0.25
+    },
+    {
+      "note": 12,
+      "beat": 18.625,
+      "length": 1
+    },
+    {
+      "note": 40,
+      "beat": 19,
+      "length": 0.25
+    },
+    {
+      "note": 24,
+      "beat": 19,
+      "length": 1
+    },
+    {
+      "note": 43,
+      "beat": 20,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 20,
+      "length": 1
+    },
+    {
+      "note": 1,
+      "beat": 21,
+      "length": 1
+    },
+    {
+      "note": 43,
+      "beat": 21,
+      "length": 0.5
+    },
+    {
+      "note": 13,
+      "beat": 22,
+      "length": 1
+    },
+    {
+      "note": 43,
+      "beat": 22,
+      "length": 0.5
+    },
+    {
+      "note": 43,
+      "beat": 23,
+      "length": 0.25
+    },
+    {
+      "note": 31,
+      "beat": 23.375,
+      "length": 0.25
+    },
+    {
+      "note": 19,
+      "beat": 23.75,
+      "length": 0.25
+    },
+    {
+      "note": 43,
+      "beat": 24.125,
+      "length": 0.25
+    },
+    {
+      "note": 43,
+      "beat": 24.75,
+      "length": 0.25
+    },
+    {
+      "note": 43,
+      "beat": 25.125,
+      "length": 0.25
+    },
+    {
+      "note": 25,
+      "beat": 25.5,
+      "length": 0.5
+    },
+    {
+      "note": 7,
+      "beat": 25.5,
+      "length": 0.25
+    },
+    {
+      "note": 43,
+      "beat": 26.5,
+      "length": 0.25
+    },
+    {
+      "note": 37,
+      "beat": 26.5,
+      "length": 0.5
+    },
+    {
+      "note": 19,
+      "beat": 27.5,
+      "length": 0.5
+    },
+    {
+      "note": 31,
+      "beat": 29.625,
+      "length": 0.25
+    },
+    {
+      "note": 2,
+      "beat": 30,
+      "length": 0.5
+    },
+    {
+      "note": 19,
+      "beat": 30,
+      "length": 0.25
+    },
+    {
+      "note": 7,
+      "beat": 31,
+      "length": 0.5
+    },
+    {
+      "note": 18,
+      "beat": 32,
+      "length": 0.5
+    }
+  ]
+}
