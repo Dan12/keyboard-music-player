@@ -10,6 +10,7 @@ type tsdl_state = {
   draw_callback: (Tsdl.Sdl.renderer -> unit) option ref;
   audio_callback: ((int32, int32_elt, c_layout) Bigarray.Array1.t -> unit) option ref;
   event_callback: (Tsdl.Sdl.event -> unit) option ref;
+  tick_callback: (unit -> unit) option ref;
 }
 
 let tsdl_state_singleton = ref None
@@ -84,6 +85,7 @@ let init window_dims =
       draw_callback = ref None;
       audio_callback = ref None;
       event_callback = ref None;
+      tick_callback = ref None;
     }
 
 let quit () =
@@ -108,6 +110,10 @@ let set_audio_callback func =
   test_state (fun s ->
   s.audio_callback := Some func)
 
+let set_tick_callback func = 
+  test_state (fun s ->
+  s.tick_callback := Some func)
+
 let prev_refresh_time = ref 0.
 let refresh_wait_ms = 40.
 let start_main_loop () =
@@ -127,7 +133,9 @@ let start_main_loop () =
     (* always delay 1ms, used for ticks *)
     Sdl.delay (Int32.of_int 1);
 
-    (* TODO call tick here *)
+    (match !(s.tick_callback) with
+    | None -> ()
+    | Some tick_callback -> tick_callback ());
 
     (* refresh at constant rate *)
     let cur_time = Unix.gettimeofday () in
@@ -140,7 +148,7 @@ let start_main_loop () =
         prev_refresh_time := cur_time -. (time_wasted_ms /. 1000.);
         (* call the draw callback if it exists *)
         match !(s.draw_callback) with
-        | None -> ();
+        | None -> ()
         | Some draw_callback ->
           draw_callback s.renderer;
       end
