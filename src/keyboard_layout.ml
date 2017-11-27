@@ -41,13 +41,14 @@ let create_keyboard keys (rows, cols) =
   let add_col r c str_json =
     let str = str_json |> to_string in
     let key =
-      if String.equal str "SHIFT"
-      then Shift
-      else if String.equal str "ENTER"
-      then Enter
-      else if String.equal str "EMPTY"
-      then Empty
-      else String str
+      if String.equal str "SHIFT" then 
+        Shift
+      else if String.equal str "ENTER" then 
+        Enter
+      else if String.equal str "EMPTY" then
+        Empty
+      else 
+        String str
     in
     arr.(r).(c) <- key
   in
@@ -73,9 +74,10 @@ let parse_layout filename =
 let to_upper keycode =
   let a = 97 in
   let z = 122 in
-  if keycode >= a && keycode <= z
-  then keycode - 32
-  else keycode
+  if keycode >= a && keycode <= z then 
+    keycode - 32
+  else 
+    keycode
 
 let process_key ipt (layout, _) =
   match ipt with
@@ -102,6 +104,7 @@ let get_rows (_, keyboard) =
   Array.length keyboard
 
 let get_cols (_, keyboard) =
-  if Array.length keyboard == 0
-  then 0
-  else Array.length keyboard.(0)
+  if Array.length keyboard == 0 then
+    0
+  else 
+    Array.length keyboard.(0)
