@@ -1,5 +1,6 @@
 open Tsdl
 open Tsdl_ttf
+open Keyboard_layout
 open Keyboard
 
 let fonts = Hashtbl.create 16
@@ -84,13 +85,13 @@ let draw_key r x y w h font key_visual key_state =
 (*
  * Assumes the key list has length of [row] * [col]
  *)
-let draw_keyboard renderer keyboard x y w row col =
+let draw_keyboard renderer keyboard_layout keyboard x y w row col =
   let offset = w / col in
   let key_size = (100 - percent_key_padding) * offset / 100 in
   let font = get_font (7 * key_size / 10) in
   for r = 0 to row - 1 do
     for c = 0 to col - 1 do
-      let key_visual = Keyboard.get_visual (r, c) keyboard in
+      let key_visual = Keyboard_layout.get_visual (r, c) keyboard_layout in
       let key_state = Keyboard.get_state (r, c) keyboard in
       let curr_x = c * offset + x in
       let curr_y = r * offset + y in
@@ -108,7 +109,7 @@ let present r =
   let _ = Sdl.render_present r in
   ()
 
-let draw keyboard r =
+let draw keyboard_layout keyboard r =
   clear r;
-  draw_keyboard r keyboard 20 20 1200 4 12;
+  draw_keyboard r keyboard_layout keyboard 20 20 1200 4 12;
   present r
