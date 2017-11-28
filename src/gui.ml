@@ -222,5 +222,5 @@ let button_pressed (x,y) =
         rect_x <= x && x <= (rect_x+rect_w) && rect_y <= y && y <= (rect_y+rect_h)
     ) button_rect_list in
   match pressed_button_rect with
-  | Some (Some (_, button)) -> Some button
+  | Some (Some (rect, button)) -> Some button
   | _ -> None

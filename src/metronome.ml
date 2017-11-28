@@ -13,4 +13,8 @@ let set_bpm beat = bpm := beat
 
 let get_beat () = !cached_beat
 
+let unpause () =
+  let seconds = minutes_elapsed() *. 60.0 in
+  start_time := (Unix.gettimeofday() -. seconds)
+
 let reset () = start_time := Unix.gettimeofday()

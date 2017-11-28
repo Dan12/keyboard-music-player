@@ -1,8 +1,9 @@
 let tick_callback () =
-  Metronome.tick ();
-  let midi = Midi_player.get_midi () in
-  let beat = Metronome.get_beat () in
-  Midi.tick midi beat
+  if Model.midi_is_playing() then
+    Metronome.tick ();
+    let midi = Midi_player.get_midi () in
+    let beat = Metronome.get_beat () in
+    Midi.tick midi beat
 in
 
 Sound_manager.init ();
@@ -16,8 +17,6 @@ let keyboard = Model.get_keyboard () in
 let keyboard_layout = Model.get_keyboard_layout () in
 
 (* NOTE: Testing midi *)
-Metronome.reset ();
-Metronome.set_bpm (Model.get_song () |> Song.get_bpm);
 Midi_player.set_midi "resources/eq_data/eq_midi_0.json";
 
 Tsdl_wrapper.set_draw_callback (Gui.draw keyboard_layout keyboard);

@@ -10,7 +10,8 @@ type model = {
   mutable keyboard: keyboard;
   mutable keyboard_layout: keyboard_layout;
   mutable song: song;
-  mutable state: state
+  mutable state: state;
+  mutable is_playing: bool;
 }
 
 let model:model =
@@ -26,7 +27,8 @@ let model:model =
     keyboard = keyboard;
     keyboard_layout = keyboard_layout;
     song = eq_song;
-    state = SKeyboard
+    state = SKeyboard;
+    is_playing = false;
   }
 
 let set_width w =
@@ -64,3 +66,14 @@ let set_state s =
 
 let get_state () =
   model.state
+
+let start_midi () =
+  if model.is_playing = false then
+    Metronome.unpause();
+    Metronome.set_bpm (get_song() |> Song.get_bpm);
+    model.is_playing <- true
+
+let pause_midi () =
+  model.is_playing <- false
+
+let midi_is_playing () = model.is_playing
