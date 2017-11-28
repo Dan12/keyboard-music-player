@@ -1,43 +1,32 @@
 open Tsdl.Sdl.Event
 
-type input_event_state = {
-  keyboard: Keyboard.keyboard;
-  layout: Keyboard_layout.keyboard_layout;
-}
-
 let input_event_singleton = ref None
 
-let init keyboard layout =
-  input_event_singleton := Some {
-    keyboard = keyboard;
-    layout = layout;
-  }
-
 let handle_keyboard input_event =
-  match !input_event_singleton with
-  | None -> ()
-  | Some ie ->
-    match State_manager.get_state () with
-    | State_manager.SKeyboard ->
-      (* get the mapped output *)
-      let output = Keyboard_layout.process_key input_event ie.layout in
-      (* pass it to the keyboard and check if it modifies state *)
-      if Keyboard.process_event output ie.keyboard then
-        (* if it does, pass it to the sound manager *)
-        begin
-          match output with
-          | Keyboard_layout.KOKeydown (r,c) ->
-            Sound_manager.key_pressed (r,c)
-          | Keyboard_layout.KOKeyup (r,c) ->
-            Sound_manager.key_released (r,c)
-          | _ -> ()
-        end
-      else
-        (match output with
-        | Keyboard_layout.KOSoundpackSet i ->
-          Sound_manager.set_soundpack i
-        | _ -> ())
-    | _ -> ()
+  match Model.get_state () with
+  | Model.SKeyboard ->
+    let layout = Model.get_keyboard_layout () in
+    let keyboard = Model.get_keyboard () in
+    (* get the mapped output *)
+    let output = Keyboard_layout.process_key input_event layout in
+    (* pass it to the keyboard and check if it modifies state *)
+    if Keyboard.process_event output keyboard then
+      (* if it does, pass it to the sound manager *)
+      begin
+        match output with
+        | Keyboard_layout.KOKeydown (r,c) ->
+          Sound_manager.key_pressed (r,c)
+        | Keyboard_layout.KOKeyup (r,c) ->
+          Sound_manager.key_released (r,c)
+        | _ -> ()
+      end
+    else
+      (match output with
+      | Keyboard_layout.KOSoundpackSet i ->
+        let song = Model.get_song () in
+        Song.set_sound_pack i song
+      | _ -> ())
+  | _ -> ()
 
 let handle_mouse_up x y =
   match Gui.button_pressed (x, y) with

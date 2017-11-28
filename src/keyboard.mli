@@ -22,9 +22,4 @@ val process_event : Keyboard_layout.keyboard_output -> keyboard -> bool
 (* [get_state (r,c) keyboard] returns the state of the key at the given
  * row and column.
  *)
-val get_state_key : int*int -> keyboard -> key_state
-
-(* [get_state_arrow i keyboard] returns the state of the arrow key at the given
- * index. [left, up, down, right]
- *)
-val get_state_arrow : int -> keyboard -> key_state
+val get_state : int*int -> keyboard -> key_state
