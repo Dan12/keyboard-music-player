@@ -1,3 +1,10 @@
+let tick_callback () =
+  Metronome.tick ();
+  let midi = Midi_player.get_midi () in
+  let beat = Metronome.get_beat () in
+  Midi.tick midi beat
+in
+
 Sound_manager.init ();
 
 let window_width = Model.get_width () in
@@ -9,12 +16,14 @@ let keyboard = Model.get_keyboard () in
 let keyboard_layout = Model.get_keyboard_layout () in
 
 (* NOTE: Testing midi *)
+Metronome.reset ();
+Metronome.set_bpm (Model.get_song () |> Song.get_bpm);
 Midi_player.set_midi "resources/eq_data/eq_midi_0.json";
 
 Tsdl_wrapper.set_draw_callback (Gui.draw keyboard_layout keyboard);
 Tsdl_wrapper.set_audio_callback Sound_manager.audio_callback;
 Tsdl_wrapper.set_event_callback Input_event_manager.event_callback;
-Tsdl_wrapper.set_tick_callback Metronome.tick;
+Tsdl_wrapper.set_tick_callback tick_callback;
 
 Tsdl_wrapper.start_main_loop ();
 

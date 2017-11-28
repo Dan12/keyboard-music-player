@@ -2,30 +2,33 @@ open Tsdl.Sdl.Event
 
 let input_event_singleton = ref None
 
+let handle_keyboard_output output =
+  let keyboard = Model.get_keyboard () in
+  (* pass it to the keyboard and check if it modifies state *)
+  if Keyboard.process_event output keyboard then
+    (* if it does, pass it to the sound manager *)
+    begin
+      match output with
+      | Keyboard_layout.KOKeydown (r,c) ->
+        Sound_manager.key_pressed (r,c)
+      | Keyboard_layout.KOKeyup (r,c) ->
+        Sound_manager.key_released (r,c)
+      | _ -> ()
+    end
+  else
+    (match output with
+     | Keyboard_layout.KOSoundpackSet i ->
+       let song = Model.get_song () in
+       Song.set_sound_pack i song
+     | _ -> ())
+
 let handle_keyboard input_event =
   match Model.get_state () with
   | Model.SKeyboard ->
     let layout = Model.get_keyboard_layout () in
-    let keyboard = Model.get_keyboard () in
     (* get the mapped output *)
     let output = Keyboard_layout.process_key input_event layout in
-    (* pass it to the keyboard and check if it modifies state *)
-    if Keyboard.process_event output keyboard then
-      (* if it does, pass it to the sound manager *)
-      begin
-        match output with
-        | Keyboard_layout.KOKeydown (r,c) ->
-          Sound_manager.key_pressed (r,c)
-        | Keyboard_layout.KOKeyup (r,c) ->
-          Sound_manager.key_released (r,c)
-        | _ -> ()
-      end
-    else
-      (match output with
-      | Keyboard_layout.KOSoundpackSet i ->
-        let song = Model.get_song () in
-        Song.set_sound_pack i song
-      | _ -> ())
+    handle_keyboard_output output
   | _ -> ()
 
 let handle_mouse_up x y =
