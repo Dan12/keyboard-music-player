@@ -225,14 +225,20 @@ let draw_graphics r amplitudes x y w h =
     done;
   done
 
-
 let get_amplitudes () =
-  let complex_arr = Model.get_buffer () in
+  (* let complex_arr = Model.get_buffer () in
 
   let normalize = fun compl ->
-    int_of_float (float_of_int max_amplitude *. (Complex.norm compl)) in
+    int_of_float (float_of_int max_amplitude *. (Complex.norm compl))
 
-  Array.map normalize complex_arr
+  Array.map normalize complex_arr *)
+
+
+  let arr = Array.make 30 0 in
+  for i = 0 to Array.length arr - 1 do
+    arr.(i) <- Random.int 61
+  done;
+  arr
 
 let draw r =
   let window_w = Model.get_width () in
