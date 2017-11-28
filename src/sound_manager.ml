@@ -89,4 +89,5 @@ let audio_callback output =
         (* Remove all sounds not being played anymore *)
         let filtered_sounds = List.filter Sound.is_playing s.sounds_playing in
         s.sounds_playing <- filtered_sounds
-      end
+        end;
+  Model.set_buffer output
