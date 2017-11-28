@@ -9,9 +9,6 @@
 (* [init] initialize the sound manager *)
 val init : unit -> unit
 
-(* [set_song song] set the sound manager's song *)
-val set_song : Song.song -> unit
-
 (* [key_pressed (r,c)] callback when key is pressed on the keyboard
  * row [r] and column [c]
  *)
@@ -21,11 +18,6 @@ val key_pressed : int*int -> unit
  * row [r] and column [c]
  *)
 val key_released : int*int -> unit
-
-(* [set_soundpack soundpack] sets the current sound's soundpack
- * to [soundpack]
- *)
-val set_soundpack : int -> unit
 
 (* [audio_callback output] is the audio callback that populates [output]
  * with audio data

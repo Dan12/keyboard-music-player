@@ -106,7 +106,7 @@ let draw_keyboard renderer keyboard_layout keyboard x y w rows cols =
   for r = 0 to rows - 1 do
     for c = 0 to cols - 1 do
       let key_visual = Keyboard_layout.get_visual (r, c) keyboard_layout in
-      let key_state = Keyboard.get_state_key (r, c) keyboard in
+      let key_state = Keyboard.get_state (r, c) keyboard in
       let curr_x = c * offset + x in
       let curr_y = r * offset + y in
       draw_key renderer curr_x curr_y key_size key_size key_state;
@@ -124,10 +124,10 @@ let draw_arrows r keyboard x y w =
   let w_key = (100 - percent_key_padding) * x_offset / 100 in
   let h_key = (100 - percent_key_padding) * y_offset / 100 in
 
-  let left_state = Keyboard.get_state_arrow 0 keyboard in
-  let up_state = Keyboard.get_state_arrow 1 keyboard in
-  let down_state = Keyboard.get_state_arrow 2 keyboard in
-  let right_state = Keyboard.get_state_arrow 3 keyboard in
+  let left_state = if Model.get_song () |> Song.get_sound_pack = 0 then KSDown else KSUp in
+  let up_state = if Model.get_song () |> Song.get_sound_pack = 1 then KSDown else KSUp in
+  let down_state = if Model.get_song () |> Song.get_sound_pack = 2 then KSDown else KSUp in
+  let right_state = if Model.get_song () |> Song.get_sound_pack = 3 then KSDown else KSUp in
 
   (* draw left *)
   draw_key r x (y + y_offset) w_key h_key left_state;
