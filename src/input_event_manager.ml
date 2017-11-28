@@ -40,7 +40,9 @@ let handle_keyboard input_event =
     | _ -> ()
 
 let handle_mouse_up x y =
-  failwith "Unimplemented"
+  match Gui.button_pressed (x, y) with
+  | Some button -> print_endline "Button pressed!"
+  | None -> ()
 
 let event_callback event =
   match enum (get event typ) with
@@ -59,6 +61,7 @@ let event_callback event =
   | `Mouse_button_up ->
     let mouse_x = get event mouse_button_x in
     let mouse_y = get event mouse_button_y in
+    handle_mouse_up mouse_x mouse_y;
     print_endline ((string_of_int mouse_x) ^ ", " ^ (string_of_int mouse_y))
   | `Mouse_motion ->
     let mouse_x = get event mouse_button_x in
