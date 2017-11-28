@@ -79,3 +79,6 @@ let set_sound_pack s song =
     ()
   else
     song.soundpack <- s
+
+let get_sound_pack song =
+  song.soundpack
