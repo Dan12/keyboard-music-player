@@ -20,7 +20,7 @@ match o with | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
              | Ok a -> f a
 
 (* gets called every audio_samples/audio_freq seconds (rn ~ 0.093)
- * and the whole loop only takes >1% of that^ time for simple stuff 
+ * and the whole loop only takes >1% of that^ time for simple stuff
  *)
 let audio_callback output =
   Mutex.lock m;
@@ -32,8 +32,8 @@ let audio_callback output =
   (* output dim is 2*4096 *)
   for i = 0 to ((Array1.dim output / 2) - 1) do
     let (samplel, sampler) = match !audiofile with
-    | Some arr when (!play_audio_pos >= 0) -> 
-      if !time*2+1 - (!play_audio_pos) < Array1.dim arr then 
+    | Some arr when (!play_audio_pos >= 0) ->
+      if !time*2+1 - (!play_audio_pos) < Array1.dim arr then
         (Int32.of_int(arr.{!time*2 - (!play_audio_pos)} lsl 16), Int32.of_int(arr.{!time*2+1 - (!play_audio_pos)} lsl 16))
       else
         let _ = Sdl.free_wav arr in let _ = audiofile := None in (Int32.of_int 0, Int32.of_int 0)
@@ -73,15 +73,15 @@ let audio_setup () =
       Int32.of_int (audio_samples * 2 * 2);
     (* set the audio callback to get the next chunk of the audio buffer *)
     Sdl.as_callback = None; }
-  in 
-  let _ = 
+  in
+  let _ =
     match Sdl.rw_from_file "a0.wav" "r" with
     | Error (_) -> print_endline "error reading file"
-    | Ok rw_ops -> 
+    | Ok rw_ops ->
       match Sdl.load_wav_rw rw_ops wav_audio_spec Bigarray.int16_signed with
       | Error (_) -> let _ = Sdl.rw_close rw_ops in print_endline "error parsing wav file"
       | Ok (spec, bigarr) ->
-        let _ = Sdl.rw_close rw_ops in 
+        let _ = Sdl.rw_close rw_ops in
         let _ = audiofile := Some bigarr in
         (* let _ = print_endline (string_of_int (spec.as_format)) in
         let _ = print_endline (string_of_int (Sdl.Audio.s32)) in *)
@@ -105,7 +105,7 @@ let audio_setup () =
 let video_setup font =
   match Sdl.create_window_and_renderer ~w:640 ~h:480 Sdl.Window.windowed with
   | Error ( `Msg e ) -> Sdl.log "Create window error: %s" e; exit 1
-  | Ok (w,r) -> 
+  | Ok (w,r) ->
     (* clear the buffer *)
     let _ = Sdl.render_clear r in
     (* set the color to yellow *)
@@ -124,7 +124,7 @@ let video_setup font =
     Ttf.render_text_solid font "foobar" fg_color >>= fun (sface) ->
     Sdl.create_texture_from_surface r sface >>= fun (font_texture) ->
     let _ = Sdl.render_copy ~dst:text_rect r font_texture in
-    
+
     (* flush the buffer *)
     let _ = Sdl.render_present r in
     (w,r)
@@ -153,13 +153,13 @@ let main () = match Sdl.init Sdl.Init.(audio + video) with
                   Sdl.destroy_window window;
                   Sdl.quit();
                   running := false;
-              | `Key_down -> 
+              | `Key_down ->
                 Mutex.lock m;
                 play_audio_pos := !time*2;
                 Mutex.unlock m;
-                print_endline (string_of_int (!play_audio_pos)); 
+                print_endline (string_of_int (!play_audio_pos));
                 print_endline (string_of_int (Sdl.Event.(get e keyboard_keycode)))
-              | `Key_up -> 
+              | `Key_up ->
                 print_endline (string_of_int (Sdl.Event.(get e keyboard_keycode)))
               | `Mouse_button_down -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y))))
               | `Mouse_button_up -> print_endline (string_of_int (Sdl.Event.(get e mouse_button_x))^","^(string_of_int(Sdl.Event.(get e mouse_button_y))))
