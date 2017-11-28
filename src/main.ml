@@ -1,5 +1,4 @@
 Sound_manager.init ();
-
 let window_width = Model.get_width () in
 let window_height = Model.get_height () in
 Tsdl_wrapper.init (window_width, window_height);
