@@ -186,15 +186,6 @@ let present r =
   let _ = Sdl.render_present r in
   ()
 
-(* TODO use fft to get the amplitudes *)
-open Random
-let get_amplitudes () =
-  let arr = Array.make 30 0 in
-  for i = 0 to Array.length arr - 1 do
-    arr.(i) <- Random.int 100
-  done;
-  arr
-
 let get_amplitude_color_element min max amp =
   min + amp * ((max - min) / max_amplitude)
 
@@ -228,12 +219,20 @@ let draw_graphics r amplitudes x y w h =
     for bar = 0 to num_bars - 1 do
       let segment_x = x + bar * offset in
       let segment_y = (y + h) - (height + 1) * segment_h in
-      if height <= amplitudes.(bar)
+      if height <= amplitudes.(bar) || (height = 1 && Random.int 2 = 1)
       then draw_graphic_segment r height segment_x segment_y bar_w segment_h
       else ()
     done;
   done
 
+
+let get_amplitudes () =
+  let complex_arr = Model.get_buffer () in
+
+  let normalize = fun compl ->
+    int_of_float (float_of_int max_amplitude *. (Complex.norm compl)) in
+
+  Array.map normalize complex_arr
 
 let draw r =
   let window_w = Model.get_width () in
