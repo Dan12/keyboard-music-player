@@ -235,7 +235,13 @@ let draw_graphics r amplitudes x y w h =
   done
 
 
-let draw (window_w, window_h) keyboard_layout keyboard r =
+let draw r =
+  let window_w = Model.get_width () in
+  let window_h = Model.get_height () in
+
+  let keyboard = Model.get_keyboard () in
+  let keyboard_layout = Model.get_keyboard_layout () in
+
   clear r;
   let amplitudes = get_amplitudes () in
   let num_bars = Array.length amplitudes + 1 in

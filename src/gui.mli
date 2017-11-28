@@ -7,4 +7,4 @@ open Keyboard
 (* [draw renderer] the draw callback that makes draw calls using
  * [renderer] to display the state.
  *)
-val draw : int*int -> keyboard_layout -> keyboard -> Tsdl.Sdl.renderer -> unit
+val draw : Tsdl.Sdl.renderer -> unit
