@@ -41,3 +41,7 @@ val set_state : state -> unit
 
 (* [get_state] returns the current state. *)
 val get_state : unit -> state
+
+val set_buffer : (int32, Bigarray.int32_elt, Bigarray.c_layout) Bigarray.Array1.t -> unit
+
+val get_buffer : unit -> Complex.t array
