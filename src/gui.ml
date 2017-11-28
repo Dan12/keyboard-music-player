@@ -4,6 +4,9 @@ open Keyboard_layout
 open Keyboard
 open Button
 
+let button_rects:((Sdl.rect * button) option array) =
+  Array.make (List.length buttons) None
+
 let fonts = Hashtbl.create 16
 
 let percent_key_padding = 10
@@ -142,27 +145,37 @@ let draw_arrows r keyboard x y w =
   let _ = Sdl.render_draw_line r (x + 2 * x_offset + 3 * w_key / 4) (y + y_offset + h_key / 2) (x + 2 * x_offset + w_key / 2) (y + y_offset + h_key / 4) in
   2 * y_offset
 
-let draw_button r button =
-  let (x, y, w, h) = Button.get_location button in
-  let rect = Sdl.Rect.create x y w h in
+let draw_button r x y size i button =
+  let rect = Sdl.Rect.create x y size size in
+  Array.set button_rects i (Some (rect, button));
   let _ = Sdl.render_draw_rect r (Some rect) in
   match button with
   | Load ->
-    let font = get_font 30 in
-    draw_text r (x + w/2) (y + h/2) font "Load"
+    let font = get_font (3 * size / 8) in
+    draw_text r (x + size/2) (y + size/2) font "Load"
   | Play ->
-    let _ = Sdl.render_draw_line r (x+15) (y+15) (x+w-15) (y+h/2) in
-    let _ = Sdl.render_draw_line r (x+15) (y+h-15) (x+w-15) (y+h/2) in
-    let _ = Sdl.render_draw_line r (x+15) (y+15) (x+15) (y+h-15) in
+    let padding = size / 5 in
+    let _ = Sdl.render_draw_line r (x+padding) (y+padding) (x+size-padding) (y+size/2) in
+    let _ = Sdl.render_draw_line r (x+padding) (y+size-padding) (x+size-padding) (y+size/2) in
+    let _ = Sdl.render_draw_line r (x+padding) (y+padding) (x+padding) (y+size-padding) in
     ()
   | Pause ->
-    let left_rect = Sdl.Rect.create (x+15) (y+15) (w/4) (h-30) in
-    let right_rect = Sdl.Rect.create (x+45) (y+15) (w/4) (h-30) in
+    let padding = size / 5 in
+    let rect_width = (size - 3 * padding) / 2 in
+    let rect_height = size - 2 * padding in
+    let left_rect = Sdl.Rect.create (x+padding) (y+padding) rect_width rect_height in
+    let right_rect = Sdl.Rect.create (x+padding+rect_width+padding) (y+padding) rect_width rect_height in
     let _ = Sdl.render_draw_rects r [left_rect;right_rect] in
     ()
 
-let draw_buttons r =
-  List.iter (fun b -> draw_button r b) Button.buttons
+let draw_buttons r x y w =
+  let offset = w / (List.length buttons) in
+  let size = (100 - percent_key_padding) * offset / 100 in
+  List.iteri (fun i button ->
+      let button_x = i * offset + x in
+      draw_button r button_x y size i button
+    ) buttons;
+  size
 
 let clear r =
   set_color r background_color;
@@ -189,4 +202,9 @@ let draw keyboard_layout keyboard r =
   let arrows_x = init_x + keyboard_w / 2 - arrows_w / 2 in
   let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
   let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
+
+  let buttons_w = arrows_w in
+  let buttons_x = arrows_x in
+  let buttons_y = 22 * arrows_h / 20 + arrows_y in
+  let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
   present r
