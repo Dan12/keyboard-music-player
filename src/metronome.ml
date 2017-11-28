@@ -1,5 +1,3 @@
-open Unix
-
 let start_time = ref (Unix.gettimeofday())
 let last_time = ref (Unix.gettimeofday())
 let cached_beat = ref 0.0
