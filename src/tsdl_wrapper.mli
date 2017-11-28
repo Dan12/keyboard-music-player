@@ -28,7 +28,13 @@ val set_audio_callback : ((int32, Bigarray.int32_elt, Bigarray.c_layout) Bigarra
  * be [event_fun]. Event callback should be a relatively quick function,
  * as it will block the audio callback from being called.
  *)
- val set_event_callback : (Tsdl.Sdl.event -> unit) -> unit
+val set_event_callback : (Tsdl.Sdl.event -> unit) -> unit
+
+(* [set_tick_callback tick_fun] set the tick function to be
+ * [tick_fun]. This will be called about once every millisecond,
+ * however, [tick_fun] should do its own time calculations.
+ *)
+val set_tick_callback : (unit -> unit) -> unit
 
 (* [start_main_loop] starts the main loop and unpauses the audio callback. *)
 val start_main_loop : unit -> unit

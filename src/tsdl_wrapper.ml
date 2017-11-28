@@ -10,6 +10,7 @@ type tsdl_state = {
   draw_callback: (Tsdl.Sdl.renderer -> unit) option ref;
   audio_callback: ((int32, int32_elt, c_layout) Bigarray.Array1.t -> unit) option ref;
   event_callback: (Tsdl.Sdl.event -> unit) option ref;
+  tick_callback: (unit -> unit) option ref;
 }
 
 let tsdl_state_singleton = ref None
@@ -45,7 +46,7 @@ let audio_callback_ref =
 let audio_freq = 44100
 (* If set below 1024, there seems to be a race condition
  * and close deadlocks inside of quit *)
-let audio_samples = 1024
+let audio_samples = 256
 let audio_setup () =
   let desired_audiospec =
     { Sdl.as_freq = audio_freq;
@@ -84,6 +85,7 @@ let init window_dims =
       draw_callback = ref None;
       audio_callback = ref None;
       event_callback = ref None;
+      tick_callback = ref None;
     }
 
 let quit () =
@@ -108,7 +110,11 @@ let set_audio_callback func =
   test_state (fun s ->
   s.audio_callback := Some func)
 
-let prev_time = ref 0.
+let set_tick_callback func =
+  test_state (fun s ->
+  s.tick_callback := Some func)
+
+let prev_refresh_time = ref 0.
 let refresh_wait_ms = 40.
 let start_main_loop () =
   test_state (fun s ->
@@ -124,20 +130,30 @@ let start_main_loop () =
   (* create a running boolean to exit out of the loop when necessary *)
   let running = ref true in
   while !running do
+    (* always delay 1ms, used for ticks *)
+    Sdl.delay (Int32.of_int 1);
+
+    (match !(s.tick_callback) with
+    | None -> ()
+    | Some tick_callback -> tick_callback ());
+
     (* refresh at constant rate *)
     let cur_time = Unix.gettimeofday () in
-    let time_taken = (cur_time -. !prev_time) *. 1000. in
-    if time_taken < refresh_wait_ms then
-      Sdl.delay (Int32.of_float (refresh_wait_ms -. time_taken))
+
+    let time_taken = (cur_time -. !prev_refresh_time) *. 1000. in
+    if time_taken >= refresh_wait_ms then
+      begin
+        (* set prev refresh time to the cur time minus the time overshot *)
+        let time_wasted_ms = min refresh_wait_ms ((time_taken -. refresh_wait_ms)) in
+        prev_refresh_time := cur_time -. (time_wasted_ms /. 1000.);
+        (* call the draw callback if it exists *)
+        match !(s.draw_callback) with
+        | None -> ()
+        | Some draw_callback ->
+          draw_callback s.renderer;
+      end
     else
       ();
-    prev_time := cur_time;
-
-    (* call the draw callback if it exists *)
-    match !(s.draw_callback) with
-    | None -> ();
-    | Some draw_callback ->
-      draw_callback s.renderer;
 
     (* get all of the events that happend while we were waiting *)
     while !running && Sdl.poll_event (Some e) do

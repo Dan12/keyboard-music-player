@@ -1,0 +1,350 @@
+{
+  "name": "Part 3",
+  "song_data": [
+    {
+      "note": 49,
+      "beat": 1,
+      "length": 1
+    },
+    {
+      "note": 5,
+      "beat": 2,
+      "length": 0.5
+    },
+    {
+      "note": 37,
+      "beat": 2,
+      "length": 0.5
+    },
+    {
+      "note": 6,
+      "beat": 2.625,
+      "length": 0.5
+    },
+    {
+      "note": 38,
+      "beat": 2.625,
+      "length": 0.5
+    },
+    {
+      "note": 7,
+      "beat": 3,
+      "length": 0.5
+    },
+    {
+      "note": 39,
+      "beat": 3,
+      "length": 0.5
+    },
+    {
+      "note": 8,
+      "beat": 4,
+      "length": 2
+    },
+    {
+      "note": 40,
+      "beat": 4,
+      "length": 0.5
+    },
+    {
+      "note": 25,
+      "beat": 5,
+      "length": 0.5
+    },
+    {
+      "note": 17,
+      "beat": 5.625,
+      "length": 0.5
+    },
+    {
+      "note": 26,
+      "beat": 5.625,
+      "length": 0.5
+    },
+    {
+      "note": 18,
+      "beat": 6,
+      "length": 0.5
+    },
+    {
+      "note": 27,
+      "beat": 6,
+      "length": 0.5
+    },
+    {
+      "note": 20,
+      "beat": 7,
+      "length": 0.5
+    },
+    {
+      "note": 4,
+      "beat": 7,
+      "length": 0.5
+    },
+    {
+      "note": 16,
+      "beat": 7.375,
+      "length": 0.5
+    },
+    {
+      "note": 28,
+      "beat": 7.75,
+      "length": 0.5
+    },
+    {
+      "note": 8,
+      "beat": 8,
+      "length": 2
+    },
+    {
+      "note": 15,
+      "beat": 8,
+      "length": 0.5
+    },
+    {
+      "note": 5,
+      "beat": 10,
+      "length": 0.5
+    },
+    {
+      "note": 37,
+      "beat": 10,
+      "length": 0.5
+    },
+    {
+      "note": 6,
+      "beat": 10.625,
+      "length": 0.5
+    },
+    {
+      "note": 38,
+      "beat": 10.625,
+      "length": 0.5
+    },
+    {
+      "note": 7,
+      "beat": 11,
+      "length": 0.5
+    },
+    {
+      "note": 39,
+      "beat": 11,
+      "length": 0.5
+    },
+    {
+      "note": 8,
+      "beat": 12,
+      "length": 2
+    },
+    {
+      "note": 40,
+      "beat": 12,
+      "length": 0.5
+    },
+    {
+      "note": 25,
+      "beat": 13,
+      "length": 0.5
+    },
+    {
+      "note": 17,
+      "beat": 13.625,
+      "length": 0.5
+    },
+    {
+      "note": 26,
+      "beat": 13.625,
+      "length": 0.5
+    },
+    {
+      "note": 18,
+      "beat": 14,
+      "length": 0.5
+    },
+    {
+      "note": 27,
+      "beat": 14,
+      "length": 0.5
+    },
+    {
+      "note": 8,
+      "beat": 14.625,
+      "length": 0.5
+    },
+    {
+      "note": 4,
+      "beat": 15,
+      "length": 0.5
+    },
+    {
+      "note": 20,
+      "beat": 15,
+      "length": 0.5
+    },
+    {
+      "note": 16,
+      "beat": 15.375,
+      "length": 0.5
+    },
+    {
+      "note": 28,
+      "beat": 15.75,
+      "length": 0.5
+    },
+    {
+      "note": 32,
+      "beat": 16,
+      "length": 0.5
+    },
+    {
+      "note": 15,
+      "beat": 16,
+      "length": 0.5
+    },
+    {
+      "note": 30,
+      "beat": 16.625,
+      "length": 0.5
+    },
+    {
+      "note": 4,
+      "beat": 17,
+      "length": 0.5
+    },
+    {
+      "note": 31,
+      "beat": 17,
+      "length": 0.5
+    },
+    {
+      "note": 16,
+      "beat": 17.375,
+      "length": 0.5
+    },
+    {
+      "note": 29,
+      "beat": 17.625,
+      "length": 0.5
+    },
+    {
+      "note": 28,
+      "beat": 17.75,
+      "length": 0.5
+    },
+    {
+      "note": 5,
+      "beat": 18,
+      "length": 0.5
+    },
+    {
+      "note": 37,
+      "beat": 18,
+      "length": 0.5
+    },
+    {
+      "note": 6,
+      "beat": 18.625,
+      "length": 0.5
+    },
+    {
+      "note": 38,
+      "beat": 18.625,
+      "length": 0.5
+    },
+    {
+      "note": 7,
+      "beat": 19,
+      "length": 0.5
+    },
+    {
+      "note": 39,
+      "beat": 19,
+      "length": 0.5
+    },
+    {
+      "note": 24,
+      "beat": 20,
+      "length": 1
+    },
+    {
+      "note": 8,
+      "beat": 20,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 21,
+      "length": 1
+    },
+    {
+      "note": 19,
+      "beat": 21,
+      "length": 0.5
+    },
+    {
+      "note": 12,
+      "beat": 22,
+      "length": 1
+    },
+    {
+      "note": 41,
+      "beat": 22.625,
+      "length": 0.5
+    },
+    {
+      "note": 42,
+      "beat": 23,
+      "length": 0.5
+    },
+    {
+      "note": 43,
+      "beat": 24,
+      "length": 0.5
+    },
+    {
+      "note": 0,
+      "beat": 24,
+      "length": 1
+    },
+    {
+      "note": 44,
+      "beat": 25.625,
+      "length": 0.5
+    },
+    {
+      "note": 45,
+      "beat": 26,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 26,
+      "length": 1
+    },
+    {
+      "note": 46,
+      "beat": 27,
+      "length": 0.5
+    },
+    {
+      "note": 2,
+      "beat": 28,
+      "length": 1
+    },
+    {
+      "note": 33,
+      "beat": 28,
+      "length": 1.5
+    },
+    {
+      "note": 34,
+      "beat": 29.625,
+      "length": 0.5
+    },
+    {
+      "note": 35,
+      "beat": 30,
+      "length": 1
+    }
+  ]
+}

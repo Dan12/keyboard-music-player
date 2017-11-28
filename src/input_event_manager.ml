@@ -33,7 +33,10 @@ let handle_keyboard input_event =
           | _ -> ()
         end
       else
-        ()
+        (match output with
+        | Keyboard_layout.KOSoundpackSet i ->
+          Sound_manager.set_soundpack i
+        | _ -> ())
     | _ -> ()
 
 let event_callback event =

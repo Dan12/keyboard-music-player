@@ -4,15 +4,22 @@
 
 type keyboard_layout
 
-type keyboard_output = 
+type keyboard_output =
   | KOKeydown of int*int
   | KOKeyup of int*int
   | KOSoundpackSet of int
   | KOUnmapped
 
-type keyboard_input = 
+type keyboard_input =
   | KIKeydown of int
   | KIKeyup of int
+
+(* These keys are the different possible visuals to add to each key *)
+type key_visual =
+  | String of string
+  | Shift
+  | Enter
+  | Empty
 
 (* [parse_layout filename] parses [filename] into a keyboard layout *)
 val parse_layout : string -> keyboard_layout
@@ -21,3 +28,14 @@ val parse_layout : string -> keyboard_layout
  * and [is_key_down] to a keyboard output type to be processed later
  *)
 val process_key : keyboard_input -> keyboard_layout -> keyboard_output
+
+(* [get_rows layout] returns the number of rows of keys *)
+val get_rows : keyboard_layout -> int
+
+(* [get_rows layout] returns the number of columns of keys*)
+val get_cols : keyboard_layout -> int
+
+(* [get_key (r,c) keyboard] returns the visual key mapping of the key at the given
+ * row and column.
+ *)
+val get_visual : int*int -> keyboard_layout -> key_visual
