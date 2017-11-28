@@ -18,3 +18,6 @@ val get_sound : int*int -> song -> Sound.sound option
  * then [song] goes to its default empty soundpack.
  *)
 val set_sound_pack : int -> song -> unit
+
+(* [get_sound_pack song] returns [song]'s current soundpack *)
+val get_sound_pack : song -> int
