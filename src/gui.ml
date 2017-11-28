@@ -2,6 +2,7 @@ open Tsdl
 open Tsdl_ttf
 open Keyboard_layout
 open Keyboard
+open Button
 
 let fonts = Hashtbl.create 16
 
@@ -140,6 +141,28 @@ let draw_arrows r keyboard x y w =
   let _ = Sdl.render_draw_line r (x + 2 * x_offset + 3 * w_key / 4) (y + y_offset + h_key / 2) (x + 2 * x_offset + w_key / 2) (y + y_offset + 3 * h_key / 4) in
   let _ = Sdl.render_draw_line r (x + 2 * x_offset + 3 * w_key / 4) (y + y_offset + h_key / 2) (x + 2 * x_offset + w_key / 2) (y + y_offset + h_key / 4) in
   2 * y_offset
+
+let draw_button r button =
+  let (x, y, w, h) = Button.get_location button in
+  let rect = Sdl.Rect.create x y w h in
+  let _ = Sdl.render_draw_rect r (Some rect) in
+  match button with
+  | Load ->
+    let font = get_font 30 in
+    draw_text r (x + w/2) (y + h/2) font "Load"
+  | Play ->
+    let _ = Sdl.render_draw_line r (x+15) (y+15) (x+w-15) (y+h/2) in
+    let _ = Sdl.render_draw_line r (x+15) (y+h-15) (x+w-15) (y+h/2) in
+    let _ = Sdl.render_draw_line r (x+15) (y+15) (x+15) (y+h-15) in
+    ()
+  | Pause ->
+    let left_rect = Sdl.Rect.create (x+15) (y+15) (w/4) (h-30) in
+    let right_rect = Sdl.Rect.create (x+45) (y+15) (w/4) (h-30) in
+    let _ = Sdl.render_draw_rects r [left_rect;right_rect] in
+    ()
+
+let draw_buttons r =
+  List.iter (fun b -> draw_button r b) Button.buttons
 
 let clear r =
   set_color r background_color;
