@@ -5,7 +5,6 @@ open Song
    from here. *)
 
 type state = SKeyboard | SFileChooser
-type model
 
 (* [set_width w] sets the window width to [w]. *)
 val set_width : int -> unit
