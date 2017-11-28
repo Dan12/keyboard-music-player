@@ -94,7 +94,7 @@ let draw_keyboard renderer keyboard_layout keyboard x y w rows cols =
   for r = 0 to rows - 1 do
     for c = 0 to cols - 1 do
       let key_visual = Keyboard_layout.get_visual (r, c) keyboard_layout in
-      let key_state = Keyboard.get_state_key (r, c) keyboard in
+      let key_state = Keyboard.get_state (r, c) keyboard in
       let curr_x = c * offset + x in
       let curr_y = r * offset + y in
       draw_key renderer curr_x curr_y key_size key_size key_state;
@@ -112,31 +112,31 @@ let draw_arrows r keyboard x y w =
   let w_key = (100 - percent_key_padding) * x_offset / 100 in
   let h_key = (100 - percent_key_padding) * y_offset / 100 in
 
-  let left_state = Keyboard.get_state_arrow 0 keyboard in
+  (* let left_state = Keyboard.get_state_arrow 0 keyboard in
   let up_state = Keyboard.get_state_arrow 1 keyboard in
   let down_state = Keyboard.get_state_arrow 2 keyboard in
-  let right_state = Keyboard.get_state_arrow 3 keyboard in
+  let right_state = Keyboard.get_state_arrow 3 keyboard in *)
 
   (* draw left *)
-  draw_key r x (y + y_offset) w_key h_key left_state;
+  (* draw_key r x (y + y_offset) w_key h_key left_state; *)
   let _ = Sdl.render_draw_line r (x + w_key / 4) (y + y_offset + h_key / 2) (x + 3 * w_key / 4) (y + y_offset + h_key / 2) in
   let _ = Sdl.render_draw_line r (x + w_key / 4) (y + y_offset + h_key / 2) (x + w_key / 2) (y + y_offset + 3 * h_key / 4) in
   let _ = Sdl.render_draw_line r (x + w_key / 4) (y + y_offset + h_key / 2) (x + w_key / 2) (y + y_offset + h_key / 4) in
 
   (* draw down *)
-  draw_key r (x + x_offset) (y + y_offset) w_key h_key down_state;
+  (* draw_key r (x + x_offset) (y + y_offset) w_key h_key down_state; *)
   let _ = Sdl.render_draw_line r (x + x_offset + w_key / 2) (y + y_offset + 3 * h_key / 4) (x + x_offset + w_key / 2) (y + y_offset + h_key / 4) in
   let _ = Sdl.render_draw_line r (x + x_offset + w_key / 2) (y + y_offset + 3 * h_key / 4) (x + x_offset + w_key / 3) (y + y_offset + h_key / 2) in
   let _ = Sdl.render_draw_line r (x + x_offset + w_key / 2) (y + y_offset + 3 * h_key / 4) (x + x_offset + 2 * w_key / 3) (y + y_offset + h_key / 2) in
 
   (* draw up *)
-  draw_key r (x + x_offset) y w_key h_key up_state;
+  (* draw_key r (x + x_offset) y w_key h_key up_state; *)
   let _ = Sdl.render_draw_line r (x + x_offset + w_key / 2) (y + h_key / 4) (x + x_offset + w_key / 2) (y + 3 * h_key / 4) in
   let _ = Sdl.render_draw_line r (x + x_offset + w_key / 2) (y + h_key / 4) (x + x_offset + w_key / 3) (y + h_key / 2) in
   let _ = Sdl.render_draw_line r (x + x_offset + w_key / 2) (y + h_key / 4) (x + x_offset + 2 * w_key / 3) (y + h_key / 2) in
 
   (* draw right *)
-  draw_key r (x + 2 * x_offset) (y + y_offset) w_key h_key right_state;
+  (* draw_key r (x + 2 * x_offset) (y + y_offset) w_key h_key right_state; *)
   let _ = Sdl.render_draw_line r (x + 2 * x_offset + w_key / 4) (y + y_offset + h_key / 2) (x + 2 * x_offset + 3 * w_key / 4) (y + y_offset + h_key / 2) in
   let _ = Sdl.render_draw_line r (x + 2 * x_offset + 3 * w_key / 4) (y + y_offset + h_key / 2) (x + 2 * x_offset + w_key / 2) (y + y_offset + 3 * h_key / 4) in
   let _ = Sdl.render_draw_line r (x + 2 * x_offset + 3 * w_key / 4) (y + y_offset + h_key / 2) (x + 2 * x_offset + w_key / 2) (y + y_offset + h_key / 4) in
