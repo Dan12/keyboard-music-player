@@ -75,6 +75,16 @@ let key_released row_col =
           ()
   end
 
+let set_soundpack i =
+  test_manager
+  begin
+  fun (s) ->
+    match s.song with
+    | None -> ()
+    | Some song ->
+      Song.set_sound_pack i song
+  end
+
 let add_sound (cur_l, cur_r) sound =
   let (sample_l, sample_r) = Sound.get_next_values sound in
   (cur_l+sample_l, cur_r+sample_r)
@@ -90,8 +100,12 @@ let audio_callback output =
         let arr_len = ((Array1.dim output / 2) - 1) in
         for i = 0 to arr_len do
           let (sample_l, sample_r) = List.fold_left add_sound (0,0) s.sounds_playing in
-          output.{2*i} <- Int32.of_int (sample_l lsl 16);
-          output.{2*i + 1} <- Int32.of_int (sample_r lsl 16);
+          if sample_l > 65536 then
+            print_endline "to 0"
+          else
+            ();
+          output.{2*i} <- Int32.of_int (sample_l lsl 15);
+          output.{2*i + 1} <- Int32.of_int (sample_r lsl 15);
         done;
         (* Remove all sounds not being played anymore *)
         let filtered_sounds = List.filter Sound.is_playing s.sounds_playing in
