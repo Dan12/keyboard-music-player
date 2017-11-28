@@ -70,15 +70,13 @@ let video_setup (w,h) =
   >>= fun window_renderer ->
   window_renderer
 
-let init () =
+let init window_dims =
   match !tsdl_state_singleton with
   | Some _ -> ()
   | None ->
     Sdl.init Sdl.Init.(audio + video) >>= fun () ->
     Ttf.init () >>= fun () ->
-    let window_width = Model.get_width () in
-    let window_height = Model.get_height () in
-    let (window, renderer) = video_setup (window_width, window_height) in
+    let (window, renderer) = video_setup window_dims in
     let device_id = audio_setup () in
     tsdl_state_singleton := Some {
       window = window;

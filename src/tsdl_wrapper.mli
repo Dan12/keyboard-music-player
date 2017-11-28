@@ -6,7 +6,7 @@
 (* [init width,height] initializes a new tsdl state with a window of the given
  * [width] and [height] and a new audio context. This call will only succeed once.
  *)
-val init : unit -> unit
+val init : int*int -> unit
 
 (* [quit] will clean up and close the Sdl context. Has no effect if called
  * before init.
