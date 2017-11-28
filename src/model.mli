@@ -5,12 +5,19 @@ open Song
    from here. *)
 
 type state = SKeyboard | SFileChooser
-type model = {
-  mutable keyboard: keyboard;
-  mutable keyboard_layout: keyboard_layout;
-  mutable song: song;
-  mutable state: state
-}
+type model
+
+(* [set_width w] sets the window width to [w]. *)
+val set_width : int -> unit
+
+(* [get_width] returns the current window width. *)
+val get_width : unit -> int64
+
+(* [set_height h] sets the window height to [h]. *)
+val set_height : int -> unit
+
+(* [get_height] returns the current window height. *)
+val get_height : unit -> int
 
 (* [set_keyboard k] sets the current state of the keyboard to [k]. *)
 val set_keyboard : keyboard -> unit
