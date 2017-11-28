@@ -31,35 +31,35 @@ let keyboard = Keyboard.create_keyboard (rows, cols) in
 let set_width w =
   model.window_w <- w
 
-let get_width =
+let get_width () =
   model.window_w
 
 let set_height h =
   model.window_h <- h
 
-let get_heigth h =
+let get_height () =
   model.window_h
 
 let set_keyboard k =
   model.keyboard <- k
 
-let get_keyboard =
+let get_keyboard () =
   model.keyboard
 
 let set_keyboard_layout kl =
   model.keyboard_layout <- kl
 
-let get_keyboard_layout =
+let get_keyboard_layout () =
   model.keyboard_layout
 
 let set_song s =
   model.song <- s
 
-let get_song =
+let get_song () =
   model.song
 
 let set_state s =
   model.state <- s
 
-let get_state s =
+let get_state s () =
   model.state
