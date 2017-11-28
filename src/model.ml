@@ -61,9 +61,5 @@ let get_song () =
 let set_state s =
   model.state <- s
 
-<<<<<<< HEAD
-let get_state s () =
-=======
 let get_state () =
->>>>>>> 0d2142a43e9a33fb24a1e5bb7357e865bff8e482
   model.state
