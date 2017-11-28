@@ -42,11 +42,14 @@ val set_state : state -> unit
 (* [get_state] returns the current state. *)
 val get_state : unit -> state
 
-(* [start] sets [isPlaying] = true and the initial values of [Metronome]. *)
+(* [start] sets [is_playing] = true and the initial values of [Metronome]. *)
 val start_midi : unit -> unit
 
-(* [pause] sets [isPlaying] = false *)
+(* [pause] sets [is_playing] = false *)
 val pause_midi : unit -> unit
+
+(* [stop_midi] resets the metronome and sets [is_playing] = false. *)
+val stop_midi : unit -> unit
 
 (* [is_playing] returns whether or not the midi is playing. *)
 val midi_is_playing : unit -> bool

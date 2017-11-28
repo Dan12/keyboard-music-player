@@ -149,23 +149,26 @@ let draw_button r x y size i button =
   let rect = Sdl.Rect.create x y size size in
   Array.set button_rects i (Some (rect, button));
   let _ = Sdl.render_draw_rect r (Some rect) in
+  let padding = size / 5 in
   match button with
   | Load ->
     let font = get_font (3 * size / 8) in
     draw_text r (x + size/2) (y + size/2) font "Load"
   | Play ->
-    let padding = size / 5 in
     let _ = Sdl.render_draw_line r (x+padding) (y+padding) (x+size-padding) (y+size/2) in
     let _ = Sdl.render_draw_line r (x+padding) (y+size-padding) (x+size-padding) (y+size/2) in
     let _ = Sdl.render_draw_line r (x+padding) (y+padding) (x+padding) (y+size-padding) in
     ()
   | Pause ->
-    let padding = size / 5 in
     let rect_width = (size - 3 * padding) / 2 in
     let rect_height = size - 2 * padding in
     let left_rect = Sdl.Rect.create (x+padding) (y+padding) rect_width rect_height in
     let right_rect = Sdl.Rect.create (x+padding+rect_width+padding) (y+padding) rect_width rect_height in
     let _ = Sdl.render_draw_rects r [left_rect;right_rect] in
+    ()
+  | Stop ->
+    let rect = Sdl.Rect.create (x+padding) (y+padding) (size-padding*2) (size-padding*2) in
+    let _ = Sdl.render_draw_rect r (Some rect) in
     ()
 
 let draw_buttons r x y w =
@@ -203,7 +206,7 @@ let draw keyboard_layout keyboard r =
   let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
   let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
 
-  let buttons_w = arrows_w in
+  let buttons_w = arrows_w * 2 in
   let buttons_x = arrows_x in
   let buttons_y = 22 * arrows_h / 20 + arrows_y in
   let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in

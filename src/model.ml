@@ -76,4 +76,8 @@ let start_midi () =
 let pause_midi () =
   model.is_playing <- false
 
+let stop_midi () =
+  model.is_playing <- false;
+  Metronome.reset()
+
 let midi_is_playing () = model.is_playing

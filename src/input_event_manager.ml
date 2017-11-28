@@ -38,7 +38,8 @@ let handle_mouse_up x y =
     (match button with
      | Load -> () (* TODO load file chooser *)
      | Play -> Model.start_midi()
-     | Pause -> Model.pause_midi())
+     | Pause -> Model.pause_midi()
+     | Stop -> Model.stop_midi())
   | None -> ()
 
 let event_callback event =
