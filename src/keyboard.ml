@@ -4,27 +4,12 @@ type key_state =
 
 (* These states are the various states a key can be in *)
 
-type arrows = {mutable left:key_state; mutable down:key_state;
-               mutable up:key_state; mutable right:key_state}
-
-type keyboard = key_state array array * arrows
+type keyboard = key_state array array
 
 let create_keyboard (rows, cols) =
-  let arrows = {
-    left = KSDown;
-    up = KSUp;
-    down = KSUp;
-    right = KSUp;
-  } in
-  (Array.make_matrix rows cols KSUp, arrows)
+  Array.make_matrix rows cols KSUp
 
-let set_arrow arrows i =
-  arrows.left <- if i = 0 then KSDown else KSUp;
-  arrows.up <- if i = 1 then KSDown else KSUp;
-  arrows.down <- if i = 2 then KSDown else KSUp;
-  arrows.right <- if i = 3 then KSDown else KSUp
-
-let process_event ipt (keyboard, arrows) =
+let process_event ipt keyboard =
   match ipt with
   | Keyboard_layout.KOKeydown (r,c) ->
     begin
@@ -42,20 +27,7 @@ let process_event ipt (keyboard, arrows) =
         true
       | _ -> false
     end
-  | Keyboard_layout.KOSoundpackSet i ->
-    set_arrow arrows i;
-    print_int i;
-    false
   | _ -> false
 
-let get_state_key (r,c) (keyboard, _) =
+let get_state (r,c) keyboard =
   keyboard.(r).(c)
-
-let get_state_arrow i (_, arrows) =
-  if i = 0
-  then arrows.left
-  else if i = 1
-  then arrows.up
-  else if i = 2
-  then arrows.down
-  else arrows.right
