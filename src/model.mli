@@ -4,6 +4,14 @@ open Song
 (* This module implements the singleton model by accessing all of our data
    from here. *)
 
+type state = SKeyboard | SFileChooser
+type model = {
+  mutable keyboard: keyboard;
+  mutable keyboard_layout: keyboard_layout;
+  mutable song: song;
+  mutable state: state
+}
+
 (* [set_keyboard k] sets the current state of the keyboard to [k]. *)
 val set_keyboard : keyboard -> unit
 
@@ -21,3 +29,9 @@ val set_song : song -> unit
 
 (* [get_song] returns the current song in use. *)
 val get_song : unit -> song
+
+(* [set_state s] sets the current state to [s]. *)
+val set_state : state -> unit
+
+(* [get_state] returns the current state. *)
+val get_state : unit -> state
