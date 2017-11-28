@@ -5,6 +5,8 @@ open Song
 type state = SKeyboard | SFileChooser
 
 type model = {
+  mutable window_w: int;
+  mutable window_h: int;
   mutable keyboard: keyboard;
   mutable keyboard_layout: keyboard_layout;
   mutable song: song;
@@ -18,11 +20,25 @@ let model:model =
   let cols = Keyboard_layout.get_cols keyboard_layout in
   let keyboard = Keyboard.create_keyboard (rows, cols) in
   {
+    window_w = 1280;
+    window_h = 720;
     keyboard = keyboard;
     keyboard_layout = keyboard_layout;
     song = eq_song;
     state = SKeyboard
   }
+
+let set_width w =
+  model.window_w <- w
+
+let get_width =
+  model.window_w
+
+let set_height h =
+  model.window_h <- h
+
+let get_heigth h =
+  model.window_h
 
 let set_keyboard k =
   model.keyboard <- k
