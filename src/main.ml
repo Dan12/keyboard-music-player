@@ -1,6 +1,8 @@
 Sound_manager.init ();
 
-Tsdl_wrapper.init ();
+let window_width = Model.get_width () in
+let window_height = Model.get_height () in
+Tsdl_wrapper.init (window_width, window_height);
 print_endline "starting";
 
 let keyboard = Model.get_keyboard () in
