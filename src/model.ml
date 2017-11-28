@@ -15,7 +15,8 @@ type model = {
 
 let model:model =
   let eq_song = Song.parse_song_file "resources/eq_data/eq.json" in
-  let keyboard_layout = Keyboard_layout.parse_layout "resources/standard_keyboard_layout.json" in
+  let keyboard_layout = Keyboard_layout.parse_layout
+      "resources/standard_keyboard_layout.json" in
   let rows = Keyboard_layout.get_rows keyboard_layout in
   let cols = Keyboard_layout.get_cols keyboard_layout in
   let keyboard = Keyboard.create_keyboard (rows, cols) in
