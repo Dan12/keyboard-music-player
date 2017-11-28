@@ -1,22 +1,11 @@
-(* Graph widget test program. *)
-
 open GMain
 open GdkKeysyms
-open Graph
-
-let font_name = "-*-helvetica-medium-r-normal-*-120-*"
 
 let locale = GtkMain.Main.init ()
 
-let font =
-  try
-    Gdk.Font.load font_name
-  with
-    Gpointer.Null -> failwith ("graph.ml: font " ^ font_name ^ ": not found")
-
 let main () =
-  let window = GWindow.window ~width:640 ~height:480
-                              ~title:"LablGtk graph widget demo" () in
+  let window = GWindow.window ~width:320 ~height:240
+                              ~title:"Simple lablgtk program" () in
   let vbox = GPack.vbox ~packing:window#add () in
   window#connect#destroy ~callback:Main.quit;
 
@@ -30,16 +19,14 @@ let main () =
   let factory = new GMenu.factory file_menu ~accel_group in
   factory#add_item "Quit" ~key:_Q ~callback: Main.quit;
 
-  (* Data. *)
-  let array = Array.init 100 (fun _ -> Random.int 10) in
-
-  (* Create a graph in the main area. *)
-  let graph = new graph font ~packing:vbox#add array in
-  graph#set_title "Random data";
+  (* Button *)
+  let button = GButton.button ~label:"Push me!"
+                              ~packing:vbox#add () in
+  button#connect#clicked ~callback: (fun () -> prerr_endline "Ouch!");
 
   (* Display the windows and enter Gtk+ main loop *)
+  window#add_accel_group accel_group;
   window#show ();
   Main.main ()
 
-let () =
-  main ()
+let () = main ()
