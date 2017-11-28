@@ -11,7 +11,7 @@ type model
 val set_width : int -> unit
 
 (* [get_width] returns the current window width. *)
-val get_width : unit -> int64
+val get_width : unit -> int
 
 (* [set_height h] sets the window height to [h]. *)
 val set_height : int -> unit
