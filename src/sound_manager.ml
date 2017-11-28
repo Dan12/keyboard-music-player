@@ -1,7 +1,6 @@
 open Bigarray
 
 type sound_manager = {
-  mutable song: Song.song option;
   mutable sounds_playing: Sound.sound list;
 }
 (* TODO needs samples played counter *)
@@ -13,7 +12,6 @@ let init () =
   | Some _ -> ()
   | None ->
     sound_manager_singleton := Some {
-      song = None;
       sounds_playing = [];
     }
 
@@ -22,18 +20,11 @@ let test_manager f =
   | None -> ()
   | Some s -> f s
 
-let set_song song =
-  test_manager (fun (s) ->
-  s.song <- Some song)
-
 let key_pressed row_col =
   test_manager 
   begin
   fun (s) ->
-    
-    match s.song with
-    | None -> ()
-    | Some song ->
+    let song = Model.get_song () in
       match Song.get_sound row_col song with
       | None -> ()
       | Some sound ->
@@ -58,9 +49,7 @@ let key_released row_col =
   test_manager
   begin
   fun (s) ->
-    match s.song with
-    | None -> ()
-    | Some song ->
+    let song = Model.get_song () in
       match Song.get_sound row_col song with
       | None -> ()
       | Some sound ->
@@ -73,16 +62,6 @@ let key_released row_col =
         else
           (* TODO if looping and not hold to play, then stop  *)
           ()
-  end
-
-let set_soundpack i =
-  test_manager
-  begin
-  fun (s) ->
-    match s.song with
-    | None -> ()
-    | Some song ->
-      Song.set_sound_pack i song
   end
 
 let add_sound (cur_l, cur_r) sound =

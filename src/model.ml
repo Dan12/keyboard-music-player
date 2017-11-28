@@ -14,19 +14,19 @@ type model = {
 }
 
 let model:model =
-let eq_song = Song.parse_song_file "resources/eq_data/eq.json" in
-let keyboard_layout = Keyboard_layout.parse_layout "resources/standard_keyboard_layout.json" in
-let rows = Keyboard_layout.get_rows keyboard_layout in
-let cols = Keyboard_layout.get_cols keyboard_layout in
-let keyboard = Keyboard.create_keyboard (rows, cols) in
-{
-  window_w = 1280;
-  window_h = 720;
-  keyboard = keyboard;
-  keyboard_layout = keyboard_layout;
-  song = eq_song;
-  state = SKeyboard
-}
+  let eq_song = Song.parse_song_file "resources/eq_data/eq.json" in
+  let keyboard_layout = Keyboard_layout.parse_layout "resources/standard_keyboard_layout.json" in
+  let rows = Keyboard_layout.get_rows keyboard_layout in
+  let cols = Keyboard_layout.get_cols keyboard_layout in
+  let keyboard = Keyboard.create_keyboard (rows, cols) in
+  {
+    window_w = 1280;
+    window_h = 720;
+    keyboard = keyboard;
+    keyboard_layout = keyboard_layout;
+    song = eq_song;
+    state = SKeyboard
+  }
 
 let set_width w =
   model.window_w <- w
@@ -61,5 +61,9 @@ let get_song () =
 let set_state s =
   model.state <- s
 
+<<<<<<< HEAD
 let get_state s () =
+=======
+let get_state () =
+>>>>>>> 0d2142a43e9a33fb24a1e5bb7357e865bff8e482
   model.state
