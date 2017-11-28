@@ -5,7 +5,7 @@ open Keyboard
 open Button
 
 let button_rects:((Sdl.rect * button) option array) =
-  Array.make (List.length buttons) None
+  Array.make num_buttons None
 
 let fonts = Hashtbl.create 16
 
@@ -74,8 +74,7 @@ let draw_key_text r x y w h font = function
   | Enter -> draw_enter r (x  + w / 4) (y + h / 4) (w / 2) (h / 2)
   | Empty -> ()
 
-
-let draw_key r x y w h key_state =
+let draw_key_to_rect r x y w h key_state =
   (match key_state with
    | KSDown -> set_color r keyboard_pressed_color;
      let rect = Sdl.Rect.create x y w h in
@@ -85,7 +84,10 @@ let draw_key r x y w h key_state =
   set_color r keyboard_border_color;
   let rect = Sdl.Rect.create x y w h in
   let _ = Sdl.render_draw_rect r (Some rect) in
-  ()
+  rect
+
+let draw_key r x y w h key_state =
+  draw_key_to_rect r x y w h key_state |> ignore
 
 (*
  * Assumes the key list has length of [row] * [col]
@@ -145,10 +147,11 @@ let draw_arrows r keyboard x y w =
   let _ = Sdl.render_draw_line r (x + 2 * x_offset + 3 * w_key / 4) (y + y_offset + h_key / 2) (x + 2 * x_offset + w_key / 2) (y + y_offset + h_key / 4) in
   2 * y_offset
 
-let draw_button r x y size i button =
-  let rect = Sdl.Rect.create x y size size in
+let draw_button r x y size i button_with_state =
+  let (button, state) = button_with_state in
+  let rect = draw_key_to_rect r x y size size state in
   Array.set button_rects i (Some (rect, button));
-  let _ = Sdl.render_draw_rect r (Some rect) in
+
   let padding = size / 5 in
   match button with
   | Load ->
@@ -172,12 +175,12 @@ let draw_button r x y size i button =
     ()
 
 let draw_buttons r x y w =
-  let offset = w / (List.length buttons) in
+  let offset = w / num_buttons in
   let size = (100 - percent_key_padding) * offset / 100 in
-  List.iteri (fun i button ->
+  Array.iteri (fun i button ->
       let button_x = i * offset + x in
       draw_button r button_x y size i button
-    ) buttons;
+    ) (Model.get_buttons());
   size
 
 let clear r =
