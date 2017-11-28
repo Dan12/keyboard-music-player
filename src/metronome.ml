@@ -23,4 +23,4 @@ let reset () =
   start_time := time;
   last_time := time;
   cached_beat := 0.0;
-  bpm := 0;
+  bpm := 0

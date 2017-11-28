@@ -1,4 +1,6 @@
 let tick_callback () =
+  if Model.midi_should_load() then
+    Midi_player.set_midi (Model.get_midi_filename ());
   if Model.midi_is_playing() then
     Metronome.tick ();
     let midi = Midi_player.get_midi () in
@@ -15,9 +17,6 @@ print_endline "starting";
 
 let keyboard = Model.get_keyboard () in
 let keyboard_layout = Model.get_keyboard_layout () in
-
-(* NOTE: Testing midi *)
-Midi_player.set_midi "resources/eq_data/eq_midi_0.json";
 
 Tsdl_wrapper.set_draw_callback (Gui.draw keyboard_layout keyboard);
 Tsdl_wrapper.set_audio_callback Sound_manager.audio_callback;

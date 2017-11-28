@@ -42,6 +42,9 @@ val set_state : state -> unit
 (* [get_state] returns the current state. *)
 val get_state : unit -> state
 
+(* [get_midi_filename] returns the filename of the midi. *)
+val get_midi_filename : unit -> string
+
 (* [start] sets [is_playing] = true and the initial values of [Metronome]. *)
 val start_midi : unit -> unit
 
@@ -53,3 +56,6 @@ val stop_midi : unit -> unit
 
 (* [is_playing] returns whether or not the midi is playing. *)
 val midi_is_playing : unit -> bool
+
+(* [midi_should_load] returns true if the midi file should be reloaded *)
+val midi_should_load : unit -> bool
