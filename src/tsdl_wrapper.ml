@@ -110,7 +110,7 @@ let set_audio_callback func =
   test_state (fun s ->
   s.audio_callback := Some func)
 
-let set_tick_callback func = 
+let set_tick_callback func =
   test_state (fun s ->
   s.tick_callback := Some func)
 

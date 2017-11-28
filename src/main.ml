@@ -14,6 +14,7 @@ print_endline "starting";
 Tsdl_wrapper.set_draw_callback (Gui.draw keyboard_layout keyboard);
 Tsdl_wrapper.set_audio_callback Sound_manager.audio_callback;
 Tsdl_wrapper.set_event_callback Input_event_manager.event_callback;
+Tsdl_wrapper.set_tick_callback Metronome.tick;
 
 State_manager.set_state State_manager.SKeyboard;
 Tsdl_wrapper.start_main_loop ();
