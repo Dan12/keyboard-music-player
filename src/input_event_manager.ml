@@ -39,6 +39,9 @@ let handle_keyboard input_event =
         | _ -> ())
     | _ -> ()
 
+let handle_mouse_up x y =
+  failwith "Unimplemented"
+
 let event_callback event =
   match enum (get event typ) with
   | `Key_down ->
@@ -49,7 +52,7 @@ let event_callback event =
     let keycode = get event keyboard_keycode in
     (* print_endline (string_of_int keycode); *)
     handle_keyboard (Keyboard_layout.KIKeyup keycode)
-  | `Mouse_button_down -> 
+  | `Mouse_button_down ->
     let mouse_x = get event mouse_button_x in
     let mouse_y = get event mouse_button_y in
     print_endline ((string_of_int mouse_x) ^ ", " ^ (string_of_int mouse_y))
