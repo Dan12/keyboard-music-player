@@ -32,6 +32,17 @@ let handle_keyboard input_event =
     handle_keyboard_output output
   | _ -> ()
 
+let clear_keyboard () =
+  let layout = Model.get_keyboard_layout() in
+  let keyboard = Model.get_keyboard() in
+  let rows = Keyboard_layout.get_rows layout in
+  let cols = Keyboard_layout.get_cols layout in
+  for row = 0 to rows - 1 do
+    for col = 0 to cols - 1 do
+      Keyboard.process_event (Keyboard_layout.KOKeyup (row, col)) keyboard |> ignore
+    done;
+  done
+
 let handle_mouse_up x y =
   match Gui.button_pressed (x, y) with
   | Some button ->
@@ -39,7 +50,8 @@ let handle_mouse_up x y =
      | Load -> () (* TODO load file chooser *)
      | Play -> Model.start_midi()
      | Pause -> Model.pause_midi()
-     | Stop -> Model.stop_midi())
+     | Stop -> Model.stop_midi();
+       clear_keyboard())
   | None -> ()
 
 let event_callback event =
