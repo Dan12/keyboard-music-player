@@ -1,4 +1,6 @@
 open Tsdl.Sdl.Event
+open Button
+open Model
 
 let input_event_singleton = ref None
 
@@ -30,7 +32,13 @@ let handle_keyboard input_event =
 
 let handle_mouse_up x y =
   match Gui.button_pressed (x, y) with
-  | Some button -> print_endline "Button pressed!"
+  | Some button ->
+    begin
+      match button with
+      | Load -> Model.set_state SFileChooser;
+      | Play -> print_endline("Play pressed!")
+      | Pause -> print_endline("Pause pressed!")
+    end
   | None -> ()
 
 let event_callback event =

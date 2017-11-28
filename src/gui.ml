@@ -3,6 +3,7 @@ open Tsdl_ttf
 open Keyboard_layout
 open Keyboard
 open Button
+open Model
 
 let button_rects:((Sdl.rect * button) option array) =
   Array.make (List.length buttons) None
@@ -188,26 +189,39 @@ let present r =
   ()
 
 let draw keyboard_layout keyboard r =
-  clear r;
-  let init_x = 20 in
+  match Model.get_state () with
+  | SKeyboard ->
+    clear r;
+    let init_x = 20 in
 
-  let keyboard_y = 20 in
-  let keyboard_w = 1200 in
-  let keyboard_rows = Keyboard_layout.get_rows keyboard_layout in
-  let keyboard_cols = Keyboard_layout.get_cols keyboard_layout in
-  let keyboard_h = draw_keyboard r keyboard_layout keyboard
-      init_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
+    let keyboard_y = 20 in
+    let keyboard_w = 1200 in
+    let keyboard_rows = Keyboard_layout.get_rows keyboard_layout in
+    let keyboard_cols = Keyboard_layout.get_cols keyboard_layout in
+    let keyboard_h = draw_keyboard r keyboard_layout keyboard
+        init_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
 
-  let arrows_w = keyboard_w / 6 in
-  let arrows_x = init_x + keyboard_w / 2 - arrows_w / 2 in
-  let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
-  let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
+    let arrows_w = keyboard_w / 6 in
+    let arrows_x = init_x + keyboard_w / 2 - arrows_w / 2 in
+    let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
+    let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
 
-  let buttons_w = arrows_w in
-  let buttons_x = arrows_x in
-  let buttons_y = 22 * arrows_h / 20 + arrows_y in
-  let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
-  present r
+    let buttons_w = arrows_w in
+    let buttons_x = arrows_x in
+    let buttons_y = 22 * arrows_h / 20 + arrows_y in
+    let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
+    present r
+  | SFileChooser ->
+    clear r;
+    let init_x = 20 in
+
+    let keyboard_y = 20 in
+    let keyboard_w = 1200 in
+    let keyboard_rows = Keyboard_layout.get_rows keyboard_layout in
+    let keyboard_cols = Keyboard_layout.get_cols keyboard_layout in
+    let keyboard_h = draw_keyboard r keyboard_layout keyboard
+        init_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
+    present r
 
 let button_pressed (x,y) =
   let button_rect_list = Array.to_list button_rects in
