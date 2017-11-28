@@ -6,13 +6,25 @@ open Button
 
 let fonts = Hashtbl.create 16
 
+let keyboard_padding_w = 20
+let keyboard_padding_h = 30
 let percent_key_padding = 10
+
 let arrow_width_height_ratio = 2
+
+let graphic_padding_w = 25
+let graphic_padding_h = 20
+let percent_graphic_padding = 16
+let max_amplitude = 60
+
 
 let background_color = Sdl.Color.create 255 255 255 255
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
 let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
+
+let min_graphic_color = Sdl.Color.create 0 255 0 255
+let max_graphic_color = Sdl.Color.create 255 0 0 255
 
 let (>>=) o f = match o with
   | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
@@ -174,19 +186,80 @@ let present r =
   let _ = Sdl.render_present r in
   ()
 
-let draw keyboard_layout keyboard r =
-  clear r;
-  let init_x = 20 in
+(* TODO use fft to get the amplitudes *)
+open Random
+let get_amplitudes () =
+  let arr = Array.make 30 0 in
+  for i = 0 to Array.length arr - 1 do
+    arr.(i) <- Random.int 100
+  done;
+  arr
 
-  let keyboard_y = 20 in
-  let keyboard_w = 1200 in
+let get_amplitude_color_element min max amp =
+  min + amp * ((max - min) / max_amplitude)
+
+let get_amplitude_color amp =
+  let min_r = Sdl.Color.r min_graphic_color in
+  let min_g = Sdl.Color.g min_graphic_color in
+  let min_b = Sdl.Color.b min_graphic_color in
+
+  let max_r = Sdl.Color.r max_graphic_color in
+  let max_g = Sdl.Color.g max_graphic_color in
+  let max_b = Sdl.Color.b max_graphic_color in
+
+  let r = get_amplitude_color_element min_r max_r amp in
+  let g = get_amplitude_color_element min_g max_g amp in
+  let b = get_amplitude_color_element min_b max_b amp in
+  Sdl.Color.create r g b 255
+
+let draw_graphic_segment r amp x y w h =
+  let segment_color = get_amplitude_color amp in
+  set_color r segment_color;
+  let rect = Sdl.Rect.create x y w h in
+  let _ = Sdl.render_fill_rect r (Some rect) in
+  ()
+
+let draw_graphics r amplitudes x y w h =
+  let num_bars = Array.length amplitudes in
+  let offset = (w + num_bars / 2) / num_bars in
+  let bar_w = (100 - percent_graphic_padding) * offset / 100 in
+  let segment_h = (h + max_amplitude / 2) / max_amplitude in
+  for height = 0 to max_amplitude do
+    for bar = 0 to num_bars - 1 do
+      let segment_x = x + bar * offset in
+      let segment_y = (y + h) - (height + 1) * segment_h in
+      if height <= amplitudes.(bar)
+      then draw_graphic_segment r height segment_x segment_y bar_w segment_h
+      else ()
+    done;
+  done
+
+
+let draw (window_w, window_h) keyboard_layout keyboard r =
+  clear r;
+  let amplitudes = get_amplitudes () in
+  let num_bars = Array.length amplitudes + 1 in
+  let graphics_x = graphic_padding_w in
+  let graphics_y = graphic_padding_h in
+  let graphics_w = (window_w - 2 * graphic_padding_w) * 100 * num_bars /
+                   (100 * num_bars - percent_graphic_padding) in
+  let graphics_h = window_h - 2 * graphic_padding_h in
+  draw_graphics r amplitudes graphics_x graphics_y graphics_w graphics_h;
+
+
+  let keyboard_x = keyboard_padding_w in
+  let keyboard_y = keyboard_padding_h in
   let keyboard_rows = Keyboard_layout.get_rows keyboard_layout in
   let keyboard_cols = Keyboard_layout.get_cols keyboard_layout in
+  let keyboard_w = (window_w - 2 * keyboard_padding_w) * 100 * keyboard_cols /
+                   (100 * keyboard_cols - percent_key_padding) in
   let keyboard_h = draw_keyboard r keyboard_layout keyboard
-      init_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
+      keyboard_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
+
 
   let arrows_w = keyboard_w / 6 in
-  let arrows_x = init_x + keyboard_w / 2 - arrows_w / 2 in
+  let arrows_x = keyboard_padding_w + keyboard_w / 2 - arrows_w / 2 in
   let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
   let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
+
   present r
