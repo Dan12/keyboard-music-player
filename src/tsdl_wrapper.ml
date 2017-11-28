@@ -2,6 +2,7 @@ open Tsdl
 open Result
 open Tsdl_ttf
 open Bigarray
+open Metronome
 
 type tsdl_state = {
   window: Tsdl.Sdl.window;
@@ -85,7 +86,7 @@ let init window_dims =
       draw_callback = ref None;
       audio_callback = ref None;
       event_callback = ref None;
-      tick_callback = ref None;
+      tick_callback = ref (Some tick);
     }
 
 let quit () =
@@ -110,7 +111,7 @@ let set_audio_callback func =
   test_state (fun s ->
   s.audio_callback := Some func)
 
-let set_tick_callback func = 
+let set_tick_callback func =
   test_state (fun s ->
   s.tick_callback := Some func)
 

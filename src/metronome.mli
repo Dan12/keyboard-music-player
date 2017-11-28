@@ -2,7 +2,7 @@
 val tick : unit -> unit
 
 (* Sets the beats per minute *)
-val set_bpm : float
+val set_bpm : float -> unit
 
 (* get the current beat/measure or something *)
 val get_beat : unit -> float
