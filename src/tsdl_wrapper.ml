@@ -46,7 +46,7 @@ let audio_callback_ref =
 let audio_freq = 44100
 (* If set below 1024, there seems to be a race condition
  * and close deadlocks inside of quit *)
-let audio_samples = 256
+let audio_samples = 1024
 let audio_setup () =
   let desired_audiospec =
     { Sdl.as_freq = audio_freq;
@@ -70,13 +70,15 @@ let video_setup (w,h) =
   >>= fun window_renderer ->
   window_renderer
 
-let init window_dims =
+let init () =
   match !tsdl_state_singleton with
   | Some _ -> ()
   | None ->
     Sdl.init Sdl.Init.(audio + video) >>= fun () ->
     Ttf.init () >>= fun () ->
-    let (window, renderer) = video_setup window_dims in
+    let window_width = Model.get_width () in
+    let window_height = Model.get_height () in
+    let (window, renderer) = video_setup (window_width, window_height) in
     let device_id = audio_setup () in
     tsdl_state_singleton := Some {
       window = window;

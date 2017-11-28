@@ -1,6 +1,6 @@
 Sound_manager.init ();
 
-Tsdl_wrapper.init (1280,720);
+Tsdl_wrapper.init ();
 print_endline "starting";
 
 let keyboard = Model.get_keyboard () in
