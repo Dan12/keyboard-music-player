@@ -44,7 +44,6 @@ let process_event ipt (keyboard, arrows) =
     end
   | Keyboard_layout.KOSoundpackSet i ->
     set_arrow arrows i;
-    print_int i;
     false
   | _ -> false
 
