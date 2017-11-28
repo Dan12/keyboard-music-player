@@ -46,9 +46,12 @@ let key_pressed row_col =
         let is_in_groups test_sound =
           List.filter (Sound.in_group test_sound) sound_groups = []
         in
-        let new_sounds = List.filter is_in_groups  s.sounds_playing in
+        let new_sounds = List.filter is_in_groups s.sounds_playing in
         (* add the new sound to the group *)
-        s.sounds_playing <- sound::new_sounds
+        if List.mem sound new_sounds then
+          ()
+        else
+          s.sounds_playing <- sound::new_sounds
   end
 
 let key_released row_col =
@@ -64,13 +67,27 @@ let key_released row_col =
         if Sound.is_hold_to_play sound then
           begin
             Sound.stop_sound sound;
-            let removed_list = List.filter (fun ts -> ts = sound) s.sounds_playing in
+            let removed_list = List.filter (fun ts -> ts <> sound) s.sounds_playing in
             s.sounds_playing <- removed_list
           end
         else
           (* TODO if looping and not hold to play, then stop  *)
           ()
   end
+
+let set_soundpack i =
+  test_manager
+  begin
+  fun (s) ->
+    match s.song with
+    | None -> ()
+    | Some song ->
+      Song.set_sound_pack i song
+  end
+
+let add_sound (cur_l, cur_r) sound =
+  let (sample_l, sample_r) = Sound.get_next_values sound in
+  (cur_l+sample_l, cur_r+sample_r)
 
 let audio_callback output =
   match !sound_manager_singleton with
@@ -81,12 +98,14 @@ let audio_callback output =
     | Some _ ->
       begin
         let arr_len = ((Array1.dim output / 2) - 1) in
-        let sound = List.nth s.sounds_playing 0 in
-        (* TODO additive sounds *)
         for i = 0 to arr_len do
-          let (sample_l, sample_r) = Sound.get_next_values sound in
-          output.{2*i} <- Int32.of_int (sample_l lsl 16);
-          output.{2*i + 1} <- Int32.of_int (sample_r lsl 16);
+          let (sample_l, sample_r) = List.fold_left add_sound (0,0) s.sounds_playing in
+          if sample_l > 65536 then
+            print_endline "to 0"
+          else
+            ();
+          output.{2*i} <- Int32.of_int (sample_l lsl 15);
+          output.{2*i + 1} <- Int32.of_int (sample_r lsl 15);
         done;
         (* Remove all sounds not being played anymore *)
         let filtered_sounds = List.filter Sound.is_playing s.sounds_playing in

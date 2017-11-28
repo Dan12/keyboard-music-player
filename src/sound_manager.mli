@@ -22,6 +22,11 @@ val key_pressed : int*int -> unit
  *)
 val key_released : int*int -> unit
 
+(* [set_soundpack soundpack] sets the current sound's soundpack
+ * to [soundpack]
+ *)
+val set_soundpack : int -> unit
+
 (* [audio_callback output] is the audio callback that populates [output]
  * with audio data
  *)
