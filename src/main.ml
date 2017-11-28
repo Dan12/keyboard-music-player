@@ -8,6 +8,9 @@ print_endline "starting";
 let keyboard = Model.get_keyboard () in
 let keyboard_layout = Model.get_keyboard_layout () in
 
+(* NOTE: Testing midi *)
+Midi_player.set_midi "resources/eq_data/eq_midi_0.json";
+
 Tsdl_wrapper.set_draw_callback (Gui.draw keyboard_layout keyboard);
 Tsdl_wrapper.set_audio_callback Sound_manager.audio_callback;
 Tsdl_wrapper.set_event_callback Input_event_manager.event_callback;

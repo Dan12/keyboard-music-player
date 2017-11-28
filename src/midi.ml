@@ -53,7 +53,9 @@ let rec set_key_downs notes beat =
     match h with
     | Soundpack s ->
       let play = s.beat >= beat in
-      if play then Sound_manager.set_soundpack s.soundpack;
+      if play then
+        (let song = Model.get_song() in
+        Song.set_sound_pack s.soundpack song);
       set_note play h t beat
     | Note n ->
       let play = n.beat >= beat in
@@ -85,5 +87,5 @@ let rec set_key_ups played_notes beat =
 let tick midi beat =
   let (new_notes, new_played_notes) = set_key_downs midi.notes beat in
   let remaining_played_notes = set_key_ups midi.played_notes beat in
-  {midi with notes = new_notes;
-             played_notes = List.rev_append new_played_notes remaining_played_notes}
+  midi.notes <- new_notes;
+  midi.played_notes <- List.rev_append new_played_notes remaining_played_notes
