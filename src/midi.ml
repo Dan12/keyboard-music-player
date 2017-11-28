@@ -1,4 +1,5 @@
 open Yojson.Basic.Util
+open Input_event_manager
 
 type timed_soundpack = {
   soundpack: int;
@@ -52,14 +53,14 @@ let rec set_key_downs notes beat =
   | h::t ->
     match h with
     | Soundpack s ->
-      let play = s.beat >= beat in
+      let play = s.beat <= beat in
       if play then
-        (let song = Model.get_song() in
-        Song.set_sound_pack s.soundpack song);
+        (handle_keyboard_output (Keyboard_layout.KOSoundpackSet s.soundpack));
       set_note play h t beat
     | Note n ->
-      let play = n.beat >= beat in
-      if play then Sound_manager.key_pressed (n.row, n.col);
+      let play = n.beat <= beat in
+      if play then
+        (handle_keyboard_output (Keyboard_layout.KOKeydown (n.row, n.col)));
       set_note play h t beat
 
 and set_note play note remaining beat =
@@ -78,8 +79,8 @@ let rec set_key_ups played_notes beat =
     | Soundpack s -> set_key_ups t beat
     | Note n ->
       let end_time = n.beat +. n.length in
-      if end_time >= beat then
-        (Sound_manager.key_released (n.row, n.col);
+      if end_time <= beat then
+        (handle_keyboard_output (Keyboard_layout.KOKeyup (n.row, n.col));
         set_key_ups t beat)
       else
         h::(set_key_ups t beat)
