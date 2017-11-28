@@ -69,6 +69,7 @@ let add_sound (cur_l, cur_r) sound =
   (cur_l+sample_l, cur_r+sample_r)
 
 let audio_callback output =
+  begin
   match !sound_manager_singleton with
   | None -> Array1.fill output (Int32.of_int 0)
   | Some s ->
@@ -89,5 +90,6 @@ let audio_callback output =
         (* Remove all sounds not being played anymore *)
         let filtered_sounds = List.filter Sound.is_playing s.sounds_playing in
         s.sounds_playing <- filtered_sounds
-        end;
+        end
+  end;
   Model.set_buffer output
