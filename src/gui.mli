@@ -12,3 +12,7 @@ val draw : Tsdl.Sdl.renderer -> unit
 (* [button_pressed x y] returns the button that encloses the given
 location if such button exists. *)
 val button_pressed : (int * int) -> Button.button option
+
+(* [file_button_pressed x y] returns the file button that encloses the given
+location if such button exitsts. *)
+val file_button_pressed : (int * int) -> File_button.file_button option

@@ -1,5 +1,7 @@
 open Tsdl.Sdl.Event
 open Button
+open Model
+open File_button
 
 let input_event_singleton = ref None
 
@@ -44,15 +46,26 @@ let clear_keyboard () =
   done
 
 let handle_mouse_up x y =
-  match Gui.button_pressed (x, y) with
-  | Some button ->
-    (match button with
-     | Load -> () (* TODO load file chooser *)
-     | Play -> Model.start_midi()
-     | Pause -> Model.pause_midi()
-     | Stop -> Model.stop_midi();
-       clear_keyboard())
-  | None -> ()
+  match Model.get_state () with
+  | SKeyboard -> begin
+    match Gui.button_pressed (x, y) with
+    | Some button ->
+      (match button with
+       | Load -> Model.set_state Model.SFileChooser
+       | Play -> Model.start_midi()
+       | Pause -> Model.pause_midi()
+       | Stop -> Model.stop_midi();
+         clear_keyboard())
+    | None -> ()
+    end
+  | SFileChooser -> begin
+      match Gui.file_button_pressed (x, y) with
+      | Some button ->
+        (match button with
+         | Cancel -> Model.set_state Model.SKeyboard
+         | Select -> (*TODO load file*)Model.set_state Model.SKeyboard)
+      | None -> ()
+    end
 
 let event_callback event =
   match enum (get event typ) with
@@ -73,8 +86,9 @@ let event_callback event =
     let mouse_y = get event mouse_button_y in
     handle_mouse_up mouse_x mouse_y;
   | `Mouse_motion ->
-    (* let mouse_x = get event mouse_button_x in
-    let mouse_y = get event mouse_button_y in *)
+    let mouse_x = get event mouse_button_x in
+    let mouse_y = get event mouse_button_y in
+      print_endline ((string_of_int mouse_x) ^ ", " ^ (string_of_int mouse_y));
     ()
   | `Mouse_wheel ->
     (* let scroll_dx = get event mouse_wheel_x in

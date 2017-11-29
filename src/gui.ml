@@ -3,10 +3,14 @@ open Tsdl_ttf
 open Keyboard_layout
 open Keyboard
 open Button
+open File_button
 open Model
 
 let button_rects:((Sdl.rect * button) option array) =
   Array.make num_buttons None
+
+let file_button_rects:((Sdl.rect * file_button) option array) =
+  Array.make num_file_buttons None
 
 let fonts = Hashtbl.create 16
 
@@ -267,7 +271,7 @@ let get_amplitudes () =
   done;
   arr *)
 
-let draw r =
+let draw_output r =
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
 
@@ -306,6 +310,42 @@ let draw r =
   let _ = draw_buttons r buttons_x buttons_y buttons_w in
   present r
 
+let draw_file_button r x y size i file_button =
+  let rect = draw_key_to_rect r x (y + ((size/5)*2)) size (size - ((size/5)*2)) KSUp in
+  Array.set file_button_rects i (Some (rect, file_button));
+
+  let font = get_font (1 * size / 4) in
+  match file_button with
+  | Cancel ->
+    draw_text r (x + size/2) (y + ((size/3)*2)) font "Cancel"
+  | Select ->
+    draw_text r (x + size/2) (y + ((size/3)*2)) font "Select"
+
+let draw_file_buttons r x y w =
+  let offset = w / num_file_buttons in
+  let size = (100 - percent_key_padding) * offset / 100 in
+  Array.iteri (fun i button ->
+      let button_x = i * offset + x in
+      draw_file_button r button_x y size i button
+    ) (Model.get_file_buttons());
+  size
+
+let draw_filechooser r =
+  let window_w = Model.get_width () in
+  let window_h = Model.get_height () in
+
+  clear r;
+  let buttons_x = window_w - (window_w / 5) in
+  let buttons_y = window_h - (window_h / 6) in
+  let buttons_w = (window_w / 5) in
+  let _ = draw_file_buttons r buttons_x buttons_y buttons_w in
+  present r
+
+let draw r =
+  match Model.get_state () with
+  | SKeyboard -> draw_output r
+  | SFileChooser -> draw_filechooser r
+
 let button_pressed (x,y) =
   let button_rect_list = Array.to_list button_rects in
   let pressed_button_rect = List.find_opt (fun button_rect_option ->
@@ -318,6 +358,22 @@ let button_pressed (x,y) =
         let rect_h = Sdl.Rect.h rect in
         rect_x <= x && x <= (rect_x+rect_w) && rect_y <= y && y <= (rect_y+rect_h)
     ) button_rect_list in
+  match pressed_button_rect with
+  | Some (Some (rect, button)) -> Some button
+  | _ -> None
+
+let file_button_pressed (x,y) =
+  let file_button_rect_list = Array.to_list file_button_rects in
+  let pressed_button_rect = List.find_opt (fun button_rect_option ->
+      match button_rect_option with
+      | None -> false
+      | Some (rect, button) ->
+        let rect_x = Sdl.Rect.x rect in
+        let rect_y = Sdl.Rect.y rect in
+        let rect_w = Sdl.Rect.w rect in
+        let rect_h = Sdl.Rect.h rect in
+        rect_x <= x && x <= (rect_x+rect_w) && rect_y <= y && y <= (rect_y+rect_h)
+    ) file_button_rect_list in
   match pressed_button_rect with
   | Some (Some (rect, button)) -> Some button
   | _ -> None

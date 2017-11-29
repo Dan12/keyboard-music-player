@@ -45,6 +45,9 @@ val get_state : unit -> state
 (* [get_buttons] returns the buttons & their state. *)
 val get_buttons : unit -> Button.buttons
 
+(* [get_file_buttons] returns the file buttons. *)
+val get_file_buttons : unit -> File_button.file_buttons
+
 (* [get_midi_filename] returns the filename of the midi. *)
 val get_midi_filename : unit -> string
 
