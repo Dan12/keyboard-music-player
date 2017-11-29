@@ -302,7 +302,7 @@ let draw r =
   let buttons_w = arrows_w * 2 in
   let buttons_x = arrows_x in
   let buttons_y = 22 * arrows_h / 20 + arrows_y in
-  let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
+  let _ = draw_buttons r buttons_x buttons_y buttons_w in
   present r
 
 let button_pressed (x,y) =
