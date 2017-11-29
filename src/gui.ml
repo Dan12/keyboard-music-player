@@ -6,17 +6,29 @@ open Button
 open Model
 
 let button_rects:((Sdl.rect * button) option array) =
-  Array.make (List.length buttons) None
+  Array.make num_buttons None
 
 let fonts = Hashtbl.create 16
 
+let keyboard_padding_w = 20
+let keyboard_padding_h = 30
 let percent_key_padding = 10
+
 let arrow_width_height_ratio = 2
+
+let graphic_padding_w = 25
+let graphic_padding_h = 20
+let percent_graphic_padding = 16
+let max_amplitude = 60
+
 
 let background_color = Sdl.Color.create 255 255 255 255
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
 let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
+
+let min_graphic_color = Sdl.Color.create 0 255 0 255
+let max_graphic_color = Sdl.Color.create 255 0 0 255
 
 let (>>=) o f = match o with
   | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
@@ -75,8 +87,7 @@ let draw_key_text r x y w h font = function
   | Enter -> draw_enter r (x  + w / 4) (y + h / 4) (w / 2) (h / 2)
   | Empty -> ()
 
-
-let draw_key r x y w h key_state =
+let draw_key_to_rect r x y w h key_state =
   (match key_state with
    | KSDown -> set_color r keyboard_pressed_color;
      let rect = Sdl.Rect.create x y w h in
@@ -86,7 +97,10 @@ let draw_key r x y w h key_state =
   set_color r keyboard_border_color;
   let rect = Sdl.Rect.create x y w h in
   let _ = Sdl.render_draw_rect r (Some rect) in
-  ()
+  rect
+
+let draw_key r x y w h key_state =
+  draw_key_to_rect r x y w h key_state |> ignore
 
 (*
  * Assumes the key list has length of [row] * [col]
@@ -146,36 +160,40 @@ let draw_arrows r keyboard x y w =
   let _ = Sdl.render_draw_line r (x + 2 * x_offset + 3 * w_key / 4) (y + y_offset + h_key / 2) (x + 2 * x_offset + w_key / 2) (y + y_offset + h_key / 4) in
   2 * y_offset
 
-let draw_button r x y size i button =
-  let rect = Sdl.Rect.create x y size size in
+let draw_button r x y size i button_with_state =
+  let (button, state) = button_with_state in
+  let rect = draw_key_to_rect r x y size size state in
   Array.set button_rects i (Some (rect, button));
-  let _ = Sdl.render_draw_rect r (Some rect) in
+
+  let padding = size / 5 in
   match button with
   | Load ->
     let font = get_font (3 * size / 8) in
     draw_text r (x + size/2) (y + size/2) font "Load"
   | Play ->
-    let padding = size / 5 in
     let _ = Sdl.render_draw_line r (x+padding) (y+padding) (x+size-padding) (y+size/2) in
     let _ = Sdl.render_draw_line r (x+padding) (y+size-padding) (x+size-padding) (y+size/2) in
     let _ = Sdl.render_draw_line r (x+padding) (y+padding) (x+padding) (y+size-padding) in
     ()
   | Pause ->
-    let padding = size / 5 in
     let rect_width = (size - 3 * padding) / 2 in
     let rect_height = size - 2 * padding in
     let left_rect = Sdl.Rect.create (x+padding) (y+padding) rect_width rect_height in
     let right_rect = Sdl.Rect.create (x+padding+rect_width+padding) (y+padding) rect_width rect_height in
     let _ = Sdl.render_draw_rects r [left_rect;right_rect] in
     ()
+  | Stop ->
+    let rect = Sdl.Rect.create (x+padding) (y+padding) (size-padding*2) (size-padding*2) in
+    let _ = Sdl.render_draw_rect r (Some rect) in
+    ()
 
 let draw_buttons r x y w =
-  let offset = w / (List.length buttons) in
+  let offset = w / num_buttons in
   let size = (100 - percent_key_padding) * offset / 100 in
-  List.iteri (fun i button ->
+  Array.iteri (fun i button ->
       let button_x = i * offset + x in
       draw_button r button_x y size i button
-    ) buttons;
+    ) (Model.get_buttons());
   size
 
 let clear r =
@@ -188,35 +206,105 @@ let present r =
   let _ = Sdl.render_present r in
   ()
 
-let draw keyboard_layout keyboard r =
-  match Model.get_state () with
-  | SKeyboard ->
-    clear r;
-    let init_x = 20 in
+let get_amplitude_color_element min max amp =
+  min + amp * ((max - min) / max_amplitude)
 
-    let keyboard_y = 20 in
-    let keyboard_w = 1200 in
-    let keyboard_rows = Keyboard_layout.get_rows keyboard_layout in
-    let keyboard_cols = Keyboard_layout.get_cols keyboard_layout in
-    let keyboard_h = draw_keyboard r keyboard_layout keyboard
-        init_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
+let get_amplitude_color amp =
+  let min_r = Sdl.Color.r min_graphic_color in
+  let min_g = Sdl.Color.g min_graphic_color in
+  let min_b = Sdl.Color.b min_graphic_color in
 
-    let arrows_w = keyboard_w / 6 in
-    let arrows_x = init_x + keyboard_w / 2 - arrows_w / 2 in
-    let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
-    let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
+  let max_r = Sdl.Color.r max_graphic_color in
+  let max_g = Sdl.Color.g max_graphic_color in
+  let max_b = Sdl.Color.b max_graphic_color in
 
-    let buttons_w = arrows_w in
-    let buttons_x = arrows_x in
-    let buttons_y = 22 * arrows_h / 20 + arrows_y in
-    let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
-    present r
-  | SFileChooser ->
-    clear r;
+  let r = get_amplitude_color_element min_r max_r amp in
+  let g = get_amplitude_color_element min_g max_g amp in
+  let b = get_amplitude_color_element min_b max_b amp in
+  Sdl.Color.create r g b 255
 
-    let _ = Sdl.render_draw_rect r (Some (Sdl.Rect.create 300 300 300 300)) in
+let draw_graphic_segment r amp x y w h =
+  let segment_color = get_amplitude_color amp in
+  set_color r segment_color;
+  let rect = Sdl.Rect.create x y w h in
+  let _ = Sdl.render_fill_rect r (Some rect) in
+  ()
 
-    present r
+let draw_graphics r amplitudes x y w h =
+  let num_bars = Array.length amplitudes in
+  let offset = (w + num_bars / 2) / num_bars in
+  let bar_w = (100 - percent_graphic_padding) * offset / 100 in
+  let segment_h = (h + max_amplitude / 2) / max_amplitude in
+  for height = 0 to max_amplitude do
+    for bar = 0 to num_bars - 1 do
+      let segment_x = x + bar * offset in
+      let segment_y = (y + h) - (height + 1) * segment_h in
+      if height <= amplitudes.(bar) || (height = 1 && Random.int 2 = 1)
+      then draw_graphic_segment r height segment_x segment_y bar_w segment_h
+      else ()
+    done;
+  done
+
+let get_amplitudes () =
+  let complex_arr = Model.get_buffer () in
+
+  let normalize = fun compl ->
+    int_of_float (2.0 *. (Complex.norm compl))
+  in
+
+  let mapped = Array.map normalize complex_arr in
+  let init_i i =
+    mapped.(i)
+  in
+  Array.init 64 init_i
+
+  (* let complex_arr = Model.get_buffer () in
+  print_endline (string_of_int (Array.length complex_arr));
+
+  let arr = Array.make 30 0 in
+  for i = 0 to Array.length arr - 1 do
+    arr.(i) <- Random.int 61
+  done;
+  arr *)
+
+let draw r =
+  let window_w = Model.get_width () in
+  let window_h = Model.get_height () in
+
+  let keyboard = Model.get_keyboard () in
+  let keyboard_layout = Model.get_keyboard_layout () in
+
+  clear r;
+  let amplitudes = get_amplitudes () in
+  let num_bars = Array.length amplitudes + 1 in
+  let graphics_x = graphic_padding_w in
+  let graphics_y = graphic_padding_h in
+  let graphics_w = (window_w - 2 * graphic_padding_w) * 100 * num_bars /
+                   (100 * num_bars - percent_graphic_padding) in
+  let graphics_h = window_h - 2 * graphic_padding_h in
+  draw_graphics r amplitudes graphics_x graphics_y graphics_w graphics_h;
+
+
+  let keyboard_x = keyboard_padding_w in
+  let keyboard_y = keyboard_padding_h in
+  let keyboard_rows = Keyboard_layout.get_rows keyboard_layout in
+  let keyboard_cols = Keyboard_layout.get_cols keyboard_layout in
+  let keyboard_w = (window_w - 2 * keyboard_padding_w) * 100 * keyboard_cols /
+                   (100 * keyboard_cols - percent_key_padding) in
+  let keyboard_h = draw_keyboard r keyboard_layout keyboard
+      keyboard_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
+
+
+  let arrows_w = keyboard_w / 6 in
+  let arrows_x = keyboard_padding_w + keyboard_w / 2 - arrows_w / 2 in
+  let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
+  let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
+
+  let buttons_w = arrows_w * 2 in
+  let buttons_x = arrows_x in
+  let buttons_y = 22 * arrows_h / 20 + arrows_y in
+  let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
+  present r
 
 let button_pressed (x,y) =
   let button_rect_list = Array.to_list button_rects in
@@ -231,5 +319,5 @@ let button_pressed (x,y) =
         rect_x <= x && x <= (rect_x+rect_w) && rect_y <= y && y <= (rect_y+rect_h)
     ) button_rect_list in
   match pressed_button_rect with
-  | Some (Some (_, button)) -> Some button
+  | Some (Some (rect, button)) -> Some button
   | _ -> None
