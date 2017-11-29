@@ -65,19 +65,19 @@ let event_callback event =
     (* print_endline (string_of_int keycode); *)
     handle_keyboard (Keyboard_layout.KIKeyup keycode)
   | `Mouse_button_down ->
-    let mouse_x = get event mouse_button_x in
-    let mouse_y = get event mouse_button_y in
+    (* let mouse_x = get event mouse_button_x in
+    let mouse_y = get event mouse_button_y in *)
     ()
   | `Mouse_button_up ->
     let mouse_x = get event mouse_button_x in
     let mouse_y = get event mouse_button_y in
     handle_mouse_up mouse_x mouse_y;
   | `Mouse_motion ->
-    let mouse_x = get event mouse_button_x in
-    let mouse_y = get event mouse_button_y in
+    (* let mouse_x = get event mouse_button_x in
+    let mouse_y = get event mouse_button_y in *)
     ()
   | `Mouse_wheel ->
-    let scroll_dx = get event mouse_wheel_x in
-    let scroll_dy = get event mouse_wheel_y in
+    (* let scroll_dx = get event mouse_wheel_x in
+    let scroll_dy = get event mouse_wheel_y in *)
     ()
   | _ -> ()
