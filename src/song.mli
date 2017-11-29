@@ -21,3 +21,6 @@ val set_sound_pack : int -> song -> unit
 
 (* [get_sound_pack song] returns [song]'s current soundpack *)
 val get_sound_pack : song -> int
+
+(* [get_bpm song] returns the bpm of the given song *)
+val get_bpm : song -> int

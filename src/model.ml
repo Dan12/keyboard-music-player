@@ -13,6 +13,10 @@ type model = {
   mutable keyboard_layout: keyboard_layout;
   mutable song: song;
   mutable state: state;
+  buttons: Button.buttons;
+  mutable midi_filename: string;
+  mutable should_load_midi: bool;
+  mutable is_playing: bool;
   mutable buffer: Complex.t array;
 }
 
@@ -31,6 +35,10 @@ let model:model =
     keyboard_layout = keyboard_layout;
     song = eq_song;
     state = SKeyboard;
+    buttons = Button.create_buttons();
+    midi_filename = "resources/eq_data/eq_midi_0.json";
+    should_load_midi = true;
+    is_playing = false;
     buffer = buffer;
   }
 
@@ -70,6 +78,33 @@ let set_state s =
 let get_state () =
   model.state
 
+let get_buttons () =
+  model.buttons
+
+let get_midi_filename () =
+  model.midi_filename
+
+let start_midi () =
+  if model.is_playing = false then
+    Metronome.unpause();
+    Metronome.set_bpm (get_song() |> Song.get_bpm);
+    model.is_playing <- true;
+  model.should_load_midi <- false;
+  Button.press_button Button.Play model.buttons
+
+let pause_midi () =
+  model.is_playing <- false;
+  Button.press_button Button.Pause model.buttons
+
+let stop_midi () =
+  model.is_playing <- false;
+  model.should_load_midi <- true;
+  Metronome.reset();
+  Button.press_button Button.Stop model.buttons
+
+let midi_is_playing () = model.is_playing
+
+let midi_should_load () = model.should_load_midi
 let set_buffer b =
   let (left, _) = Audio_effects.complex_create b in
   Audio_effects.fft fft left;

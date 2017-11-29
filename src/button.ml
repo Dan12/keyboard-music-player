@@ -1,24 +1,41 @@
+open Keyboard
+
 type button =
   | Load
   | Play
   | Pause
+  | Stop
 
-let buttons = [Load;Play;Pause]
+type buttons = (button * Keyboard.key_state) array
 
-let size = 80
-let begin_x = 485
-let y = 500
-let padding = 10
+let get_button i =
+  if i = 0
+  then Load
+  else if i = 1
+  then Play
+  else if i = 2
+  then Pause
+  else Stop
 
-let get_location = function
-  | Load -> (begin_x, y, size, size)
-  | Play -> (begin_x + size + padding, y, size, size)
-  | Pause -> (begin_x + (size + padding) * 2, y, size, size)
+let get_index = function
+  | Load -> 0
+  | Play -> 1
+  | Pause -> 2
+  | Stop -> 3
 
-let point_in_button point button =
-  let (x, y, width, height) = get_location button in
-  let (pointx, pointy) = point in
-  pointx >= x && pointy >= y && pointx <= width && pointy <= height
+let num_buttons = 4
 
-let get_button point =
-  List.find_opt (point_in_button point) buttons
+let clear buttons =
+  for i = 0 to num_buttons-1 do
+    buttons.(i) <- (get_button i, KSUp)
+  done
+
+let press_button button buttons =
+  clear buttons;
+  buttons.(get_index button) <- (button, KSDown)
+
+let create_buttons () =
+  let buttons = Array.make num_buttons (Load, KSUp) in
+  clear buttons;
+  press_button Stop buttons;
+  buttons

@@ -8,3 +8,7 @@ open Keyboard
  * [renderer] to display the state.
  *)
 val draw : Tsdl.Sdl.renderer -> unit
+
+(* [button_pressed x y] returns the button that encloses the given
+location if such button exists. *)
+val button_pressed : (int * int) -> Button.button option

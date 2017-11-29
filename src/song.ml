@@ -37,14 +37,14 @@ let parse_sound base s_json =
 let parse_sound_row base r_json =
   let r = to_list r_json in
   let row_list = List.map (parse_sound base) r in
-  Array.of_list row_list  
+  Array.of_list row_list
 
 let parse_soundpack base s_json =
   let s = to_list s_json in
   let soundpack = List.map (parse_sound_row base) s in
   Array.of_list soundpack
 
-let parse_song_file file = 
+let parse_song_file file =
   let base = Filename.dirname file in
   let json = to_assoc (Yojson.Basic.from_file file) in
   let name = List.assoc "name" json |> to_string in
@@ -82,3 +82,6 @@ let set_sound_pack s song =
 
 let get_sound_pack song =
   song.soundpack
+
+let get_bpm song =
+  song.bpm

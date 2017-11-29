@@ -42,6 +42,31 @@ val set_state : state -> unit
 (* [get_state] returns the current state. *)
 val get_state : unit -> state
 
+(* [get_buttons] returns the buttons & their state. *)
+val get_buttons : unit -> Button.buttons
+
+(* [get_midi_filename] returns the filename of the midi. *)
+val get_midi_filename : unit -> string
+
+(* [start] sets [is_playing] = true and the initial values of [Metronome]. *)
+val start_midi : unit -> unit
+
+(* [pause] sets [is_playing] = false *)
+val pause_midi : unit -> unit
+
+(* [stop_midi] resets the metronome and sets [is_playing] = false. *)
+val stop_midi : unit -> unit
+
+(* [is_playing] returns whether or not the midi is playing. *)
+val midi_is_playing : unit -> bool
+
+(* [midi_should_load] returns true if the midi file should be reloaded *)
+val midi_should_load : unit -> bool
+
+(* [set_buffer audio_output] compute the fft of [audio_output] and cache
+ * it in the model
+ *)
 val set_buffer : (int32, Bigarray.int32_elt, Bigarray.c_layout) Bigarray.Array1.t -> unit
 
+(* [get_buffer] get the most recent fft *)
 val get_buffer : unit -> Complex.t array

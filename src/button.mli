@@ -4,13 +4,16 @@ type button =
   | Load
   | Play
   | Pause
+  | Stop
 
-(* [buttons] returns the list of all variant types above. *)
-val buttons : button list
+type buttons = (button * Keyboard.key_state) array
 
-(* [get_location button] returns the x y width height of the given button. *)
-val get_location : button -> int * int * int * int
+(* [buttons] returns the list of all variant types above with their state. *)
+val create_buttons : unit -> buttons
 
-(* [get_button x y] returns the button at the given location if the given
-location is within a button. *)
-val get_button : int * int -> button option
+(* [num_buttons] returns the number of variant types above. *)
+val num_buttons : int
+
+(* [press_button button buttons] sets the button within the buttons array to
+   key down. *)
+val press_button : button -> buttons -> unit

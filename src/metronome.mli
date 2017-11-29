@@ -2,10 +2,13 @@
 val tick : unit -> unit
 
 (* Sets the beats per minute *)
-val set_bpm : float -> unit
+val set_bpm : int -> unit
 
 (* get the current beat/measure or something *)
 val get_beat : unit -> float
+
+(* [unpause] restarts the metronome w/o resetting the beat. *)
+val unpause : unit -> unit
 
 (* reset the beat/measure *)
 val reset : unit -> unit
