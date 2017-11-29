@@ -4,6 +4,8 @@ open Song
 
 type state = SKeyboard | SFileChooser
 
+let fft = Audio_effects.init 10
+
 type model = {
   mutable window_w: int;
   mutable window_h: int;
@@ -15,6 +17,7 @@ type model = {
   mutable midi_filename: string;
   mutable should_load_midi: bool;
   mutable is_playing: bool;
+  mutable buffer: Complex.t array;
 }
 
 let model:model =
@@ -24,6 +27,7 @@ let model:model =
   let rows = Keyboard_layout.get_rows keyboard_layout in
   let cols = Keyboard_layout.get_cols keyboard_layout in
   let keyboard = Keyboard.create_keyboard (rows, cols) in
+  let buffer = Array.make 1024 {Complex.re = 0.; Complex.im = 0.;} in
   {
     window_w = 1280;
     window_h = 720;
@@ -35,6 +39,7 @@ let model:model =
     midi_filename = "resources/eq_data/eq_midi_0.json";
     should_load_midi = true;
     is_playing = false;
+    buffer = buffer;
   }
 
 let set_width w =
@@ -100,3 +105,10 @@ let stop_midi () =
 let midi_is_playing () = model.is_playing
 
 let midi_should_load () = model.should_load_midi
+let set_buffer b =
+  let (left, _) = Audio_effects.complex_create b in
+  Audio_effects.fft fft left;
+  model.buffer <- left
+
+let get_buffer () =
+  model.buffer

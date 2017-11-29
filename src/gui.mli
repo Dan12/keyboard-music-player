@@ -7,7 +7,7 @@ open Keyboard
 (* [draw renderer] the draw callback that makes draw calls using
  * [renderer] to display the state.
  *)
-val draw : keyboard_layout -> keyboard -> Tsdl.Sdl.renderer -> unit
+val draw : Tsdl.Sdl.renderer -> unit
 
 (* [button_pressed x y] returns the button that encloses the given
 location if such button exists. *)

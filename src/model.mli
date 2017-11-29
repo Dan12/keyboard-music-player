@@ -62,3 +62,11 @@ val midi_is_playing : unit -> bool
 
 (* [midi_should_load] returns true if the midi file should be reloaded *)
 val midi_should_load : unit -> bool
+
+(* [set_buffer audio_output] compute the fft of [audio_output] and cache
+ * it in the model
+ *)
+val set_buffer : (int32, Bigarray.int32_elt, Bigarray.c_layout) Bigarray.Array1.t -> unit
+
+(* [get_buffer] get the most recent fft *)
+val get_buffer : unit -> Complex.t array
