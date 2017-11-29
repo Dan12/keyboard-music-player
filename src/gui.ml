@@ -213,14 +213,9 @@ let draw keyboard_layout keyboard r =
     present r
   | SFileChooser ->
     clear r;
-    let init_x = 20 in
 
-    let keyboard_y = 20 in
-    let keyboard_w = 1200 in
-    let keyboard_rows = Keyboard_layout.get_rows keyboard_layout in
-    let keyboard_cols = Keyboard_layout.get_cols keyboard_layout in
-    let keyboard_h = draw_keyboard r keyboard_layout keyboard
-        init_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
+    let _ = Sdl.render_draw_rect r (Some (Sdl.Rect.create 300 300 300 300)) in
+
     present r
 
 let button_pressed (x,y) =
