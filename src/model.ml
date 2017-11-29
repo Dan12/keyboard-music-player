@@ -105,10 +105,12 @@ let stop_midi () =
 let midi_is_playing () = model.is_playing
 
 let midi_should_load () = model.should_load_midi
+
 let set_buffer b =
-  let (left, _) = Audio_effects.complex_create b in
+  (* let (left, _) = Audio_effects.complex_create b in
   Audio_effects.fft fft left;
-  model.buffer <- left
+  model.buffer <- left *)
+  ()
 
 let get_buffer () =
   model.buffer
