@@ -3,6 +3,7 @@ open Tsdl_ttf
 open Keyboard_layout
 open Keyboard
 open Button
+open Model
 
 let button_rects:((Sdl.rect * button) option array) =
   Array.make num_buttons None
