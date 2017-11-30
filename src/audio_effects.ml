@@ -65,3 +65,16 @@ let fft f d =
       done
   in
   fft f.temp d 0 f.n
+
+let ccoef k c =
+  {Complex.re = k *. c.Complex.re; Complex.im = k *. c.Complex.im}
+
+let iter f d =
+  let len = Array.length d in
+  let n = float len in
+  for i = 0 to len - 1 do
+    let k = f (float i) n in
+    d.(i) <- ccoef k d.(i)
+  done
+
+let cosine d = iter (fun i n -> sin (pi *. i /. n)) d

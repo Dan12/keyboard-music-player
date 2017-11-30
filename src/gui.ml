@@ -22,13 +22,15 @@ let percent_graphic_padding = 16
 let max_amplitude = 60
 
 
-let background_color = Sdl.Color.create 255 255 255 255
+let background_color = Sdl.Color.create 0 0 0 255
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
 let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
 
 let min_graphic_color = Sdl.Color.create 0 255 0 255
 let max_graphic_color = Sdl.Color.create 255 0 0 255
+
+let key_background = Sdl.Color.create 255 255 255 100
 
 let (>>=) o f = match o with
   | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
@@ -94,6 +96,9 @@ let draw_key_to_rect r x y w h key_state =
      let _ = Sdl.render_fill_rect r (Some rect) in
      ()
    | _ -> ());
+  set_color r key_background;
+  let rect = Sdl.Rect.create x y w h in
+  let _ = Sdl.render_fill_rect r (Some rect) in
   set_color r keyboard_border_color;
   let rect = Sdl.Rect.create x y w h in
   let _ = Sdl.render_draw_rect r (Some rect) in
@@ -256,7 +261,7 @@ let get_amplitudes () =
   let init_i i =
     mapped.(i)
   in
-  Array.init 64 init_i
+  Array.init 32 init_i
 
   (* let complex_arr = Model.get_buffer () in
   print_endline (string_of_int (Array.length complex_arr));

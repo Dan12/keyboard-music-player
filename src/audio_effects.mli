@@ -14,3 +14,5 @@ val complex_create : (int32, Bigarray.int32_elt, Bigarray.c_layout) Bigarray.Arr
 
 (** Perform an FFT analysis. *)
 val fft : t -> Complex.t array -> unit
+
+val cosine : Complex.t array -> unit
