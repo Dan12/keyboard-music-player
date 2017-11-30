@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-var data = fs.readFileSync('eq_midi.json');
+var data = fs.readFileSync('ghet_midi.json');
 var json_data = JSON.parse(data);
 
 for(var i = 0; i < json_data["data"].length; i++) {
@@ -17,3 +17,8 @@ for(var i = 0; i < json_data["data"].length; i++) {
     console.log("Data written successfully!");
   });
 } 
+
+// 47 -> 47
+// 48 -> 50
+// 49 -> 48
+// 50 -> 49

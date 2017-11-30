@@ -1,0 +1,1478 @@
+{
+  "name": "GHET1 - Knife Party vs Skrillex",
+  "bpm": 176,
+  "soundpacks": [
+    [
+      [
+        {},
+        {
+          "pitches": [
+            "chain1_wav/c10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {},
+        {},
+        {
+          "pitches": [
+            "chain1_wav/d14.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/d13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/d12.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b0.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b1.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/e3.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b3.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        }
+      ],
+      [
+        {},
+        {},
+        {},
+        {
+          "pitches": [
+            "chain1_wav/d11.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/d10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/d9.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/d8.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b4.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b5.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b6.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b7.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/e2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        }
+      ],
+      [
+        {
+          "pitches": [
+            "chain1_wav/a12.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {},
+        {},
+        {
+          "pitches": [
+            "chain1_wav/d7.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/d6.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/d5.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/d4.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b8.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b9.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b11.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {}
+      ],
+      [
+        {},
+        {},
+        {},
+        {
+          "pitches": [
+            "chain1_wav/d3.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/d2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/d1.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/d0.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b12.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b14.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain1_wav/b15.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {}
+      ]
+    ],
+    [
+      [
+        {
+          "pitches": [
+            "chain2_wav/c2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/c10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/a4.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d15.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d14.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d12.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b0.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b1.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b3.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/e3.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        }
+      ],
+      [
+        {
+          "pitches": [
+            "chain2_wav/a9.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/a14.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/a5.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d11.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d9.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d8.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/c13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/c1.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/c3.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b7.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/e2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        }
+      ],
+      [
+        {
+          "pitches": [
+            "chain2_wav/a12.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/a0.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/a6.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d7.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d6.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d5.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d4.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b8.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b9.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b11.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/a13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        }
+      ],
+      [
+        {
+          "pitches": [
+            "chain2_wav/a10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/a11.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/a1.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d3.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d1.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/d0.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b12.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b14.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain2_wav/b15.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {}
+      ]
+    ],
+    [
+      [
+        {
+          "pitches": [
+            "chain3_wav/c4.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/c10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/a14.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d0.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {},
+        {
+          "pitches": [
+            "chain3_wav/d2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d3.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {},
+        {
+          "pitches": [
+            "chain3_wav/b1.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/b2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/b3.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {}
+      ],
+      [
+        {
+          "pitches": [
+            "chain3_wav/a13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/a0.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {},
+        {
+          "pitches": [
+            "chain3_wav/d4.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d5.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d6.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d7.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/b4.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d9.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/b6.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/b7.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {}
+      ],
+      [
+        {
+          "pitches": [
+            "chain3_wav/a12.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d11.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {},
+        {
+          "pitches": [
+            "chain3_wav/d8.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d9.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d11.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d0.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/b9.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/b10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/b11.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {}
+      ],
+      [
+        {},
+        {},
+        {},
+        {
+          "pitches": [
+            "chain3_wav/d12.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d14.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d15.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/b12.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/d8.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/b14.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain3_wav/b15.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {}
+      ]
+    ],
+    [
+      [
+        {
+          "pitches": [
+            "chain4_wav/eb15.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/eb13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/ed4_1.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {},
+        {
+          "pitches": [
+            "chain4_wav/c10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {},
+        {},
+        {},
+        {
+          "pitches": [
+            "chain4_wav/b1.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/b2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {},
+        {}
+      ],
+      [
+        {
+          "pitches": [
+            "chain4_wav/eb11.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/eb6.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/ed4_2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {},
+        {
+          "pitches": [
+            "chain4_wav/d2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/d3.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/d13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {},
+        {
+          "pitches": [
+            "chain4_wav/b5.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/b6.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/b7.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {}
+      ],
+      [
+        {
+          "pitches": [
+            "chain4_wav/ea12.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/ea13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/ed8_1.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/a12.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/a13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/d2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/d14.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/b8.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/b9.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/b10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/b11.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/d1.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        }
+      ],
+      [
+        {
+          "pitches": [
+            "chain4_wav/ec10.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/eb7.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/ed8_2.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {},
+        {},
+        {
+          "pitches": [
+            "chain4_wav/d1.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/d15.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/b12.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/b13.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/b14.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {
+          "pitches": [
+            "chain4_wav/b15.wav"
+          ],
+          "hold_to_play": false,
+          "loop": false,
+          "groups": [],
+          "quantization": 0
+        },
+        {}
+      ]
+    ]
+  ]
+}

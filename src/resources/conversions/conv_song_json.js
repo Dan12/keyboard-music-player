@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-var data = fs.readFileSync('eq_old.json');
+var data = fs.readFileSync('ghet_old.json');
 var json_data = JSON.parse(data);
 
 var export_json = {}

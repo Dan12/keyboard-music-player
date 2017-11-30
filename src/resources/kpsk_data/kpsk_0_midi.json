@@ -1,0 +1,265 @@
+{
+  "name": "Part 1",
+  "song_data": [
+    {
+      "note": 50,
+      "beat": 1,
+      "length": 1
+    },
+    {
+      "note": 1,
+      "beat": 2,
+      "length": 0.25
+    },
+    {
+      "note": 1,
+      "beat": 2.5,
+      "length": 0.25
+    },
+    {
+      "note": 1,
+      "beat": 4,
+      "length": 0.5
+    },
+    {
+      "note": 24,
+      "beat": 5,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 6,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 7,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 8,
+      "length": 0.5
+    },
+    {
+      "note": 24,
+      "beat": 9,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 10,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 11,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 12,
+      "length": 0.5
+    },
+    {
+      "note": 24,
+      "beat": 13,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 14,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 15,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 16,
+      "length": 0.5
+    },
+    {
+      "note": 24,
+      "beat": 17,
+      "length": 0.5
+    },
+    {
+      "note": 0,
+      "beat": 17,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 18,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 19,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 20,
+      "length": 0.5
+    },
+    {
+      "note": 24,
+      "beat": 21,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 22,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 23,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 24,
+      "length": 0.5
+    },
+    {
+      "note": 24,
+      "beat": 25,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 26,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 27,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 28,
+      "length": 0.5
+    },
+    {
+      "note": 24,
+      "beat": 29,
+      "length": 0.5
+    },
+    {
+      "note": 25,
+      "beat": 29,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 30,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 31,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 32,
+      "length": 0.5
+    },
+    {
+      "note": 24,
+      "beat": 33,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 34,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 35,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 36,
+      "length": 0.5
+    },
+    {
+      "note": 24,
+      "beat": 37,
+      "length": 0.5
+    },
+    {
+      "note": 12,
+      "beat": 37,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 38,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 39,
+      "length": 0.5
+    },
+    {
+      "note": 2,
+      "beat": 39,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 40,
+      "length": 0.5
+    },
+    {
+      "note": 14,
+      "beat": 40,
+      "length": 0.5
+    },
+    {
+      "note": 24,
+      "beat": 41,
+      "length": 0.5
+    },
+    {
+      "note": 26,
+      "beat": 41,
+      "length": 0.5
+    },
+    {
+      "note": 1,
+      "beat": 42,
+      "length": 0.5
+    },
+    {
+      "note": 38,
+      "beat": 42,
+      "length": 0.5
+    },
+    {
+      "note": 13,
+      "beat": 43,
+      "length": 0.5
+    },
+    {
+      "note": 36,
+      "beat": 43,
+      "length": 0.5
+    },
+    {
+      "note": 37,
+      "beat": 43.5,
+      "length": 0.5
+    }
+  ]
+}
