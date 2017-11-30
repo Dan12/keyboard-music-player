@@ -25,7 +25,7 @@ type model = {
 }
 
 let model:model =
-  let eq_song = Song.parse_song_file "resources/eq_data/eq.json" in
+  let eq_song = Song.parse_song_file "resources/eq_data/eq_song.json" in
   let keyboard_layout = Keyboard_layout.parse_layout
       "resources/standard_keyboard_layout.json" in
   let rows = Keyboard_layout.get_rows keyboard_layout in
@@ -44,7 +44,7 @@ let model:model =
     filename_buttons = File_button.create_empty_filename_list ();
     num_filename_buttons = 0;
     file_location = "resources/eq_data/";
-    midi_filename = "resources/eq_data/eq_midi_0.json";
+    midi_filename = "resources/eq_data/eq_0_midi.json";
     should_load_midi = true;
     is_playing = false;
     buffer = buffer;
