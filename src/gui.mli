@@ -14,5 +14,9 @@ location if such button exists. *)
 val button_pressed : (int * int) -> Button.button option
 
 (* [file_button_pressed x y] returns the file button that encloses the given
-location if such button exitsts. *)
+location if such button exists. *)
 val file_button_pressed : (int * int) -> File_button.file_button option
+
+(* [filename_button_pressed x y] returns the filename button that encloses the
+given location if such button exists. *)
+val filename_button_pressed : (int * int) -> File_button.filename_button option

@@ -62,8 +62,20 @@ let handle_mouse_up x y =
       match Gui.file_button_pressed (x, y) with
       | Some button ->
         (match button with
-         | Cancel -> Model.set_state Model.SKeyboard
-         | Select -> (*TODO load file*)Model.set_state Model.SKeyboard)
+         | Cancel ->
+           Model.set_filename_buttons (Model.get_file_location());
+           Model.set_state Model.SKeyboard
+         | Select -> begin
+             match File_button.selected_filename (Model.get_filename_buttons()) with
+             | Some button -> Model.set_midi_filename ((Model.get_file_location())^button)
+             | None -> ()
+           end;
+           Model.set_filename_buttons (Model.get_file_location());
+          Model.set_state Model.SKeyboard)
+      | None -> ()
+    end; begin
+      match Gui.filename_button_pressed (x, y) with
+      | Some button -> File_button.press_filename_button button (Model.get_filename_buttons())
       | None -> ()
     end
 
@@ -86,9 +98,9 @@ let event_callback event =
     let mouse_y = get event mouse_button_y in
     handle_mouse_up mouse_x mouse_y;
   | `Mouse_motion ->
-    let mouse_x = get event mouse_button_x in
+    (*let mouse_x = get event mouse_button_x in
     let mouse_y = get event mouse_button_y in
-      print_endline ((string_of_int mouse_x) ^ ", " ^ (string_of_int mouse_y));
+      print_endline ((string_of_int mouse_x) ^ ", " ^ (string_of_int mouse_y));*)
     ()
   | `Mouse_wheel ->
     (* let scroll_dx = get event mouse_wheel_x in

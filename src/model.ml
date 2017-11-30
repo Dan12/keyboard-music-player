@@ -15,6 +15,9 @@ type model = {
   mutable state: state;
   buttons: Button.buttons;
   file_buttons: File_button.file_buttons;
+  mutable filename_buttons : File_button.filename_buttons;
+  mutable num_filename_buttons : int;
+  mutable file_location: string;
   mutable midi_filename: string;
   mutable should_load_midi: bool;
   mutable is_playing: bool;
@@ -38,6 +41,9 @@ let model:model =
     state = SKeyboard;
     buttons = Button.create_buttons();
     file_buttons = File_button.create_file_buttons();
+    filename_buttons = File_button.create_empty_filename_list ();
+    num_filename_buttons = 0;
+    file_location = "resources/eq_data/";
     midi_filename = "resources/eq_data/eq_midi_0.json";
     should_load_midi = true;
     is_playing = false;
@@ -85,6 +91,23 @@ let get_buttons () =
 
 let get_file_buttons () =
   model.file_buttons
+
+let get_file_location () =
+  model.file_location
+
+let set_filename_buttons d =
+  model.filename_buttons <-
+    File_button.create_filename_buttons (get_file_location ())
+
+let get_filename_buttons () =
+  model.filename_buttons
+
+let get_num_filename_buttons () =
+  model.num_filename_buttons <- Array.length (get_filename_buttons ());
+  model.num_filename_buttons
+
+let set_midi_filename f =
+  model.midi_filename <- f
 
 let get_midi_filename () =
   model.midi_filename

@@ -12,6 +12,9 @@ let button_rects:((Sdl.rect * button) option array) =
 let file_button_rects:((Sdl.rect * file_button) option array) =
   Array.make num_file_buttons None
 
+let filename_button_rects:((Sdl.rect * filename_button) option array ref) =
+  ref (Array.make (Model.get_num_filename_buttons ()) None)
+
 let fonts = Hashtbl.create 16
 
 let keyboard_padding_w = 20
@@ -330,11 +333,35 @@ let draw_file_buttons r x y w =
     ) (Model.get_file_buttons());
   size
 
+let draw_filename_button r x y size i button_with_state =
+  let (button, state) = button_with_state in
+  let rect = draw_key_to_rect r x y (size * 5) size state in
+  Array.set !filename_button_rects i (Some (rect, button));
+
+  let font = get_font (3 * size / 8) in
+  draw_text r (x + (3 * size / 2)) (y + size/2) font button
+
+let draw_filename_buttons r x y w =
+  let offset = w / (Model.get_num_filename_buttons ()) in
+  let size = (100 - percent_key_padding) * offset / 100 in
+  Array.iteri (fun i button ->
+      let button_y = i * offset + y in
+      draw_filename_button r x button_y size i button
+    ) (Model.get_filename_buttons());
+  size
+
 let draw_filechooser r =
+  let num_files = Model.get_num_filename_buttons () in
+  filename_button_rects := Array.make (num_files) None;
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
 
   clear r;
+  let filename_buttons_x = window_w / 25 in
+  let filename_buttons_y = window_h / 15 in
+  let filename_buttons_w = (window_h / (8 / num_files)) in
+  let _ = draw_filename_buttons r filename_buttons_x filename_buttons_y filename_buttons_w in
+
   let buttons_x = window_w - (window_w / 5) in
   let buttons_y = window_h - (window_h / 6) in
   let buttons_w = (window_w / 5) in
@@ -375,5 +402,21 @@ let file_button_pressed (x,y) =
         rect_x <= x && x <= (rect_x+rect_w) && rect_y <= y && y <= (rect_y+rect_h)
     ) file_button_rect_list in
   match pressed_button_rect with
+  | Some (Some (rect, button)) -> Some button
+  | _ -> None
+
+let filename_button_pressed (x,y) =
+  let filename_button_rect_list = Array.to_list !filename_button_rects in
+  let pressed_filename_button_rect = List.find_opt (fun button_rect_option ->
+      match button_rect_option with
+      | None -> false
+      | Some (rect, button) ->
+        let rect_x = Sdl.Rect.x rect in
+        let rect_y = Sdl.Rect.y rect in
+        let rect_w = Sdl.Rect.w rect in
+        let rect_h = Sdl.Rect.h rect in
+        rect_x <= x && x <= (rect_x+rect_w) && rect_y <= y && y <= (rect_y+rect_h)
+    ) filename_button_rect_list in
+  match pressed_filename_button_rect with
   | Some (Some (rect, button)) -> Some button
   | _ -> None
