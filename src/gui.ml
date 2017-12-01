@@ -360,11 +360,11 @@ let draw_filechooser r =
   filename_button_rects := Array.make (num_files) None;
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
-
+  
   clear r;
   let filename_buttons_x = window_w / 25 in
   let filename_buttons_y = window_h / 15 in
-  let filename_buttons_w = (window_h / (8 / num_files)) in
+  let filename_buttons_w = (window_h * 3 / 4) in
   let _ = draw_filename_buttons r filename_buttons_x filename_buttons_y filename_buttons_w in
 
   let buttons_x = window_w - (window_w / 5) in

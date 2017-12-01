@@ -46,17 +46,24 @@ let create_empty_filename_list () =
   Array.make 0 ("",KSUp)
 
 let create_filename_buttons f =
-  let filename_list = if Sys.is_directory (f) then
+  let folder_list = if Sys.is_directory (f) then
     Sys.readdir f |> Array.to_list
     else [] in
-  if (List.length filename_list) > 0 then
+  if (List.length folder_list) > 0 then
+    let data_list = List.fold_left
+        (fun j s -> if contains "data" s
+          then (f ^ s ^ Filename.dir_sep)::j else j) [] folder_list in
+    let filename_list = List.fold_left
+        (fun j s -> if Sys.is_directory (s) then
+            (Sys.readdir s |> Array.to_list)@j else j) [] data_list in
     let json_list = List.fold_left
-      (fun j s -> if contains ".json" s && contains "midi" s
+      (fun j s -> if contains ".json" s
         then s::j else j) [] filename_list in
     let size = List.length json_list in
     if size > 0 then
       let filename_buttons = Array.make size (((List.hd json_list):filename_button), KSUp) in
       clear_filename size json_list filename_buttons;
+      Array.sort (compare) filename_buttons;
       filename_buttons
     else Array.make 0 ("",KSUp)
   else Array.make 0 ("",KSUp)

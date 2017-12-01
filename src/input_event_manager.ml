@@ -67,7 +67,10 @@ let handle_mouse_up x y =
            Model.set_state Model.SKeyboard
          | Select -> begin
              match File_button.selected_filename (Model.get_filename_buttons()) with
-             | Some button -> Model.set_midi_filename ((Model.get_file_location())^button)
+             | Some button ->
+               let index = String.index button '_' in
+               let folder = String.sub button 0 index in
+               Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
              | None -> ()
            end;
            Model.set_filename_buttons (Model.get_file_location());
@@ -99,8 +102,7 @@ let event_callback event =
     handle_mouse_up mouse_x mouse_y;
   | `Mouse_motion ->
     (*let mouse_x = get event mouse_button_x in
-    let mouse_y = get event mouse_button_y in
-      print_endline ((string_of_int mouse_x) ^ ", " ^ (string_of_int mouse_y));*)
+    let mouse_y = get event mouse_button_y in *)
     ()
   | `Mouse_wheel ->
     (* let scroll_dx = get event mouse_wheel_x in
