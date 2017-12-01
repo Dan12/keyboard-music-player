@@ -4,6 +4,7 @@ open Model
 open File_button
 
 let input_event_singleton = ref None
+let recent_click = ref (Unix.gettimeofday())
 
 let handle_keyboard_output output =
   let keyboard = Model.get_keyboard () in
@@ -55,7 +56,7 @@ let contains s1 s2 =
   done;
   !contain
 
-let handle_mouse_up x y =
+let handle_mouse_up x y t =
   match Model.get_state () with
   | SKeyboard -> begin
     match Gui.button_pressed (x, y) with
@@ -90,7 +91,16 @@ let handle_mouse_up x y =
       | None -> ()
     end; begin
       match Gui.filename_button_pressed (x, y) with
-      | Some button -> File_button.press_filename_button button (Model.get_filename_buttons())
+      | Some button ->
+        if (t -. !recent_click) < 0.3 then
+          let index = String.index button '_' in
+          let folder = String.sub button 0 index in
+          if contains "midi" button then
+            Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
+          else Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button));
+          Model.set_filename_buttons (Model.get_file_location());
+          Model.set_state Model.SKeyboard
+        else File_button.press_filename_button button (Model.get_filename_buttons())
       | None -> ()
     end
 
@@ -109,9 +119,11 @@ let event_callback event =
     let mouse_y = get event mouse_button_y in *)
     ()
   | `Mouse_button_up ->
+    let click = Unix.gettimeofday() in
     let mouse_x = get event mouse_button_x in
     let mouse_y = get event mouse_button_y in
-    handle_mouse_up mouse_x mouse_y;
+    handle_mouse_up mouse_x mouse_y click;
+    recent_click := click
   | `Mouse_motion ->
     (*let mouse_x = get event mouse_button_x in
     let mouse_y = get event mouse_button_y in *)

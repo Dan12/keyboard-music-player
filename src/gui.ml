@@ -342,7 +342,6 @@ let draw_filename_button r x y size i button_with_state =
   let (button, state) = button_with_state in
   let rect = draw_key_to_rect r x y (size * 5) size state in
   Array.set !filename_button_rects i (Some (rect, button));
-  print_endline (string_of_int (Array.length !filename_button_rects));
 
   let font = get_font (3 * size / 8) in
   draw_text r (x + (3 * size / 2)) (y + size/2) font button
