@@ -45,6 +45,16 @@ let clear_keyboard () =
     done;
   done
 
+let contains s1 s2 =
+  let size = String.length s1 in
+  let contain = ref false in
+  let i = ref 0 in
+  while !i < (String.length s2 - size + 1) && !contain = false do
+    if String.sub s2 !i size = s1 then contain := true
+    else i := !i + 1
+  done;
+  !contain
+
 let handle_mouse_up x y =
   match Model.get_state () with
   | SKeyboard -> begin
@@ -70,7 +80,9 @@ let handle_mouse_up x y =
              | Some button ->
                let index = String.index button '_' in
                let folder = String.sub button 0 index in
+               if contains "midi" button then
                Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
+               else Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button))
              | None -> ()
            end;
            Model.set_filename_buttons (Model.get_file_location());
