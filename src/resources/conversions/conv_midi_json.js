@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-var data = fs.readFileSync('ghet_midi.json');
+var data = fs.readFileSync('elec_midi.json');
 var json_data = JSON.parse(data);
 
 for(var i = 0; i < json_data["data"].length; i++) {
