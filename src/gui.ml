@@ -342,17 +342,28 @@ let draw_filename_button r x y size i button_with_state =
   let (button, state) = button_with_state in
   let rect = draw_key_to_rect r x y (size * 5) size state in
   Array.set !filename_button_rects i (Some (rect, button));
+  print_endline (string_of_int (Array.length !filename_button_rects));
 
   let font = get_font (3 * size / 8) in
   draw_text r (x + (3 * size / 2)) (y + size/2) font button
 
 let draw_filename_buttons r x y w =
-  let offset = w / (Model.get_num_filename_buttons ()) in
+  let offset = w / ((Model.get_num_filename_buttons ())/2) in
   let size = (100 - percent_key_padding) * offset / 100 in
+  let buttons = Model.get_filename_buttons() in
+  let half = if (Array.length buttons) mod 2 = 0 then (Array.length buttons)/2 else ((Array.length buttons)/2)+1 in
+  let first_half = Array.sub buttons 0 half in
+  let second_half = Array.sub buttons half ((Array.length buttons) - half) in
+  let final_i = ref 0 in
   Array.iteri (fun i button ->
       let button_y = i * offset + y in
-      draw_filename_button r x button_y size i button
-    ) (Model.get_filename_buttons());
+      draw_filename_button r x button_y size i button;
+      final_i := !final_i + 1
+    ) first_half;
+  Array.iteri (fun i button ->
+      let button_y = i * offset + y in
+      draw_filename_button r (x+(size*7)) button_y size (i + !final_i) button
+    ) second_half;
   size
 
 let draw_filechooser r =
@@ -360,7 +371,7 @@ let draw_filechooser r =
   filename_button_rects := Array.make (num_files) None;
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
-  
+
   clear r;
   let filename_buttons_x = window_w / 25 in
   let filename_buttons_y = window_h / 15 in
