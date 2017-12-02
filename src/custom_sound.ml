@@ -60,7 +60,7 @@ let get_next_sample s =
         4. *. (1. -. x) -. 1.
     end
   in
-  let amp_int = int_of_float (amp *. volume *. 2147483648.) in
+  let amp_int = int_of_float (amp *. volume *. 2147483647.) in
   s.sample <- s.sample + 1;
   (amp_int, amp_int)
     

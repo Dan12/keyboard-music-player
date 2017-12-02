@@ -91,6 +91,17 @@ let add_custom_sound (cur_l, cur_r) sound =
   let (sample_l, sample_r) = Custom_sound.get_next_sample sound in
   (cur_l+sample_l, cur_r+sample_r)
 
+
+let max_32 = 2147483647
+let min_32 = -2147483648
+let clip s =
+  if s > max_32 then
+    max_32
+  else if s < min_32 then
+    min_32
+  else
+    s
+
 let audio_callback output =
   begin
   match !sound_manager_singleton with
@@ -101,6 +112,8 @@ let audio_callback output =
         let arr_len = ((Array1.dim output / 2) - 1) in
         for i = 0 to arr_len do
           let (sample_l, sample_r) = List.fold_left add_custom_sound (0,0) s.synth_sounds_playing in
+          let sample_l = clip sample_l in
+          let sample_r = clip sample_r in
           output.{2*i} <- Int32.of_int (sample_l);
           output.{2*i + 1} <- Int32.of_int (sample_r);
         done;
@@ -110,8 +123,10 @@ let audio_callback output =
         let arr_len = ((Array1.dim output / 2) - 1) in
         for i = 0 to arr_len do
           let (sample_l, sample_r) = List.fold_left add_sound (0,0) s.sounds_playing in
-          output.{2*i} <- Int32.of_int (sample_l lsl 15);
-          output.{2*i + 1} <- Int32.of_int (sample_r lsl 15);
+          let sample_l = clip (sample_l lsl 15) in
+          let sample_r = clip (sample_r lsl 15) in
+          output.{2*i} <- Int32.of_int (sample_l);
+          output.{2*i + 1} <- Int32.of_int (sample_r);
         done;
         (* Remove all sounds not being played anymore *)
         let filtered_sounds = List.filter Sound.is_playing s.sounds_playing in
