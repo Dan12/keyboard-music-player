@@ -1,4 +1,4 @@
-type waveform = Sine
+type waveform = Sine | Triangle | Saw | Square
 
 type custom_sound
 

@@ -1,4 +1,6 @@
-type waveform = Sine
+(* code adapted from: https://github.com/savonet/ocaml-mm *)
+
+type waveform = Sine | Triangle | Saw | Square
 
 type custom_sound = {
   waveform : waveform;
@@ -26,14 +28,42 @@ let create w (octave, note) =
 let start s =
   s.sample <- 0
 
+(** Fractional part of a float. *)
+let fracf x =
+  if x < 1. then
+    x
+  else if x < 2. then
+    x -. 1.
+  else
+    fst (modf x)
+
 let get_next_sample s =
-  match s.waveform with
-  | Sine ->
-    let theta = 2. *. pi *. s.freq /. sample_rate in
-    let amp = volume *. sin(theta *. (float_of_int s.sample)) in
-    let amp_int = int_of_float (amp *. 2147483648.) in
-    s.sample <- s.sample + 1;
-    (amp_int, amp_int)
+  let t = (float_of_int s.sample) in
+  let actual_freq = s.freq /. sample_rate in
+  let amp = 
+    begin
+    match s.waveform with
+    | Sine ->
+      let theta = 2. *. pi *. actual_freq in
+      sin(theta *. t)
+    | Square ->
+      let theta = fracf (t *. actual_freq) in
+      if theta < 0.5 then 1. else -1.
+    | Saw ->
+      let x = fracf (t *. actual_freq) in
+      2. *. x -. 1.
+    | Triangle ->
+      let x = fracf (t *. actual_freq) +. 0.25 in
+      if x < 0.5 then 
+        4. *. x -. 1. 
+      else 
+        4. *. (1. -. x) -. 1.
+    end
+  in
+  let amp_int = int_of_float (amp *. volume *. 2147483648.) in
+  s.sample <- s.sample + 1;
+  (amp_int, amp_int)
+    
 
 let is_equal (o,n) s =
   let o = o + octave_shift in
