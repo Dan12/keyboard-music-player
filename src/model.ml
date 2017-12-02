@@ -4,7 +4,7 @@ open Song
 
 type state = SKeyboard | SFileChooser
 
-let fft = Audio_effects.init 10
+let fft = ref (Audio_effects.init 10)
 
 type model = {
   mutable window_w: int;
@@ -135,11 +135,14 @@ let midi_is_playing () = model.is_playing
 let midi_should_load () = model.should_load_midi
 
 let set_buffer b =
-  (* let (left, _) = Audio_effects.complex_create b in
+  let (left, _) = Audio_effects.complex_create b in
   Audio_effects.cosine left;
-  Audio_effects.fft fft left;
-  model.buffer <- left *)
-  ()
+  if Bigarray.Array1.dim b = 1024 then
+    fft := Audio_effects.init 9
+  else
+    ();
+  Audio_effects.fft (!fft) left;
+  model.buffer <- left
 
 let get_buffer () =
   model.buffer

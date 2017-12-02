@@ -1,3 +1,5 @@
+(* code adapted from: https://github.com/savonet/ocaml-mm *)
+
 (** Internal data for computing FFT. *)
 type t
 

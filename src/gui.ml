@@ -37,7 +37,7 @@ let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
 let min_graphic_color = Sdl.Color.create 0 255 0 255
 let max_graphic_color = Sdl.Color.create 255 0 0 255
 
-(* let key_background = Sdl.Color.create 255 255 255 100 *)
+let key_background = Sdl.Color.create 255 255 255 220
 
 let (>>=) o f = match o with
   | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
@@ -54,7 +54,8 @@ let set_color r color =
   let red = Sdl.Color.r color in
   let green = Sdl.Color.g color in
   let blue = Sdl.Color.b color in
-  let _ = Sdl.set_render_draw_color r red green blue 255 in
+  let alpha = Sdl.Color.a color in
+  let _ = Sdl.set_render_draw_color r red green blue alpha in
   ()
 
 let draw_text r x y font str =
@@ -97,15 +98,17 @@ let draw_key_text r x y w h font = function
   | Empty -> ()
 
 let draw_key_to_rect r x y w h key_state =
+
   (match key_state with
-   | KSDown -> set_color r keyboard_pressed_color;
-     let rect = Sdl.Rect.create x y w h in
-     let _ = Sdl.render_fill_rect r (Some rect) in
-     ()
-   | _ -> ());
-  (* set_color r key_background;
-  let rect = Sdl.Rect.create x y w h in
-  let _ = Sdl.render_fill_rect r (Some rect) in *)
+  | KSDown -> set_color r keyboard_pressed_color;
+    let rect = Sdl.Rect.create x y w h in
+    let _ = Sdl.render_fill_rect r (Some rect) in
+    ()
+  | _ -> set_color r key_background;
+    let rect = Sdl.Rect.create x y w h in
+    let _ = Sdl.render_fill_rect r (Some rect) in
+    ());
+
   set_color r keyboard_border_color;
   let rect = Sdl.Rect.create x y w h in
   let _ = Sdl.render_draw_rect r (Some rect) in

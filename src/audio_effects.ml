@@ -1,3 +1,5 @@
+(* code adapted from: https://github.com/savonet/ocaml-mm *)
+
 let pi = 3.14159265358979323846
 
 type t =
