@@ -1,0 +1,11 @@
+type waveform = Sine
+
+type custom_sound
+
+val create : waveform -> int*int -> custom_sound
+
+val start : custom_sound -> unit
+
+val get_next_sample : custom_sound -> int*int
+
+val is_equal :  int*int -> custom_sound -> bool
