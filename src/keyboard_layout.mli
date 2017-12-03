@@ -2,14 +2,18 @@
  * file and the mapping of keyboard keys to sound positions.
  *)
 
+(* This type is a parse keyboard layout *)
 type keyboard_layout
 
+(* This is the type of possible outputs from a layout
+ *)
 type keyboard_output =
   | KOKeydown of int*int
   | KOKeyup of int*int
   | KOSoundpackSet of int
   | KOUnmapped
 
+(* This is the type of possible inputs to a layout*)
 type keyboard_input =
   | KIKeydown of int
   | KIKeyup of int

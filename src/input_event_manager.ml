@@ -51,58 +51,68 @@ let contains s1 s2 =
   let contain = ref false in
   let i = ref 0 in
   while !i < (String.length s2 - size + 1) && !contain = false do
-    if String.sub s2 !i size = s1 then contain := true
-    else i := !i + 1
+    if String.sub s2 !i size = s1 then 
+      contain := true
+    else 
+      i := !i + 1
   done;
   !contain
 
 let handle_mouse_up x y t =
   match Model.get_state () with
-  | SKeyboard -> begin
-    match Gui.button_pressed (x, y) with
-    | Some button ->
-      (match button with
-       | Load -> Model.set_state Model.SFileChooser
-       | Play -> Model.start_midi()
-       | Pause -> Model.pause_midi()
-       | Stop -> Model.stop_midi();
-         clear_keyboard())
-    | None -> ()
-    end
-  | SFileChooser -> begin
-      match Gui.file_button_pressed (x, y) with
+  | SKeyboard -> 
+    begin
+      match Gui.button_pressed (x, y) with
       | Some button ->
         (match button with
-         | Cancel ->
-           Model.set_filename_buttons (Model.get_file_location());
-           Model.set_state Model.SKeyboard
-         | Select -> begin
-             match File_button.selected_filename (Model.get_filename_buttons()) with
-             | Some button ->
-               let index = String.index button '_' in
-               let folder = String.sub button 0 index in
-               if contains "midi" button then
-               Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
-               else Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button))
-             | None -> ()
-           end;
-           Model.set_filename_buttons (Model.get_file_location());
-          Model.set_state Model.SKeyboard)
-      | None -> ()
-    end; begin
-      match Gui.filename_button_pressed (x, y) with
-      | Some button ->
-        if (t -. !recent_click) < 0.3 then
-          let index = String.index button '_' in
-          let folder = String.sub button 0 index in
-          if contains "midi" button then
-            Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
-          else Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button));
-          Model.set_filename_buttons (Model.get_file_location());
-          Model.set_state Model.SKeyboard
-        else File_button.press_filename_button button (Model.get_filename_buttons())
+        | Load -> Model.set_state Model.SFileChooser
+        | Play -> Model.start_midi()
+        | Pause -> Model.pause_midi()
+        | Stop -> Model.stop_midi();
+          clear_keyboard())
       | None -> ()
     end
+  | SFileChooser -> 
+    begin
+      match Gui.file_button_pressed (x, y) with
+      | Some button ->
+        begin
+          match button with
+            | Cancel ->
+              Model.set_filename_buttons (Model.get_file_location());
+              Model.set_state Model.SKeyboard
+            | Select -> 
+              begin
+                match File_button.selected_filename (Model.get_filename_buttons()) with
+                | Some button ->
+                  let index = String.index button '_' in
+                  let folder = String.sub button 0 index in
+                  if contains "midi" button then
+                    Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
+                  else 
+                    Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button))
+                | None -> ()
+              end;
+              Model.set_filename_buttons (Model.get_file_location());
+            Model.set_state Model.SKeyboard
+          end;
+      | None -> ()
+    end; 
+
+    match Gui.filename_button_pressed (x, y) with
+    | Some button ->
+      if (t -. !recent_click) < 0.3 then
+        let index = String.index button '_' in
+        let folder = String.sub button 0 index in
+        if contains "midi" button then
+          Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
+        else 
+          Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button));
+        Model.set_filename_buttons (Model.get_file_location());
+        Model.set_state Model.SKeyboard
+      else 
+        File_button.press_filename_button button (Model.get_filename_buttons())
+    | None -> ()
 
 let event_callback event =
   match enum (get event typ) with

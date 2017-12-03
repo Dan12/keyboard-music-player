@@ -8,11 +8,6 @@
  *)
 val init : int*int -> unit
 
-(* [quit] will clean up and close the Sdl context. Has no effect if called
- * before init.
- *)
-val quit : unit -> unit
-
 (* [set_draw_callback draw_fun] set the draw function to
  * be the specified function.
  *)

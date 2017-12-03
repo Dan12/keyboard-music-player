@@ -5,6 +5,7 @@ type sound_manager = {
   mutable sounds_playing: Sound.sound list;
 }
 
+(* [manager] is the singleton instance of the sound_manager *)
 let manager = {
   sounds_playing = [];
 }

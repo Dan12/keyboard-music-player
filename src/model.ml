@@ -2,8 +2,15 @@ open Keyboard
 open Keyboard_layout
 open Song
 
+(* The possible states of the interface
+ * The keyboard lets the user play songs
+ * The file chooser lets a user choose a file
+ *)
 type state = SKeyboard | SFileChooser
 
+(* The fft instance to use when computing fft on 
+ * the current audio buffer
+ *)
 let fft = ref (Audio_effects.init 10)
 
 type model = {
@@ -24,6 +31,7 @@ type model = {
   mutable buffer: Complex.t array;
 }
 
+(* The model with all the default values initialized *)
 let model:model =
   let eq_song = Song.parse_song_file "resources/eq_data/eq_song.json" in
   let keyboard_layout = Keyboard_layout.parse_layout

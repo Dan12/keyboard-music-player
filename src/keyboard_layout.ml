@@ -20,12 +20,18 @@ type keyboard_input =
   | KIKeydown of int
   | KIKeyup of int
 
+(* [parse_arrows map arrows] add a soundpack keyboard mapping
+ * to [map] for each arrow key in [arrows]
+ *)
 let parse_arrows map lst =
   let add_to_map i num =
     Hashtbl.add map (num |> to_int) (Soundpack i)
   in
   List.iteri add_to_map lst
 
+(* [parse_arrows map keys] add a RowCol keyboard mapping
+ * to [map] for each key in [keys]
+ *)
 let parse_keyboard map lst =
   let add_col r i num =
     Hashtbl.add map (num |> to_int) (RowCol (r,i))
@@ -35,6 +41,9 @@ let parse_keyboard map lst =
   in
   List.iteri add_row lst
 
+(* [create_keyboard key_array dims] generate a 2D character map for [keys]
+ * with the given [dims]
+ *)
 let create_keyboard keys (rows, cols) =
   let arr = Array.make_matrix rows cols Empty in
   let add_col r c str_json =
@@ -70,6 +79,10 @@ let parse_layout filename =
   let keys = create_keyboard key_array (rows, cols) in
     (map, keys)
 
+(* [to_upper keycode] converts [keycode] to the ascii uppercase
+ * representation of [keycode] if [keycode] represents a lowercase
+ * ascii alphabet character
+ *)
 let to_upper keycode =
   let a = 97 in
   let z = 122 in

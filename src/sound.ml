@@ -2,14 +2,14 @@ open Bigarray
 open Tsdl
 
 type sound = {
-  pitches: (int, Bigarray.int16_signed_elt) Tsdl.Sdl.bigarray list;
+  pitches: (int, int16_signed_elt) Tsdl.Sdl.bigarray list;
   looping: bool;
   hold_to_play: bool;
   groups: int list;
   quantization: int;
   mutable playing: bool;
   mutable pitch_index: int;
-  mutable current_pitch: (int, Bigarray.int16_signed_elt) Tsdl.Sdl.bigarray;
+  mutable current_pitch: (int, int16_signed_elt) Tsdl.Sdl.bigarray;
   mutable current_pitch_len: int;
   mutable buffer_index: int;
 }
