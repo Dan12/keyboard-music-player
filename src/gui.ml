@@ -32,7 +32,7 @@ let max_amplitude = 60
 let background_color = Sdl.Color.create 255 255 255 255
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
-let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
+let keyboard_pressed_color = Sdl.Color.create 90 90 255 255
 
 let min_graphic_color = Sdl.Color.create 0 255 0 255
 let max_graphic_color = Sdl.Color.create 255 0 0 255
