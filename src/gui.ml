@@ -1,3 +1,5 @@
+(* TODO needs comments for all functions and variables except draw *)
+
 open Tsdl
 open Tsdl_ttf
 open Keyboard_layout
@@ -32,7 +34,7 @@ let max_amplitude = 60
 let background_color = Sdl.Color.create 255 255 255 255
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
-let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
+let keyboard_pressed_color = Sdl.Color.create 90 90 255 255
 
 let min_graphic_color = Sdl.Color.create 0 255 0 255
 let max_graphic_color = Sdl.Color.create 255 0 0 255
@@ -316,7 +318,7 @@ let draw_output r =
   let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
 
   let buttons_w = arrows_w * 2 in
-  let buttons_x = arrows_x in
+  let buttons_x = keyboard_padding_w + keyboard_w / 2 - buttons_w / 2 in
   let buttons_y = 22 * arrows_h / 20 + arrows_y in
   let _ = draw_buttons r buttons_x buttons_y buttons_w in
   present r

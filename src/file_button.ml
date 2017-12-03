@@ -14,8 +14,10 @@ type file_buttons = file_button array
 let num_file_buttons = 2
 
 let get_file_button i =
-  if i = 0 then Cancel
-  else Select
+  if i = 0 then
+    Cancel
+  else 
+    Select
 
 let clear buttons =
   for i = 0 to num_file_buttons-1 do
@@ -37,8 +39,10 @@ let contains s1 s2 =
   let contain = ref false in
   let i = ref 0 in
   while !i < (String.length s2 - size + 1) && !contain = false do
-    if String.sub s2 !i size = s1 then contain := true
-    else i := !i + 1
+    if String.sub s2 !i size = s1 then
+      contain := true
+    else 
+      i := !i + 1
   done;
   !contain
 
@@ -46,34 +50,51 @@ let create_empty_filename_list () =
   Array.make 0 ("",KSUp)
 
 let create_filename_buttons f =
-  let folder_list = if Sys.is_directory (f) then
-    Sys.readdir f |> Array.to_list
-    else [] in
+  let folder_list = 
+    if Sys.is_directory (f) then
+      Sys.readdir f |> Array.to_list
+    else 
+      [] in
   if (List.length folder_list) > 0 then
-    let data_list = List.fold_left
-        (fun j s -> if contains "data" s
-          then (f ^ s ^ Filename.dir_sep)::j else j) [] folder_list in
-    let filename_list = List.fold_left
-        (fun j s -> if Sys.is_directory (s) then
-            (Sys.readdir s |> Array.to_list)@j else j) [] data_list in
-    let json_list = List.fold_left
-      (fun j s -> if contains ".json" s
-        then s::j else j) [] filename_list in
+    let add_to_data_list j s =
+      if contains "data" s then 
+        (f ^ s ^ Filename.dir_sep)::j 
+      else 
+        j in
+    let data_list = List.fold_left add_to_data_list [] folder_list in
+
+    let add_to_filename_list j s =
+      if Sys.is_directory (s) then
+        (Sys.readdir s |> Array.to_list) @ j 
+      else 
+        j in
+    let filename_list = List.fold_left add_to_filename_list [] data_list in
+
+    let add_to_json_list j s = 
+      if contains ".json" s then 
+        s::j
+      else
+        j in
+    let json_list = List.fold_left add_to_json_list [] filename_list in
+
     let size = List.length json_list in
     if size > 0 then
       let filename_buttons = Array.make size (((List.hd json_list):filename_button), KSUp) in
       clear_filename size json_list filename_buttons;
       Array.sort (compare) filename_buttons;
       filename_buttons
-    else Array.make 0 ("",KSUp)
-  else Array.make 0 ("",KSUp)
+    else 
+      Array.make 0 ("",KSUp)
+  else 
+    Array.make 0 ("",KSUp)
 
 let press_filename_button file buttons =
   for i = 0 to Array.length(buttons)-1 do
     let (button, state) = Array.get buttons i in
     if button = file then
       buttons.(i) <- (button, KSDown)
-    else buttons.(i) <- (button, KSUp)
+    else 
+      buttons.(i) <- (button, KSUp)
   done
 
 let selected_filename buttons =

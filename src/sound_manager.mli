@@ -6,9 +6,6 @@
  * because the internal state will be entirely mutable.
  *)
 
-(* [init] initialize the sound manager *)
-val init : unit -> unit
-
 (* [key_pressed (r,c)] callback when key is pressed on the keyboard
  * row [r] and column [c]
  *)

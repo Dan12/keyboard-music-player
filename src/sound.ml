@@ -2,14 +2,14 @@ open Bigarray
 open Tsdl
 
 type sound = {
-  pitches: (int, Bigarray.int16_signed_elt) Tsdl.Sdl.bigarray list;
+  pitches: (int, int16_signed_elt) Tsdl.Sdl.bigarray list;
   looping: bool;
   hold_to_play: bool;
   groups: int list;
   quantization: int;
   mutable playing: bool;
   mutable pitch_index: int;
-  mutable current_pitch: (int, Bigarray.int16_signed_elt) Tsdl.Sdl.bigarray;
+  mutable current_pitch: (int, int16_signed_elt) Tsdl.Sdl.bigarray;
   mutable current_pitch_len: int;
   mutable buffer_index: int;
 }
@@ -67,11 +67,13 @@ let next_pitch sound =
   sound.current_pitch_len <- Array1.dim sound.current_pitch
 
 let get_next_values sound =
+  (* default to (0,0) even if oob, don't want to throw error *)
   if sound.playing then
     if sound.buffer_index + 1 >= sound.current_pitch_len then
       let _ = sound.playing <- false in
       (0,0)
     else
+      (* stereo wav stored in l,r,l,r,l,r,... *)
       let l = sound.current_pitch.{sound.buffer_index} in
       let r = sound.current_pitch.{sound.buffer_index+1} in
       let _ = sound.buffer_index <- sound.buffer_index + 2 in

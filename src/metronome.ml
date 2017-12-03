@@ -1,3 +1,5 @@
+(* TODO add comments for non mli variables *)
+
 let start_time = ref (Unix.gettimeofday())
 let last_time = ref (Unix.gettimeofday())
 let cached_beat = ref 0.0

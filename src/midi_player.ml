@@ -1,3 +1,5 @@
+(* TODO add comments for non mli variables *)
+
 open Midi
 
 let midi_singleton:(midi ref) = ref empty
