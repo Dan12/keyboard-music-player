@@ -20,7 +20,7 @@ let key_pressed row_col =
     | Some s ->
       Custom_sound.start s
     | None ->
-      let new_sound = Custom_sound.create Custom_sound.Sine row_col in
+      let new_sound = Custom_sound.create Custom_sound.Square row_col in
       manager.synth_sounds_playing <- new_sound::manager.synth_sounds_playing
   else
     let song = Model.get_song () in
@@ -93,16 +93,18 @@ let audio_callback output =
       output.{2*i + 1} <- Int32.of_int (sample_r);
     done;
   else
-    let arr_len = ((Array1.dim output / 2) - 1) in
-    for i = 0 to arr_len do
-      let (sample_l, sample_r) = List.fold_left add_sound (0,0) manager.sounds_playing in
-      let sample_l = clip (sample_l lsl 15) in
-      let sample_r = clip (sample_r lsl 15) in
-      output.{2*i} <- Int32.of_int (sample_l lsl 15);
-      output.{2*i + 1} <- Int32.of_int (sample_r lsl 15);
-    done;
-    (* Remove all sounds not being played anymore *)
-    let filtered_sounds = List.filter Sound.is_playing manager.sounds_playing in
-    manager.sounds_playing <- filtered_sounds;
-    Model.set_buffer output
+    begin
+      let arr_len = ((Array1.dim output / 2) - 1) in
+      for i = 0 to arr_len do
+        let (sample_l, sample_r) = List.fold_left add_sound (0,0) manager.sounds_playing in
+        let sample_l = clip (sample_l lsl 15) in
+        let sample_r = clip (sample_r lsl 15) in
+        output.{2*i} <- Int32.of_int (sample_l lsl 15);
+        output.{2*i + 1} <- Int32.of_int (sample_r lsl 15);
+      done;
+      (* Remove all sounds not being played anymore *)
+      let filtered_sounds = List.filter Sound.is_playing manager.sounds_playing in
+      manager.sounds_playing <- filtered_sounds;
+    end;
+  Model.set_buffer output
   
