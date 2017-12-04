@@ -173,6 +173,8 @@ let get_bpm_pos_min () =
 let get_bpm_pos_max () =
   model.bpm_pos_max
 
+let set_midi_load load = model.should_load_midi <- load
+
 let set_scrubbing scrubbing =
   model.scrubbing <- scrubbing
 

@@ -93,6 +93,9 @@ val get_bpm_pos_min : unit -> int
 (* [get_bpm_pos_max] returns [bpm_pos_max]. *)
 val get_bpm_pos_max : unit -> int
 
+(* [set_midi_load load] sets the value of [should_load_midi]*)
+val set_midi_load : bool -> unit
+
 (* [set_scrubbing scrubbing] changes [scrubbing]. *)
 val set_scrubbing : bool -> unit
 

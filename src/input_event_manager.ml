@@ -60,9 +60,10 @@ let contains s1 s2 =
 
 let handle_mouse_up x y t =
   if Model.is_scrubbing() then
-    Model.set_scrubbing false;
+    (Model.set_scrubbing false;
+     clear_keyboard());
   if Model.is_bpm_scrubbing() then
-    Model.set_bpm_scrubbing false;
+     Model.set_bpm_scrubbing false;
   clear_keyboard();
   match Model.get_state () with
   | SKeyboard ->
