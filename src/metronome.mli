@@ -7,6 +7,9 @@ val set_bpm : int -> unit
 (* get the current beat/measure or something *)
 val get_beat : unit -> float
 
+(* [set_beat beat] sets the current beat/measure. *)
+val set_beat : float -> unit
+
 (* [unpause] restarts the metronome w/o resetting the beat. *)
 val unpause : unit -> unit
 
