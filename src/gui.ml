@@ -391,22 +391,6 @@ let draw r =
   | SKeyboard -> draw_output r
   | SFileChooser -> draw_filechooser r
 
-let button_pressed (x,y) =
-  let button_rect_list = Array.to_list button_rects in
-  let pressed_button_rect = List.find_opt (fun button_rect_option ->
-      match button_rect_option with
-      | None -> false
-      | Some (rect, button) ->
-        let rect_x = Sdl.Rect.x rect in
-        let rect_y = Sdl.Rect.y rect in
-        let rect_w = Sdl.Rect.w rect in
-        let rect_h = Sdl.Rect.h rect in
-        rect_x <= x && x <= (rect_x+rect_w) && rect_y <= y && y <= (rect_y+rect_h)
-    ) button_rect_list in
-  match pressed_button_rect with
-  | Some (Some (rect, button)) -> Some button
-  | _ -> None
-
 let file_button_pressed (x,y) =
   let file_button_rect_list = Array.to_list file_button_rects in
   let pressed_button_rect = List.find_opt (fun button_rect_option ->
