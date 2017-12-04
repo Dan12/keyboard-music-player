@@ -60,7 +60,6 @@ class biquad_filter samplerate (kind:[`Low_pass | `High_pass | `Band_pass | `Not
       (a +. 1.) -. (a -. 1.) *. cos_w0 -. s
     in
     p0 <- b0 /. a0;
-    print_endline (string_of_float p0);
     p1 <- b1 /. a0;
     p2 <- b2 /. a0;
     q1 <- a1 /. a0;
