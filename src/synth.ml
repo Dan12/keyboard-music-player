@@ -75,7 +75,7 @@ let get_next_sample s =
   (* let filter_ctrl = Filter.process s.filter adsr_ctrl in *)
   (* let flt_arr = Array.make 1 adsr_ctrl in
   lpf#process flt_arr 0 1; *)
-  let amp_int = int_of_float (adsr_ctrl.(0) *. 2147483647.) in
+  let amp_int = int_of_float (adsr_ctrl *. 2147483647.) in
   s.sample <- s.sample + 1;
   (amp_int, amp_int)
     
