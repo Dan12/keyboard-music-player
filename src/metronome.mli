@@ -14,9 +14,9 @@ val unpause : unit -> unit
 val reset : unit -> unit
 
 (**
-   NOTE: When using this file for the first time, call functions in the
-   following order: reset(), set_bpm(), tick(), get_beat().
-   OR in this order: set_bpm(), reset(), tick(), get_beat().
-   But no other order, please.
-   Then call tick() every once in a while.
-*)
+ * NOTE: When using this file for the first time, call functions in the
+ * following order: reset(), set_bpm(), tick(), get_beat().
+ * OR in this order: set_bpm(), reset(), tick(), get_beat().
+ * But no other order, please.
+ * Then call tick() every once in a while.
+ *)

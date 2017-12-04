@@ -1,8 +1,7 @@
+(* These states are the various states a key can be in *)
 type key_state =
   | KSDown
   | KSUp
-
-(* These states are the various states a key can be in *)
 
 type keyboard = key_state array array
 

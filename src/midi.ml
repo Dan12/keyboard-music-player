@@ -1,3 +1,5 @@
+(* TODO add comments for non mli functions *)
+
 open Yojson.Basic.Util
 open Input_event_manager
 
@@ -42,11 +44,11 @@ let parse_midi filename =
   {name = name; notes = notes; played_notes = []}
 
 (* [set_key_downs notes beat] will artificially send key down events for the
-   notes whose beat has passed. Assumes notes is in ascending order of beat.
-   Returns (new_notes, new_played_notes).
-   [new_notes] = the remaining unplayed notes in midi, still in order.
-   [new_played_notes] = the notes that have just been played.
-*)
+ * notes whose beat has passed. Assumes notes is in ascending order of beat.
+ * Returns (new_notes, new_played_notes).
+ * [new_notes] = the remaining unplayed notes in midi, still in order.
+ * [new_played_notes] = the notes that have just been played.
+ *)
 let rec set_key_downs notes beat =
   match notes with
   | [] -> ([], [])
@@ -90,3 +92,6 @@ let tick midi beat =
   let remaining_played_notes = set_key_ups midi.played_notes beat in
   midi.notes <- new_notes;
   midi.played_notes <- List.rev_append new_played_notes remaining_played_notes
+
+let is_done midi =
+  (List.length midi.notes) = 0

@@ -9,6 +9,9 @@ type song = {
   mutable soundpack: int;
 }
 
+(* [parse_sound relative_path s] parse json sound [s] using
+ * [relative_path] to find its pitches.
+ *)
 let parse_sound base s_json =
   let s = to_assoc s_json in
   if s = [] then
@@ -34,11 +37,17 @@ let parse_sound base s_json =
     let sound = Sound.create pitches sound_options in
     Sound sound
 
+(* [parse_sound_row relative_path r] parse json soundpack row [r]
+ * with sounds at [relative_path]
+ *)
 let parse_sound_row base r_json =
   let r = to_list r_json in
   let row_list = List.map (parse_sound base) r in
   Array.of_list row_list
 
+(* [parse_soundpack relative_path s] parse json soundpack [s]
+ * with sounds at [relative_path]
+ *)
 let parse_soundpack base s_json =
   let s = to_list s_json in
   let soundpack = List.map (parse_sound_row base) s in

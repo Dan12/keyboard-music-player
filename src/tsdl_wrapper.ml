@@ -3,31 +3,49 @@ open Result
 open Tsdl_ttf
 open Bigarray
 
+(* the tsdl state is the state of the wrapper *)
 type tsdl_state = {
   window: Tsdl.Sdl.window;
   renderer: Tsdl.Sdl.renderer;
   audio_device: Tsdl.Sdl.audio_device_id;
   draw_callback: (Tsdl.Sdl.renderer -> unit) option ref;
-  audio_callback: ((int32, int32_elt, c_layout) Bigarray.Array1.t -> unit) option ref;
+  audio_callback: ((int32, int32_elt, c_layout) Array1.t -> unit) option ref;
   event_callback: (Tsdl.Sdl.event -> unit) option ref;
   tick_callback: (unit -> unit) option ref;
 }
 
+(* [tsdl_state_singleton] is the singleton instance of teh tsdl_state
+ * There is only 1 tsdl state, because once the main loop is started
+ * you can only exit by quitting
+ *)
 let tsdl_state_singleton = ref None
 
+(* [o >>= f] is the Result/error handling bind infix function
+ * that executes [f x] if [o] is [`Ok x].
+ * Otherwise, prints the error message.
+ *)
 let (>>=) o f =
   match o with
   | Error (`Msg e) ->
     failwith (Printf.sprintf "Error %s" e)
   | Ok a -> f a
 
+(* [test_state f] Tsld state bind function that only
+ * executes [f state] if [state] is not None
+ *)
 let test_state f =
   match !tsdl_state_singleton with
   | None -> ()
   | Some s -> f s
 
+(* This mutex will lock on the audio callback and the event callback
+ * all mutually exclusive actions should be done in one or the other.
+ * Note that the tick callback and draw callback are not mutually exclusive
+ * to the audio lock.
+ *)
 let audio_mutex = Mutex.create ()
 
+(* [audio_callback output] wrapper for the audio callback in the state *)
 let audio_callback output =
   Mutex.lock audio_mutex;
 
@@ -40,13 +58,20 @@ let audio_callback output =
 
   Mutex.unlock audio_mutex
 
+(* [audio_callback_ref] Keeps a ref to the audio callback so that it 
+ * doesn't get garbage collected *)
 let audio_callback_ref =
-  ref (Some (Sdl.audio_callback Bigarray.int32 audio_callback))
+  ref (Some (Sdl.audio_callback int32 audio_callback))
 
+(* samples per second *)
 let audio_freq = 44100
 (* If set below 1024, there seems to be a race condition
  * and close deadlocks inside of quit *)
 let audio_samples = 1024
+
+(* [audio_setup] initializes the audio callback and returns a device id to
+ * identify the audio device created during initialization
+ *)
 let audio_setup () =
   let desired_audiospec =
     { Sdl.as_freq = audio_freq;
@@ -62,6 +87,9 @@ let audio_setup () =
   Sdl.open_audio_device None false desired_audiospec 0 >>= fun (device_id, _) ->
   device_id
 
+(* [video_setup] sets up the rendered with the given window size
+ * and returns an instance of the initalized window and renderer
+ *)
 let video_setup (w,h) =
   Sdl.create_window_and_renderer
     ~w:w
@@ -89,10 +117,14 @@ let init window_dims =
       tick_callback = ref None;
     }
 
+(* [quit] will clean up and close the Sdl context. Has no effect if called
+ * before init.
+ *)
 let quit () =
   test_state (fun s ->
     print_endline "Safely exiting and cleaning up";
     Sdl.destroy_window s.window;
+    (* This deadlocks, so just crash *)
     (* Mutex.lock audio_mutex;
     Sdl.pause_audio_device s.audio_device true;
     Sdl.close_audio_device s.audio_device;
@@ -174,6 +206,9 @@ let start_main_loop () =
     done
   done)
 
+(* The spec to use when loading a wav file.
+ * 16 bit saves disk space and is the default export format of ffmpeg.
+ *)
 let wav_audio_spec =
   {
     Sdl.as_freq = audio_freq;
@@ -187,13 +222,14 @@ let wav_audio_spec =
     (* set the audio callback to get the next chunk of the audio buffer *)
     Sdl.as_callback = None;
   }
+  
 let load_wav filename =
   match Sdl.rw_from_file filename "r" with
   | Error (_) ->
     print_endline "error reading file";
     None
   | Ok rw_ops ->
-    match Sdl.load_wav_rw rw_ops wav_audio_spec Bigarray.int16_signed with
+    match Sdl.load_wav_rw rw_ops wav_audio_spec int16_signed with
     | Error (_) ->
       let _ = Sdl.rw_close rw_ops in
       print_endline "error parsing wav file";
