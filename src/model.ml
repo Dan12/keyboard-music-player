@@ -8,7 +8,7 @@ open Song
  *)
 type state = SKeyboard | SFileChooser
 
-(* The fft instance to use when computing fft on 
+(* The fft instance to use when computing fft on
  * the current audio buffer
  *)
 let fft = ref (Audio_effects.init 10)
