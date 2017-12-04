@@ -11,7 +11,7 @@ type state = SKeyboard | SFileChooser
 (* The fft instance to use when computing fft on
  * the current audio buffer
  *)
-let fft = ref (Audio_effects.init 10)
+let fft = ref (Fft.init 10)
 
 type model = {
   mutable window_w: int;
@@ -143,13 +143,13 @@ let midi_is_playing () = model.is_playing
 let midi_should_load () = model.should_load_midi
 
 let set_buffer b =
-  let (left, _) = Audio_effects.complex_create b in
-  (* Audio_effects.cosine left; *)
+  let (left, _) = Fft.complex_create b in
+  Fft.cosine left;
   if Bigarray.Array1.dim b = 1024 then
-    fft := Audio_effects.init 9
+    fft := Fft.init 9
   else
     ();
-  Audio_effects.fft (!fft) left;
+  Fft.fft (!fft) left;
   model.buffer <- left
 
 let get_buffer () =
