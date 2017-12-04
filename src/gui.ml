@@ -35,7 +35,7 @@ let keyboard_text_color = Sdl.Color.create 0 0 0 255
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
 
 let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
-let key__unpressed_color = Sdl.Color.create 255 255 255 192
+let key_background = Sdl.Color.create 255 255 255 192
 
 let min_graphic_color = Sdl.Color.create 0 255 0 255
 let max_graphic_color = Sdl.Color.create 255 0 0 255
@@ -404,7 +404,7 @@ let filename_button_pressed (x,y) =
 
 
 
-(* 
+(*
 let create_midi_buttons () =
   let current_pressed = ref 3 in
   let play_up _ =
