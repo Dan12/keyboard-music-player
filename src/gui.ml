@@ -23,7 +23,7 @@ let percent_key_padding = 10
 
 let arrow_width_height_ratio = 2
 
-let num_graphic_bars = 32
+let num_graphic_bars = 48
 let graphic_padding_w = 25
 let graphic_padding_h = 20
 let percent_graphic_padding = 16
@@ -252,7 +252,13 @@ let draw_graphic_segment r amp x y w h =
   let _ = Sdl.render_fill_rect r (Some rect) in
   ()
 
+let rec is_zero arr i =
+  if i >= Array.length arr
+  then true
+  else arr.(i) = 0 && (is_zero arr (i + 1))
+
 let draw_graphics r amplitudes x y w h =
+  let should_noise = (*is_zero amplitudes 0*) true in
   let num_bars = Array.length amplitudes in
   let offset = (w + num_bars / 2) / num_bars in
   let bar_w = (100 - percent_graphic_padding) * offset / 100 in
@@ -261,7 +267,7 @@ let draw_graphics r amplitudes x y w h =
     for bar = 0 to num_bars - 1 do
       let segment_x = x + bar * offset in
       let segment_y = (y + h) - (height + 1) * segment_h in
-      if height <= amplitudes.(bar) (* || (height = 1 && Random.int 2 = 1) *)
+      if height <= amplitudes.(bar) || (should_noise && height = 1 && Random.int 2 = 1)
       then draw_graphic_segment r height segment_x segment_y bar_w segment_h
       else ()
     done;
