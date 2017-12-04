@@ -14,8 +14,8 @@ type state = SKeyboard | SFileChooser
 let fft = ref (Audio_effects.init 10)
 
 type model = {
-  mutable window_w: int;
-  mutable window_h: int;
+  window_w: int;
+  window_h: int;
   mutable keyboard: keyboard;
   mutable keyboard_layout: keyboard_layout;
   mutable song: song;
@@ -28,6 +28,8 @@ type model = {
   mutable midi_filename: string;
   mutable should_load_midi: bool;
   mutable is_playing: bool;
+  mutable scrub_pos: int;
+  scrub_max_pos: int;
   mutable buffer: Complex.t array;
 }
 
@@ -55,17 +57,13 @@ let model:model =
     midi_filename = "resources/eq_data/eq_0_midi.json";
     should_load_midi = true;
     is_playing = false;
+    scrub_pos = 0;
+    scrub_max_pos = 20;
     buffer = buffer;
   }
 
-let set_width w =
-  model.window_w <- w
-
 let get_width () =
   model.window_w
-
-let set_height h =
-  model.window_h <- h
 
 let get_height () =
   model.window_h
@@ -141,6 +139,15 @@ let stop_midi () =
 let midi_is_playing () = model.is_playing
 
 let midi_should_load () = model.should_load_midi
+
+let get_scrub_pos () =
+  model.scrub_pos
+
+let set_scrub_pos pos =
+  model.scrub_pos <- pos
+
+let get_scrub_max_pos () =
+  model.scrub_max_pos
 
 let set_buffer b =
   let (left, _) = Audio_effects.complex_create b in

@@ -6,14 +6,8 @@ open Song
 
 type state = SKeyboard | SFileChooser
 
-(* [set_width w] sets the window width to [w]. *)
-val set_width : int -> unit
-
 (* [get_width] returns the current window width. *)
 val get_width : unit -> int
-
-(* [set_height h] sets the window height to [h]. *)
-val set_height : int -> unit
 
 (* [get_height] returns the current window height. *)
 val get_height : unit -> int
@@ -80,6 +74,17 @@ val midi_is_playing : unit -> bool
 
 (* [midi_should_load] returns true if the midi file should be reloaded *)
 val midi_should_load : unit -> bool
+
+(* [get_scrub_button_pos] returns the current [scrub_button_pos]. *)
+val get_scrub_pos : unit -> int
+
+(* [set_scrub_button_pos pos] sets [scrub_button_pos].
+   Range of [pos] is from 0 to [get_scrub_button_max_pos]. *)
+val set_scrub_pos : int -> unit
+
+(* [get_scrub_button_max_pos] returns the maximum possible position for
+   [scrub_button_pos]. *)
+val get_scrub_max_pos : unit -> int
 
 (* [set_buffer audio_output] compute the fft of [audio_output] and cache
  * it in the model
