@@ -144,7 +144,7 @@ let midi_should_load () = model.should_load_midi
 
 let set_buffer b =
   let (left, _) = Audio_effects.complex_create b in
-  Audio_effects.cosine left;
+  (* Audio_effects.cosine left; *)
   if Bigarray.Array1.dim b = 1024 then
     fft := Audio_effects.init 9
   else

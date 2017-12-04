@@ -22,21 +22,24 @@ let percent_key_padding = 10
 
 let arrow_width_height_ratio = 2
 
+let num_graphic_bars = 48
 let graphic_padding_w = 25
 let graphic_padding_h = 20
 let percent_graphic_padding = 16
 let max_amplitude = 60
+let max_frequency = 63 (* >= num_graphic_bars/2 - 1*)
 
 
 let background_color = Sdl.Color.create 255 255 255 255
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
-let keyboard_pressed_color = Sdl.Color.create 90 90 255 255
+
+let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
+let key__unpressed_color = Sdl.Color.create 255 255 255 192
 
 let min_graphic_color = Sdl.Color.create 0 255 0 255
 let max_graphic_color = Sdl.Color.create 255 0 0 255
 
-let key_background = Sdl.Color.create 255 255 255 220
 
 
 (*
@@ -159,7 +162,13 @@ let draw_graphic_segment r amp x y w h =
   let _ = Sdl.render_fill_rect r (Some rect) in
   ()
 
+let rec is_zero arr i =
+  if i >= Array.length arr
+  then true
+  else arr.(i) = 0 && (is_zero arr (i + 1))
+
 let draw_graphics r amplitudes x y w h =
+  let should_noise = (*is_zero amplitudes 0*) true in
   let num_bars = Array.length amplitudes in
   let offset = (w + num_bars / 2) / num_bars in
   let bar_w = (100 - percent_graphic_padding) * offset / 100 in
@@ -168,33 +177,45 @@ let draw_graphics r amplitudes x y w h =
     for bar = 0 to num_bars - 1 do
       let segment_x = x + bar * offset in
       let segment_y = (y + h) - (height + 1) * segment_h in
-      if height <= amplitudes.(bar) || (height = 1 && Random.int 2 = 1)
+      if height <= amplitudes.(bar) || (should_noise && height = 1 && Random.int 2 = 1)
       then draw_graphic_segment r height segment_x segment_y bar_w segment_h
       else ()
     done;
   done
 
-let get_amplitudes () =
+let rec sum_array arr from_i to_i =
+  if from_i >= to_i
+  then 0
+  else arr.(from_i) + (sum_array arr (from_i + 1) to_i)
+
+let get_amplitudes size =
   let complex_arr = Model.get_buffer () in
 
   let normalize = fun compl ->
     int_of_float (2.0 *. (Complex.norm compl))
   in
 
-  let mapped = Array.map normalize complex_arr in
-  let init_i i =
-    mapped.(i)
+  let normalized = Array.map normalize complex_arr in
+  let normalized_len = min (max_frequency + 1) (Array.length normalized) in (* truncate unwanted frequencies *)
+
+  let condensed_len = size / 2 in
+  let condense i =
+    let ratio = normalized_len / condensed_len in
+    let from_i = i * ratio in
+    let to_i = (i + 1) * ratio in
+    (sum_array normalized from_i to_i) / ratio
   in
-  Array.init 32 init_i
+  let condensed = Array.init condensed_len condense in
 
-  (* let complex_arr = Model.get_buffer () in
-  print_endline (string_of_int (Array.length complex_arr));
-
-  let arr = Array.make 30 0 in
-  for i = 0 to Array.length arr - 1 do
-    arr.(i) <- Random.int 61
-  done;
-  arr *)
+  let init_i i = (* meet base in the middle *)
+    condensed.(abs(condensed_len - 1 + i / condensed_len - i))
+  in
+  (* let init_i i = (* put base on the ends *)
+    if (i >= condensed_len)
+    then condensed.(size - 1 - i)
+    else condensed.(i)
+  in *)
+  Array.init size init_i
 
 let draw_output r =
   let window_w = Model.get_width () in
@@ -204,7 +225,7 @@ let draw_output r =
   let keyboard_layout = Model.get_keyboard_layout () in
 
   clear r;
-  let amplitudes = get_amplitudes () in
+  let amplitudes = get_amplitudes num_graphic_bars in
   let num_bars = Array.length amplitudes + 1 in
   let graphics_x = graphic_padding_w in
   let graphics_y = graphic_padding_h in
@@ -225,13 +246,14 @@ let draw_output r =
 
 
   let arrows_w = keyboard_w / 6 in
-  let arrows_x = keyboard_padding_w + keyboard_w / 2 - arrows_w / 2 in
+  let arrows_x = keyboard_x + keyboard_w - arrows_w - 5 in
   let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
-  let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
+  let _ = draw_arrows r keyboard arrows_x arrows_y arrows_w in
+
 
   let buttons_w = arrows_w * 2 in
-  let buttons_x = keyboard_padding_w + keyboard_w / 2 - buttons_w / 2 in
-  let buttons_y = 22 * arrows_h / 20 + arrows_y in
+  let buttons_x = keyboard_x in
+  let buttons_y = arrows_y in
   let _ = draw_buttons r buttons_x buttons_y buttons_w in
   present r
 
