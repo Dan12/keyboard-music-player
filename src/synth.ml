@@ -2,7 +2,7 @@
 
 type waveform = Sine | Triangle | Saw | Square
 
-type custom_sound = {
+type synth = {
   waveform : waveform;
   freq : float;
   note_ocate : int*int;
@@ -13,7 +13,7 @@ type custom_sound = {
 let volume = 0.5
 let sample_rate = 44100.
 let pi = 3.14159265358979323846
-let octave_shift = 2
+let octave_shift = 3
 
 let create w (octave, note) =
   let octave = octave + octave_shift in

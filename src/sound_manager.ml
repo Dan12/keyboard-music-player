@@ -3,7 +3,7 @@ open Bigarray
 (* Only need to keep track of sounds  *)
 type sound_manager = {
   mutable sounds_playing: Sound.sound list;
-  mutable synth_sounds_playing: Custom_sound.custom_sound list;
+  mutable synth_sounds_playing: Synth.synth list;
 }
 
 let custom_instrument = true
@@ -16,11 +16,11 @@ let manager = {
 
 let key_pressed row_col =
   if custom_instrument then
-    match List.find_opt (Custom_sound.is_equal row_col) manager.synth_sounds_playing with
+    match List.find_opt (Synth.is_equal row_col) manager.synth_sounds_playing with
     | Some s ->
-      Custom_sound.start s
+      Synth.start s
     | None ->
-      let new_sound = Custom_sound.create Custom_sound.Sine row_col in
+      let new_sound = Synth.create Synth.Square row_col in
       manager.synth_sounds_playing <- new_sound::manager.synth_sounds_playing
   else
     let song = Model.get_song () in
@@ -46,7 +46,7 @@ let key_pressed row_col =
 let key_released row_col =
   if custom_instrument then
     let release s =
-      Custom_sound.release s in
+      Synth.release s in
     List.iter release manager.synth_sounds_playing
   else
     let song = Model.get_song () in
@@ -68,7 +68,7 @@ let add_sound (cur_l, cur_r) sound =
   (cur_l+sample_l, cur_r+sample_r)
 
 let add_custom_sound (cur_l, cur_r) sound =
-  let (sample_l, sample_r) = Custom_sound.get_next_sample sound in
+  let (sample_l, sample_r) = Synth.get_next_sample sound in
   (cur_l+sample_l, cur_r+sample_r)
 
 
@@ -94,7 +94,7 @@ let audio_callback output =
         output.{2*i + 1} <- Int32.of_int (sample_r);
       done;
       (* filter out the only the sounds being played *)
-      manager.synth_sounds_playing <- List.filter Custom_sound.is_playing manager.synth_sounds_playing
+      manager.synth_sounds_playing <- List.filter Synth.is_playing manager.synth_sounds_playing
     end
   else
     begin
