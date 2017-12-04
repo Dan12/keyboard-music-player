@@ -61,18 +61,6 @@ let handle_mouse_up x y t =
   | SKeyboard ->
     let iter = fun _ b -> Button_standard.up_press b (x, y) in
     List.iteri iter (Model.get_midi_buttons())
-
-    (* begin
-    match Gui.button_pressed (x, y) with
-    | Some button ->
-      (match button with
-       | Load -> Model.set_state Model.SFileChooser
-       | Play -> Model.start_midi()
-       | Pause -> Model.pause_midi()
-       | Stop -> Model.stop_midi();
-         clear_keyboard())
-    | None -> ()
-    end *)
   | SFileChooser -> begin
       match Gui.file_button_pressed (x, y) with
       | Some button ->
