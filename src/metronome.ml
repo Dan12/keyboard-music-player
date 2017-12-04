@@ -13,6 +13,8 @@ let tick () =
 
 let set_bpm beat = bpm := beat
 
+let get_bpm () = !bpm
+
 let get_beat () = !cached_beat
 
 let set_beat beat =

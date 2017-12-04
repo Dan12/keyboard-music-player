@@ -28,16 +28,21 @@ type model = {
   mutable midi_filename: string;
   mutable should_load_midi: bool;
   mutable is_playing: bool;
+  mutable bpm_pos: int;
+  mutable bpm_scrubbing: bool;
   mutable scrubbing: bool;
   mutable scrub_pos: float;
   scrub_pos_min: float;
   scrub_pos_max: float;
+  bpm_pos_min: int;
+  bpm_pos_max: int;
   mutable buffer: Complex.t array;
 }
 
 (* The model with all the default values initialized *)
 let model:model =
   let window_w = 1280 in
+  let bpm_margin = 80 in
   let scrub_margin = 80.0 in
   let eq_song = Song.parse_song_file "resources/eq_data/eq_song.json" in
   let keyboard_layout = Keyboard_layout.parse_layout
@@ -61,10 +66,14 @@ let model:model =
     midi_filename = "resources/eq_data/eq_0_midi.json";
     should_load_midi = true;
     is_playing = false;
+    bpm_pos = bpm_margin;
     scrubbing = false;
+    bpm_scrubbing = false;
     scrub_pos = scrub_margin;
     scrub_pos_min = scrub_margin;
     scrub_pos_max = (float_of_int window_w) -. scrub_margin;
+    bpm_pos_min = bpm_margin;
+    bpm_pos_max = (window_w / 3) - bpm_margin;
     buffer = buffer;
   }
 
@@ -145,6 +154,24 @@ let stop_midi () =
 let midi_is_playing () = model.is_playing
 
 let midi_should_load () = model.should_load_midi
+
+let set_bpm_pos p =
+  model.bpm_pos <- p
+
+let get_bpm_pos () =
+  model.bpm_pos
+
+let set_bpm_scrubbing b =
+  model.bpm_scrubbing <- b
+
+let is_bpm_scrubbing () =
+  model.bpm_scrubbing
+
+let get_bpm_pos_min () =
+  model.bpm_pos_min
+
+let get_bpm_pos_max () =
+  model.bpm_pos_max
 
 let set_scrubbing scrubbing =
   model.scrubbing <- scrubbing

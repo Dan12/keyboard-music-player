@@ -22,4 +22,4 @@ given location if such button exists. *)
 val filename_button_pressed : (int * int) -> File_button.filename_button option
 
 (* [scrub_pressed x y] returns whether or not the scrub was pressed. *)
-val scrub_pressed : (int * int) -> bool
+val scrub_pressed : (int * int) -> string -> bool

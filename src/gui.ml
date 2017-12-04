@@ -10,6 +10,8 @@ open Model
 
 let scrub:(Sdl.rect option ref) = ref None
 
+let bpm:(Sdl.rect option ref) = ref None
+
 let button_rects:((Sdl.rect * button) option array) =
   Array.make num_buttons None
 
@@ -215,6 +217,13 @@ let draw_buttons r x y w =
     ) (Model.get_buttons());
   size
 
+let draw_bpm r y =
+  let size = 20 in
+  let x = (Model.get_bpm_pos() - size/2) in
+  let rect = Sdl.Rect.create x y (size/2) size in
+  bpm := Some rect;
+  let _ = Sdl.render_draw_rect r (Some rect) in ()
+
 let draw_scrub r y =
   let size = 30 in
   let x = (Model.get_scrub_pos() |> int_of_float) - size/2 in
@@ -331,6 +340,9 @@ let draw_output r =
   let buttons_x = keyboard_padding_w + keyboard_w / 2 - buttons_w / 2 in
   let buttons_y = 22 * arrows_h / 20 + arrows_y in
   let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
+
+  let bpm_y = arrows_y + arrows_h + keyboard_padding_h in
+  let _ = draw_bpm r bpm_y in
 
   let scrub_y = buttons_y + buttons_h + keyboard_padding_h / 5 in
   let _ = draw_scrub r scrub_y in
@@ -454,8 +466,11 @@ let filename_button_pressed (x,y) =
   | Some (Some (rect, button)) -> Some button
   | _ -> None
 
-let scrub_pressed (x,y) =
-  match !scrub with
+(*is [s] is "scrub" then for midi slider, if "bpm" then for bpm slider*)
+let scrub_pressed (x,y) s =
+  let matched = if s = "scrub" then
+    !scrub else !bpm in
+  match matched with
   | None -> false
   | Some rect ->
     let rect_x = Sdl.Rect.x rect in

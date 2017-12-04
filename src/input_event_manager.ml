@@ -61,6 +61,8 @@ let contains s1 s2 =
 let handle_mouse_up x y t =
   if Model.is_scrubbing() then
     Model.set_scrubbing false;
+  if Model.is_bpm_scrubbing() then
+    Model.set_bpm_scrubbing false;
   clear_keyboard();
   match Model.get_state () with
   | SKeyboard ->
@@ -121,7 +123,8 @@ let handle_mouse_up x y t =
 let handle_mouse_down x y =
   match Model.get_state() with
   | SKeyboard ->
-      Model.set_scrubbing (Gui.scrub_pressed (x, y))
+    Model.set_scrubbing (Gui.scrub_pressed (x, y) "scrub");
+    Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) "bpm")
   | SFileChooser -> ()
 
 let event_callback event =
@@ -157,6 +160,17 @@ let event_callback event =
         else
           mouse_x) in
       Model.set_scrub_pos scrub_x
+    end;
+    if Model.is_bpm_scrubbing() then
+    begin
+      let scrub_x = (
+        if int_of_float mouse_x > Model.get_bpm_pos_max() then
+          Model.get_bpm_pos_max()
+        else if int_of_float mouse_x < Model.get_bpm_pos_min() then
+          Model.get_bpm_pos_min()
+        else
+          int_of_float mouse_x) in
+      Model.set_bpm_pos scrub_x
     end
   | `Mouse_wheel ->
     (* let scroll_dx = get event mouse_wheel_x in
