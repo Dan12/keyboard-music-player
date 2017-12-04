@@ -1,7 +1,6 @@
 (* TODO needs comments for all functions and variables except draw *)
 
 open Tsdl
-open Tsdl_ttf
 open Keyboard_layout
 open Keyboard
 open Button
@@ -16,8 +15,6 @@ let file_button_rects:((Sdl.rect * file_button) option array) =
 
 let filename_button_rects:((Sdl.rect * filename_button) option array ref) =
   ref (Array.make (Model.get_num_filename_buttons ()) None)
-
-let fonts = Hashtbl.create 16
 
 let keyboard_padding_w = 20
 let keyboard_padding_h = 30
@@ -41,83 +38,6 @@ let max_graphic_color = Sdl.Color.create 255 0 0 255
 
 let key_background = Sdl.Color.create 255 255 255 220
 
-let (>>=) o f = match o with
-  | Error (`Msg e) -> failwith (Printf.sprintf "Error %s" e)
-  | Ok a -> f a
-
-let get_font size =
-  match Hashtbl.find_opt fonts size with
-  | None -> Ttf.open_font "resources/agane.ttf" size >>= fun font ->
-    Hashtbl.add fonts size font;
-    font
-  | Some font -> font
-
-let set_color r color =
-  let red = Sdl.Color.r color in
-  let green = Sdl.Color.g color in
-  let blue = Sdl.Color.b color in
-  let alpha = Sdl.Color.a color in
-  let _ = Sdl.set_render_draw_color r red green blue alpha in
-  ()
-
-let draw_text r x y font str =
-  (* defines the bounds of the font *)
-  Ttf.size_utf8 font str >>= fun (text_w, text_h) ->
-  (* 2/5 will lower the text by 10% *)
-  let text_rect = Sdl.Rect.create (x - text_w / 2) (y - 2 * text_h / 5) text_w text_h in
-  Ttf.render_text_solid font str keyboard_text_color >>= fun (sface) ->
-  Sdl.create_texture_from_surface r sface >>= fun (font_texture) ->
-  let _ = Sdl.render_copy ~dst:text_rect r font_texture in
-  let () = Sdl.free_surface sface in
-  Sdl.destroy_texture font_texture
-
-let draw_shift r x y w h =
-  let _ = Sdl.render_draw_line r x (y + h / 2) (x + w / 2) y in
-  let _ = Sdl.render_draw_line r (x + w / 2) y (x + w) (y + h / 2) in
-  let _ = Sdl.render_draw_line r (x + w) (y + h / 2) (x + 3 * w / 4) (y + h / 2) in
-  let _ = Sdl.render_draw_line r (x + 3 * w / 4) (y + h / 2) (x + 3 * w / 4) (y + h) in
-  let _ = Sdl.render_draw_line r (x + 3 * w / 4) (y + h) (x + w / 4) (y + h) in
-  let _ = Sdl.render_draw_line r (x + w / 4) (y + h) (x + w / 4) (y + h / 2) in
-  let _ = Sdl.render_draw_line r (x + w / 4) (y + h / 2) x (y + h / 2) in
-  ()
-
-let draw_enter r x y w h =
-  let _ = Sdl.render_draw_line r x (y + 2 * h / 3) (x + w / 4) (y + h / 3) in
-  let _ = Sdl.render_draw_line r (x + w / 4) (y + h / 3) (x + w / 4) (y + h / 2) in
-  let _ = Sdl.render_draw_line r (x + w / 4) (y + h / 2) (x + 3 * w / 4) (y + h / 2) in
-  let _ = Sdl.render_draw_line r (x + 3 * w / 4) (y + h / 2) (x + 3 * w / 4) y in
-  let _ = Sdl.render_draw_line r (x + 3 * w / 4) y (x + w) y in
-  let _ = Sdl.render_draw_line r (x + w) y (x + w) (y + 5 * h / 6) in
-  let _ = Sdl.render_draw_line r (x + w) (y + 5 * h / 6) (x + w / 4) (y + 5 * h / 6) in
-  let _ = Sdl.render_draw_line r (x + w / 4) (y + 5 * h / 6) (x + w / 4) (y + h) in
-  let _ = Sdl.render_draw_line r (x + w / 4) (y + h) x (y + 2 * h / 3) in
-  ()
-
-let draw_key_text r x y w h font = function
-  | String s -> draw_text r (x + w / 2) (y + h / 2) font s
-  | Shift -> draw_shift r (x  + w / 4) (y + h / 4) (w / 2) (h / 2)
-  | Enter -> draw_enter r (x  + w / 4) (y + h / 4) (w / 2) (h / 2)
-  | Empty -> ()
-
-let draw_key_to_rect r x y w h key_state =
-
-  (match key_state with
-  | KSDown -> set_color r keyboard_pressed_color;
-    let rect = Sdl.Rect.create x y w h in
-    let _ = Sdl.render_fill_rect r (Some rect) in
-    ()
-  | _ -> set_color r key_background;
-    let rect = Sdl.Rect.create x y w h in
-    let _ = Sdl.render_fill_rect r (Some rect) in
-    ());
-
-  set_color r keyboard_border_color;
-  let rect = Sdl.Rect.create x y w h in
-  let _ = Sdl.render_draw_rect r (Some rect) in
-  rect
-
-let draw_key r x y w h key_state =
-  draw_key_to_rect r x y w h key_state |> ignore
 
 (*
  * Assumes the key list has length of [row] * [col]
@@ -125,15 +45,15 @@ let draw_key r x y w h key_state =
 let draw_keyboard renderer keyboard_layout keyboard x y w rows cols =
   let offset = w / cols in
   let key_size = (100 - percent_key_padding) * offset / 100 in
-  let font = get_font (7 * key_size / 10) in
+  let font_size = 7 * key_size / 10 in
   for r = 0 to rows - 1 do
     for c = 0 to cols - 1 do
       let key_visual = Keyboard_layout.get_visual (r, c) keyboard_layout in
       let key_state = Keyboard.get_state (r, c) keyboard in
       let curr_x = c * offset + x in
       let curr_y = r * offset + y in
-      draw_key renderer curr_x curr_y key_size key_size key_state;
-      draw_key_text renderer curr_x curr_y key_size key_size font key_visual
+      Gui_utils.draw_key renderer curr_x curr_y key_size key_size keyboard_pressed_color key_background keyboard_border_color key_state;
+      Gui_utils.draw_key_text renderer curr_x curr_y key_size key_size font_size keyboard_text_color key_visual
     done;
   done;
   offset * rows
@@ -153,40 +73,32 @@ let draw_arrows r keyboard x y w =
   let right_state = if Model.get_song () |> Song.get_sound_pack = 3 then KSDown else KSUp in
 
   (* draw left *)
-  draw_key r x (y + y_offset) w_key h_key left_state;
-  let _ = Sdl.render_draw_line r (x + w_key / 4) (y + y_offset + h_key / 2) (x + 3 * w_key / 4) (y + y_offset + h_key / 2) in
-  let _ = Sdl.render_draw_line r (x + w_key / 4) (y + y_offset + h_key / 2) (x + w_key / 2) (y + y_offset + 3 * h_key / 4) in
-  let _ = Sdl.render_draw_line r (x + w_key / 4) (y + y_offset + h_key / 2) (x + w_key / 2) (y + y_offset + h_key / 4) in
+  Gui_utils.draw_key r x (y + y_offset) w_key h_key keyboard_pressed_color key_background keyboard_border_color left_state;
+  Gui_utils.draw_left r x (y + y_offset) w_key h_key;
 
   (* draw down *)
-  draw_key r (x + x_offset) (y + y_offset) w_key h_key down_state;
-  let _ = Sdl.render_draw_line r (x + x_offset + w_key / 2) (y + y_offset + 3 * h_key / 4) (x + x_offset + w_key / 2) (y + y_offset + h_key / 4) in
-  let _ = Sdl.render_draw_line r (x + x_offset + w_key / 2) (y + y_offset + 3 * h_key / 4) (x + x_offset + w_key / 3) (y + y_offset + h_key / 2) in
-  let _ = Sdl.render_draw_line r (x + x_offset + w_key / 2) (y + y_offset + 3 * h_key / 4) (x + x_offset + 2 * w_key / 3) (y + y_offset + h_key / 2) in
+  Gui_utils.draw_key r (x + x_offset) (y + y_offset) w_key h_key keyboard_pressed_color key_background keyboard_border_color down_state;
+  Gui_utils.draw_down r (x + x_offset) (y + y_offset) w_key h_key;
 
   (* draw up *)
-  draw_key r (x + x_offset) y w_key h_key up_state;
-  let _ = Sdl.render_draw_line r (x + x_offset + w_key / 2) (y + h_key / 4) (x + x_offset + w_key / 2) (y + 3 * h_key / 4) in
-  let _ = Sdl.render_draw_line r (x + x_offset + w_key / 2) (y + h_key / 4) (x + x_offset + w_key / 3) (y + h_key / 2) in
-  let _ = Sdl.render_draw_line r (x + x_offset + w_key / 2) (y + h_key / 4) (x + x_offset + 2 * w_key / 3) (y + h_key / 2) in
+  Gui_utils.draw_key r (x + x_offset) y w_key h_key keyboard_pressed_color key_background keyboard_border_color up_state;
+  Gui_utils.draw_up r (x + x_offset) y w_key h_key;
 
   (* draw right *)
-  draw_key r (x + 2 * x_offset) (y + y_offset) w_key h_key right_state;
-  let _ = Sdl.render_draw_line r (x + 2 * x_offset + w_key / 4) (y + y_offset + h_key / 2) (x + 2 * x_offset + 3 * w_key / 4) (y + y_offset + h_key / 2) in
-  let _ = Sdl.render_draw_line r (x + 2 * x_offset + 3 * w_key / 4) (y + y_offset + h_key / 2) (x + 2 * x_offset + w_key / 2) (y + y_offset + 3 * h_key / 4) in
-  let _ = Sdl.render_draw_line r (x + 2 * x_offset + 3 * w_key / 4) (y + y_offset + h_key / 2) (x + 2 * x_offset + w_key / 2) (y + y_offset + h_key / 4) in
+  Gui_utils.draw_key r (x + 2 * x_offset) (y + y_offset) w_key h_key keyboard_pressed_color key_background keyboard_border_color right_state;
+  Gui_utils.draw_right r (x + 2 * x_offset) (y + y_offset) w_key h_key;
   2 * y_offset
 
 let draw_button r x y size i button_with_state =
   let (button, state) = button_with_state in
-  let rect = draw_key_to_rect r x y size size state in
+  let rect = Gui_utils.draw_key_to_rect r x y size size keyboard_pressed_color key_background keyboard_border_color state in
   Array.set button_rects i (Some (rect, button));
 
   let padding = size / 5 in
   match button with
   | Load ->
-    let font = get_font (3 * size / 8) in
-    draw_text r (x + size/2) (y + size/2) font "Load"
+    let font_size = 3 * size / 8 in
+    Gui_utils.draw_text r (x + size/2) (y + size/2) font_size keyboard_text_color "Load"
   | Play ->
     let _ = Sdl.render_draw_line r (x+padding) (y+padding) (x+size-padding) (y+size/2) in
     let _ = Sdl.render_draw_line r (x+padding) (y+size-padding) (x+size-padding) (y+size/2) in
@@ -214,7 +126,7 @@ let draw_buttons r x y w =
   size
 
 let clear r =
-  set_color r background_color;
+  Gui_utils.set_color r background_color;
   let _ = Sdl.render_clear r in
   ()
 
@@ -242,7 +154,7 @@ let get_amplitude_color amp =
 
 let draw_graphic_segment r amp x y w h =
   let segment_color = get_amplitude_color amp in
-  set_color r segment_color;
+  Gui_utils.set_color r segment_color;
   let rect = Sdl.Rect.create x y w h in
   let _ = Sdl.render_fill_rect r (Some rect) in
   ()
@@ -324,15 +236,15 @@ let draw_output r =
   present r
 
 let draw_file_button r x y size i file_button =
-  let rect = draw_key_to_rect r x (y + ((size/5)*2)) size (size - ((size/5)*2)) KSUp in
+  let rect = Gui_utils.draw_key_to_rect r x (y + 2*size/5) size (size - 2*size/5) keyboard_pressed_color key_background keyboard_border_color KSUp in
   Array.set file_button_rects i (Some (rect, file_button));
 
-  let font = get_font (1 * size / 4) in
+  let font_size = 1 * size / 4 in
   match file_button with
   | Cancel ->
-    draw_text r (x + size/2) (y + ((size/3)*2)) font "Cancel"
+    Gui_utils.draw_text r (x + size/2) (y + ((size/3)*2)) font_size keyboard_text_color "Cancel"
   | Select ->
-    draw_text r (x + size/2) (y + ((size/3)*2)) font "Select"
+    Gui_utils.draw_text r (x + size/2) (y + ((size/3)*2)) font_size keyboard_text_color "Select"
 
 let draw_file_buttons r x y w =
   let offset = w / num_file_buttons in
@@ -345,11 +257,11 @@ let draw_file_buttons r x y w =
 
 let draw_filename_button r x y size i button_with_state =
   let (button, state) = button_with_state in
-  let rect = draw_key_to_rect r x y (size * 5) size state in
+  let rect = Gui_utils.draw_key_to_rect r x y (size * 5) size keyboard_pressed_color key_background keyboard_border_color state in
   Array.set !filename_button_rects i (Some (rect, button));
 
-  let font = get_font (3 * size / 8) in
-  draw_text r (x + (3 * size / 2)) (y + size/2) font button
+  let font_size = 3 * size / 8 in
+  Gui_utils.draw_text r (x + (3 * size / 2)) (y + size/2) font_size keyboard_text_color button
 
 let draw_filename_buttons r x y w =
   let offset = w / ((Model.get_num_filename_buttons ())/2) in
@@ -440,3 +352,54 @@ let filename_button_pressed (x,y) =
   match pressed_filename_button_rect with
   | Some (Some (rect, button)) -> Some button
   | _ -> None
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(* 
+let create_midi_buttons () =
+  let current_pressed = ref 3 in
+  let play_up _ =
+    current_pressed := 1;
+    Model.start_midi() in
+  let rec play = Button.create_button ignore play_up play_draw
+  and play_draw (r:Tsdl.Sdl.renderer) =
+    let (x, y, w, h) = Button.get_area play in
+
+    let state = if !current_pressed = 1 then KSDown else KSUp in
+    draw_key r x y w h state;
+
+    let w_padding = w / 5 in
+    let h_padding = h / 5 in
+
+    let _ = Sdl.render_draw_line r (x+w_padding) (y+h_padding) (x+w-w_padding) (y+h/2) in
+    let _ = Sdl.render_draw_line r (x+w_padding) (y+h-h_padding) (x+w-w_padding) (y+h/2) in
+    let _ = Sdl.render_draw_line r (x+w_padding) (y+h_padding) (x+w_padding) (y+h-h_padding) in
+    () in
+  [play] *)
