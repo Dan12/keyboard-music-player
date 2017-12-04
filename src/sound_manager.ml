@@ -20,7 +20,7 @@ let key_pressed row_col =
     | Some s ->
       Custom_sound.start s
     | None ->
-      let new_sound = Custom_sound.create Custom_sound.Square row_col in
+      let new_sound = Custom_sound.create Custom_sound.Sine row_col in
       manager.synth_sounds_playing <- new_sound::manager.synth_sounds_playing
   else
     let song = Model.get_song () in
@@ -45,9 +45,9 @@ let key_pressed row_col =
 
 let key_released row_col =
   if custom_instrument then
-    let not_equal s =
-      not (Custom_sound.is_equal row_col s) in
-    manager.synth_sounds_playing <- List.filter not_equal manager.synth_sounds_playing
+    let release s =
+      Custom_sound.release s in
+    List.iter release manager.synth_sounds_playing
   else
     let song = Model.get_song () in
     match Song.get_sound row_col song with
@@ -84,14 +84,18 @@ let clip s =
 
 let audio_callback output =
   if custom_instrument then
-    let arr_len = ((Array1.dim output / 2) - 1) in
-    for i = 0 to arr_len do
-      let (sample_l, sample_r) = List.fold_left add_custom_sound (0,0) manager.synth_sounds_playing in
-      let sample_l = clip sample_l in
-      let sample_r = clip sample_r in
-      output.{2*i} <- Int32.of_int (sample_l);
-      output.{2*i + 1} <- Int32.of_int (sample_r);
-    done;
+    begin
+      let arr_len = ((Array1.dim output / 2) - 1) in
+      for i = 0 to arr_len do
+        let (sample_l, sample_r) = List.fold_left add_custom_sound (0,0) manager.synth_sounds_playing in
+        let sample_l = clip sample_l in
+        let sample_r = clip sample_r in
+        output.{2*i} <- Int32.of_int (sample_l);
+        output.{2*i + 1} <- Int32.of_int (sample_r);
+      done;
+      (* filter out the only the sounds being played *)
+      manager.synth_sounds_playing <- List.filter Custom_sound.is_playing manager.synth_sounds_playing
+    end
   else
     begin
       let arr_len = ((Array1.dim output / 2) - 1) in

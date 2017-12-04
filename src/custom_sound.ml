@@ -7,6 +7,7 @@ type custom_sound = {
   freq : float;
   note_ocate : int*int;
   mutable sample : int;
+  mutable playing : bool;
 }
 
 let volume = 0.5
@@ -23,6 +24,7 @@ let create w (octave, note) =
     freq = freq;
     note_ocate = (note, octave);
     sample = 0;
+    playing = true;
   }  
 
 let start s =
@@ -69,3 +71,9 @@ let is_equal (o,n) s =
   let o = o + octave_shift in
   let (sn, so) = s.note_ocate in
   sn = n && so = o
+
+let is_playing sound =
+  sound.playing
+
+let release sound =
+  sound.playing <- false
