@@ -18,15 +18,16 @@ type midi_data =
   | Soundpack of timed_soundpack
   | Note of timed_note
 
-(* AF: [notes] is sorted in ascending order by beat. *)
+(* AF: [notes] and [all_notes] is sorted in ascending order by beat. *)
 type midi = {
   name: string;
   length: float;
   mutable notes: midi_data list;
   mutable played_notes: midi_data list;
+  all_notes: midi_data list;
 }
 
-let empty = {name=""; length=0.0; notes=[]; played_notes=[]}
+let empty = {name=""; length=0.0; notes=[]; played_notes=[]; all_notes=[]}
 
 let note_end_time = function
   | Soundpack s -> s.beat +. s.length
@@ -56,7 +57,7 @@ let parse_midi filename =
   let data = List.assoc "song_data" json |> to_list in
   let notes = List.map parse_data data in
   let length = length_of_notes notes in
-  {name = name; notes = notes; length = length; played_notes = []}
+  {name = name; notes = notes; length = length; played_notes = []; all_notes = notes}
 
 (* [set_key_downs notes beat] will artificially send key down events for the
  * notes whose beat has passed. Assumes notes is in ascending order of beat.
@@ -113,14 +114,10 @@ let beat_of_note = function
   | Note n -> n.beat
 
 let scrub_to_beat midi beat =
-  let (notes_to_play, new_notes) = List.partition
-      (fun note -> note_end_time note <= beat) midi.notes in
-  let (notes_to_unplay, new_played_notes) = List.partition
-      (fun note -> note_end_time note > beat) midi.played_notes in
-  midi.notes <- List.sort (fun note1 note2 ->
-      (beat_of_note note1 -. beat_of_note note2) |> int_of_float)
-      (List.rev_append notes_to_unplay new_notes);
-  midi.played_notes <- List.rev_append notes_to_play new_played_notes
+  let (played_notes, notes) = List.partition
+      (fun note -> note_end_time note <= beat) midi.all_notes in
+  midi.notes <- notes;
+  midi.played_notes <- played_notes
 
 let is_done midi =
   (List.length midi.notes) = 0

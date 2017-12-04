@@ -59,7 +59,9 @@ let contains s1 s2 =
   !contain
 
 let handle_mouse_up x y t =
-  Model.set_scrubbing false;
+  if Model.is_scrubbing() then
+    Model.set_scrubbing false;
+  clear_keyboard();
   match Model.get_state () with
   | SKeyboard ->
     begin
