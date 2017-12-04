@@ -15,6 +15,7 @@ type model = {
   mutable song: song;
   mutable state: state;
   mutable midi_buttons: Button_standard.button list;
+  mutable current_midi_button: int;
   mutable file_buttons: File_button.file_buttons;
   mutable filename_buttons : File_button.filename_buttons;
   mutable num_filename_buttons : int;
@@ -50,6 +51,7 @@ let model:model =
     song = eq_song;
     state = SKeyboard;
     midi_buttons = [];
+    current_midi_button = 3;
     file_buttons = File_button.create_file_buttons();
     filename_buttons = File_button.create_empty_filename_list ();
     num_filename_buttons = 0;
@@ -155,19 +157,17 @@ let get_buffer () =
   model.buffer
 
 let create_midi_buttons () =
-  let current_pressed = ref 3 in
-
   let button_draw b is_current_down draw_icon = fun r ->
     let (x, y, w, h) = Button_standard.get_area b in
 
-    let state = if is_current_down !current_pressed then KSDown else KSUp in
+    let state = if is_current_down model.current_midi_button then KSDown else KSUp in
     Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
 
     draw_icon r x y w h in
 
 
   let load_up _ =
-    current_pressed := 0;
+    model.current_midi_button <- 0;
     set_state SFileChooser in
 
   let load_drawer r x y w h =
@@ -180,7 +180,7 @@ let create_midi_buttons () =
 
 
   let play_up _ =
-    current_pressed := 1;
+    model.current_midi_button <- 1;
     start_midi() in
 
   let play = Button_standard.create_button ignore play_up in
@@ -189,7 +189,7 @@ let create_midi_buttons () =
 
 
   let pause_up _ =
-    current_pressed := 2;
+    model.current_midi_button <- 2;
     pause_midi() in
 
   let pause = Button_standard.create_button ignore pause_up in
@@ -209,7 +209,7 @@ let create_midi_buttons () =
     done in
 
   let stop_up _ =
-    current_pressed := 3;
+    model.current_midi_button <- 3;
     stop_midi();
     clear_keyboard() in
 
