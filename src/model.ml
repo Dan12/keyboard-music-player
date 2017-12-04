@@ -146,6 +146,8 @@ let midi_is_playing () = model.is_playing
 
 let midi_should_load () = model.should_load_midi
 
+let set_midi_load load = model.should_load_midi <- load
+
 let set_scrubbing scrubbing =
   model.scrubbing <- scrubbing
 

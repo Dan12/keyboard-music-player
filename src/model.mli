@@ -75,6 +75,9 @@ val midi_is_playing : unit -> bool
 (* [midi_should_load] returns true if the midi file should be reloaded *)
 val midi_should_load : unit -> bool
 
+(* [set_midi_load load] sets the value of [should_load_midi]*)
+val set_midi_load : bool -> unit
+
 (* [set_scrubbing scrubbing] changes [scrubbing]. *)
 val set_scrubbing : bool -> unit
 

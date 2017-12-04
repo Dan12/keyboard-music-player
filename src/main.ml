@@ -1,28 +1,36 @@
 let tick_callback () =
-  if Model.is_scrubbing() then
-    let percent_played =
-      (Model.get_scrub_pos() -. Model.get_scrub_pos_min())
-      /. (Model.get_scrub_pos_max() -. Model.get_scrub_pos_min()) in
-    let midi = Midi_player.get_midi() in
-    let beat = Midi.length midi *. percent_played in
-    Midi.scrub_to_beat midi beat;
-    Metronome.set_beat beat;
-  else
-    if Model.midi_should_load() then
+  (* Set midi & bpm so Metronome can use it if we scrub before pressing play. *)
+  if Model.midi_should_load() then
+    begin
       Midi_player.set_midi (Model.get_midi_filename ());
-    if Model.midi_is_playing() then
-      Metronome.tick();
-      let midi = Midi_player.get_midi () in
-      let beat = Metronome.get_beat () in
-      Midi.tick midi beat;
-
-      let percent_played = beat /. (Midi.length midi) in
-      let scrub_pos = percent_played *. (Model.get_scrub_pos_max() -. Model.get_scrub_pos_min())
-                      +. Model.get_scrub_pos_min() in
-      Model.set_scrub_pos scrub_pos;
-
+      Metronome.set_bpm (Model.get_song() |> Song.get_bpm);
+      Model.set_midi_load false
+    end;
+  let midi = Midi_player.get_midi () in
+  if Model.is_scrubbing() then
+    begin
+      let percent_played =
+        (Model.get_scrub_pos() -. Model.get_scrub_pos_min())
+        /. (Model.get_scrub_pos_max() -. Model.get_scrub_pos_min()) in
+      let beat = Midi.length midi *. percent_played in
+      Midi.scrub_to_beat midi beat;
+      Metronome.set_beat beat
+    end
+  else
+    begin
+      if Model.midi_is_playing() then
+        begin
+          Metronome.tick();
+          let beat = Metronome.get_beat () in
+          Midi.tick midi beat;
+          let percent_played = beat /. (Midi.length midi) in
+          let scrub_pos = percent_played *. (Model.get_scrub_pos_max() -. Model.get_scrub_pos_min())
+                          +. Model.get_scrub_pos_min() in
+          Model.set_scrub_pos scrub_pos
+        end;
       if Midi.is_done midi then
         Model.stop_midi()
+    end
 in
 
 Model.set_filename_buttons (Model.get_file_location ());

@@ -32,6 +32,8 @@ let graphic_padding_h = 20
 let percent_graphic_padding = 16
 let max_amplitude = 60
 
+let black = Sdl.Color.create 0 0 0 255
+let red = Sdl.Color.create 204 24 30 255
 
 let background_color = Sdl.Color.create 255 255 255 255
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
@@ -217,10 +219,27 @@ let draw_buttons r x y w =
 
 let draw_scrub r y =
   let size = 30 in
-  let x = (Model.get_scrub_pos() |> int_of_float) - size/2 in
+  let scrub_pos = Model.get_scrub_pos() |> int_of_float in
+  let x = scrub_pos - size/2 in
   let rect = Sdl.Rect.create x y size size in
   scrub := Some rect;
-  let _ = Sdl.render_draw_rect r (Some rect) in
+
+  let scrub_start_x = Model.get_scrub_pos_min() |> int_of_float in
+  let scrub_end_x = Model.get_scrub_pos_max() |> int_of_float in
+  let line_y = y + size / 2 - 1 in
+  let line_h = 3 in
+  set_color r red;
+  let played_line = Sdl.Rect.create scrub_start_x line_y
+      (scrub_pos - scrub_start_x) line_h in
+  let _ = Sdl.render_fill_rect r (Some played_line) in
+  set_color r black;
+  let remaining_line = Sdl.Rect.create scrub_pos line_y
+      (scrub_end_x - scrub_pos) line_h in
+  let _ = Sdl.render_fill_rect r (Some remaining_line) in
+
+  (* draw the scrub from ealier last. *)
+  set_color r black;
+  let _ = Sdl.render_fill_rect r (Some rect) in
   ()
 
 let clear r =
