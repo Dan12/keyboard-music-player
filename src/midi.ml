@@ -19,12 +19,25 @@ type midi_data =
   | Note of timed_note
 
 type midi = {
-  mutable name: string;
+  name: string;
+  length: float;
   mutable notes: midi_data list;
   mutable played_notes: midi_data list;
 }
 
-let empty = {name=""; notes=[]; played_notes=[]}
+let empty = {name=""; length=0.0; notes=[]; played_notes=[]}
+
+let note_end_time = function
+  | Soundpack s -> s.beat +. s.length
+  | Note n -> n.beat +. n.length
+
+let length_of_notes (notes:midi_data list) =
+  List.fold_left (fun longest_end_time note ->
+      let note_length = note_end_time note in
+      if longest_end_time > note_length then
+        longest_end_time
+      else
+        note_length) 0.0 notes
 
 let parse_data data =
   let json = to_assoc data in
@@ -41,7 +54,8 @@ let parse_midi filename =
   let name = List.assoc "name" json |> to_string in
   let data = List.assoc "song_data" json |> to_list in
   let notes = List.map parse_data data in
-  {name = name; notes = notes; played_notes = []}
+  let length = length_of_notes notes in
+  {name = name; notes = notes; length = length; played_notes = []}
 
 (* [set_key_downs notes beat] will artificially send key down events for the
  * notes whose beat has passed. Assumes notes is in ascending order of beat.
@@ -95,3 +109,6 @@ let tick midi beat =
 
 let is_done midi =
   (List.length midi.notes) = 0
+
+let length midi =
+  midi.length

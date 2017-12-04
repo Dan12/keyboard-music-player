@@ -13,3 +13,7 @@ val tick : midi -> float -> unit
 
 (* [is_done midi] returns whether or not the midi is done playing. *)
 val is_done : midi -> bool
+
+(* [length midi] returns [midi.length], which is the beat when the last
+note to play finishes playing. *)
+val length : midi -> float
