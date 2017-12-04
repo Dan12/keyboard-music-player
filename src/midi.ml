@@ -92,3 +92,6 @@ let tick midi beat =
   let remaining_played_notes = set_key_ups midi.played_notes beat in
   midi.notes <- new_notes;
   midi.played_notes <- List.rev_append new_played_notes remaining_played_notes
+
+let is_done midi =
+  (List.length midi.notes) = 0
