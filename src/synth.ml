@@ -13,7 +13,7 @@ type synth = {
   filter: Filter.filter_t;
 }
 
-let lpf = new Biquad.biquad_filter 44100 `Band_pass (10040.) 10.
+let lpf = new Biquad.biquad_filter 44100 `Band_pass (440.) 10.
 
 let volume = 0.25
 let sample_rate = 44100.
