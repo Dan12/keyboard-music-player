@@ -18,6 +18,8 @@ let tick_callback () =
     end
   else
     begin
+      if Midi.is_done midi then
+        Model.stop_midi();
       if Model.midi_is_playing() then
         begin
           Metronome.tick();
@@ -27,9 +29,7 @@ let tick_callback () =
           let scrub_pos = percent_played *. (Model.get_scrub_pos_max() -. Model.get_scrub_pos_min())
                           +. Model.get_scrub_pos_min() in
           Model.set_scrub_pos scrub_pos
-        end;
-      if Midi.is_done midi then
-        Model.stop_midi()
+        end
     end
 in
 
