@@ -91,9 +91,11 @@ let handle_mouse_up x y t =
                   let index = String.index button '_' in
                   let folder = String.sub button 0 index in
                   if contains "midi" button then
-                    Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
+                    let _ = Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button) in
+                    Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^folder^"_song.json"))
                   else
-                    Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button))
+                    let _ = Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button)) in
+                    Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^folder^"_0_midi.json")
                 | None -> ()
               end;
               Model.set_filename_buttons (Model.get_file_location());
