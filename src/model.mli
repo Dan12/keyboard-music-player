@@ -43,7 +43,7 @@ val set_state : state -> unit
 val get_state : unit -> state
 
 (* [get_buttons] returns the buttons & their state. *)
-val get_buttons : unit -> Button.buttons
+val get_midi_buttons : unit -> Button_standard.button list
 
 (* [get_file_buttons] returns the file buttons. *)
 val get_file_buttons : unit -> File_button.file_buttons

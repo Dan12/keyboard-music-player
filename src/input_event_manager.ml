@@ -58,7 +58,11 @@ let contains s1 s2 =
 
 let handle_mouse_up x y t =
   match Model.get_state () with
-  | SKeyboard -> begin
+  | SKeyboard ->
+    let iter = fun _ b -> Button_standard.up_press b (x, y) in
+    List.iteri iter (Model.get_midi_buttons())
+
+    (* begin
     match Gui.button_pressed (x, y) with
     | Some button ->
       (match button with
@@ -68,7 +72,7 @@ let handle_mouse_up x y t =
        | Stop -> Model.stop_midi();
          clear_keyboard())
     | None -> ()
-    end
+    end *)
   | SFileChooser -> begin
       match Gui.file_button_pressed (x, y) with
       | Some button ->

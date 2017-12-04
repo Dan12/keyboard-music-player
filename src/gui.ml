@@ -182,40 +182,14 @@ let draw_arrows r keyboard x y w =
   let _ = Sdl.render_draw_line r (x + 2 * x_offset + 3 * w_key / 4) (y + y_offset + h_key / 2) (x + 2 * x_offset + w_key / 2) (y + y_offset + h_key / 4) in
   2 * y_offset
 
-let draw_button r x y size i button_with_state =
-  let (button, state) = button_with_state in
-  let rect = draw_key_to_rect r x y size size state in
-  Array.set button_rects i (Some (rect, button));
-
-  let padding = size / 5 in
-  match button with
-  | Load ->
-    let font = get_font (3 * size / 8) in
-    draw_text r (x + size/2) (y + size/2) font "Load"
-  | Play ->
-    let _ = Sdl.render_draw_line r (x+padding) (y+padding) (x+size-padding) (y+size/2) in
-    let _ = Sdl.render_draw_line r (x+padding) (y+size-padding) (x+size-padding) (y+size/2) in
-    let _ = Sdl.render_draw_line r (x+padding) (y+padding) (x+padding) (y+size-padding) in
-    ()
-  | Pause ->
-    let rect_width = (size - 3 * padding) / 2 in
-    let rect_height = size - 2 * padding in
-    let left_rect = Sdl.Rect.create (x+padding) (y+padding) rect_width rect_height in
-    let right_rect = Sdl.Rect.create (x+padding+rect_width+padding) (y+padding) rect_width rect_height in
-    let _ = Sdl.render_draw_rects r [left_rect;right_rect] in
-    ()
-  | Stop ->
-    let rect = Sdl.Rect.create (x+padding) (y+padding) (size-padding*2) (size-padding*2) in
-    let _ = Sdl.render_draw_rect r (Some rect) in
-    ()
-
 let draw_buttons r x y w =
   let offset = w / num_buttons in
   let size = (100 - percent_key_padding) * offset / 100 in
-  Array.iteri (fun i button ->
-      let button_x = i * offset + x in
-      draw_button r button_x y size i button
-    ) (Model.get_buttons());
+  let iter = fun i b ->
+    let button_x = i * offset + x in
+    Button_standard.set_area b button_x y size size;
+    Button_standard.draw b r in
+  List.iteri iter (Model.get_midi_buttons());
   size
 
 let clear r =
@@ -258,7 +232,7 @@ let rec is_zero arr i =
   else arr.(i) = 0 && (is_zero arr (i + 1))
 
 let draw_graphics r amplitudes x y w h =
-  let should_noise = (*is_zero amplitudes 0*) true in
+  let should_noise = is_zero amplitudes 0 in
   let num_bars = Array.length amplitudes in
   let offset = (w + num_bars / 2) / num_bars in
   let bar_w = (100 - percent_graphic_padding) * offset / 100 in
