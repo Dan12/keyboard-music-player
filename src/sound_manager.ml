@@ -46,7 +46,8 @@ let key_pressed row_col =
 let key_released row_col =
   if custom_instrument then
     let release s =
-      Synth.release s in
+      if Synth.is_equal row_col s then
+        Synth.release s in
     List.iter release manager.synth_sounds_playing
   else
     let song = Model.get_song () in

@@ -13,8 +13,6 @@ type synth = {
   filter: Filter.filter_t;
 }
 
-let lpf = new Biquad.biquad_filter 44100 `Band_pass (440.) 10.
-
 let volume = 0.25
 let sample_rate = 44100.
 let pi = 3.14159265358979323846
@@ -30,9 +28,9 @@ let create w (octave, note) =
     note_ocate = (note, octave);
     sample = 0;
     playing = true;
-    adsr_config = Adsr.make_adsr 44100 (0.,0.0,1.0,0.1);
+    adsr_config = Adsr.make_adsr 44100 (0.1,0.0,1.0,0.1);
     adsr_state = Adsr.init_state ();
-    filter = Filter.make 44100 `Low_pass 440. 2.;
+    filter = Filter.make 44100 `Low_pass ~gain:10.0 10000. 100.;
   }  
 
 let start s =
@@ -72,9 +70,8 @@ let get_next_sample s =
   in
   let vol_ctrl = amp *. volume in
   let adsr_ctrl = Adsr.process_sample s.adsr_config s.adsr_state vol_ctrl in
-  (* let filter_ctrl = Filter.process s.filter adsr_ctrl in *)
-  (* let flt_arr = Array.make 1 adsr_ctrl in
-  lpf#process flt_arr 0 1; *)
+  (* let filter_ctrl = Filter.process s.filter adsr_ctrl in
+  let amp_int = int_of_float (filter_ctrl *. 2147483647.) in *)
   let amp_int = int_of_float (adsr_ctrl *. 2147483647.) in
   s.sample <- s.sample + 1;
   (amp_int, amp_int)

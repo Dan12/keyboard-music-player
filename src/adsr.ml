@@ -1,3 +1,5 @@
+(* code adapted from: https://github.com/savonet/ocaml-mm *)
+
 type adsr_t = int*int*float*int
 
 type adsr_state = {
