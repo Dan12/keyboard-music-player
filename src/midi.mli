@@ -11,6 +11,10 @@ val parse_midi : string -> midi
    calling key_pressed, key_released, and set_soundpack. *)
 val tick : midi -> float -> unit
 
+(* [scrub_to_beat midi beat] is like [tick], but the new beat can be smaller
+than the previous beat. Does not play the actual midi. *)
+val scrub_to_beat : midi -> float -> unit
+
 (* [is_done midi] returns whether or not the midi is done playing. *)
 val is_done : midi -> bool
 

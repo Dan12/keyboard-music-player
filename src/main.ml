@@ -1,13 +1,28 @@
 let tick_callback () =
-  if Model.midi_should_load() then
-    Midi_player.set_midi (Model.get_midi_filename ());
-  if Model.midi_is_playing() then
-    Metronome.tick();
-    let midi = Midi_player.get_midi () in
-    let beat = Metronome.get_beat () in
-    Midi.tick midi beat;
-    if Midi.is_done midi then
-      Model.stop_midi()
+  if Model.is_scrubbing() then
+    let percent_played =
+      (Model.get_scrub_pos() -. Model.get_scrub_pos_min())
+      /. (Model.get_scrub_pos_max() -. Model.get_scrub_pos_min()) in
+    let midi = Midi_player.get_midi() in
+    let beat = Midi.length midi *. percent_played in
+    Midi.scrub_to_beat midi beat;
+    Metronome.set_beat beat;
+  else
+    if Model.midi_should_load() then
+      Midi_player.set_midi (Model.get_midi_filename ());
+    if Model.midi_is_playing() then
+      Metronome.tick();
+      let midi = Midi_player.get_midi () in
+      let beat = Metronome.get_beat () in
+      Midi.tick midi beat;
+
+      let percent_played = beat /. (Midi.length midi) in
+      let scrub_pos = percent_played *. (Model.get_scrub_pos_max() -. Model.get_scrub_pos_min())
+                      +. Model.get_scrub_pos_min() in
+      Model.set_scrub_pos scrub_pos;
+
+      if Midi.is_done midi then
+        Model.stop_midi()
 in
 
 Model.set_filename_buttons (Model.get_file_location ());

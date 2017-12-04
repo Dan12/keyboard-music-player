@@ -18,6 +18,7 @@ type midi_data =
   | Soundpack of timed_soundpack
   | Note of timed_note
 
+(* AF: [notes] is sorted in ascending order by beat. *)
 type midi = {
   name: string;
   length: float;
@@ -106,6 +107,20 @@ let tick midi beat =
   let remaining_played_notes = set_key_ups midi.played_notes beat in
   midi.notes <- new_notes;
   midi.played_notes <- List.rev_append new_played_notes remaining_played_notes
+
+let beat_of_note = function
+  | Soundpack s -> s.beat
+  | Note n -> n.beat
+
+let scrub_to_beat midi beat =
+  let (notes_to_play, new_notes) = List.partition
+      (fun note -> note_end_time note <= beat) midi.notes in
+  let (notes_to_unplay, new_played_notes) = List.partition
+      (fun note -> note_end_time note > beat) midi.played_notes in
+  midi.notes <- List.sort (fun note1 note2 ->
+      (beat_of_note note1 -. beat_of_note note2) |> int_of_float)
+      (List.rev_append notes_to_unplay new_notes);
+  midi.played_notes <- List.rev_append notes_to_play new_played_notes
 
 let is_done midi =
   (List.length midi.notes) = 0
