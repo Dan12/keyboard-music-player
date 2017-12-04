@@ -68,7 +68,7 @@ let handle_mouse_up x y t =
       match Gui.button_pressed (x, y) with
       | Some button ->
         (match button with
-        | Load -> Model.set_state Model.SFileChooser
+         | Load -> (*Model.set_state Model.SFileChooser*) Metronome.set_bpm 200
         | Play -> Model.start_midi()
         | Pause -> Model.pause_midi()
         | Stop -> Model.stop_midi();
