@@ -28,13 +28,17 @@ type model = {
   mutable midi_filename: string;
   mutable should_load_midi: bool;
   mutable is_playing: bool;
-  mutable scrub_pos: int;
-  scrub_max_pos: int;
+  mutable scrubbing: bool;
+  mutable scrub_pos: float;
+  scrub_pos_min: float;
+  scrub_pos_max: float;
   mutable buffer: Complex.t array;
 }
 
 (* The model with all the default values initialized *)
 let model:model =
+  let window_w = 1280 in
+  let scrub_margin = 80.0 in
   let eq_song = Song.parse_song_file "resources/eq_data/eq_song.json" in
   let keyboard_layout = Keyboard_layout.parse_layout
       "resources/standard_keyboard_layout.json" in
@@ -43,7 +47,7 @@ let model:model =
   let keyboard = Keyboard.create_keyboard (rows, cols) in
   let buffer = Array.make 1024 {Complex.re = 0.; Complex.im = 0.;} in
   {
-    window_w = 1280;
+    window_w = window_w;
     window_h = 720;
     keyboard = keyboard;
     keyboard_layout = keyboard_layout;
@@ -57,8 +61,10 @@ let model:model =
     midi_filename = "resources/eq_data/eq_0_midi.json";
     should_load_midi = true;
     is_playing = false;
-    scrub_pos = 0;
-    scrub_max_pos = 20;
+    scrubbing = false;
+    scrub_pos = scrub_margin;
+    scrub_pos_min = scrub_margin;
+    scrub_pos_max = (float_of_int window_w) -. scrub_margin;
     buffer = buffer;
   }
 
@@ -140,14 +146,23 @@ let midi_is_playing () = model.is_playing
 
 let midi_should_load () = model.should_load_midi
 
+let set_scrubbing scrubbing =
+  model.scrubbing <- scrubbing
+
+let is_scrubbing () =
+  model.scrubbing
+
 let get_scrub_pos () =
   model.scrub_pos
 
 let set_scrub_pos pos =
   model.scrub_pos <- pos
 
-let get_scrub_max_pos () =
-  model.scrub_max_pos
+let get_scrub_pos_min () =
+  model.scrub_pos_min
+
+let get_scrub_pos_max () =
+  model.scrub_pos_max
 
 let set_buffer b =
   let (left, _) = Audio_effects.complex_create b in
