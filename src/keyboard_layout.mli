@@ -12,6 +12,7 @@ type keyboard_output =
   | KOKeyup of int*int
   | KOSoundpackSet of int
   | KOUnmapped
+  | KOSpace
 
 (* This is the type of possible inputs to a layout*)
 type keyboard_input =

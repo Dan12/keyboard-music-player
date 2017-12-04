@@ -31,10 +31,10 @@ let duration f = f.n
 let complex_create (buf:(int32, Bigarray.int32_elt, Bigarray.c_layout) Bigarray.Array1.t) =
   let len = Bigarray.Array1.dim buf/2 in
   let max = float_of_int (1 lsl 31) in
-  let left = 
+  let left =
     Array.init len (fun i -> {Complex.re = Int32.to_float (buf.{i*2}) /. max; Complex.im = 0.})
   in
-  let right = 
+  let right =
     Array.init len (fun i -> {Complex.re = Int32.to_float (buf.{i*2+1}) /. max; Complex.im = 0.})
   in
   (left, right)

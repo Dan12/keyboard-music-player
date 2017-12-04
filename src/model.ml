@@ -8,7 +8,7 @@ open Song
  *)
 type state = SKeyboard | SFileChooser
 
-(* The fft instance to use when computing fft on 
+(* The fft instance to use when computing fft on
  * the current audio buffer
  *)
 let fft = ref (Fft.init 10)
@@ -105,7 +105,7 @@ let get_file_location () =
 
 let set_filename_buttons d =
   model.filename_buttons <-
-    File_button.create_filename_buttons (get_file_location ())
+    File_button.create_filename_buttons (d)
 
 let get_filename_buttons () =
   model.filename_buttons

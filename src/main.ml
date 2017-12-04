@@ -2,10 +2,12 @@ let tick_callback () =
   if Model.midi_should_load() then
     Midi_player.set_midi (Model.get_midi_filename ());
   if Model.midi_is_playing() then
-    Metronome.tick ();
+    Metronome.tick();
     let midi = Midi_player.get_midi () in
     let beat = Metronome.get_beat () in
-    Midi.tick midi beat
+    Midi.tick midi beat;
+    if Midi.is_done midi then
+      Model.stop_midi()
 in
 
 Model.set_filename_buttons (Model.get_file_location ());

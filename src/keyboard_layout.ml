@@ -6,7 +6,7 @@ type key_visual =
   | Enter
   | Empty
 
-type keyboard_mapping = RowCol of int*int | Soundpack of int
+type keyboard_mapping = RowCol of int*int | Soundpack of int | Space
 
 type keyboard_layout = ((int, keyboard_mapping) Hashtbl.t) * key_visual array array
 
@@ -15,6 +15,7 @@ type keyboard_output =
   | KOKeyup of int*int
   | KOSoundpackSet of int
   | KOUnmapped
+  | KOSpace
 
 type keyboard_input =
   | KIKeydown of int
@@ -73,7 +74,9 @@ let parse_layout filename =
   let key_array = List.assoc "keys" json |> to_list in
   let rows = List.assoc "rows" json |> to_int in
   let cols = List.assoc "cols" json |> to_int in
+  let space = List.assoc "space" json |> to_int in
   let map = Hashtbl.create 64 in
+  Hashtbl.add map space Space;
   parse_keyboard map keyboard_array;
   parse_arrows map switch_soundpack;
   let keys = create_keyboard key_array (rows, cols) in
@@ -99,15 +102,17 @@ let process_key ipt (layout, _) =
       match Hashtbl.find_opt layout keycode with
       | Some RowCol (r,c) -> KOKeydown (r,c)
       | Some Soundpack s -> KOSoundpackSet s
-      | None -> KOUnmapped
+      | _ -> KOUnmapped
     end
   | KIKeyup keycode ->
     begin
       let keycode = to_upper keycode in
       match Hashtbl.find_opt layout keycode with
       | Some RowCol (r,c) -> KOKeyup (r,c)
+      | Some Space -> KOSpace
       | _ -> KOUnmapped
     end
+
 
 let get_visual (r,c) (_, keyboard) =
   keyboard.(r).(c)
