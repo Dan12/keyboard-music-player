@@ -1,28 +1,22 @@
 let pi = 3.14159265358979323846
 
-type filter_t = {
-  p0 : float;
-  p1 : float;
-  p2 : float;
-  q1 : float;
-  q2 : float;
+class biquad_filter samplerate (kind:[`Low_pass | `High_pass | `Band_pass | `Notch | `All_pass | `Peaking | `Low_shelf | `High_shelf]) ?(gain=0.) freq q =
+  let samplerate = float samplerate in
+  object (self)
+  val mutable p0 = 0.
+  val mutable p1 = 0.
+  val mutable p2 = 0.
+  val mutable q1 = 0.
+  val mutable q2 = 0.
 
-  mutable x1 : float;
-  mutable x2 : float;
-  mutable y0 : float;
-  mutable y1 : float;
-  mutable y2 : float;
-}
-
-let make sr kind ?(gain=0.) freq q =
-  let samplerate = float_of_int sr in
-  let w0 = 2. *. pi *. freq /. samplerate in
-  let cos_w0 = cos w0 in
-  let sin_w0 = sin w0 in
-  let alpha = sin w0 /. (2. *. q) in
-  let a = if gain = 0. then 1. else 10. ** (gain /. 40.) in
-  let b0,b1,b2,a0,a1,a2 =
-  match kind with
+  method private init =
+    let w0 = 2. *. pi *. freq /. samplerate in
+    let cos_w0 = cos w0 in
+    let sin_w0 = sin w0 in
+    let alpha = sin w0 /. (2. *. q) in
+      let a = if gain = 0. then 1. else 10. ** (gain /. 40.) in
+    let b0,b1,b2,a0,a1,a2 =
+    match kind with
     | `Low_pass ->
       let b1 = 1. -. cos_w0 in
       let b0 = b1 /. 2. in
@@ -64,26 +58,31 @@ let make sr kind ?(gain=0.) freq q =
       (a +. 1.) -. (a -. 1.) *. cos_w0 +. s,
       2. *. (a -. 1.) -. (a +. 1.) *. cos_w0,
       (a +. 1.) -. (a -. 1.) *. cos_w0 -. s
-  in
-  {
-    p0 = b0 /. a0;
-    p1 = b1 /. a0;
-    p2 = b2 /. a0;
-    q1 = a1 /. a0;
-    q2 = a2 /. a0;
+    in
+    p0 <- b0 /. a0;
+    print_endline (string_of_float p0);
+    p1 <- b1 /. a0;
+    p2 <- b2 /. a0;
+    q1 <- a1 /. a0;
+    q2 <- a2 /. a0
 
-    x1 = 0.;
-    x2 = 0.;
-    y0 = 0.;
-    y1 = 0.;
-    y2 = 0.;
-  }
+  initializer
+  self#init
 
-let process filter sample =
-  let x0 = sample in
-  let y0 = filter.p0 *. x0 +. filter.p1 *. filter.x1 +. filter.p2 *. filter.x2 -. filter.q1 *. filter.y1 -. filter.q2 *. filter.y2 in
-  filter.x2 <- filter.x1;
-  filter.x1 <- x0;
-  filter.y2 <- filter.y1;
-  filter.y1 <- y0;
-  y0
+  val mutable x1 = 0.
+  val mutable x2 = 0.
+  val mutable y0 = 0.
+  val mutable y1 = 0.
+  val mutable y2 = 0.
+
+  method process buf ofs len =
+    for i = ofs to ofs + len - 1 do
+      let x0 = buf.(i) in
+      let y0 = p0 *. x0 +. p1 *. x1 +. p2 *. x2 -. q1 *. y1 -. q2 *. y2 in
+      buf.(i) <- y0;
+      x2 <- x1;
+      x1 <- x0;
+      y2 <- y1;
+      y1 <- y0
+    done
+end

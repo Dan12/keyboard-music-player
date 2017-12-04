@@ -18,8 +18,8 @@ val release_state : adsr_state -> unit
 (* [is_dead state] returns true if the state is in the dead state *)
 val is_dead : adsr_state -> bool
 
-(* [process_sample envelope state (sample_l, sample_r)] returns the gain
- * adjusted [sample_l] and [sample_r] based on the current [state] and
+(* [process_sample envelope state sample] returns the gain
+ * adjusted mono [sample] based on the current [state] and
  * [envelope]
  *)
-val process_sample : adsr_t -> adsr_state -> float*float -> float*float
+val process_sample : adsr_t -> adsr_state -> float -> float

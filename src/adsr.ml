@@ -9,7 +9,7 @@ type adsr_state = {
 let samples_of_seconds sr t =
   int_of_float (float sr *. t)
 
-let make sr (a,d,s,r) =
+let make_adsr sr (a,d,s,r) =
   samples_of_seconds sr a,
   samples_of_seconds sr d,
   s,
@@ -28,7 +28,7 @@ let release_state state =
 let is_dead state =
   state.state = 4
 
-let process_sample adsr state (sample_l, sample_r) =
+let process_sample adsr state sample =
   let (a,d,s,r) = adsr in
   match state.state with
   | 0 ->
@@ -38,10 +38,12 @@ let process_sample adsr state (sample_l, sample_r) =
     state.sample_pos <- state.sample_pos+1;
     (* set to the next state if at that position *)
     if state.sample_pos >= a then
-      state.state <- 1;
-      state.sample_pos <- 0;
+      begin
+        state.state <- 1;
+        state.sample_pos <- 0;
+      end;
     (* return the scaled samples *)
-    (sample_l *. scalar, sample_r *. scalar)
+    sample *. scalar
   | 1 ->
     (* calculate the gain scalar in decay phase *)
     let scalar = 1. +. ((0.8 -. 1.) *. (float_of_int state.sample_pos)) /. (float_of_int d) in
@@ -49,21 +51,25 @@ let process_sample adsr state (sample_l, sample_r) =
     state.sample_pos <- state.sample_pos+1;
     (* set to the next state if at that position *)
     if state.sample_pos >= d then
-      state.state <- 2;
-      state.sample_pos <- 0;
+      begin
+        state.state <- 2;
+        state.sample_pos <- 0;
+      end;
     (* return the scaled samples *)
-    (sample_l *. scalar, sample_r *. scalar)
+    sample *. scalar
   | 2 ->
-    (sample_l *. s, sample_r *. s)
+    sample *. s
   | 3 -> 
     (* calculate the gain scalar in release phase *)
-    let scalar = (float_of_int state.sample_pos) /. (float_of_int a) in
+    let scalar = s -. (float_of_int state.sample_pos) /. (float_of_int r) in
     (* increment the sample position *)
     state.sample_pos <- state.sample_pos+1;
     (* set to the next state if at that position *)
     if state.sample_pos >= r then
-      state.state <- 4;
-      state.sample_pos <- 0;
+      begin
+        state.state <- 4;
+        state.sample_pos <- 0;
+      end;
     (* return the scaled samples *)
-    (sample_l *. scalar, sample_r *. scalar)
-  | _ -> (0.,0.)
+    sample *. scalar
+  | _ -> 0.
