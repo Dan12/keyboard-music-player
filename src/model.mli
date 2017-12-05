@@ -119,6 +119,12 @@ val get_scrub_pos_min : unit -> float
    [scrub_pos]. *)
 val get_scrub_pos_max : unit -> float
 
+(* [get_beats] returns the number of beats in the current midi file. *)
+val get_beats : unit -> float
+
+(* [set_beats beats] saves the number of beats in the current midi file.  *)
+val set_beats : float -> unit
+
 (* [set_buffer audio_output] compute the fft of [audio_output] and cache
  * it in the model
  *)

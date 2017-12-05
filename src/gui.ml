@@ -155,6 +155,11 @@ let draw_scrub r y =
       (scrub_end_x - scrub_pos) line_h in
   let _ = Sdl.render_fill_rect r (Some remaining_line) in
 
+  let current_beat = Metronome.get_beat() |> int_of_float |> string_of_int in
+  let total_beats = Model.get_beats() |> int_of_float |> string_of_int in
+  let text = current_beat ^ "/" ^ total_beats in
+  Gui_utils.draw_text r (scrub_end_x + size*2) line_y size black text;
+
   (* draw the scrub from ealier last. *)
   Gui_utils.set_color r black;
   let _ = Sdl.render_fill_rect r (Some rect) in

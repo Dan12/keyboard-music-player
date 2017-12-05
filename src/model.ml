@@ -42,6 +42,7 @@ type model = {
   bpm_pos_max: float;
   mutable buffer: Complex.t array;
   mutable playing_song : bool;
+  mutable beats_in_midi: float;
 }
 
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
@@ -86,7 +87,7 @@ let get_filenames dir =
 let model:model =
   let window_w = 1280 in
   let bpm_margin = 80.0 in
-  let scrub_margin = 80.0 in
+  let scrub_margin = 160.0 in
   let eq_song = Song.parse_song_file "resources/eq_data/eq_song.json" in
   let keyboard_layout = Keyboard_layout.parse_layout
       "resources/standard_keyboard_layout.json" in
@@ -121,6 +122,7 @@ let model:model =
     bpm_pos_max = (float_of_int (window_w / 3)) -. bpm_margin;
     buffer = buffer;
     playing_song = true;
+    beats_in_midi = 0.0;
   }
 
 let get_width () =
@@ -249,6 +251,12 @@ let get_scrub_pos_min () =
 
 let get_scrub_pos_max () =
   model.scrub_pos_max
+
+let get_beats () =
+  model.beats_in_midi
+
+let set_beats beats =
+  model.beats_in_midi <- beats
 
 let set_buffer b =
   let (left, _) = Fft.complex_create b in

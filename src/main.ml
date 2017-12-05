@@ -4,6 +4,7 @@ let tick_callback () =
     begin
       Midi_player.set_midi (Model.get_midi_filename ());
       Metronome.set_bpm (Model.get_song() |> Song.get_bpm);
+      Midi_player.get_midi() |> Midi.length |> Model.set_beats;
       Model.set_midi_load false
     end;
   let midi = Midi_player.get_midi () in
