@@ -57,6 +57,7 @@ let handle_mouse_up x y t =
     let iter = fun i b -> Button_standard.up_press b (x, y) in
     List.iteri iter (Model.get_file_buttons());
     List.iteri iter (Model.get_filename_buttons())
+  | SSynthesizer -> ()
 
 let event_callback event =
   match enum (get event typ) with

@@ -6,13 +6,14 @@ open Song
 (* The possible states of the interface
  * The keyboard lets the user play songs
  * The file chooser lets a user choose a file
+ * The synthesizer lets a user generate synthesized sounds
  *)
-type state = SKeyboard | SFileChooser
+type state = SKeyboard | SFileChooser | SSynthesizer
 
 (* The fft instance to use when computing fft on
  * the current audio buffer
  *)
-let fft = ref (Audio_effects.init 10)
+let fft = ref (Fft.init 10)
 
 type model = {
   mutable window_w: int;
@@ -32,6 +33,7 @@ type model = {
   mutable should_load_midi: bool;
   mutable is_playing: bool;
   mutable buffer: Complex.t array;
+  mutable playing_song : bool;
 }
 
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
@@ -99,6 +101,7 @@ let model:model =
     should_load_midi = true;
     is_playing = false;
     buffer = buffer;
+    playing_song = true;
   }
 
 let set_width w =
@@ -190,13 +193,13 @@ let midi_is_playing () = model.is_playing
 let midi_should_load () = model.should_load_midi
 
 let set_buffer b =
-  let (left, _) = Audio_effects.complex_create b in
-  Audio_effects.cosine left;
+  let (left, _) = Fft.complex_create b in
+  Fft.cosine left;
   if Bigarray.Array1.dim b = 1024 then
-    fft := Audio_effects.init 9
+    fft := Fft.init 9
   else
     ();
-  Audio_effects.fft (!fft) left;
+  Fft.fft (!fft) left;
   model.buffer <- left
 
 let get_buffer () =
