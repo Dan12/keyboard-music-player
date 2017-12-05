@@ -149,8 +149,7 @@ let event_callback event =
     handle_mouse_up mouse_x mouse_y click;
     recent_click := click
   | `Mouse_motion ->
-    let int_mouse_x = get event mouse_button_x in
-    let mouse_x = int_mouse_x |> float_of_int in
+    let mouse_x = get event mouse_button_x |> float_of_int in
     let mouse_y = get event mouse_button_y in
     if Model.is_scrubbing() then
     begin
@@ -166,12 +165,12 @@ let event_callback event =
     if Model.is_bpm_scrubbing() then
     begin
       let scrub_x = (
-        if int_mouse_x > Model.get_bpm_pos_max() then
+        if mouse_x > Model.get_bpm_pos_max() then
           Model.get_bpm_pos_max()
-        else if int_mouse_x < Model.get_bpm_pos_min() then
+        else if mouse_x < Model.get_bpm_pos_min() then
           Model.get_bpm_pos_min()
         else
-          int_mouse_x) in
+          mouse_x) in
       Model.set_bpm_pos scrub_x
     end
   | `Mouse_wheel ->

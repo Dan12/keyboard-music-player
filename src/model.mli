@@ -76,10 +76,10 @@ val midi_is_playing : unit -> bool
 val midi_should_load : unit -> bool
 
 (* [set_bpm_pos p] sets the position of the bpm slider to [p]. *)
-val set_bpm_pos : int -> unit
+val set_bpm_pos : float -> unit
 
 (* [get_bpm_pos] returns the current position of the bpm slider. *)
-val get_bpm_pos : unit -> int
+val get_bpm_pos : unit -> float
 
 (* [set_bpm_scrubbing b] changes [b]. *)
 val set_bpm_scrubbing : bool -> unit
@@ -88,10 +88,10 @@ val set_bpm_scrubbing : bool -> unit
 val is_bpm_scrubbing : unit -> bool
 
 (* [get_bpm_pos_min] returns [bpm_pos_min]. *)
-val get_bpm_pos_min : unit -> int
+val get_bpm_pos_min : unit -> float
 
 (* [get_bpm_pos_max] returns [bpm_pos_max]. *)
-val get_bpm_pos_max : unit -> int
+val get_bpm_pos_max : unit -> float
 
 (* [set_midi_load load] sets the value of [should_load_midi]*)
 val set_midi_load : bool -> unit

@@ -28,21 +28,21 @@ type model = {
   mutable midi_filename: string;
   mutable should_load_midi: bool;
   mutable is_playing: bool;
-  mutable bpm_pos: int;
+  mutable bpm_pos: float;
   mutable bpm_scrubbing: bool;
   mutable scrubbing: bool;
   mutable scrub_pos: float;
   scrub_pos_min: float;
   scrub_pos_max: float;
-  bpm_pos_min: int;
-  bpm_pos_max: int;
+  bpm_pos_min: float;
+  bpm_pos_max: float;
   mutable buffer: Complex.t array;
 }
 
 (* The model with all the default values initialized *)
 let model:model =
   let window_w = 1280 in
-  let bpm_margin = 80 in
+  let bpm_margin = 80.0 in
   let scrub_margin = 80.0 in
   let eq_song = Song.parse_song_file "resources/eq_data/eq_song.json" in
   let keyboard_layout = Keyboard_layout.parse_layout
@@ -73,7 +73,7 @@ let model:model =
     scrub_pos_min = scrub_margin;
     scrub_pos_max = (float_of_int window_w) -. scrub_margin;
     bpm_pos_min = bpm_margin;
-    bpm_pos_max = (window_w / 3) - bpm_margin;
+    bpm_pos_max = (float_of_int (window_w / 3)) -. bpm_margin;
     buffer = buffer;
   }
 

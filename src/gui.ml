@@ -221,13 +221,14 @@ let draw_buttons r x y w =
 
 let draw_bpm r y =
   let size = 20 in
-  let x = (Model.get_bpm_pos() - size/2) in
+  print_endline(string_of_float (Model.get_bpm_pos()));
+  let x = ((Model.get_bpm_pos()|> int_of_float) - size/2) in
   let rect = Sdl.Rect.create x y (size/2) size in
   bpm := Some rect;
   let _ = Sdl.render_fill_rect r (Some rect) in
   let line_h = 3 in
-  let line = Sdl.Rect.create (Model.get_bpm_pos_min()) (y + (size / 2) - 1)
-      (Model.get_bpm_pos_max()-Model.get_bpm_pos_min()) line_h in
+  let line = Sdl.Rect.create (Model.get_bpm_pos_min()|> int_of_float) (y + (size / 2) - 1)
+      ((Model.get_bpm_pos_max()|> int_of_float)-(Model.get_bpm_pos_min()|> int_of_float)) line_h in
   set_color r black;
   let _ = Sdl.render_fill_rect r (Some line) in ()
 
