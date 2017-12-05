@@ -19,7 +19,10 @@ let tick_callback () =
   else
     begin
       if Midi.is_done midi then
-        Model.stop_midi();
+        begin
+          Model.stop_midi();
+          Input_event_manager.clear_keyboard()
+        end;
       if Model.midi_is_playing() then
         begin
           Metronome.tick();
