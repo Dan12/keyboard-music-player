@@ -148,6 +148,9 @@ let stop_midi () =
   model.is_playing <- false;
   model.should_load_midi <- true;
   Metronome.reset();
+  model.scrub_pos <- model.scrub_pos_min;
+  Metronome.set_bpm (model.song |> Song.get_bpm);
+  model.bpm_pos <- (Metronome.get_percent() *. (model.bpm_pos_max -. model.bpm_pos_min));
   Button.press_button Button.Stop model.buttons
 
 let midi_is_playing () = model.is_playing
