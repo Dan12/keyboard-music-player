@@ -6,9 +6,6 @@ open Button
 open File_button
 open Model
 
-let file_button_rects:((Sdl.rect * file_button) option array) =
-  Array.make num_file_buttons None
-
 let filename_button_rects:((Sdl.rect * filename_button) option array ref) =
   ref (Array.make (Model.get_num_filename_buttons ()) None)
 
@@ -377,22 +374,6 @@ let draw r =
   match Model.get_state () with
   | SKeyboard -> draw_output r
   | SFileChooser -> draw_filechooser r
-
-let file_button_pressed (x,y) =
-  let file_button_rect_list = Array.to_list file_button_rects in
-  let pressed_button_rect = List.find_opt (fun button_rect_option ->
-      match button_rect_option with
-      | None -> false
-      | Some (rect, button) ->
-        let rect_x = Sdl.Rect.x rect in
-        let rect_y = Sdl.Rect.y rect in
-        let rect_w = Sdl.Rect.w rect in
-        let rect_h = Sdl.Rect.h rect in
-        rect_x <= x && x <= (rect_x+rect_w) && rect_y <= y && y <= (rect_y+rect_h)
-    ) file_button_rect_list in
-  match pressed_button_rect with
-  | Some (Some (rect, button)) -> Some button
-  | _ -> None
 
 let filename_button_pressed (x,y) =
   let filename_button_rect_list = Array.to_list !filename_button_rects in

@@ -162,8 +162,27 @@ let remove_selected_filename () =
 
 let get_selected_filename () = model.selected_filename
 
-let set_selected_filename file = 
+let set_selected_filename file =
   model.selected_filename <- Some file
+
+let commit_selected_filename () =
+  let contains s1 s2 =
+    let size = String.length s1 in
+    let contain = ref false in
+    let i = ref 0 in
+    while !i < (String.length s2 - size + 1) && !contain = false do
+      if String.sub s2 !i size = s1 then contain := true
+      else i := !i + 1
+    done;
+    !contain in
+  match get_selected_filename() with
+  | Some name ->
+    let index = String.index name '_' in
+    let folder = String.sub name 0 index in
+    if contains "midi" name then
+      set_midi_filename ((get_file_location())^folder^"_data/"^name)
+    else set_song (Song.parse_song_file ((get_file_location())^folder^"_data/"^name))
+  | None -> ()
 
 let create_midi_buttons () =
   let button_draw b is_current_down draw_icon = fun r ->
@@ -237,15 +256,6 @@ let create_file_buttons () =
     let font_size = w / 4 in
     Gui_utils.draw_text r (x + w/2) (y + 2*h/3) font_size keyboard_text_color text in
 
-  let contains s1 s2 =
-    let size = String.length s1 in
-    let contain = ref false in
-    let i = ref 0 in
-    while !i < (String.length s2 - size + 1) && !contain = false do
-      if String.sub s2 !i size = s1 then contain := true
-      else i := !i + 1
-    done;
-    !contain in
 
 
   let cancel_up _ =
@@ -256,15 +266,10 @@ let create_file_buttons () =
   let cancel_draw = button_draw cancel "Cancel" in
   Button_standard.set_draw cancel cancel_draw;
 
+
+
   let select_up _ =
-    (match get_selected_filename() with
-     | Some name ->
-      let index = String.index name '_' in
-      let folder = String.sub name 0 index in
-      if contains "midi" name then
-        set_midi_filename ((get_file_location())^folder^"_data/"^name)
-      else set_song (Song.parse_song_file ((get_file_location())^folder^"_data/"^name))
-    | None -> ());
+    commit_selected_filename();
     remove_selected_filename();
     set_state SKeyboard  in
 

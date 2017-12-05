@@ -20,11 +20,11 @@ let handle_keyboard_output output =
       | _ -> ()
     end
   else
-    (match output with
-     | Keyboard_layout.KOSoundpackSet i ->
-       let song = Model.get_song () in
-       Song.set_sound_pack i song
-     | _ -> ())
+    match output with
+    | Keyboard_layout.KOSoundpackSet i ->
+      let song = Model.get_song () in
+      Song.set_sound_pack i song
+    | _ -> ()
 
 let handle_keyboard input_event =
   match Model.get_state () with
@@ -34,17 +34,6 @@ let handle_keyboard input_event =
     let output = Keyboard_layout.process_key input_event layout in
     handle_keyboard_output output
   | _ -> ()
-
-let clear_keyboard () =
-  let layout = Model.get_keyboard_layout() in
-  let keyboard = Model.get_keyboard() in
-  let rows = Keyboard_layout.get_rows layout in
-  let cols = Keyboard_layout.get_cols layout in
-  for row = 0 to rows - 1 do
-    for col = 0 to cols - 1 do
-      Keyboard.process_event (Keyboard_layout.KOKeyup (row, col)) keyboard |> ignore
-    done;
-  done
 
 let contains s1 s2 =
   let size = String.length s1 in
@@ -64,29 +53,9 @@ let handle_mouse_up x y t =
   | SFileChooser ->
     let iter = fun _ b -> Button_standard.up_press b (x, y) in
     List.iteri iter (Model.get_file_buttons());
-    (* begin
-      match Gui.file_button_pressed (x, y) with
-      | Some button ->
-        (match button with
-         | Cancel ->
-           Model.set_filename_buttons (Model.get_file_location());
-           Model.set_state Model.SKeyboard
-         | Select -> begin
-             match File_button.selected_filename (Model.get_filename_buttons()) with
-             | Some button ->
-               let index = String.index button '_' in
-               let folder = String.sub button 0 index in
-               if contains "midi" button then
-               Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
-               else Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button))
-             | None -> ()
-           end;
-           Model.set_filename_buttons (Model.get_file_location());
-          Model.set_state Model.SKeyboard)
-      | None -> ()
-    end; begin *) begin
+    begin
       match Gui.filename_button_pressed (x, y) with
-      | Some button ->
+      | Some button -> Model.set_selected_filename button;
         if (t -. !recent_click) < 0.3 then
           let index = String.index button '_' in
           let folder = String.sub button 0 index in
