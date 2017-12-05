@@ -18,7 +18,7 @@ val start : synth -> unit
  *)
 val get_next_sample : synth -> int*int
 
-(* [is_equal (octave,note) synth] returns true if [synth] 
+(* [is_equal (octave,note) synth] returns true if [synth]
  * is a synth for [octave] and [note] *)
 val is_equal :  int*int -> synth -> bool
 

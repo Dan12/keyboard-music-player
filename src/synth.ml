@@ -50,7 +50,7 @@ let fracf x =
 let get_next_sample s =
   let t = (float_of_int s.sample) in
   let actual_freq = s.freq /. sample_rate in
-  let amp = 
+  let amp =
     begin
     match s.waveform with
     | Sine ->
@@ -64,9 +64,9 @@ let get_next_sample s =
       2. *. x -. 1.
     | Triangle ->
       let x = fracf (t *. actual_freq) +. 0.25 in
-      if x < 0.5 then 
-        4. *. x -. 1. 
-      else 
+      if x < 0.5 then
+        4. *. x -. 1.
+      else
         4. *. (1. -. x) -. 1.
     end
   in
@@ -76,7 +76,7 @@ let get_next_sample s =
   let amp_int = int_of_float (vol_ctrl *. 2147483647.) in
   s.sample <- s.sample + 1;
   (amp_int, amp_int)
-    
+
 
 let is_equal (o,n) s =
   let o = o + octave_shift in

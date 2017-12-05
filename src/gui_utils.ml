@@ -86,6 +86,34 @@ let draw_right r x y w h =
   let _ = Sdl.render_draw_line r (x + 3 * w / 4) (y + h / 2) (x + w / 2) (y + h / 4) in
   ()
 
+let draw_play r x y w h =
+  let w_padding = w / 5 in
+  let h_padding = h / 5 in
+
+  let _ = Sdl.render_draw_line r (x+w_padding) (y+h_padding) (x+w-w_padding) (y+h/2) in
+  let _ = Sdl.render_draw_line r (x+w_padding) (y+h-h_padding) (x+w-w_padding) (y+h/2) in
+  let _ = Sdl.render_draw_line r (x+w_padding) (y+h_padding) (x+w_padding) (y+h-h_padding) in
+  ()
+
+let draw_pause r x y w h =
+  let w_padding = w / 5 in
+  let h_padding = h / 5 in
+
+  let rect_width = (w - 3 * w_padding) / 2 in
+  let rect_height = h - 2 * h_padding in
+  let left_rect = Sdl.Rect.create (x+w_padding) (y+h_padding) rect_width rect_height in
+  let right_rect = Sdl.Rect.create (x+rect_width+2*w_padding) (y+h_padding) rect_width rect_height in
+  let _ = Sdl.render_draw_rects r [left_rect;right_rect] in
+  ()
+
+let draw_stop r x y w h =
+  let w_padding = w / 5 in
+  let h_padding = h / 5 in
+
+  let rect = Sdl.Rect.create (x+w_padding) (y+h_padding) (w-w_padding*2) (h-h_padding*2) in
+  let _ = Sdl.render_draw_rect r (Some rect) in
+  ()
+
 
 let draw_key_text r x y w h font_size text_color = function
   | String s -> draw_text r (x + w / 2) (y + h / 2) font_size text_color s
