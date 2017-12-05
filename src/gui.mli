@@ -6,3 +6,6 @@
  * [renderer] to display the state.
  *)
 val draw : Tsdl.Sdl.renderer -> unit
+
+(* [scrub_pressed x y] returns whether or not the scrub was pressed. *)
+val scrub_pressed : (int * int) -> string -> bool

@@ -33,7 +33,7 @@ let create w (octave, note) =
     adsr_config = Adsr.make_adsr 44100 (0.1,0.0,1.0,0.1);
     adsr_state = Adsr.init_state ();
     filter = Filter.make 44100 `High_pass 1000. 2.;
-  }  
+  }
 
 let start s =
   s.sample <- 0

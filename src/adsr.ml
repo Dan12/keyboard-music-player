@@ -61,7 +61,7 @@ let process_sample adsr state sample =
     sample *. scalar
   | 2 ->
     sample *. s
-  | 3 -> 
+  | 3 ->
     (* calculate the gain scalar in release phase *)
     let scalar = s -. (float_of_int state.sample_pos) /. (float_of_int r) in
     (* increment the sample position *)

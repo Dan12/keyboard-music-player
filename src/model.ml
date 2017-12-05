@@ -16,8 +16,8 @@ type state = SKeyboard | SFileChooser | SSynthesizer
 let fft = ref (Fft.init 10)
 
 type model = {
-  mutable window_w: int;
-  mutable window_h: int;
+  window_w: int;
+  window_h: int;
   mutable keyboard: keyboard;
   mutable keyboard_layout: keyboard_layout;
   mutable song: song;
@@ -32,6 +32,14 @@ type model = {
   mutable midi_filename: string;
   mutable should_load_midi: bool;
   mutable is_playing: bool;
+  mutable bpm_pos: float;
+  mutable bpm_scrubbing: bool;
+  mutable scrubbing: bool;
+  mutable scrub_pos: float;
+  scrub_pos_min: float;
+  scrub_pos_max: float;
+  bpm_pos_min: float;
+  bpm_pos_max: float;
   mutable buffer: Complex.t array;
   mutable playing_song : bool;
 }
@@ -76,6 +84,9 @@ let get_filenames dir =
 
 
 let model:model =
+  let window_w = 1280 in
+  let bpm_margin = 80.0 in
+  let scrub_margin = 80.0 in
   let eq_song = Song.parse_song_file "resources/eq_data/eq_song.json" in
   let keyboard_layout = Keyboard_layout.parse_layout
       "resources/standard_keyboard_layout.json" in
@@ -84,7 +95,7 @@ let model:model =
   let keyboard = Keyboard.create_keyboard (rows, cols) in
   let buffer = Array.make 1024 {Complex.re = 0.; Complex.im = 0.;} in
   {
-    window_w = 1280;
+    window_w = window_w;
     window_h = 720;
     keyboard = keyboard;
     keyboard_layout = keyboard_layout;
@@ -100,18 +111,20 @@ let model:model =
     midi_filename = "resources/eq_data/eq_0_midi.json";
     should_load_midi = true;
     is_playing = false;
+    bpm_pos = bpm_margin;
+    scrubbing = false;
+    bpm_scrubbing = false;
+    scrub_pos = scrub_margin;
+    scrub_pos_min = scrub_margin;
+    scrub_pos_max = (float_of_int window_w) -. scrub_margin;
+    bpm_pos_min = bpm_margin;
+    bpm_pos_max = (float_of_int (window_w / 3)) -. bpm_margin;
     buffer = buffer;
     playing_song = true;
   }
 
-let set_width w =
-  model.window_w <- w
-
 let get_width () =
   model.window_w
-
-let set_height h =
-  model.window_h <- h
 
 let get_height () =
   model.window_h
@@ -158,7 +171,6 @@ let get_midi_filename () =
 let start_midi () =
   if model.is_playing = false then
     Metronome.unpause();
-    Metronome.set_bpm (get_song() |> Song.get_bpm);
     model.is_playing <- true;
   model.should_load_midi <- false
 
@@ -168,7 +180,11 @@ let pause_midi () =
 let stop_midi () =
   model.is_playing <- false;
   model.should_load_midi <- true;
-  Metronome.reset()
+  Metronome.reset();
+  model.scrub_pos <- model.scrub_pos_min;
+  Metronome.set_bpm (model.song |> Song.get_bpm);
+  model.bpm_pos <- (Metronome.get_percent() *. (model.bpm_pos_max -. model.bpm_pos_min));
+  model.current_midi_button <- 3
 
 let clear_keyboard () =
   let layout = get_keyboard_layout() in
@@ -191,6 +207,47 @@ let set_state s =
 let midi_is_playing () = model.is_playing
 
 let midi_should_load () = model.should_load_midi
+
+let set_bpm_pos p =
+  model.bpm_pos <- p;
+  let bpm_length = model.bpm_pos_max -. model.bpm_pos_min in
+  let percent = (p -. model.bpm_pos_min) /. bpm_length in
+  Metronome.set_bpm_by_percent (percent)
+
+let get_bpm_pos () =
+  model.bpm_pos
+
+let set_bpm_scrubbing b =
+  model.bpm_scrubbing <- b
+
+let is_bpm_scrubbing () =
+  model.bpm_scrubbing
+
+let get_bpm_pos_min () =
+  model.bpm_pos_min
+
+let get_bpm_pos_max () =
+  model.bpm_pos_max
+
+let set_midi_load load = model.should_load_midi <- load
+
+let set_scrubbing scrubbing =
+  model.scrubbing <- scrubbing
+
+let is_scrubbing () =
+  model.scrubbing
+
+let get_scrub_pos () =
+  model.scrub_pos
+
+let set_scrub_pos pos =
+  model.scrub_pos <- pos
+
+let get_scrub_pos_min () =
+  model.scrub_pos_min
+
+let get_scrub_pos_max () =
+  model.scrub_pos_max
 
 let set_buffer b =
   let (left, _) = Fft.complex_create b in
