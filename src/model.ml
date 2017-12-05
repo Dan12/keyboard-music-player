@@ -17,9 +17,9 @@ type model = {
   mutable midi_buttons: Button_standard.button list;
   mutable current_midi_button: int;
   mutable file_buttons: Button_standard.button list;
+  mutable filename_buttons : Button_standard.button list;
+  mutable current_filename_button: int;
   mutable selected_filename: string option;
-  mutable filename_buttons : File_button.filename_buttons;
-  mutable num_filename_buttons : int;
   mutable file_location: string;
   mutable midi_filename: string;
   mutable should_load_midi: bool;
@@ -33,6 +33,36 @@ let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
 let key_background = Sdl.Color.create 255 255 255 220
 
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
+
+
+
+
+let contains s1 s2 =
+let size = String.length s1 in
+let contain = ref false in
+let i = ref 0 in
+while !i < (String.length s2 - size + 1) && !contain = false do
+  if String.sub s2 !i size = s1 then contain := true
+  else i := !i + 1
+done;
+!contain
+
+
+let get_filenames dir =
+  let folder_list =
+    if Sys.is_directory dir
+    then Sys.readdir dir |> Array.to_list
+    else [] in
+  let data_list = List.fold_left
+      (fun j s -> if contains "data" s
+        then (dir ^ s ^ Filename.dir_sep)::j else j) [] folder_list in
+  let filename_list = List.fold_left
+      (fun j s -> if Sys.is_directory (s) then
+          (Sys.readdir s |> Array.to_list)@j else j) [] data_list in
+  let json_list = List.fold_left
+      (fun j s -> if contains ".json" s
+        then s::j else j) [] filename_list in
+  List.sort (compare) json_list
 
 
 
@@ -55,8 +85,8 @@ let model:model =
     current_midi_button = 3;
     file_buttons = [];
     selected_filename = None;
-    filename_buttons = File_button.create_empty_filename_list ();
-    num_filename_buttons = 0;
+    filename_buttons = [];
+    current_filename_button = -1;
     file_location = "resources/";
     midi_filename = "resources/eq_data/eq_0_midi.json";
     should_load_midi = true;
@@ -109,15 +139,8 @@ let get_file_buttons () =
 let get_file_location () =
   model.file_location
 
-let set_filename_buttons dir =
-  model.filename_buttons <- File_button.create_filename_buttons dir
-
 let get_filename_buttons () =
   model.filename_buttons
-
-let get_num_filename_buttons () =
-  model.num_filename_buttons <- Array.length (get_filename_buttons ());
-  model.num_filename_buttons
 
 let set_midi_filename f =
   model.midi_filename <- f
@@ -166,15 +189,6 @@ let set_selected_filename file =
   model.selected_filename <- Some file
 
 let commit_selected_filename () =
-  let contains s1 s2 =
-    let size = String.length s1 in
-    let contain = ref false in
-    let i = ref 0 in
-    while !i < (String.length s2 - size + 1) && !contain = false do
-      if String.sub s2 !i size = s1 then contain := true
-      else i := !i + 1
-    done;
-    !contain in
   match get_selected_filename() with
   | Some name ->
     let index = String.index name '_' in
@@ -183,6 +197,41 @@ let commit_selected_filename () =
       set_midi_filename ((get_file_location())^folder^"_data/"^name)
     else set_song (Song.parse_song_file ((get_file_location())^folder^"_data/"^name))
   | None -> ()
+
+
+
+let set_filename_buttons dir =
+  let files = get_filenames dir in
+  let string_to_button index str =
+    let recent_click = ref 0.0 in
+    let button_up _ =
+      set_selected_filename str;
+      model.current_filename_button <- index;
+      let time = Unix.gettimeofday() in
+      begin
+        if time -. !recent_click < 0.3
+        then commit_selected_filename();
+        remove_selected_filename();
+        set_state SKeyboard;
+      end;
+      recent_click := time in
+
+
+    let button_draw b = fun r ->
+      let (x, y, w, h) = Button_standard.get_area b in
+
+      let state = if model.current_filename_button = index then KSDown else KSUp in
+      Gui_utils.draw_key r x y (5 * w) h keyboard_pressed_color key_background keyboard_border_color state;
+
+      let font_size = 3 * w / 8 in
+      Gui_utils.draw_text r (x + 3 * w / 2) (y + h/2) font_size keyboard_text_color str in
+
+    
+    let button = Button_standard.create_button ignore button_up in
+    Button_standard.set_draw button (button_draw button);
+    button in
+
+  model.filename_buttons <- List.mapi string_to_button files
 
 let create_midi_buttons () =
   let button_draw b is_current_down draw_icon = fun r ->
@@ -257,7 +306,6 @@ let create_file_buttons () =
     Gui_utils.draw_text r (x + w/2) (y + 2*h/3) font_size keyboard_text_color text in
 
 
-
   let cancel_up _ =
     remove_selected_filename();
     set_state SKeyboard in
@@ -265,7 +313,6 @@ let create_file_buttons () =
   let cancel = Button_standard.create_button ignore cancel_up in
   let cancel_draw = button_draw cancel "Cancel" in
   Button_standard.set_draw cancel cancel_draw;
-
 
 
   let select_up _ =
@@ -278,5 +325,8 @@ let create_file_buttons () =
   Button_standard.set_draw select select_draw;
   [cancel; select]
 
+
+
+let _ = set_filename_buttons (get_file_location())
 let _ = model.midi_buttons <- create_midi_buttons()
 let _ = model.file_buttons <- create_file_buttons()

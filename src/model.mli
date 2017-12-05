@@ -53,11 +53,11 @@ val get_file_location : unit -> string
 
 val set_selected_filename : string -> unit
 
-(* [set_filename_buttons d] stores all the song/midi files. *)
+(* [set_filename_buttons dir] stores all the song/midi files. *)
 val set_filename_buttons : string -> unit
 
 (* [get_filename_buttons] returns all the song/midi files. *)
-val get_filename_buttons : unit -> File_button.filename_buttons
+val get_filename_buttons : unit -> Button_standard.button list
 
 (* [get_num_filename_buttons] returns the number of filenames. *)
 val get_num_filename_buttons : unit -> int

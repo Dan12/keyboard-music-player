@@ -340,15 +340,13 @@ let draw_filename_buttons r x y w =
   let half = if (Array.length buttons) mod 2 = 0 then (Array.length buttons)/2 else ((Array.length buttons)/2)+1 in
   let first_half = Array.sub buttons 0 half in
   let second_half = Array.sub buttons half ((Array.length buttons) - half) in
-  let final_i = ref 0 in
   Array.iteri (fun i button ->
       let button_y = i * offset + y in
-      draw_filename_button r x button_y size i button;
-      final_i := !final_i + 1
+      draw_filename_button r x button_y size i button
     ) first_half;
   Array.iteri (fun i button ->
       let button_y = i * offset + y in
-      draw_filename_button r (x+(size*7)) button_y size (i + !final_i) button
+      draw_filename_button r (x+(size*7)) button_y size i button
     ) second_half;
   size
 
@@ -374,19 +372,3 @@ let draw r =
   match Model.get_state () with
   | SKeyboard -> draw_output r
   | SFileChooser -> draw_filechooser r
-
-let filename_button_pressed (x,y) =
-  let filename_button_rect_list = Array.to_list !filename_button_rects in
-  let pressed_filename_button_rect = List.find_opt (fun button_rect_option ->
-      match button_rect_option with
-      | None -> false
-      | Some (rect, button) ->
-        let rect_x = Sdl.Rect.x rect in
-        let rect_y = Sdl.Rect.y rect in
-        let rect_w = Sdl.Rect.w rect in
-        let rect_h = Sdl.Rect.h rect in
-        rect_x <= x && x <= (rect_x+rect_w) && rect_y <= y && y <= (rect_y+rect_h)
-    ) filename_button_rect_list in
-  match pressed_filename_button_rect with
-  | Some (Some (rect, button)) -> Some button
-  | _ -> None
