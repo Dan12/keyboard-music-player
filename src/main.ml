@@ -33,6 +33,8 @@ let tick_callback () =
     end
 in
 
+Metronome.set_bpm (Model.get_song() |> Song.get_bpm);
+Model.set_bpm_pos (Metronome.get_percent() *. (Model.get_bpm_pos_max() -. Model.get_bpm_pos_min()));
 Model.set_filename_buttons (Model.get_file_location ());
 let window_width = Model.get_width () in
 let window_height = Model.get_height () in

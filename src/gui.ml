@@ -221,7 +221,6 @@ let draw_buttons r x y w =
 
 let draw_bpm r y =
   let size = 20 in
-  print_endline(string_of_float (Model.get_bpm_pos()));
   let x = ((Model.get_bpm_pos()|> int_of_float) - size/2) in
   let rect = Sdl.Rect.create x y (size/2) size in
   bpm := Some rect;

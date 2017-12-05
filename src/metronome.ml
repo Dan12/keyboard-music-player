@@ -21,6 +21,10 @@ let tick () =
 
 let set_bpm beat = bpm := beat
 
+let set_bpm_by_percent percent =
+  let bpm_diff = max_bpm -. min_bpm in
+  bpm := (int_of_float ((percent *. bpm_diff) +. min_bpm))
+
 let get_bpm () = !bpm
 
 let get_percent () =

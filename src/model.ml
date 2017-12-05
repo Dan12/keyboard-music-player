@@ -156,7 +156,10 @@ let midi_is_playing () = model.is_playing
 let midi_should_load () = model.should_load_midi
 
 let set_bpm_pos p =
-  model.bpm_pos <- p
+  model.bpm_pos <- p;
+  let bpm_length = model.bpm_pos_max -. model.bpm_pos_min in
+  let percent = (p -. model.bpm_pos_min) /. bpm_length in
+  Metronome.set_bpm_by_percent (percent)
 
 let get_bpm_pos () =
   model.bpm_pos
