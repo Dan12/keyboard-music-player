@@ -101,14 +101,25 @@ let draw_buttons r x y w =
 let draw_bpm r y =
   let size = 20 in
   let x = ((Model.get_bpm_pos()|> int_of_float) - size/2) in
-  let rect = Sdl.Rect.create x y (size/2) size in
+  let rect = Sdl.Rect.create (x+(size/4)) y (size/2) size in
   bpm := Some rect;
-  let _ = Sdl.render_fill_rect r (Some rect) in
   let line_h = 3 in
   let line = Sdl.Rect.create (Model.get_bpm_pos_min()|> int_of_float) (y + (size / 2) - 1)
       ((Model.get_bpm_pos_max()|> int_of_float)-(Model.get_bpm_pos_min()|> int_of_float)) line_h in
   Gui_utils.set_color r black;
-  let _ = Sdl.render_fill_rect r (Some line) in ()
+  let _ = Sdl.render_fill_rect r (Some line) in
+  let song_bpm = Model.get_song() |> Song.get_bpm in
+  let bpm_diff = Metronome.get_max_bpm() -. Metronome.get_min_bpm() in
+  let percent = ((float_of_int song_bpm) -. Metronome.get_min_bpm()) /. bpm_diff in
+  let bpm_pos = int_of_float ((percent *. (Model.get_bpm_pos_max() -. Model.get_bpm_pos_min())) +. Model.get_bpm_pos_min()) in
+  let def_line = Sdl.Rect.create (bpm_pos-1) (y - (size / 2)) (2) (size*2) in
+  Gui_utils.set_color r red;
+  let _ = Sdl.render_fill_rect r (Some def_line) in
+  Gui_utils.set_color r black;
+  let _ = Sdl.render_fill_rect r (Some rect) in
+  let text = "BPM: "^(string_of_int(Metronome.get_bpm()))  in
+  Gui_utils.draw_text r (int_of_float (Model.get_bpm_pos_max()) + (size*3)) (y + (size / 2) - 1) size black text;
+  ()
 
 let draw_scrub r y =
   let size = 30 in

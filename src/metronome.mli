@@ -13,6 +13,12 @@ val get_bpm : unit -> int
 (* get the current beat/measure or something *)
 val get_beat : unit -> float
 
+(* returns the min_bpm. *)
+val get_min_bpm : unit -> float
+
+(* returns the max_bpm. *)
+val get_max_bpm : unit -> float
+
 (* gets the percent of bpm to bpm_max. *)
 val get_percent : unit -> float
 
