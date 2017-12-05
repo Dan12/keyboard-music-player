@@ -46,10 +46,12 @@ val get_state : unit -> state
 val get_midi_buttons : unit -> Button_standard.button list
 
 (* [get_file_buttons] returns the file buttons. *)
-val get_file_buttons : unit -> File_button.file_buttons
+val get_file_buttons : unit -> Button_standard.button list
 
 (* [get_file_location] returns the path to all the song/midi files. *)
 val get_file_location : unit -> string
+
+val set_selected_filename : string -> unit
 
 (* [set_filename_buttons d] stores all the song/midi files. *)
 val set_filename_buttons : string -> unit

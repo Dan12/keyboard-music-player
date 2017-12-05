@@ -61,7 +61,10 @@ let handle_mouse_up x y t =
   | SKeyboard ->
     let iter = fun _ b -> Button_standard.up_press b (x, y) in
     List.iteri iter (Model.get_midi_buttons())
-  | SFileChooser -> begin
+  | SFileChooser ->
+    let iter = fun _ b -> Button_standard.up_press b (x, y) in
+    List.iteri iter (Model.get_file_buttons());
+    (* begin
       match Gui.file_button_pressed (x, y) with
       | Some button ->
         (match button with
@@ -81,7 +84,7 @@ let handle_mouse_up x y t =
            Model.set_filename_buttons (Model.get_file_location());
           Model.set_state Model.SKeyboard)
       | None -> ()
-    end; begin
+    end; begin *) begin
       match Gui.filename_button_pressed (x, y) with
       | Some button ->
         if (t -. !recent_click) < 0.3 then

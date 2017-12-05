@@ -16,7 +16,8 @@ type model = {
   mutable state: state;
   mutable midi_buttons: Button_standard.button list;
   mutable current_midi_button: int;
-  mutable file_buttons: File_button.file_buttons;
+  mutable file_buttons: Button_standard.button list;
+  mutable selected_filename: string option;
   mutable filename_buttons : File_button.filename_buttons;
   mutable num_filename_buttons : int;
   mutable file_location: string;
@@ -52,7 +53,8 @@ let model:model =
     state = SKeyboard;
     midi_buttons = [];
     current_midi_button = 3;
-    file_buttons = File_button.create_file_buttons();
+    file_buttons = [];
+    selected_filename = None;
     filename_buttons = File_button.create_empty_filename_list ();
     num_filename_buttons = 0;
     file_location = "resources/";
@@ -107,9 +109,8 @@ let get_file_buttons () =
 let get_file_location () =
   model.file_location
 
-let set_filename_buttons d =
-  model.filename_buttons <-
-    File_button.create_filename_buttons (get_file_location ())
+let set_filename_buttons dir =
+  model.filename_buttons <- File_button.create_filename_buttons dir
 
 let get_filename_buttons () =
   model.filename_buttons
@@ -156,6 +157,14 @@ let set_buffer b =
 let get_buffer () =
   model.buffer
 
+let remove_selected_filename () =
+  model.selected_filename <- None
+
+let get_selected_filename () = model.selected_filename
+
+let set_selected_filename file = 
+  model.selected_filename <- Some file
+
 let create_midi_buttons () =
   let button_draw b is_current_down draw_icon = fun r ->
     let (x, y, w, h) = Button_standard.get_area b in
@@ -167,6 +176,7 @@ let create_midi_buttons () =
 
 
   let load_up _ =
+    set_filename_buttons (get_file_location());
     model.current_midi_button <- 0;
     set_state SFileChooser in
 
@@ -218,4 +228,50 @@ let create_midi_buttons () =
   Button_standard.set_draw stop stop_draw;
   [load; play; pause; stop]
 
+let create_file_buttons () =
+  let button_draw b text = fun r ->
+    let (x, y, w, h) = Button_standard.get_area b in
+
+    Gui_utils.draw_key r x (y + 2*h/5) w (h - 2*h/5) keyboard_pressed_color key_background keyboard_border_color KSUp;
+
+    let font_size = w / 4 in
+    Gui_utils.draw_text r (x + w/2) (y + 2*h/3) font_size keyboard_text_color text in
+
+  let contains s1 s2 =
+    let size = String.length s1 in
+    let contain = ref false in
+    let i = ref 0 in
+    while !i < (String.length s2 - size + 1) && !contain = false do
+      if String.sub s2 !i size = s1 then contain := true
+      else i := !i + 1
+    done;
+    !contain in
+
+
+  let cancel_up _ =
+    remove_selected_filename();
+    set_state SKeyboard in
+
+  let cancel = Button_standard.create_button ignore cancel_up in
+  let cancel_draw = button_draw cancel "Cancel" in
+  Button_standard.set_draw cancel cancel_draw;
+
+  let select_up _ =
+    (match get_selected_filename() with
+     | Some name ->
+      let index = String.index name '_' in
+      let folder = String.sub name 0 index in
+      if contains "midi" name then
+        set_midi_filename ((get_file_location())^folder^"_data/"^name)
+      else set_song (Song.parse_song_file ((get_file_location())^folder^"_data/"^name))
+    | None -> ());
+    remove_selected_filename();
+    set_state SKeyboard  in
+
+  let select = Button_standard.create_button ignore select_up in
+  let select_draw = button_draw select "Select" in
+  Button_standard.set_draw select select_draw;
+  [cancel; select]
+
 let _ = model.midi_buttons <- create_midi_buttons()
+let _ = model.file_buttons <- create_file_buttons()
