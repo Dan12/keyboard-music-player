@@ -1,5 +1,6 @@
 echo "=================================================="
-echo "You may need to install 'libffi' before continuing"
+echo "If there is no error during installation, ignore this message:"
+echo "If installation fails because of libffi, you may need to install 'libffi' manually"
 echo "If you have homebrew: 'brew install libffi'"
 echo "=================================================="
 
