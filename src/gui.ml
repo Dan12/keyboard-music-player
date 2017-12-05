@@ -8,6 +8,10 @@ open Button
 open File_button
 open Model
 
+let scrub:(Sdl.rect option ref) = ref None
+
+let bpm:(Sdl.rect option ref) = ref None
+
 let button_rects:((Sdl.rect * button) option array) =
   Array.make num_buttons None
 
@@ -30,6 +34,8 @@ let graphic_padding_h = 20
 let percent_graphic_padding = 16
 let max_amplitude = 60
 
+let black = Sdl.Color.create 0 0 0 255
+let red = Sdl.Color.create 204 24 30 255
 
 let background_color = Sdl.Color.create 255 255 255 255
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
@@ -213,6 +219,44 @@ let draw_buttons r x y w =
     ) (Model.get_buttons());
   size
 
+let draw_bpm r y =
+  let size = 20 in
+  print_endline(string_of_float (Model.get_bpm_pos()));
+  let x = ((Model.get_bpm_pos()|> int_of_float) - size/2) in
+  let rect = Sdl.Rect.create x y (size/2) size in
+  bpm := Some rect;
+  let _ = Sdl.render_fill_rect r (Some rect) in
+  let line_h = 3 in
+  let line = Sdl.Rect.create (Model.get_bpm_pos_min()|> int_of_float) (y + (size / 2) - 1)
+      ((Model.get_bpm_pos_max()|> int_of_float)-(Model.get_bpm_pos_min()|> int_of_float)) line_h in
+  set_color r black;
+  let _ = Sdl.render_fill_rect r (Some line) in ()
+
+let draw_scrub r y =
+  let size = 30 in
+  let scrub_pos = Model.get_scrub_pos() |> int_of_float in
+  let x = scrub_pos - size/2 in
+  let rect = Sdl.Rect.create x y size size in
+  scrub := Some rect;
+
+  let scrub_start_x = Model.get_scrub_pos_min() |> int_of_float in
+  let scrub_end_x = Model.get_scrub_pos_max() |> int_of_float in
+  let line_y = y + size / 2 - 1 in
+  let line_h = 3 in
+  set_color r red;
+  let played_line = Sdl.Rect.create scrub_start_x line_y
+      (scrub_pos - scrub_start_x) line_h in
+  let _ = Sdl.render_fill_rect r (Some played_line) in
+  set_color r black;
+  let remaining_line = Sdl.Rect.create scrub_pos line_y
+      (scrub_end_x - scrub_pos) line_h in
+  let _ = Sdl.render_fill_rect r (Some remaining_line) in
+
+  (* draw the scrub from ealier last. *)
+  set_color r black;
+  let _ = Sdl.render_fill_rect r (Some rect) in
+  ()
+
 let clear r =
   set_color r background_color;
   let _ = Sdl.render_clear r in
@@ -320,7 +364,13 @@ let draw_output r =
   let buttons_w = arrows_w * 2 in
   let buttons_x = keyboard_padding_w + keyboard_w / 2 - buttons_w / 2 in
   let buttons_y = 22 * arrows_h / 20 + arrows_y in
-  let _ = draw_buttons r buttons_x buttons_y buttons_w in
+  let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
+
+  let bpm_y = arrows_y + arrows_h + keyboard_padding_h in
+  let _ = draw_bpm r bpm_y in
+
+  let scrub_y = buttons_y + buttons_h + keyboard_padding_h / 5 in
+  let _ = draw_scrub r scrub_y in
   present r
 
 let draw_file_button r x y size i file_button =
@@ -440,3 +490,16 @@ let filename_button_pressed (x,y) =
   match pressed_filename_button_rect with
   | Some (Some (rect, button)) -> Some button
   | _ -> None
+
+(*is [s] is "scrub" then for midi slider, if "bpm" then for bpm slider*)
+let scrub_pressed (x,y) s =
+  let matched = if s = "scrub" then
+    !scrub else !bpm in
+  match matched with
+  | None -> false
+  | Some rect ->
+    let rect_x = Sdl.Rect.x rect in
+    let rect_y = Sdl.Rect.y rect in
+    let rect_w = Sdl.Rect.w rect in
+    let rect_h = Sdl.Rect.h rect in
+    rect_x <= x && x <= (rect_x+rect_w) && rect_y <= y && y <= (rect_y+rect_h)
