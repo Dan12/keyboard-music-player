@@ -1,3 +1,0 @@
-true: package(tsdl), package(bigarray), package(tsdl_ttf)
-<test.ml> : thread
-<test.{native,byte}> : thread

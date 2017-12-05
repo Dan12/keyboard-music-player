@@ -4,7 +4,7 @@ open Song
 (* This module implements the singleton model by accessing all of our data
    from here. *)
 
-type state = SKeyboard | SFileChooser
+type state = SKeyboard | SFileChooser | SSynthesizer
 
 (* [get_width] returns the current window width. *)
 val get_width : unit -> int
@@ -37,22 +37,24 @@ val set_state : state -> unit
 val get_state : unit -> state
 
 (* [get_buttons] returns the buttons & their state. *)
-val get_buttons : unit -> Button.buttons
+val get_midi_buttons : unit -> Button_standard.button list
 
 (* [get_file_buttons] returns the file buttons. *)
-val get_file_buttons : unit -> File_button.file_buttons
+val get_file_buttons : unit -> Button_standard.button list
 
 (* [get_file_location] returns the path to all the song/midi files. *)
 val get_file_location : unit -> string
 
-(* [set_filename_buttons d] stores all the song/midi files. *)
+val set_selected_filename : string -> unit
+
+(* [set_filename_buttons dir] stores all the song/midi files. *)
 val set_filename_buttons : string -> unit
 
 (* [get_filename_buttons] returns all the song/midi files. *)
-val get_filename_buttons : unit -> File_button.filename_buttons
+val get_filename_buttons : unit -> Button_standard.button list
 
 (* [get_num_filename_buttons] returns the number of filenames. *)
-val get_num_filename_buttons : unit -> int
+(* val get_num_filename_buttons : unit -> int *)
 
 (* [set_midi_filename f] sets the current filename of the midi. *)
 val set_midi_filename : string -> unit

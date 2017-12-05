@@ -1,3 +1,4 @@
+open Tsdl
 open Keyboard
 open Keyboard_layout
 open Song
@@ -5,13 +6,14 @@ open Song
 (* The possible states of the interface
  * The keyboard lets the user play songs
  * The file chooser lets a user choose a file
+ * The synthesizer lets a user generate synthesized sounds
  *)
-type state = SKeyboard | SFileChooser
+type state = SKeyboard | SFileChooser | SSynthesizer
 
 (* The fft instance to use when computing fft on
  * the current audio buffer
  *)
-let fft = ref (Audio_effects.init 10)
+let fft = ref (Fft.init 10)
 
 type model = {
   window_w: int;
@@ -20,10 +22,12 @@ type model = {
   mutable keyboard_layout: keyboard_layout;
   mutable song: song;
   mutable state: state;
-  buttons: Button.buttons;
-  file_buttons: File_button.file_buttons;
-  mutable filename_buttons : File_button.filename_buttons;
-  mutable num_filename_buttons : int;
+  mutable midi_buttons: Button_standard.button list;
+  mutable current_midi_button: int;
+  mutable file_buttons: Button_standard.button list;
+  mutable filename_buttons : Button_standard.button list;
+  mutable current_filename_button: int;
+  mutable selected_filename: string option;
   mutable file_location: string;
   mutable midi_filename: string;
   mutable should_load_midi: bool;
@@ -37,9 +41,48 @@ type model = {
   bpm_pos_min: float;
   bpm_pos_max: float;
   mutable buffer: Complex.t array;
+  mutable playing_song : bool;
 }
 
-(* The model with all the default values initialized *)
+let keyboard_border_color = Sdl.Color.create 0 0 0 255
+let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
+
+let key_background = Sdl.Color.create 255 255 255 220
+
+let keyboard_text_color = Sdl.Color.create 0 0 0 255
+
+
+
+
+let contains s1 s2 =
+let size = String.length s1 in
+let contain = ref false in
+let i = ref 0 in
+while !i < (String.length s2 - size + 1) && !contain = false do
+  if String.sub s2 !i size = s1 then contain := true
+  else i := !i + 1
+done;
+!contain
+
+
+let get_filenames dir =
+  let folder_list =
+    if Sys.is_directory dir
+    then Sys.readdir dir |> Array.to_list
+    else [] in
+  let data_list = List.fold_left
+      (fun j s -> if contains "data" s
+        then (dir ^ s ^ Filename.dir_sep)::j else j) [] folder_list in
+  let filename_list = List.fold_left
+      (fun j s -> if Sys.is_directory (s) then
+          (Sys.readdir s |> Array.to_list)@j else j) [] data_list in
+  let json_list = List.fold_left
+      (fun j s -> if contains ".json" s
+        then s::j else j) [] filename_list in
+  List.sort (compare) json_list
+
+
+
 let model:model =
   let window_w = 1280 in
   let bpm_margin = 80.0 in
@@ -58,10 +101,12 @@ let model:model =
     keyboard_layout = keyboard_layout;
     song = eq_song;
     state = SKeyboard;
-    buttons = Button.create_buttons();
-    file_buttons = File_button.create_file_buttons();
-    filename_buttons = File_button.create_empty_filename_list ();
-    num_filename_buttons = 0;
+    midi_buttons = [];
+    current_midi_button = 3;
+    file_buttons = [];
+    selected_filename = None;
+    filename_buttons = [];
+    current_filename_button = -1;
     file_location = "resources/";
     midi_filename = "resources/eq_data/eq_0_midi.json";
     should_load_midi = true;
@@ -75,6 +120,7 @@ let model:model =
     bpm_pos_min = bpm_margin;
     bpm_pos_max = (float_of_int (window_w / 3)) -. bpm_margin;
     buffer = buffer;
+    playing_song = true;
   }
 
 let get_width () =
@@ -101,14 +147,11 @@ let set_song s =
 let get_song () =
   model.song
 
-let set_state s =
-  model.state <- s
-
 let get_state () =
   model.state
 
-let get_buttons () =
-  model.buttons
+let get_midi_buttons () =
+  model.midi_buttons
 
 let get_file_buttons () =
   model.file_buttons
@@ -116,16 +159,8 @@ let get_file_buttons () =
 let get_file_location () =
   model.file_location
 
-let set_filename_buttons d =
-  model.filename_buttons <-
-    File_button.create_filename_buttons (d)
-
 let get_filename_buttons () =
   model.filename_buttons
-
-let get_num_filename_buttons () =
-  model.num_filename_buttons <- Array.length (get_filename_buttons ());
-  model.num_filename_buttons
 
 let set_midi_filename f =
   model.midi_filename <- f
@@ -137,12 +172,10 @@ let start_midi () =
   if model.is_playing = false then
     Metronome.unpause();
     model.is_playing <- true;
-  model.should_load_midi <- false;
-  Button.press_button Button.Play model.buttons
+  model.should_load_midi <- false
 
 let pause_midi () =
-  model.is_playing <- false;
-  Button.press_button Button.Pause model.buttons
+  model.is_playing <- false
 
 let stop_midi () =
   model.is_playing <- false;
@@ -151,7 +184,25 @@ let stop_midi () =
   model.scrub_pos <- model.scrub_pos_min;
   Metronome.set_bpm (model.song |> Song.get_bpm);
   model.bpm_pos <- (Metronome.get_percent() *. (model.bpm_pos_max -. model.bpm_pos_min));
-  Button.press_button Button.Stop model.buttons
+  model.current_midi_button <- 3
+
+let clear_keyboard () =
+  let layout = get_keyboard_layout() in
+  let keyboard = get_keyboard() in
+  let rows = Keyboard_layout.get_rows layout in
+  let cols = Keyboard_layout.get_cols layout in
+  for row = 0 to rows - 1 do
+    for col = 0 to cols - 1 do
+      Keyboard.process_event (Keyboard_layout.KOKeyup (row, col)) keyboard |> ignore
+    done;
+  done
+
+let set_state s =
+  stop_midi ();
+  clear_keyboard ();
+  model.current_midi_button <- 3;
+  model.current_filename_button <- -1;
+  model.state <- s
 
 let midi_is_playing () = model.is_playing
 
@@ -199,14 +250,160 @@ let get_scrub_pos_max () =
   model.scrub_pos_max
 
 let set_buffer b =
-  let (left, _) = Audio_effects.complex_create b in
-  Audio_effects.cosine left;
+  let (left, _) = Fft.complex_create b in
+  Fft.cosine left;
   if Bigarray.Array1.dim b = 1024 then
-    fft := Audio_effects.init 9
+    fft := Fft.init 9
   else
     ();
-  Audio_effects.fft (!fft) left;
+  Fft.fft (!fft) left;
   model.buffer <- left
 
 let get_buffer () =
   model.buffer
+
+let remove_selected_filename () =
+  model.selected_filename <- None
+
+let get_selected_filename () = model.selected_filename
+
+let set_selected_filename file =
+  model.selected_filename <- Some file
+
+let commit_selected_filename () =
+  match get_selected_filename() with
+  | Some name ->
+    let index = String.index name '_' in
+    let folder = String.sub name 0 index in
+    if contains "midi" name then
+      let _ = set_midi_filename ((get_file_location())^folder^"_data/"^name) in
+      set_song (Song.parse_song_file ((get_file_location())^folder^"_data/"^folder^"_song.json"))
+    else
+      let _ = set_song (Song.parse_song_file ((get_file_location())^folder^"_data/"^name)) in
+      set_midi_filename ((get_file_location())^folder^"_data/"^folder^"_0_midi.json")
+  | None -> ()
+
+
+
+let set_filename_buttons dir =
+  let files = get_filenames dir in
+  let string_to_button index str =
+    let recent_click = ref 0.0 in
+    let button_up _ =
+      set_selected_filename str;
+      model.current_filename_button <- index;
+      let time = Unix.gettimeofday() in
+      begin
+        if time -. !recent_click < 0.3
+        then
+          begin
+            commit_selected_filename();
+            remove_selected_filename();
+            set_state SKeyboard
+          end
+      end;
+      recent_click := time in
+
+
+    let button_draw b = fun r ->
+      let (x, y, w, h) = Button_standard.get_area b in
+
+      let state = if model.current_filename_button = index then KSDown else KSUp in
+      Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
+
+      let font_size = w / 10 in
+      Gui_utils.draw_text r (x + w / 2) (y + h / 2) font_size keyboard_text_color str in
+
+
+    let button = Button_standard.create_button ignore button_up in
+    Button_standard.set_draw button (button_draw button);
+    button in
+
+  model.filename_buttons <- List.mapi string_to_button files
+
+let create_midi_buttons () =
+  let button_draw b is_current_down draw_icon = fun r ->
+    let (x, y, w, h) = Button_standard.get_area b in
+
+    let state = if is_current_down model.current_midi_button then KSDown else KSUp in
+    Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
+
+    draw_icon r x y w h in
+
+
+  let load_up _ =
+    set_filename_buttons (get_file_location());
+    model.current_midi_button <- 0;
+    set_state SFileChooser in
+
+  let load_drawer r x y w h =
+    let font_size = 3 * w / 8 in
+    Gui_utils.draw_text r (x + w/2) (y + h/2) font_size keyboard_text_color "Load" in
+
+  let load = Button_standard.create_button ignore load_up in
+  let load_draw = button_draw load ((=) 0) load_drawer in
+  Button_standard.set_draw load load_draw;
+
+
+  let play_up _ =
+    model.current_midi_button <- 1;
+    start_midi() in
+
+  let play = Button_standard.create_button ignore play_up in
+  let play_draw = button_draw play ((=) 1) Gui_utils.draw_play in
+  Button_standard.set_draw play play_draw;
+
+
+  let pause_up _ =
+    model.current_midi_button <- 2;
+    pause_midi() in
+
+  let pause = Button_standard.create_button ignore pause_up in
+  let pause_draw = button_draw pause ((=) 2) Gui_utils.draw_pause in
+  Button_standard.set_draw pause pause_draw;
+
+
+  let stop_up _ =
+    model.current_midi_button <- 3;
+    stop_midi();
+    clear_keyboard() in
+
+  let stop = Button_standard.create_button ignore stop_up in
+  let stop_draw = button_draw stop ((=) 3) Gui_utils.draw_stop in
+  Button_standard.set_draw stop stop_draw;
+  [load; play; pause; stop]
+
+let create_file_buttons () =
+  let button_draw b text = fun r ->
+    let (x, y, w, h) = Button_standard.get_area b in
+
+    Gui_utils.draw_key r x (y + 2*h/5) w (h - 2*h/5) keyboard_pressed_color key_background keyboard_border_color KSUp;
+
+    let font_size = w / 4 in
+    Gui_utils.draw_text r (x + w/2) (y + 2*h/3) font_size keyboard_text_color text in
+
+
+  let cancel_up _ =
+    remove_selected_filename();
+    set_state SKeyboard in
+
+  let cancel = Button_standard.create_button ignore cancel_up in
+  let cancel_draw = button_draw cancel "Cancel" in
+  Button_standard.set_draw cancel cancel_draw;
+
+
+  let select_up _ =
+    commit_selected_filename();
+    remove_selected_filename();
+    set_state SKeyboard  in
+
+  let select = Button_standard.create_button ignore select_up in
+  let select_draw = button_draw select "Select" in
+  Button_standard.set_draw select select_draw;
+  [cancel; select]
+
+
+
+let _ = set_filename_buttons (get_file_location())
+let _ = model.midi_buttons <- create_midi_buttons()
+let _ = model.file_buttons <- create_file_buttons()

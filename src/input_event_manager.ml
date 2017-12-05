@@ -1,7 +1,5 @@
 open Tsdl.Sdl.Event
-open Button
 open Model
-open File_button
 
 let input_event_singleton = ref None
 let recent_click = ref (Unix.gettimeofday())
@@ -20,18 +18,18 @@ let handle_keyboard_output output =
       | _ -> ()
     end
   else
-    (match output with
-     | Keyboard_layout.KOSoundpackSet i ->
-       let song = Model.get_song () in
-       Song.set_sound_pack i song
-     | Keyboard_layout.KOSpace ->
-       if Model.midi_is_playing() then Model.pause_midi()
-       else Model.start_midi()
-     | _ -> ())
+    match output with
+    | Keyboard_layout.KOSoundpackSet i ->
+      let song = Model.get_song () in
+      Song.set_sound_pack i song
+    | Keyboard_layout.KOSpace ->
+      if Model.midi_is_playing() then Model.pause_midi()
+      else Model.start_midi()
+    | _ -> ()
 
 let handle_keyboard input_event =
   match Model.get_state () with
-  | Model.SKeyboard ->
+  | SKeyboard | SSynthesizer->
     let layout = Model.get_keyboard_layout () in
     (* get the mapped output *)
     let output = Keyboard_layout.process_key input_event layout in
@@ -39,8 +37,8 @@ let handle_keyboard input_event =
   | _ -> ()
 
 let clear_keyboard () =
-  let layout = Model.get_keyboard_layout() in
-  let keyboard = Model.get_keyboard() in
+  let layout = get_keyboard_layout() in
+  let keyboard = get_keyboard() in
   let rows = Keyboard_layout.get_rows layout in
   let cols = Keyboard_layout.get_cols layout in
   for row = 0 to rows - 1 do
@@ -48,18 +46,6 @@ let clear_keyboard () =
       Keyboard.process_event (Keyboard_layout.KOKeyup (row, col)) keyboard |> ignore
     done;
   done
-
-let contains s1 s2 =
-  let size = String.length s1 in
-  let contain = ref false in
-  let i = ref 0 in
-  while !i < (String.length s2 - size + 1) && !contain = false do
-    if String.sub s2 !i size = s1 then
-      contain := true
-    else
-      i := !i + 1
-  done;
-  !contain
 
 let handle_mouse_up x y t =
   if Model.is_scrubbing() then
@@ -70,62 +56,13 @@ let handle_mouse_up x y t =
   clear_keyboard();
   match Model.get_state () with
   | SKeyboard ->
-    begin
-      match Gui.button_pressed (x, y) with
-      | Some button ->
-        (match button with
-        | Load -> Model.set_state Model.SFileChooser
-        | Play -> Model.start_midi()
-        | Pause -> Model.pause_midi()
-        | Stop -> Model.stop_midi();
-          clear_keyboard())
-      | None -> ()
-    end
+    let iter = fun _ b -> Button_standard.up_press b (x, y) in
+    List.iteri iter (Model.get_midi_buttons())
   | SFileChooser ->
-    begin
-      match Gui.file_button_pressed (x, y) with
-      | Some button ->
-        begin
-          match button with
-            | Cancel ->
-              Model.set_filename_buttons (Model.get_file_location());
-              Model.set_state Model.SKeyboard
-            | Select ->
-              begin
-                match File_button.selected_filename (Model.get_filename_buttons()) with
-                | Some button ->
-                  let index = String.index button '_' in
-                  let folder = String.sub button 0 index in
-                  if contains "midi" button then
-                    let _ = Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button) in
-                    Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^folder^"_song.json"))
-                  else
-                    let _ = Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button)) in
-                    Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^folder^"_0_midi.json");
-                    Metronome.set_bpm (get_song() |> Song.get_bpm);
-                | None -> ()
-              end;
-              Model.set_filename_buttons (Model.get_file_location());
-            Model.set_state Model.SKeyboard
-          end;
-      | None -> ()
-    end;
-
-    match Gui.filename_button_pressed (x, y) with
-    | Some button ->
-      if (t -. !recent_click) < 0.3 then
-        let index = String.index button '_' in
-        let folder = String.sub button 0 index in
-        if contains "midi" button then
-          Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
-        else
-          Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button));
-          Metronome.set_bpm (get_song() |> Song.get_bpm);
-        Model.set_filename_buttons (Model.get_file_location());
-        Model.set_state Model.SKeyboard
-      else
-        File_button.press_filename_button button (Model.get_filename_buttons())
-    | None -> ()
+    let iter = fun i b -> Button_standard.up_press b (x, y) in
+    List.iteri iter (Model.get_file_buttons());
+    List.iteri iter (Model.get_filename_buttons())
+  | SSynthesizer -> ()
 
 let handle_mouse_down x y =
   match Model.get_state() with
@@ -133,6 +70,7 @@ let handle_mouse_down x y =
     Model.set_scrubbing (Gui.scrub_pressed (x, y) "scrub");
     Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) "bpm")
   | SFileChooser -> ()
+  | SSynthesizer -> ()
 
 let event_callback event =
   match enum (get event typ) with
@@ -156,7 +94,6 @@ let event_callback event =
     recent_click := click
   | `Mouse_motion ->
     let mouse_x = get event mouse_button_x |> float_of_int in
-    let mouse_y = get event mouse_button_y in
     if Model.is_scrubbing() then
     begin
       let scrub_x = (
