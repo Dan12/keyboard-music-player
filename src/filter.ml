@@ -11,7 +11,6 @@ type filter_t = {
 
   mutable x1 : float;
   mutable x2 : float;
-  mutable y0 : float;
   mutable y1 : float;
   mutable y2 : float;
 }
@@ -76,14 +75,13 @@ let make sr kind ?(gain=0.) freq q =
 
     x1 = 0.;
     x2 = 0.;
-    y0 = 0.;
     y1 = 0.;
     y2 = 0.;
   }
 
 let process filter sample =
   let x0 = sample in
-  let y0 = filter.p0 *. x0 +. filter.p1 *. filter.x1 +. filter.p2 *. filter.x2 -. filter.q1 *. filter.y1 -. filter.q2 *. filter.y2 in
+  let y0 = (filter.p0 *. x0) +. (filter.p1 *. filter.x1) +. (filter.p2 *. filter.x2) -. (filter.q1 *. filter.y1) -. (filter.q2 *. filter.y2) in
   filter.x2 <- filter.x1;
   filter.x1 <- x0;
   filter.y2 <- filter.y1;

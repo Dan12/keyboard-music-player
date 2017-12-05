@@ -31,7 +31,7 @@ let handle_keyboard_output output =
 
 let handle_keyboard input_event =
   match Model.get_state () with
-  | Model.SKeyboard ->
+  | SKeyboard | SSynthesizer->
     let layout = Model.get_keyboard_layout () in
     (* get the mapped output *)
     let output = Keyboard_layout.process_key input_event layout in
