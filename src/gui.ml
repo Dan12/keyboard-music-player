@@ -254,15 +254,16 @@ let draw_output r =
   let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
   let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
 
+
   let buttons_w = arrows_w * 2 in
-  let buttons_x = keyboard_padding_w + keyboard_w / 2 - buttons_w / 2 in
-  let buttons_y = 22 * arrows_h / 20 + arrows_y in
+  let buttons_x = keyboard_x in
+  let buttons_y = arrows_y in
   let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
 
-  let bpm_y = arrows_y + arrows_h + keyboard_padding_h in
+  let bpm_y = arrows_y + arrows_h + 3 * keyboard_padding_h / 2 in
   let _ = draw_bpm r bpm_y in
 
-  let scrub_y = buttons_y + buttons_h + keyboard_padding_h / 5 in
+  let scrub_y = buttons_y + buttons_h + 2 * keyboard_padding_h in
   let _ = draw_scrub r scrub_y in
   ()
 
