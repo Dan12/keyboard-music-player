@@ -17,7 +17,8 @@ let minutes_elapsed () =
 let recent = ref (Unix.gettimeofday())
 let tick () =
   last_time := Unix.gettimeofday();
-  cached_beat := !cached_beat +. (!bpm |> float_of_int) *. (minutes_elapsed(); !current_minutes_elapsed -. !prev_minutes_elapsed)
+  cached_beat := !cached_beat +. (!bpm |> float_of_int) *.
+    (minutes_elapsed(); !current_minutes_elapsed -. !prev_minutes_elapsed)
 
 let set_bpm beat = bpm := beat
 
