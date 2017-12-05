@@ -28,7 +28,7 @@ let set_bpm_by_percent percent =
 let get_bpm () = !bpm
 
 let get_percent () =
-  (max_bpm -. min_bpm) /. (float_of_int !bpm)
+  (float_of_int !bpm) /. (max_bpm -. min_bpm)
 
 let get_beat () = !cached_beat
 
