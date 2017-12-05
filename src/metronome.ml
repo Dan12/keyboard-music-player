@@ -4,6 +4,8 @@ let start_time = ref (Unix.gettimeofday())
 let last_time = ref (Unix.gettimeofday())
 let cached_beat = ref 0.0
 let bpm = ref 0
+let min_bpm = 50.0
+let max_bpm = 300.0
 
 let prev_minutes_elapsed = ref 0.0
 let current_minutes_elapsed = ref 0.0
@@ -19,7 +21,21 @@ let tick () =
 
 let set_bpm beat = bpm := beat
 
+let set_bpm_by_percent percent =
+  let bpm_diff = max_bpm -. min_bpm in
+  bpm := (int_of_float ((percent *. bpm_diff) +. min_bpm))
+
+let get_bpm () = !bpm
+
+let get_percent () =
+  (float_of_int !bpm) /. (max_bpm -. min_bpm)
+
 let get_beat () = !cached_beat
+
+let set_beat beat =
+  cached_beat := beat;
+  last_time := Unix.gettimeofday();
+  start_time := !last_time -. beat /. (!bpm |> float_of_int) *. 60.0
 
 let unpause () =
   let seconds = (minutes_elapsed(); !current_minutes_elapsed) *. 60.0 in

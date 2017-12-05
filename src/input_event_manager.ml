@@ -62,13 +62,19 @@ let contains s1 s2 =
   !contain
 
 let handle_mouse_up x y t =
+  if Model.is_scrubbing() then
+    (Model.set_scrubbing false;
+     clear_keyboard());
+  if Model.is_bpm_scrubbing() then
+     Model.set_bpm_scrubbing false;
+  clear_keyboard();
   match Model.get_state () with
   | SKeyboard ->
     begin
       match Gui.button_pressed (x, y) with
       | Some button ->
         (match button with
-         | Load -> (*Model.set_state Model.SFileChooser*) Metronome.set_bpm 200
+        | Load -> Model.set_state Model.SFileChooser
         | Play -> Model.start_midi()
         | Pause -> Model.pause_midi()
         | Stop -> Model.stop_midi();
@@ -95,7 +101,8 @@ let handle_mouse_up x y t =
                     Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^folder^"_song.json"))
                   else
                     let _ = Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button)) in
-                    Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^folder^"_0_midi.json")
+                    Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^folder^"_0_midi.json");
+                    Metronome.set_bpm (get_song() |> Song.get_bpm);
                 | None -> ()
               end;
               Model.set_filename_buttons (Model.get_file_location());
@@ -113,11 +120,19 @@ let handle_mouse_up x y t =
           Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
         else
           Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button));
+          Metronome.set_bpm (get_song() |> Song.get_bpm);
         Model.set_filename_buttons (Model.get_file_location());
         Model.set_state Model.SKeyboard
       else
         File_button.press_filename_button button (Model.get_filename_buttons())
     | None -> ()
+
+let handle_mouse_down x y =
+  match Model.get_state() with
+  | SKeyboard ->
+    Model.set_scrubbing (Gui.scrub_pressed (x, y) "scrub");
+    Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) "bpm")
+  | SFileChooser -> ()
 
 let event_callback event =
   match enum (get event typ) with
@@ -130,9 +145,9 @@ let event_callback event =
     (* print_endline (string_of_int keycode); *)
     handle_keyboard (Keyboard_layout.KIKeyup keycode)
   | `Mouse_button_down ->
-    (* let mouse_x = get event mouse_button_x in
-    let mouse_y = get event mouse_button_y in *)
-    ()
+    let mouse_x = get event mouse_button_x in
+    let mouse_y = get event mouse_button_y in
+    handle_mouse_down mouse_x mouse_y
   | `Mouse_button_up ->
     let click = Unix.gettimeofday() in
     let mouse_x = get event mouse_button_x in
@@ -140,9 +155,30 @@ let event_callback event =
     handle_mouse_up mouse_x mouse_y click;
     recent_click := click
   | `Mouse_motion ->
-    (*let mouse_x = get event mouse_button_x in
-    let mouse_y = get event mouse_button_y in *)
-    ()
+    let mouse_x = get event mouse_button_x |> float_of_int in
+    let mouse_y = get event mouse_button_y in
+    if Model.is_scrubbing() then
+    begin
+      let scrub_x = (
+        if mouse_x > Model.get_scrub_pos_max() then
+          Model.get_scrub_pos_max()
+        else if mouse_x < Model.get_scrub_pos_min() then
+          Model.get_scrub_pos_min()
+        else
+          mouse_x) in
+      Model.set_scrub_pos scrub_x
+    end;
+    if Model.is_bpm_scrubbing() then
+    begin
+      let scrub_x = (
+        if mouse_x > Model.get_bpm_pos_max() then
+          Model.get_bpm_pos_max()
+        else if mouse_x < Model.get_bpm_pos_min() then
+          Model.get_bpm_pos_min()
+        else
+          mouse_x) in
+      Model.set_bpm_pos scrub_x
+    end
   | `Mouse_wheel ->
     (* let scroll_dx = get event mouse_wheel_x in
     let scroll_dy = get event mouse_wheel_y in *)
