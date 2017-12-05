@@ -326,6 +326,7 @@ let draw r =
   match Model.get_state () with
   | SKeyboard -> draw_output r
   | SFileChooser -> draw_filechooser r
+  | SSynthesizer -> ()
 
 let button_pressed (x,y) =
   let button_rect_list = Array.to_list button_rects in

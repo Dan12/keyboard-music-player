@@ -77,49 +77,52 @@ let handle_mouse_up x y t =
     end
   | SFileChooser ->
     begin
-      match Gui.file_button_pressed (x, y) with
-      | Some button ->
-        begin
-          match button with
-            | Cancel ->
-              Model.set_filename_buttons (Model.get_file_location());
+      begin
+        match Gui.file_button_pressed (x, y) with
+        | Some button ->
+          begin
+            match button with
+              | Cancel ->
+                Model.set_filename_buttons (Model.get_file_location());
+                Model.set_state Model.SKeyboard
+              | Select ->
+                begin
+                  match File_button.selected_filename (Model.get_filename_buttons()) with
+                  | Some button ->
+                    let index = String.index button '_' in
+                    let folder = String.sub button 0 index in
+                    if contains "midi" button then
+                      let _ = Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button) in
+                      Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^folder^"_song.json"))
+                    else
+                      let _ = Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button)) in
+                      Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^folder^"_0_midi.json")
+                  | None -> ()
+                end;
+                Model.set_filename_buttons (Model.get_file_location());
               Model.set_state Model.SKeyboard
-            | Select ->
-              begin
-                match File_button.selected_filename (Model.get_filename_buttons()) with
-                | Some button ->
-                  let index = String.index button '_' in
-                  let folder = String.sub button 0 index in
-                  if contains "midi" button then
-                    let _ = Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button) in
-                    Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^folder^"_song.json"))
-                  else
-                    let _ = Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button)) in
-                    Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^folder^"_0_midi.json")
-                | None -> ()
-              end;
-              Model.set_filename_buttons (Model.get_file_location());
-            Model.set_state Model.SKeyboard
-          end;
-      | None -> ()
-    end;
+            end;
+        | None -> ()
+      end;
 
-    match Gui.filename_button_pressed (x, y) with
-    | Some button ->
-      if (t -. !recent_click) < 0.3 then
-        let index = String.index button '_' in
-        let folder = String.sub button 0 index in
-        if contains "midi" button then
-          let _ = Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button) in
-          Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^folder^"_song.json"))
+      match Gui.filename_button_pressed (x, y) with
+      | Some button ->
+        if (t -. !recent_click) < 0.3 then
+          let index = String.index button '_' in
+          let folder = String.sub button 0 index in
+          if contains "midi" button then
+            let _ = Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button) in
+            Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^folder^"_song.json"))
+          else
+            let _ = Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button)) in
+            Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^folder^"_0_midi.json");
+          Model.set_filename_buttons (Model.get_file_location());
+          Model.set_state Model.SKeyboard
         else
-          let _ = Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button)) in
-          Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^folder^"_0_midi.json");
-        Model.set_filename_buttons (Model.get_file_location());
-        Model.set_state Model.SKeyboard
-      else
-        File_button.press_filename_button button (Model.get_filename_buttons())
-    | None -> ()
+          File_button.press_filename_button button (Model.get_filename_buttons())
+      | None -> ()
+    end
+  | SSynthesizer -> ()
 
 let event_callback event =
   match enum (get event typ) with
