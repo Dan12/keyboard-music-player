@@ -311,8 +311,7 @@ let draw_output r =
   ()
 
 let draw_file_buttons r x y w =
-  let buttons = Model.get_filename_buttons() in
-  let offset = w / (List.length buttons) in
+  let offset = w / 2 in
   let size = (100 - percent_key_padding) * offset / 100 in
   let iter i b =
     let button_x = i * offset + x in
