@@ -74,7 +74,7 @@ let handle_mouse_up x y t =
       match Gui.button_pressed (x, y) with
       | Some button ->
         (match button with
-         | Load -> (*Model.set_state Model.SFileChooser*) Metronome.set_bpm 200
+        | Load -> Model.set_state Model.SFileChooser
         | Play -> Model.start_midi()
         | Pause -> Model.pause_midi()
         | Stop -> Model.stop_midi();
@@ -101,7 +101,8 @@ let handle_mouse_up x y t =
                     Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^folder^"_song.json"))
                   else
                     let _ = Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button)) in
-                    Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^folder^"_0_midi.json")
+                    Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^folder^"_0_midi.json");
+                    Metronome.set_bpm (get_song() |> Song.get_bpm);
                 | None -> ()
               end;
               Model.set_filename_buttons (Model.get_file_location());
@@ -119,6 +120,7 @@ let handle_mouse_up x y t =
           Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
         else
           Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button));
+          Metronome.set_bpm (get_song() |> Song.get_bpm);
         Model.set_filename_buttons (Model.get_file_location());
         Model.set_state Model.SKeyboard
       else
