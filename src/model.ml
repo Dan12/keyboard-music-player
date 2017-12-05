@@ -183,7 +183,8 @@ let stop_midi () =
   Metronome.reset();
   model.scrub_pos <- model.scrub_pos_min;
   Metronome.set_bpm (model.song |> Song.get_bpm);
-  model.bpm_pos <- ((Metronome.get_percent() *. (model.bpm_pos_max -. model.bpm_pos_min)) +. model.bpm_pos_min);
+  model.bpm_pos <- ((Metronome.get_percent() *.
+              (model.bpm_pos_max -. model.bpm_pos_min)) +. model.bpm_pos_min);
   model.current_midi_button <- 3
 
 let clear_keyboard () =
