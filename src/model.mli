@@ -4,7 +4,7 @@ open Song
 (* This module implements the singleton model by accessing all of our data
    from here. *)
 
-type state = SKeyboard | SFileChooser
+type state = SKeyboard | SFileChooser | SSynthesizer
 
 (* [set_width w] sets the window width to [w]. *)
 val set_width : int -> unit

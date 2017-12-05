@@ -6,8 +6,6 @@ type sound_manager = {
   mutable synth_sounds_playing: Synth.synth list;
 }
 
-let custom_instrument = true
-
 (* [manager] is the singleton instance of the sound_manager *)
 let manager = {
   sounds_playing = [];
@@ -15,54 +13,66 @@ let manager = {
 }
 
 let key_pressed row_col =
-  if custom_instrument then
-    match List.find_opt (Synth.is_equal row_col) manager.synth_sounds_playing with
-    | Some s ->
-      Synth.start s
-    | None ->
-      let new_sound = Synth.create Synth.Sine row_col in
-      manager.synth_sounds_playing <- new_sound::manager.synth_sounds_playing
-  else
-    let song = Model.get_song () in
-    match Song.get_sound row_col song with
-    | None -> ()
-    | Some sound ->
-      (* stop and restart sound *)
-      Sound.stop_sound sound;
-      Sound.play_sound sound;
+  match Model.get_state () with
+  | Model.SSynthesizer ->
+    begin
+      match List.find_opt (Synth.is_equal row_col) manager.synth_sounds_playing with
+      | Some s ->
+        Synth.start s
+      | None ->
+        let new_sound = Synth.create Synth.Sine row_col in
+        manager.synth_sounds_playing <- new_sound::manager.synth_sounds_playing
+    end
+  | Model.SKeyboard ->
+    begin
+      let song = Model.get_song () in
+      match Song.get_sound row_col song with
+      | None -> ()
+      | Some sound ->
+        (* stop and restart sound *)
+        Sound.stop_sound sound;
+        Sound.play_sound sound;
 
-      (* stop all other sounds in this sounds group *)
-      let sound_groups = Sound.get_groups sound in
-      let is_in_groups test_sound =
-        List.filter (Sound.in_group test_sound) sound_groups = []
-      in
-      let new_sounds = List.filter is_in_groups manager.sounds_playing in
-      (* add the new sound to the group *)
-      if List.mem sound new_sounds then
-        ()
-      else
-      manager.sounds_playing <- sound::new_sounds
+        (* stop all other sounds in this sounds group *)
+        let sound_groups = Sound.get_groups sound in
+        let is_in_groups test_sound =
+          List.filter (Sound.in_group test_sound) sound_groups = []
+        in
+        let new_sounds = List.filter is_in_groups manager.sounds_playing in
+        (* add the new sound to the group *)
+        if List.mem sound new_sounds then
+          ()
+        else
+        manager.sounds_playing <- sound::new_sounds
+    end
+  | Model.SFileChooser -> ()
 
 let key_released row_col =
-  if custom_instrument then
-    let release s =
-      if Synth.is_equal row_col s then
-        Synth.release s in
-    List.iter release manager.synth_sounds_playing
-  else
-    let song = Model.get_song () in
-    match Song.get_sound row_col song with
-    | None -> ()
-    | Some sound ->
-      if Sound.is_hold_to_play sound then
-        begin
-          Sound.stop_sound sound;
-          let removed_list = List.filter (fun ts -> ts <> sound) manager.sounds_playing in
-          manager.sounds_playing <- removed_list
-        end
-      else
-        (* TODO if looping and not hold to play, then stop  *)
-        ()
+  match Model.get_state () with
+  | Model.SSynthesizer ->
+    begin
+      let release s =
+        if Synth.is_equal row_col s then
+          Synth.release s in
+      List.iter release manager.synth_sounds_playing
+    end
+  | Model.SKeyboard ->
+    begin
+      let song = Model.get_song () in
+      match Song.get_sound row_col song with
+      | None -> ()
+      | Some sound ->
+        if Sound.is_hold_to_play sound then
+          begin
+            Sound.stop_sound sound;
+            let removed_list = List.filter (fun ts -> ts <> sound) manager.sounds_playing in
+            manager.sounds_playing <- removed_list
+          end
+        else
+          (* TODO if looping and not hold to play, then stop  *)
+          ()
+    end
+  | Model.SFileChooser -> ()
 
 let add_sound (cur_l, cur_r) sound =
   let (sample_l, sample_r) = Sound.get_next_values sound in
@@ -84,32 +94,36 @@ let clip s =
     s
 
 let audio_callback output =
-  if custom_instrument then
-    begin
-      let arr_len = ((Array1.dim output / 2) - 1) in
-      for i = 0 to arr_len do
-        let (sample_l, sample_r) = List.fold_left add_custom_sound (0,0) manager.synth_sounds_playing in
-        let sample_l = clip sample_l in
-        let sample_r = clip sample_r in
-        output.{2*i} <- Int32.of_int (sample_l);
-        output.{2*i + 1} <- Int32.of_int (sample_r);
-      done;
-      (* filter out the only the sounds being played *)
-      manager.synth_sounds_playing <- List.filter Synth.is_playing manager.synth_sounds_playing
-    end
-  else
-    begin
-      let arr_len = ((Array1.dim output / 2) - 1) in
-      for i = 0 to arr_len do
-        let (sample_l, sample_r) = List.fold_left add_sound (0,0) manager.sounds_playing in
-        let sample_l = clip (sample_l lsl 15) in
-        let sample_r = clip (sample_r lsl 15) in
-        output.{2*i} <- Int32.of_int (sample_l lsl 15);
-        output.{2*i + 1} <- Int32.of_int (sample_r lsl 15);
-      done;
-      (* Remove all sounds not being played anymore *)
-      let filtered_sounds = List.filter Sound.is_playing manager.sounds_playing in
-      manager.sounds_playing <- filtered_sounds;
-    end;
+  begin
+    match Model.get_state () with
+    | Model.SSynthesizer ->
+      begin
+        let arr_len = ((Array1.dim output / 2) - 1) in
+        for i = 0 to arr_len do
+          let (sample_l, sample_r) = List.fold_left add_custom_sound (0,0) manager.synth_sounds_playing in
+          let sample_l = clip sample_l in
+          let sample_r = clip sample_r in
+          output.{2*i} <- Int32.of_int (sample_l);
+          output.{2*i + 1} <- Int32.of_int (sample_r);
+        done;
+        (* filter out the only the sounds being played *)
+        manager.synth_sounds_playing <- List.filter Synth.is_playing manager.synth_sounds_playing
+      end
+    | Model.SKeyboard ->
+      begin
+        let arr_len = ((Array1.dim output / 2) - 1) in
+        for i = 0 to arr_len do
+          let (sample_l, sample_r) = List.fold_left add_sound (0,0) manager.sounds_playing in
+          let sample_l = clip (sample_l lsl 15) in
+          let sample_r = clip (sample_r lsl 15) in
+          output.{2*i} <- Int32.of_int sample_l;
+          output.{2*i + 1} <- Int32.of_int sample_r;
+        done;
+        (* Remove all sounds not being played anymore *)
+        let filtered_sounds = List.filter Sound.is_playing manager.sounds_playing in
+        manager.sounds_playing <- filtered_sounds;
+      end
+    | Model.SFileChooser -> ()
+  end;
   Model.set_buffer output
   

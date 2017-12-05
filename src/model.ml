@@ -5,8 +5,9 @@ open Song
 (* The possible states of the interface
  * The keyboard lets the user play songs
  * The file chooser lets a user choose a file
+ * The synthesizer lets a user generate synthesized sounds
  *)
-type state = SKeyboard | SFileChooser
+type state = SKeyboard | SFileChooser | SSynthesizer
 
 (* The fft instance to use when computing fft on
  * the current audio buffer
@@ -29,6 +30,7 @@ type model = {
   mutable should_load_midi: bool;
   mutable is_playing: bool;
   mutable buffer: Complex.t array;
+  mutable playing_song : bool;
 }
 
 (* The model with all the default values initialized *)
@@ -56,6 +58,7 @@ let model:model =
     should_load_midi = true;
     is_playing = false;
     buffer = buffer;
+    playing_song = true;
   }
 
 let set_width w =
