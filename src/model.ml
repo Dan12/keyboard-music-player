@@ -124,9 +124,6 @@ let set_song s =
 let get_song () =
   model.song
 
-let set_state s =
-  model.state <- s
-
 let get_state () =
   model.state
 
@@ -162,6 +159,24 @@ let stop_midi () =
   model.is_playing <- false;
   model.should_load_midi <- true;
   Metronome.reset()
+
+let clear_keyboard () =
+  let layout = get_keyboard_layout() in
+  let keyboard = get_keyboard() in
+  let rows = Keyboard_layout.get_rows layout in
+  let cols = Keyboard_layout.get_cols layout in
+  for row = 0 to rows - 1 do
+    for col = 0 to cols - 1 do
+      Keyboard.process_event (Keyboard_layout.KOKeyup (row, col)) keyboard |> ignore
+    done;
+  done
+
+let set_state s =
+  stop_midi ();
+  clear_keyboard ();
+  model.current_midi_button <- 3;
+  model.current_filename_button <- -1;
+  model.state <- s
 
 let midi_is_playing () = model.is_playing
 
@@ -210,9 +225,12 @@ let set_filename_buttons dir =
       let time = Unix.gettimeofday() in
       begin
         if time -. !recent_click < 0.3
-        then commit_selected_filename();
-        remove_selected_filename();
-        set_state SKeyboard;
+        then
+          begin
+            commit_selected_filename();
+            remove_selected_filename();
+            set_state SKeyboard
+          end
       end;
       recent_click := time in
 
@@ -221,12 +239,12 @@ let set_filename_buttons dir =
       let (x, y, w, h) = Button_standard.get_area b in
 
       let state = if model.current_filename_button = index then KSDown else KSUp in
-      Gui_utils.draw_key r x y (5 * w) h keyboard_pressed_color key_background keyboard_border_color state;
+      Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
 
-      let font_size = 3 * w / 8 in
-      Gui_utils.draw_text r (x + 3 * w / 2) (y + h/2) font_size keyboard_text_color str in
+      let font_size = w / 10 in
+      Gui_utils.draw_text r (x + w / 2) (y + h / 2) font_size keyboard_text_color str in
 
-    
+
     let button = Button_standard.create_button ignore button_up in
     Button_standard.set_draw button (button_draw button);
     button in
@@ -274,17 +292,6 @@ let create_midi_buttons () =
   let pause_draw = button_draw pause ((=) 2) Gui_utils.draw_pause in
   Button_standard.set_draw pause pause_draw;
 
-
-  let clear_keyboard () =
-    let layout = get_keyboard_layout() in
-    let keyboard = get_keyboard() in
-    let rows = Keyboard_layout.get_rows layout in
-    let cols = Keyboard_layout.get_cols layout in
-    for row = 0 to rows - 1 do
-      for col = 0 to cols - 1 do
-        Keyboard.process_event (Keyboard_layout.KOKeyup (row, col)) keyboard |> ignore
-      done;
-    done in
 
   let stop_up _ =
     model.current_midi_button <- 3;

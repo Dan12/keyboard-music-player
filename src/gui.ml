@@ -5,8 +5,8 @@ open Keyboard
 open File_button
 open Model
 
-let filename_button_rects:((Sdl.rect * filename_button) option array ref) =
-  ref (Array.make (Model.get_num_filename_buttons ()) None)
+(* let filename_button_rects:((Sdl.rect * filename_button) option array ref) =
+  ref (Array.make (Model.get_num_filename_buttons ()) None) *)
 
 let fonts = Hashtbl.create 16
 
@@ -282,7 +282,6 @@ let draw_output r =
   let keyboard = Model.get_keyboard () in
   let keyboard_layout = Model.get_keyboard_layout () in
 
-  clear r;
   let amplitudes = get_amplitudes num_graphic_bars in
   let num_bars = Array.length amplitudes + 1 in
   let graphics_x = graphic_padding_w in
@@ -291,7 +290,6 @@ let draw_output r =
                    (100 * num_bars - percent_graphic_padding) in
   let graphics_h = window_h - 2 * graphic_padding_h in
   draw_graphics r amplitudes graphics_x graphics_y graphics_w graphics_h;
-
 
   let keyboard_x = keyboard_padding_w in
   let keyboard_y = keyboard_padding_h in
@@ -302,18 +300,16 @@ let draw_output r =
   let keyboard_h = draw_keyboard r keyboard_layout keyboard
       keyboard_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
 
-
   let arrows_w = keyboard_w / 6 in
   let arrows_x = keyboard_x + keyboard_w - arrows_w - 5 in
   let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
   let _ = draw_arrows r keyboard arrows_x arrows_y arrows_w in
 
-
   let buttons_w = arrows_w * 2 in
   let buttons_x = keyboard_x in
   let buttons_y = arrows_y in
   let _ = draw_buttons r buttons_x buttons_y buttons_w in
-  present r
+  ()
 
 let draw_file_buttons r x y w =
   let offset = w / num_file_buttons in
@@ -325,50 +321,46 @@ let draw_file_buttons r x y w =
   List.iteri iter (Model.get_file_buttons());
   size
 
-let draw_filename_button r x y size i button_with_state =
-  let (button, state) = button_with_state in
-  let rect = draw_key_to_rect r x y (size * 5) size state in
-  Array.set !filename_button_rects i (Some (rect, button));
-
-  let font = get_font (3 * size / 8) in
-  draw_text r (x + (3 * size / 2)) (y + size/2) font button
-
 let draw_filename_buttons r x y w =
-  let offset = w / ((Model.get_num_filename_buttons ())/2) in
-  let size = (100 - percent_key_padding) * offset / 100 in
   let buttons = Model.get_filename_buttons() in
-  let half = if (Array.length buttons) mod 2 = 0 then (Array.length buttons)/2 else ((Array.length buttons)/2)+1 in
-  let first_half = Array.sub buttons 0 half in
-  let second_half = Array.sub buttons half ((Array.length buttons) - half) in
-  Array.iteri (fun i button ->
-      let button_y = i * offset + y in
-      draw_filename_button r x button_y size i button
-    ) first_half;
-  Array.iteri (fun i button ->
-      let button_y = i * offset + y in
-      draw_filename_button r (x+(size*7)) button_y size i button
-    ) second_half;
-  size
+
+  let x_offset = 2 * w / 3 in
+  let y_offset = w / 8 in
+
+  let button_w = (100 - percent_key_padding) * x_offset / 100 in
+  let button_h = (100 - percent_key_padding) * y_offset / 100 in
+
+  let iter i b =
+    let button_x = x + (i / 8) * x_offset in
+    let button_y = y + (i mod 8) * y_offset in
+
+    Button_standard.set_area b button_x button_y button_w button_h;
+    Button_standard.draw b r
+  in
+  List.iteri iter buttons;
+  button_h
 
 let draw_filechooser r =
-  let num_files = Model.get_num_filename_buttons () in
-  filename_button_rects := Array.make (num_files) None;
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
 
-  clear r;
   let filename_buttons_x = window_w / 25 in
   let filename_buttons_y = window_h / 15 in
-  let filename_buttons_w = (window_h * 3 / 4) in
+  let filename_buttons_w = window_h * 3 / 4 in
   let _ = draw_filename_buttons r filename_buttons_x filename_buttons_y filename_buttons_w in
 
-  let buttons_x = window_w - (window_w / 5) in
-  let buttons_y = window_h - (window_h / 6) in
-  let buttons_w = (window_w / 5) in
+  let buttons_x = window_w - window_w / 5 in
+  let buttons_y = window_h - window_h / 6 in
+  let buttons_w = window_w / 5 in
   let _ = draw_file_buttons r buttons_x buttons_y buttons_w in
-  present r
+  ()
+
 
 let draw r =
-  match Model.get_state () with
-  | SKeyboard -> draw_output r
-  | SFileChooser -> draw_filechooser r
+  clear r;
+  begin
+    match Model.get_state () with
+    | SKeyboard -> draw_output r
+    | SFileChooser -> draw_filechooser r
+  end;
+  present r

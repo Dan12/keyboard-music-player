@@ -50,22 +50,9 @@ let handle_mouse_up x y t =
     let iter = fun _ b -> Button_standard.up_press b (x, y) in
     List.iteri iter (Model.get_midi_buttons())
   | SFileChooser ->
-    let iter = fun _ b -> Button_standard.up_press b (x, y) in
+    let iter = fun i b -> Button_standard.up_press b (x, y) in
     List.iteri iter (Model.get_file_buttons());
-    begin
-      match Gui.filename_button_pressed (x, y) with
-      | Some button -> Model.set_selected_filename button;
-        if (t -. !recent_click) < 0.3 then
-          let index = String.index button '_' in
-          let folder = String.sub button 0 index in
-          if contains "midi" button then
-            Model.set_midi_filename ((Model.get_file_location())^folder^"_data/"^button)
-          else Model.set_song (Song.parse_song_file ((Model.get_file_location())^folder^"_data/"^button));
-          Model.set_filename_buttons (Model.get_file_location());
-          Model.set_state Model.SKeyboard
-        else File_button.press_filename_button button (Model.get_filename_buttons())
-      | None -> ()
-    end
+    List.iteri iter (Model.get_filename_buttons())
 
 let event_callback event =
   match enum (get event typ) with

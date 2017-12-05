@@ -60,7 +60,7 @@ val set_filename_buttons : string -> unit
 val get_filename_buttons : unit -> Button_standard.button list
 
 (* [get_num_filename_buttons] returns the number of filenames. *)
-val get_num_filename_buttons : unit -> int
+(* val get_num_filename_buttons : unit -> int *)
 
 (* [set_midi_filename f] sets the current filename of the midi. *)
 val set_midi_filename : string -> unit
