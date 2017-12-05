@@ -224,7 +224,12 @@ let draw_bpm r y =
   let x = (Model.get_bpm_pos() - size/2) in
   let rect = Sdl.Rect.create x y (size/2) size in
   bpm := Some rect;
-  let _ = Sdl.render_draw_rect r (Some rect) in ()
+  let _ = Sdl.render_fill_rect r (Some rect) in
+  let line_h = 3 in
+  let line = Sdl.Rect.create (Model.get_bpm_pos_min()) (y + (size / 2) - 1)
+      (Model.get_bpm_pos_max()-Model.get_bpm_pos_min()) line_h in
+  set_color r black;
+  let _ = Sdl.render_fill_rect r (Some line) in ()
 
 let draw_scrub r y =
   let size = 30 in
