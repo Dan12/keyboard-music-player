@@ -136,6 +136,7 @@ let get_midi_filename () =
 let start_midi () =
   if model.is_playing = false then
     Metronome.unpause();
+    Metronome.set_bpm (get_song() |> Song.get_bpm);
     model.is_playing <- true;
   model.should_load_midi <- false;
   Button.press_button Button.Play model.buttons
