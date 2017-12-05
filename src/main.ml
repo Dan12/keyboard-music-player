@@ -3,7 +3,6 @@ let tick_callback () =
   if Model.midi_should_load() then
     begin
       Midi_player.set_midi (Model.get_midi_filename ());
-      Metronome.set_bpm (Model.get_song() |> Song.get_bpm);
       Model.set_midi_load false
     end;
   let midi = Midi_player.get_midi () in
