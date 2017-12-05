@@ -5,7 +5,7 @@ let last_time = ref (Unix.gettimeofday())
 let cached_beat = ref 0.0
 let bpm = ref 0
 let min_bpm = 50.0
-let max_bpm = 200.0
+let max_bpm = 300.0
 
 let prev_minutes_elapsed = ref 0.0
 let current_minutes_elapsed = ref 0.0
