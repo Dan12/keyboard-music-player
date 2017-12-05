@@ -123,7 +123,8 @@ let audio_callback output =
         let filtered_sounds = List.filter Sound.is_playing manager.sounds_playing in
         manager.sounds_playing <- filtered_sounds;
       end
-    | Model.SFileChooser -> ()
+    | _ ->
+      Array1.fill output (Int32.of_int 0)
   end;
   Model.set_buffer output
   
