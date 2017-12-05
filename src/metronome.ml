@@ -35,7 +35,10 @@ let get_beat () = !cached_beat
 let set_beat beat =
   cached_beat := beat;
   last_time := Unix.gettimeofday();
-  start_time := !last_time -. beat /. (!bpm |> float_of_int) *. 60.0
+  start_time := !last_time -. beat /. (!bpm |> float_of_int) *. 60.0;
+  let temp = (!last_time -. !start_time) /. 60.0 in
+  prev_minutes_elapsed := temp;
+  current_minutes_elapsed := temp
 
 let unpause () =
   let seconds = (minutes_elapsed(); !current_minutes_elapsed) *. 60.0 in
