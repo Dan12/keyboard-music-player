@@ -1,5 +1,4 @@
 open Tsdl.Sdl.Event
-open Button
 open Model
 open File_button
 

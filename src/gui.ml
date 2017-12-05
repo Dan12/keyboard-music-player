@@ -2,7 +2,6 @@ open Tsdl
 open Tsdl_ttf
 open Keyboard_layout
 open Keyboard
-open Button
 open File_button
 open Model
 
@@ -177,13 +176,14 @@ let draw_arrows r keyboard x y w =
   2 * y_offset
 
 let draw_buttons r x y w =
-  let offset = w / num_buttons in
+  let buttons = Model.get_midi_buttons() in
+  let offset = w / (List.length buttons) in
   let size = (100 - percent_key_padding) * offset / 100 in
   let iter = fun i b ->
     let button_x = i * offset + x in
     Button_standard.set_area b button_x y size size;
     Button_standard.draw b r in
-  List.iteri iter (Model.get_midi_buttons());
+  List.iteri iter buttons;
   size
 
 let clear r =
