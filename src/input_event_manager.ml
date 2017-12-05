@@ -1,6 +1,5 @@
 open Tsdl.Sdl.Event
 open Model
-open File_button
 
 let input_event_singleton = ref None
 let recent_click = ref (Unix.gettimeofday())

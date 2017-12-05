@@ -2,7 +2,6 @@ open Tsdl
 open Tsdl_ttf
 open Keyboard_layout
 open Keyboard
-open File_button
 open Model
 
 (* let filename_button_rects:((Sdl.rect * filename_button) option array ref) =
@@ -312,7 +311,8 @@ let draw_output r =
   ()
 
 let draw_file_buttons r x y w =
-  let offset = w / num_file_buttons in
+  let buttons = Model.get_filename_buttons() in
+  let offset = w / (List.length buttons) in
   let size = (100 - percent_key_padding) * offset / 100 in
   let iter i b =
     let button_x = i * offset + x in
