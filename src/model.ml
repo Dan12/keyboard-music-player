@@ -44,7 +44,7 @@ type model = {
   mutable playing_song : bool;
   mutable beats_in_midi: float;
   mutable adsr_params: float*float*float*float;
-  mutable filter_params: Filter.filter_kind*float*float;
+  mutable filter: Filter.filter_t;
 }
 
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
@@ -126,7 +126,7 @@ let model:model =
     playing_song = true;
     beats_in_midi = 0.0;
     adsr_params = (0.0, 0.0, 1.0, 0.0);
-    filter_params = (Filter.FKNone,1000.0, 1.0);
+    filter = Filter.make 44100 Filter.FKNone 1000.0 1.0;
   }
 
 let get_width () =
@@ -427,8 +427,9 @@ let get_adsr_params () =
 let set_adsr_params p =
   model.adsr_params <- p
 
-let get_filter_params () =
-  model.filter_params
+let get_filter () =
+  model.filter
 
 let set_filter_params p =
-  model.filter_params <- p
+  let (filter_kind, filter_freq, filter_q) = p in
+  model.filter <- Filter.make 44100 filter_kind filter_freq filter_q

@@ -13,10 +13,10 @@ val create : waveform -> int*int -> synth
 (* [start synth] starts the synth *)
 val start : synth -> unit
 
-(* [get_next_sample synth] returns the next stereo sample
+(* [get_next_sample synth] returns the next mono sample
  * for the synth.
  *)
-val get_next_sample : synth -> int*int
+val get_next_sample : synth -> float
 
 (* [is_equal (octave,note) synth] returns true if [synth]
  * is a synth for [octave] and [note] *)

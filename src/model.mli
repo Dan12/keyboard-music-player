@@ -137,6 +137,6 @@ val get_adsr_params : unit -> float*float*float*float
 
 val set_adsr_params : float*float*float*float -> unit
 
-val get_filter_params : unit -> Filter.filter_kind*float*float
+val get_filter : unit -> Filter.filter_t
 
 val set_filter_params : Filter.filter_kind*float*float -> unit

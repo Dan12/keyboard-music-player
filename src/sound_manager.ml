@@ -78,9 +78,9 @@ let add_sound (cur_l, cur_r) sound =
   let (sample_l, sample_r) = Sound.get_next_values sound in
   (cur_l+sample_l, cur_r+sample_r)
 
-let add_custom_sound (cur_l, cur_r) sound =
-  let (sample_l, sample_r) = Synth.get_next_sample sound in
-  (cur_l+sample_l, cur_r+sample_r)
+let add_custom_sound cur sound =
+  let sample = Synth.get_next_sample sound in
+  cur +. sample
 
 
 let max_32 = 2147483647
@@ -100,11 +100,13 @@ let audio_callback output =
       begin
         let arr_len = ((Array1.dim output / 2) - 1) in
         for i = 0 to arr_len do
-          let (sample_l, sample_r) = List.fold_left add_custom_sound (0,0) manager.synth_sounds_playing in
-          let sample_l = clip sample_l in
-          let sample_r = clip sample_r in
-          output.{2*i} <- Int32.of_int (sample_l);
-          output.{2*i + 1} <- Int32.of_int (sample_r);
+          let sample = List.fold_left add_custom_sound 0. manager.synth_sounds_playing in
+          let filter = Model.get_filter () in
+          let filtered_sample = Filter.process filter sample in
+          let sample_int = int_of_float (filtered_sample *. 2147483647.) in
+          let sample_clipped = clip sample_int in
+          output.{2*i} <- Int32.of_int (sample_clipped);
+          output.{2*i + 1} <- Int32.of_int (sample_clipped);
         done;
         (* filter out the only the sounds being played *)
         manager.synth_sounds_playing <- List.filter Synth.is_playing manager.synth_sounds_playing
