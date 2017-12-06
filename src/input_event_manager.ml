@@ -64,7 +64,8 @@ let handle_mouse_up x y t =
     List.iteri iter (Model.get_filename_buttons())
   | SSynthesizer ->
     iter () (Model.get_play_button());
-    iter () (Model.get_synth_grid())
+    iter () (Model.get_synth_grid());
+    List.iteri iter (Model.get_filter_buttons())
 
 
 let handle_mouse_down x y =

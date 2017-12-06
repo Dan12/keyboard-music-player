@@ -112,6 +112,16 @@ let draw_synth_button r x y w =
   Button_standard.draw b r;
   h
 
+let draw_filter_buttons r x y w h =
+  let buttons = Model.get_filter_buttons() in
+  let offset = h / (List.length buttons) in
+  let button_h = (100 - percent_key_padding) * offset / 100 in
+  let iter i b =
+    let button_y = y + i * offset in
+    Button_standard.set_area b x button_y w button_h;
+    Button_standard.draw b r in
+  List.iteri iter buttons
+
 let draw_grid r x y w =
   let b = Model.get_synth_grid() in
   let h = w in
@@ -381,7 +391,13 @@ let draw_synthesizer r =
   let grid_x = keyboard_x in
   let grid_y = 21 * keyboard_h / 20 + keyboard_y in
   let grid_w = keyboard_w / 6 - 10 in
-  let _ = draw_grid r grid_x grid_y grid_w in
+  let grid_h = draw_grid r grid_x grid_y grid_w in
+
+  let filters_x = grid_x + 5 * grid_w / 4 in
+  let filters_y = grid_y + 5 in
+  let filters_w = 3 * grid_w / 4 in
+  let filters_h = grid_h in
+  draw_filter_buttons r filters_x filters_y filters_w filters_h;
 
   let synth_button_w = grid_w in
   let synth_button_x = keyboard_x + keyboard_w - synth_button_w - 15 in

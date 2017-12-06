@@ -45,6 +45,9 @@ val get_file_buttons : unit -> Button_standard.button list
 (* [get_synth_button] returns the to synth button. *)
 val get_synth_button : unit -> Button_standard.button
 
+(* [get_filter_buttons] returns to synth filter buttons. *)
+val get_filter_buttons : unit -> Button_standard.button list
+
 (* [get_synth_grid] returns the pitch grid. *)
 val get_synth_grid : unit -> Button_standard.button
 
