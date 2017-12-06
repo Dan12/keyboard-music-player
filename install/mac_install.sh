@@ -4,6 +4,8 @@ echo "If installation fails because of libffi, you may need to install 'libffi' 
 echo "If you have homebrew: 'brew install libffi'"
 echo "=================================================="
 
+opam install ounit yojson
+
 opam depext conf-sdl2.1
 opam install tsdl
 
