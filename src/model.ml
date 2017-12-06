@@ -487,11 +487,12 @@ let create_synth_grid () =
   let set_params (x, y) =
     prev_x := x;
     prev_y := y;
+    let slope = 4.301029995664 -. 2.0 in
     let filter, _, _ = get_filter_params() in
-    let x_scaled = 10.0 ** (x *. 2.3 +. 2.0) in (* 100 -- 20000 = 10^2 -- 10^4.3 *)
+    let x_scaled = 10.0 ** (x *. slope +. 2.0) in (* 100 -- 20000 = 10^2 -- 10^4.3 *)
     let y_scaled = ((1.0 -. y) *. 9.9) +. 0.1 in
     (* set_filter_params (filter, x_scaled, y_scaled) in *)
-    
+
     print_float x_scaled;
     print_string ", ";
     print_float y_scaled;
