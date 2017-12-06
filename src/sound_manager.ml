@@ -20,7 +20,7 @@ let key_pressed row_col =
       | Some s ->
         Synth.start s
       | None ->
-        let new_sound = Synth.create Synth.Sine row_col in
+        let new_sound = Synth.create Synth.Square row_col in
         manager.synth_sounds_playing <- new_sound::manager.synth_sounds_playing
     end
   | Model.SKeyboard ->

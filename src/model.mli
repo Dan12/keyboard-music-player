@@ -132,3 +132,11 @@ val set_buffer : (int32, Bigarray.int32_elt, Bigarray.c_layout) Bigarray.Array1.
 
 (* [get_buffer] get the most recent fft *)
 val get_buffer : unit -> Complex.t array
+
+val get_adsr_params : unit -> float*float*float*float
+
+val set_adsr_params : float*float*float*float -> unit
+
+val get_filter_params : unit -> Filter.filter_kind*float*float
+
+val set_filter_params : Filter.filter_kind*float*float -> unit

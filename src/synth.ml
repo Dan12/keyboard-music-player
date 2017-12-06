@@ -13,8 +13,6 @@ type synth = {
   filter: Filter.filter_t;
 }
 
-let using_filter = true
-
 let volume = 0.25
 let sample_rate = 44100.
 let pi = 3.14159265358979323846
@@ -24,15 +22,16 @@ let create w (octave, note) =
   let octave = octave + octave_shift in
   let n = note + 12 * (octave + 1) in
   let freq = 440. *. (2. ** ((float n -. 69.) /. 12.)) in
+  let (filter_kind, filter_freq, filter_q) = Model.get_filter_params () in
   {
     waveform = w;
     freq = freq;
     note_ocate = (note, octave);
     sample = 0;
     playing = true;
-    adsr_config = Adsr.make_adsr 44100 (0.1,0.0,1.0,0.1);
+    adsr_config = Adsr.make_adsr 44100 (Model.get_adsr_params ());
     adsr_state = Adsr.init_state ();
-    filter = Filter.make 44100 `High_pass 1000. 2.;
+    filter = Filter.make 44100 filter_kind filter_freq filter_q;
   }
 
 let start s =
@@ -71,7 +70,7 @@ let get_next_sample s =
     end
   in
   let adsr_ctrl = Adsr.process_sample s.adsr_config s.adsr_state amp in
-  let filter_ctrl = if using_filter then Filter.process s.filter adsr_ctrl else adsr_ctrl in
+  let filter_ctrl = Filter.process s.filter adsr_ctrl in
   let vol_ctrl = filter_ctrl *. volume in
   let amp_int = int_of_float (vol_ctrl *. 2147483647.) in
   s.sample <- s.sample + 1;

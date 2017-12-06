@@ -34,44 +34,68 @@ let process_sample adsr state sample =
   let (a,d,s,r) = adsr in
   match state.state with
   | 0 ->
-    (* calculate the gain scalar in attack phase *)
-    let scalar = (float_of_int state.sample_pos) /. (float_of_int a) in
-    (* increment the sample position *)
-    state.sample_pos <- state.sample_pos+1;
-    (* set to the next state if at that position *)
-    if state.sample_pos >= a then
+    if a <> 0 then
+      begin
+        (* calculate the gain scalar in attack phase *) 
+        let scalar = (float_of_int state.sample_pos) /. (float_of_int a) in
+        (* increment the sample position *)
+        state.sample_pos <- state.sample_pos+1;
+        (* set to the next state if at that position *)
+        if state.sample_pos >= a then
+          begin
+            state.state <- 1;
+            state.sample_pos <- 0;
+          end;
+        (* return the scaled samples *)
+        sample *. scalar
+      end
+    else
       begin
         state.state <- 1;
-        state.sample_pos <- 0;
-      end;
-    (* return the scaled samples *)
-    sample *. scalar
+        sample
+      end
   | 1 ->
-    (* calculate the gain scalar in decay phase *)
-    let scalar = 1. +. ((0.8 -. 1.) *. (float_of_int state.sample_pos)) /. (float_of_int d) in
-    (* increment the sample position *)
-    state.sample_pos <- state.sample_pos+1;
-    (* set to the next state if at that position *)
-    if state.sample_pos >= d then
+    if d <> 0 then
+      begin
+        (* calculate the gain scalar in decay phase *)
+        let scalar = 1. +. ((0.8 -. 1.) *. (float_of_int state.sample_pos)) /. (float_of_int d) in
+        (* increment the sample position *)
+        state.sample_pos <- state.sample_pos+1;
+        (* set to the next state if at that position *)
+        if state.sample_pos >= d then
+          begin
+            state.state <- 2;
+            state.sample_pos <- 0;
+          end;
+        (* return the scaled samples *)
+        sample *. scalar
+      end
+    else
       begin
         state.state <- 2;
-        state.sample_pos <- 0;
-      end;
-    (* return the scaled samples *)
-    sample *. scalar
+        sample
+      end
   | 2 ->
     sample *. s
   | 3 ->
-    (* calculate the gain scalar in release phase *)
-    let scalar = s -. (float_of_int state.sample_pos) /. (float_of_int r) in
-    (* increment the sample position *)
-    state.sample_pos <- state.sample_pos+1;
-    (* set to the next state if at that position *)
-    if state.sample_pos >= r then
+    if r <> 0 then
+      begin
+        (* calculate the gain scalar in release phase *)
+        let scalar = s -. (float_of_int state.sample_pos) /. (float_of_int r) in
+        (* increment the sample position *)
+        state.sample_pos <- state.sample_pos+1;
+        (* set to the next state if at that position *)
+        if state.sample_pos >= r then
+          begin
+            state.state <- 4;
+            state.sample_pos <- 0;
+          end;
+        (* return the scaled samples *)
+        sample *. scalar
+      end
+    else
       begin
         state.state <- 4;
-        state.sample_pos <- 0;
-      end;
-    (* return the scaled samples *)
-    sample *. scalar
+        sample
+      end
   | _ -> 0.

@@ -15,41 +15,45 @@ type filter_t = {
   mutable y2 : float;
 }
 
+type filter_kind = FKNone | FKBand_pass | FKHigh_pass | FKLow_pass | FKNotch | FKAll_pass | FKPeaking | FKLow_shelf | FKHigh_shelf
+
 let make sr kind ?(gain=0.) freq q =
   let samplerate = float_of_int sr in
   let w0 = 2. *. pi *. freq /. samplerate in
   let cos_w0 = cos w0 in
   let sin_w0 = sin w0 in
-  let alpha = sin w0 /. (2. *. q) in
+  let alpha = sin_w0 /. (2. *. q) in
   let a = if gain = 0. then 1. else 10. ** (gain /. 40.) in
   let b0,b1,b2,a0,a1,a2 =
   match kind with
-    | `Low_pass ->
+    | FKNone ->
+      (1.0, 0.0, 0.0, 1.0, 0.0, 0.0)
+    | FKLow_pass ->
       let b1 = 1. -. cos_w0 in
       let b0 = b1 /. 2. in
       b0,b1,b0,(1. +. alpha),(-.2. *. cos_w0),(1. -. alpha)
-    | `High_pass ->
+    | FKHigh_pass ->
       let b1 = 1. +. cos_w0 in
       let b0 = b1 /. 2. in
       let b1 = -. b1 in
       b0,b1,b0,(1. +. alpha),(-.2. *. cos_w0),(1. -. alpha)
-    | `Band_pass ->
+    | FKBand_pass ->
       let b0 = sin_w0 /. 2. in
       b0,0.,-.b0,(1. +. alpha),(-.2. *. cos_w0),(1. -. alpha)
-    | `Notch ->
+    | FKNotch ->
       let b1 = -2. *. cos_w0 in
       1.,b1,1.,(1.+.alpha),b1,(1.-.alpha)
-    | `All_pass ->
+    | FKAll_pass ->
       let b0 = 1. -. alpha in
       let b1 = -.2. *. cos_w0 in
       let b2 = 1. +. alpha in
       b0,b1,b2,b2,b1,b0
-    | `Peaking ->
+    | FKPeaking ->
       let ama = alpha *. a in
       let ada = alpha /. a in
       let b1 = -.2. *. cos_w0 in
       1.+.ama,b1,1.-.ama,1.+.ada,b1,1.-.ada
-    | `Low_shelf ->
+    | FKLow_shelf ->
       let s = 2. *. (sqrt a) *. alpha in
       (a *. ((a +. 1.) -. (a -. 1.) *. cos_w0 +. s)),
       2. *. a *. ((a -. 1.) -. (a +. 1.) *. cos_w0),
@@ -57,7 +61,7 @@ let make sr kind ?(gain=0.) freq q =
       (a +. 1.) +. (a -. 1.) *. cos_w0 +. s,
       -.2. *. (a -. 1.) +. (a +. 1.) *. cos_w0,
       (a +. 1.) +. (a -. 1.) *. cos_w0 -. s
-    | `High_shelf ->
+    | FKHigh_shelf ->
       let s = 2. *. (sqrt a) *. alpha in
       a *. ((a +. 1.) +. (a -. 1.) *. cos_w0 +. s),
       -.2. *. a *. ((a -. 1.) +. (a +. 1.) *. cos_w0),

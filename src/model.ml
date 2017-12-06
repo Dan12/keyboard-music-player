@@ -43,6 +43,8 @@ type model = {
   mutable buffer: Complex.t array;
   mutable playing_song : bool;
   mutable beats_in_midi: float;
+  mutable adsr_params: float*float*float*float;
+  mutable filter_params: Filter.filter_kind*float*float;
 }
 
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
@@ -101,7 +103,7 @@ let model:model =
     keyboard = keyboard;
     keyboard_layout = keyboard_layout;
     song = eq_song;
-    state = SKeyboard;
+    state = SSynthesizer;
     midi_buttons = [];
     current_midi_button = 3;
     file_buttons = [];
@@ -123,6 +125,8 @@ let model:model =
     buffer = buffer;
     playing_song = true;
     beats_in_midi = 0.0;
+    adsr_params = (0.0, 0.0, 1.0, 0.0);
+    filter_params = (Filter.FKNone,1000.0, 1.0);
   }
 
 let get_width () =
@@ -416,3 +420,15 @@ let create_file_buttons () =
 let _ = set_filename_buttons (get_file_location())
 let _ = model.midi_buttons <- create_midi_buttons()
 let _ = model.file_buttons <- create_file_buttons()
+
+let get_adsr_params () =
+  model.adsr_params
+
+let set_adsr_params p =
+  model.adsr_params <- p
+
+let get_filter_params () =
+  model.filter_params
+
+let set_filter_params p =
+  model.filter_params <- p
