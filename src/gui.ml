@@ -98,6 +98,27 @@ let draw_buttons r x y w =
   List.iteri iter buttons;
   size
 
+let draw_play_button r x y w =
+  let b = Model.get_play_button() in
+  let h = w / 5 in
+  Button_standard.set_area b x y w h;
+  Button_standard.draw b r;
+  h
+
+let draw_synth_button r x y w =
+  let b = Model.get_synth_button() in
+  let h = w / 5 in
+  Button_standard.set_area b x y w h;
+  Button_standard.draw b r;
+  h
+
+let draw_grid r x y w =
+  let b = Model.get_synth_grid() in
+  let h = w in
+  Button_standard.set_area b x y w h;
+  Button_standard.draw b r;
+  h
+
 let draw_bpm r y =
   let size = 20 in
   let x = ((Model.get_bpm_pos()|> int_of_float) - size/2) in
@@ -254,7 +275,7 @@ let get_amplitudes size =
   in *)
   Array.init size init_i
 
-let draw_output r =
+let draw_keyboard_visual r =
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
 
@@ -278,24 +299,7 @@ let draw_output r =
                    (100 * keyboard_cols - percent_key_padding) in
   let keyboard_h = draw_keyboard r keyboard_layout keyboard
       keyboard_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
-
-  let arrows_w = keyboard_w / 6 in
-  let arrows_x = keyboard_x + keyboard_w - arrows_w - 5 in
-  let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
-  let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
-
-
-  let buttons_w = arrows_w * 2 in
-  let buttons_x = keyboard_x in
-  let buttons_y = arrows_y in
-  let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
-
-  let bpm_y = arrows_y + arrows_h + 3 * keyboard_padding_h / 2 in
-  let _ = draw_bpm r bpm_y in
-
-  let scrub_y = buttons_y + buttons_h + 2 * keyboard_padding_h in
-  let _ = draw_scrub r scrub_y in
-  ()
+  (keyboard_x, keyboard_y, keyboard_w, keyboard_h)
 
 let draw_file_buttons r x y w =
   let offset = w / 2 in
@@ -326,6 +330,35 @@ let draw_filename_buttons r x y w =
   List.iteri iter buttons;
   button_h
 
+let draw_song_player r =
+  let keyboard = Model.get_keyboard () in
+  let keyboard_coords = draw_keyboard_visual r in
+  let keyboard_x, keyboard_y, keyboard_w, keyboard_h = keyboard_coords in
+
+  let arrows_w = keyboard_w / 6 in
+  let arrows_x = keyboard_x + keyboard_w - arrows_w - 5 in
+  let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
+  let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
+
+
+  let buttons_w = arrows_w * 2 in
+  let buttons_x = keyboard_x in
+  let buttons_y = arrows_y in
+  let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
+
+
+  let synth_button_x = arrows_x in
+  let synth_button_y = arrows_y + 5 * arrows_h / 4 in
+  let synth_button_w = arrows_w -  arrows_w / 21 in
+  let _ = draw_synth_button r synth_button_x synth_button_y synth_button_w in
+
+  let bpm_y = arrows_y + arrows_h + 3 * keyboard_padding_h / 2 in
+  let _ = draw_bpm r bpm_y in
+
+  let scrub_y = buttons_y + buttons_h + 2 * keyboard_padding_h in
+  let _ = draw_scrub r scrub_y in
+  ()
+
 let draw_filechooser r =
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
@@ -341,13 +374,29 @@ let draw_filechooser r =
   let _ = draw_file_buttons r buttons_x buttons_y buttons_w in
   ()
 
+let draw_synthesizer r =
+  let keyboard_coords = draw_keyboard_visual r in
+  let keyboard_x, keyboard_y, keyboard_w, keyboard_h = keyboard_coords in
+
+  let grid_x = keyboard_x in
+  let grid_y = 21 * keyboard_h / 20 + keyboard_y in
+  let grid_w = keyboard_w / 6 - 10 in
+  let _ = draw_grid r grid_x grid_y grid_w in
+
+  let synth_button_w = grid_w in
+  let synth_button_x = keyboard_x + keyboard_w - synth_button_w - 15 in
+  let synth_button_y = grid_y in
+  let _ = draw_play_button r synth_button_x synth_button_y synth_button_w in
+  ()
+
 
 let draw r =
   clear r;
   begin
     match Model.get_state () with
-    | SKeyboard | SSynthesizer -> draw_output r
+    | SKeyboard -> draw_song_player r
     | SFileChooser -> draw_filechooser r
+    | SSynthesizer -> draw_synthesizer r
   end;
     present r
 

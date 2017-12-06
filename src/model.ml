@@ -27,6 +27,9 @@ type model = {
   mutable file_buttons: Button_standard.button list;
   mutable filename_buttons : Button_standard.button list;
   mutable current_filename_button: int;
+  mutable synth_button: Button_standard.button option;
+  mutable synth_grid: Button_standard.button option;
+  mutable play_button: Button_standard.button option;
   mutable selected_filename: string option;
   mutable file_location: string;
   mutable midi_filename: string;
@@ -103,13 +106,16 @@ let model:model =
     keyboard = keyboard;
     keyboard_layout = keyboard_layout;
     song = eq_song;
-    state = SSynthesizer;
+    state = SKeyboard;
     midi_buttons = [];
     current_midi_button = 3;
     file_buttons = [];
     selected_filename = None;
     filename_buttons = [];
     current_filename_button = -1;
+    synth_button = None;
+    synth_grid = None;
+    play_button = None;
     file_location = "resources/";
     midi_filename = "resources/eq_data/eq_0_midi.json";
     should_load_midi = true;
@@ -161,6 +167,22 @@ let get_midi_buttons () =
 
 let get_file_buttons () =
   model.file_buttons
+
+let get_synth_button () =
+  match model.synth_button with
+  | Some b -> b
+  | None -> failwith "synth_button not made"
+
+let get_synth_grid () =
+  match model.synth_grid with
+  | Some b -> b
+  | None -> failwith "synth_grid not made"
+
+let get_play_button () =
+  match model.play_button with
+  | Some b -> b
+  | None -> failwith "play_button not made"
+
 
 let get_file_location () =
   model.file_location
@@ -296,6 +318,18 @@ let commit_selected_filename () =
       set_midi_filename ((get_file_location())^folder^"_data/"^folder^"_0_midi.json")
   | None -> ()
 
+let get_adsr_params () =
+  model.adsr_params
+
+let set_adsr_params p =
+  model.adsr_params <- p
+
+let get_filter_params () =
+  model.filter_params
+
+let set_filter_params p =
+  model.filter_params <- p
+
 
 
 let set_filename_buttons dir =
@@ -328,7 +362,7 @@ let set_filename_buttons dir =
       Gui_utils.draw_text r (x + w / 2) (y + h / 2) font_size keyboard_text_color str in
 
 
-    let button = Button_standard.create_button ignore button_up in
+    let button = Button_standard.create_button ignore button_up ignore in
     Button_standard.set_draw button (button_draw button);
     button in
 
@@ -353,7 +387,7 @@ let create_midi_buttons () =
     let font_size = 3 * w / 8 in
     Gui_utils.draw_text r (x + w/2) (y + h/2) font_size keyboard_text_color "Load" in
 
-  let load = Button_standard.create_button ignore load_up in
+  let load = Button_standard.create_button ignore load_up ignore in
   let load_draw = button_draw load ((=) 0) load_drawer in
   Button_standard.set_draw load load_draw;
 
@@ -362,7 +396,7 @@ let create_midi_buttons () =
     model.current_midi_button <- 1;
     start_midi() in
 
-  let play = Button_standard.create_button ignore play_up in
+  let play = Button_standard.create_button ignore play_up ignore in
   let play_draw = button_draw play ((=) 1) Gui_utils.draw_play in
   Button_standard.set_draw play play_draw;
 
@@ -371,7 +405,7 @@ let create_midi_buttons () =
     model.current_midi_button <- 2;
     pause_midi() in
 
-  let pause = Button_standard.create_button ignore pause_up in
+  let pause = Button_standard.create_button ignore pause_up ignore in
   let pause_draw = button_draw pause ((=) 2) Gui_utils.draw_pause in
   Button_standard.set_draw pause pause_draw;
 
@@ -381,7 +415,7 @@ let create_midi_buttons () =
     stop_midi();
     clear_keyboard() in
 
-  let stop = Button_standard.create_button ignore stop_up in
+  let stop = Button_standard.create_button ignore stop_up ignore in
   let stop_draw = button_draw stop ((=) 3) Gui_utils.draw_stop in
   Button_standard.set_draw stop stop_draw;
   [load; play; pause; stop]
@@ -400,7 +434,7 @@ let create_file_buttons () =
     remove_selected_filename();
     set_state SKeyboard in
 
-  let cancel = Button_standard.create_button ignore cancel_up in
+  let cancel = Button_standard.create_button ignore cancel_up ignore in
   let cancel_draw = button_draw cancel "Cancel" in
   Button_standard.set_draw cancel cancel_draw;
 
@@ -410,25 +444,84 @@ let create_file_buttons () =
     remove_selected_filename();
     set_state SKeyboard  in
 
-  let select = Button_standard.create_button ignore select_up in
+  let select = Button_standard.create_button ignore select_up ignore in
   let select_draw = button_draw select "Select" in
   Button_standard.set_draw select select_draw;
   [cancel; select]
+
+let create_transition_button state text =
+  let transition_draw b = fun r ->
+    let (x, y, w, h) = Button_standard.get_area b in
+
+    Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color KSUp;
+
+    let font_size = w / 6 in
+    Gui_utils.draw_text r (x + w/2) (y + h/2) font_size keyboard_text_color text in
+
+
+  let transition_up _ =
+    set_state state in
+
+  let transition = Button_standard.create_button ignore transition_up ignore in
+  let transition_draw = transition_draw transition in
+  Button_standard.set_draw transition transition_draw;
+  transition
+
+let create_synth_grid () =
+  let is_moving = ref false in
+  let prev_x = ref 0.0 in
+  let prev_y = ref 0.0 in
+
+  let grid_draw b = fun r ->
+    let (x, y, w, h) = Button_standard.get_area b in
+    Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color KSUp;
+
+    let pressed_x = x + int_of_float ((float_of_int w) *. !prev_x) in
+    let pressed_y = y + int_of_float ((float_of_int h) *. !prev_y) in
+
+    let _ = Tsdl.Sdl.render_draw_line r (pressed_x - 5) pressed_y (pressed_x + 5) pressed_y in
+    let _ = Tsdl.Sdl.render_draw_line r pressed_x (pressed_y - 5) pressed_x (pressed_y + 5) in
+    () in
+
+
+  let set_params (x, y) =
+    prev_x := x;
+    prev_y := y;
+    let filter, _, _ = get_filter_params() in
+    let x_scaled = 10.0 ** (x *. 2.3 +. 2.0) in (* 100 -- 20000 = 10^2 -- 10^4.3 *)
+    let y_scaled = ((1.0 -. y) *. 9.9) +. 0.1 in
+    (* set_filter_params (filter, x_scaled, y_scaled) in *)
+    
+    print_float x_scaled;
+    print_string ", ";
+    print_float y_scaled;
+    print_endline "";
+
+    set_filter_params (Filter.FKAll_pass, x_scaled, y_scaled) in
+
+  let grid_down p =
+    is_moving := true;
+    set_params p in
+
+  let grid_up p =
+    if !is_moving then set_params p;
+    is_moving := false in
+
+  let grid_move p =
+    if !is_moving then set_params p in
+
+  let grid = Button_standard.create_button grid_down grid_up grid_move in
+  let grid_draw = grid_draw grid in
+  Button_standard.set_draw grid grid_draw;
+  grid
 
 
 
 let _ = set_filename_buttons (get_file_location())
 let _ = model.midi_buttons <- create_midi_buttons()
 let _ = model.file_buttons <- create_file_buttons()
-
-let get_adsr_params () =
-  model.adsr_params
-
-let set_adsr_params p =
-  model.adsr_params <- p
-
-let get_filter_params () =
-  model.filter_params
-
-let set_filter_params p =
-  model.filter_params <- p
+let _ = model.synth_button <-
+    Some (create_transition_button SSynthesizer "Synthesize")
+let _ = model.play_button <-
+    Some (create_transition_button SKeyboard "Play")
+let _ = model.synth_grid <- Some (create_synth_grid ())
