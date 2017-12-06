@@ -32,3 +32,6 @@ rm -rf SDL2-2.0.5
 # install tsdl
 opam install tsdl
 opam install tsdl-ttf
+
+# install other dependencies
+opam install ounit yojson

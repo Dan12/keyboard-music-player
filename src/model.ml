@@ -47,7 +47,7 @@ type model = {
   mutable playing_song : bool;
   mutable beats_in_midi: float;
   mutable adsr_params: float*float*float*float;
-  mutable filter_params: Filter.filter_kind*float*float;
+  mutable filter: Filter.filter_t;
 }
 
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
@@ -132,7 +132,7 @@ let model:model =
     playing_song = true;
     beats_in_midi = 0.0;
     adsr_params = (0.0, 0.0, 1.0, 0.0);
-    filter_params = (Filter.FKNone,1000.0, 1.0);
+    filter = Filter.make 44100 Filter.FKNone 1000.0 1.0;
   }
 
 let get_width () =
@@ -324,12 +324,12 @@ let get_adsr_params () =
 let set_adsr_params p =
   model.adsr_params <- p
 
-let get_filter_params () =
-  model.filter_params
+let get_filter () =
+  model.filter
 
 let set_filter_params p =
-  model.filter_params <- p
-
+  let (filter_kind, filter_freq, filter_q) = p in
+  model.filter <- Filter.make 44100 filter_kind filter_freq filter_q
 
 
 let set_filename_buttons dir =
@@ -488,7 +488,6 @@ let create_synth_grid () =
     prev_x := x;
     prev_y := y;
     let slope = 4.301029995664 -. 2.0 in
-    let filter, _, _ = get_filter_params() in
     let x_scaled = 10.0 ** (x *. slope +. 2.0) in (* 100 -- 20000 = 10^2 -- 10^4.3 *)
     let y_scaled = ((1.0 -. y) *. 9.9) +. 0.1 in
     (* set_filter_params (filter, x_scaled, y_scaled) in *)
@@ -498,7 +497,7 @@ let create_synth_grid () =
     print_float y_scaled;
     print_endline "";
 
-    set_filter_params (Filter.FKAll_pass, x_scaled, y_scaled) in
+    set_filter_params (Filter.FKLow_pass, x_scaled, y_scaled) in
 
   let grid_down p =
     is_moving := true;
