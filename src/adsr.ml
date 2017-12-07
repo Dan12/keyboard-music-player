@@ -58,7 +58,7 @@ let process_sample adsr state sample =
     if d <> 0 then
       begin
         (* calculate the gain scalar in decay phase *)
-        let scalar = 1. +. ((0.8 -. 1.) *. (float_of_int state.sample_pos)) /. (float_of_int d) in
+        let scalar = 1. +. ((s -. 1.) *. (float_of_int state.sample_pos)) /. (float_of_int d) in
         (* increment the sample position *)
         state.sample_pos <- state.sample_pos+1;
         (* set to the next state if at that position *)
@@ -81,7 +81,7 @@ let process_sample adsr state sample =
     if r <> 0 then
       begin
         (* calculate the gain scalar in release phase *)
-        let scalar = s -. (float_of_int state.sample_pos) /. (float_of_int r) in
+        let scalar = s -. ((s *. (float_of_int state.sample_pos)) /. (float_of_int r)) in
         (* increment the sample position *)
         state.sample_pos <- state.sample_pos+1;
         (* set to the next state if at that position *)
