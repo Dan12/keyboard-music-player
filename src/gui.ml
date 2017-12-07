@@ -387,9 +387,9 @@ let draw_adsr_sliders r' y gap =
   let line1 = Sdl.Rect.create start y (line_length |> int_of_float) line_h in
   let line2 = Sdl.Rect.create start (y + gap) (line_length |> int_of_float)
       line_h in
-  let line3 = Sdl.Rect.create start (y + (2*gap)) (line_length |> int_of_float)
+  let line3 = Sdl.Rect.create start (y + 2*gap) (line_length |> int_of_float)
       line_h in
-  let line4 = Sdl.Rect.create start  (y+(3*gap)) (line_length |> int_of_float)
+  let line4 = Sdl.Rect.create start (y+3*gap) (line_length |> int_of_float)
       line_h in
   let _ = Sdl.render_fill_rect r' (Some line1) in
   let _ = Sdl.render_fill_rect r' (Some line2) in
@@ -398,20 +398,20 @@ let draw_adsr_sliders r' y gap =
 
   Gui_utils.draw_text r' (start-15) y 20 black "A";
   Gui_utils.draw_text r' (start-15) (y+gap) 20 black "D";
-  Gui_utils.draw_text r' (start-15) (y+(2*gap)) 20 black "S";
-  Gui_utils.draw_text r' (start-15) (y+(3*gap)) 20 black "R";
+  Gui_utils.draw_text r' (start-15) (y+2*gap) 20 black "S";
+  Gui_utils.draw_text r' (start-15) (y+3*gap) 20 black "R";
 
   let (a,d,s,r) = Model.get_adsr_params() in
   let a_pos = int_of_float (a *. line_length) in
   let d_pos = int_of_float (d *. line_length) in
   let s_pos = int_of_float (s *. line_length) in
   let r_pos = int_of_float (r *. line_length) in
-  let rect1 = Sdl.Rect.create (start + a_pos) (y - (size_y/2)) size_x size_y in
-  let rect2 = Sdl.Rect.create (start + d_pos) ((y + gap) - (size_y/2)) size_x
+  let rect1 = Sdl.Rect.create (start + a_pos) (y - size_y/2) size_x size_y in
+  let rect2 = Sdl.Rect.create (start + d_pos) (y + gap - size_y/2) size_x
       size_y in
-  let rect3 = Sdl.Rect.create (start + s_pos) ((y + (2*gap)) - (size_y/2))
+  let rect3 = Sdl.Rect.create (start + s_pos) (y + 2*gap - size_y/2)
       size_x size_y in
-  let rect4 = Sdl.Rect.create (start + r_pos) ((y + (3*gap)) - (size_y/2))
+  let rect4 = Sdl.Rect.create (start + r_pos) (y + 3*gap - size_y/2)
       size_x size_y in
   a_slider := Some rect1;
   d_slider := Some rect2;
@@ -423,10 +423,11 @@ let draw_adsr_sliders r' y gap =
   let _ = Sdl.render_fill_rect r' (Some rect4) in
 
   let tail = Model.get_adsr_pos_max() |> int_of_float in
-  Gui_utils.draw_text r' (tail+45) y 20 black (Printf.sprintf "%.4f" a);
-  Gui_utils.draw_text r' (tail+45) (y+gap) 20 black (Printf.sprintf "%.4f" d);
-  Gui_utils.draw_text r' (tail+45) (y+(2*gap)) 20 black (Printf.sprintf "%.4f" s);
-  Gui_utils.draw_text r' (tail+45) (y+(3*gap)) 20 black (Printf.sprintf "%.4f" r);
+  let float_to_string = Printf.sprintf "%.4f" in
+  Gui_utils.draw_text r' (tail+45) y 20 black (float_to_string a);
+  Gui_utils.draw_text r' (tail+45) (y+gap) 20 black (float_to_string d);
+  Gui_utils.draw_text r' (tail+45) (y+2*gap) 20 black (float_to_string s);
+  Gui_utils.draw_text r' (tail+45) (y+3*gap) 20 black (float_to_string r);
   ()
 
 (* draw the main window layout, with a keyboard mapped to a song, sound visuals,
