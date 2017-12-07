@@ -15,6 +15,10 @@ We have supplied 2 install scripts in the install folder. The `vm_install.sh` sc
 
 To run the project, `cd` to the `src` folder and run `make main`. It should start up the GUI.
 
+If the window is too big, you can set the window width and height from the command line.
+
+Running `./main.byte` will set the window size to be 1280 by 720. Running `./main.byte <width>` will calculate a reasonable height from the width. Running `./main.byte <width> <height>` will set the window width to be the given width and height.
+
 ## How to Use
 
 The initial mode of the system is Keyboard mode, which lets you play the default song file by pressing sequences of keys on your keyboard. 
