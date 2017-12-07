@@ -63,6 +63,7 @@ type model = {
   mutable current_waveform: waveform;
 }
 
+
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
 let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
 
@@ -98,7 +99,7 @@ let get_filenames dir =
 
 let model:model =
   let window_w = 1280 in
-  let bpm_margin = 80.0 in
+  let bpm_margin = 21.0 in
   let scrub_margin = 160.0 in
   let eq_song = Song.parse_song_file "resources/eq_data/eq_song.json" in
   let keyboard_layout = Keyboard_layout.parse_layout
@@ -136,7 +137,8 @@ let model:model =
     scrub_pos_min = scrub_margin;
     scrub_pos_max = (float_of_int window_w) -. scrub_margin;
     bpm_pos_min = bpm_margin;
-    bpm_pos_max = (float_of_int (window_w / 3)) -. bpm_margin;
+    bpm_pos_max = ((float_of_int (window_w)) *. 14.0 /. 50.0) -.
+                  (bpm_margin *. 9.0 /. 5.0);
     adsr_pos_min = float_of_int window_w *. 7.0 /. 15.0;
     adsr_pos_max = float_of_int window_w *. 11.0 /. 15.0;
     a_sliding = false;
