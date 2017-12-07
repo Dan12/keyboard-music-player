@@ -1,3 +1,4 @@
+(* manages the playing of a midi file *)
 
 (* [set_midi filename] sets a new midi file to start playing. *)
 val set_midi : string -> unit

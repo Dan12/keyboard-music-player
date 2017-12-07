@@ -48,14 +48,14 @@ val get_midi_buttons : unit -> Button.button list
 (* [get_file_buttons] returns the file buttons. *)
 val get_file_buttons : unit -> Button.button list
 
-(* [get_synth_button] returns the to synth button. *)
-val get_synth_button : unit -> Button.button
-
 (* [get_filter_buttons] returns the synth filter buttons. *)
 val get_filter_buttons : unit -> Button.button list
 
 (* [get_wave_buttons] returns the waveform buttons. *)
 val get_wave_buttons : unit -> Button.button list
+
+(* [get_synth_button] returns the to synth button. *)
+val get_synth_button : unit -> Button.button
 
 (* [get_synth_grid] returns the pitch grid. *)
 val get_synth_grid : unit -> Button.button
@@ -68,8 +68,6 @@ val get_current_waveform : unit -> waveform
 
 (* [get_file_location] returns the path to all the song/midi files. *)
 val get_file_location : unit -> string
-
-val set_selected_filename : string -> unit
 
 (* [set_filename_buttons dir] stores all the song/midi files. *)
 val set_filename_buttons : string -> unit
