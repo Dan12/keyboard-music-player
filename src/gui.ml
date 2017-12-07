@@ -5,29 +5,48 @@ open Keyboard_layout
 open Keyboard
 open Model
 
-let scrub:(Sdl.rect option ref) = ref None
+type slider = Sdl.rect option ref
 
-let bpm:(Sdl.rect option ref) = ref None
+let scrub:slider = ref None
+let bpm:slider = ref None
+let a_slider:slider = ref None
+let d_slider:slider = ref None
+let s_slider:slider = ref None
+let r_slider:slider = ref None
 
+(* amount of padded from the edge of the window to the keyboard *)
 let keyboard_padding_w = 20
 let keyboard_padding_h = 30
+
+(* percentage of space we put between keys based on keysize *)
 let percent_key_padding = 10
 
+(* for the soundpack arrows, the width is 2* the height *)
 let arrow_width_height_ratio = 2
 
+(* number of bars in the sound visualizer *)
 let num_graphic_bars = 48
+
+(* amount of padded from the edge of the window to the visual bounds *)
 let graphic_padding_w = 25
 let graphic_padding_h = 20
+
+(* percentage of space we put between columns based on width *)
 let percent_graphic_padding = 16
+
+(* capped amplitude for the graphic visualizer *)
 let max_amplitude = 60
+(* we only look at the lower [max_frequency] frequencies to visualize *)
 let max_frequency = 63 (* >= num_graphic_bars/2 - 1*)
 
+(* here we define standard colors that we use throughout the gui *)
+let white = Sdl.Color.create 255 255 255 255
 let black = Sdl.Color.create 0 0 0 255
 let red = Sdl.Color.create 204 24 30 255
 
-let background_color = Sdl.Color.create 255 255 255 255
-let keyboard_text_color = Sdl.Color.create 0 0 0 255
-let keyboard_border_color = Sdl.Color.create 0 0 0 255
+let background_color = white
+let keyboard_text_color = black
+let keyboard_border_color = black
 
 let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
 let key_background = Sdl.Color.create 255 255 255 192
@@ -38,7 +57,8 @@ let max_graphic_color = Sdl.Color.create 255 0 0 255
 
 
 (*
- * Assumes the key list has length of [row] * [col]
+ * Draws a keyboard to the gui starting a (x, y) with a width of w. The height
+ * is calculated based on the width.
  *)
 let draw_keyboard renderer keyboard_layout keyboard x y w rows cols =
   let offset = w / cols in
@@ -56,35 +76,45 @@ let draw_keyboard renderer keyboard_layout keyboard x y w rows cols =
   done;
   offset * rows
 
-  (*
-   * Assumes the key list has length of [row] * [col]
-   *)
-let draw_arrows r keyboard x y w =
+(*
+ * Draws the sound pack manager. There are a maximum of four sound packs.
+ * Therefore, we use all arrow keys. The dimensions are the same as in
+ * [draw_keyboard].
+ *)
+let draw_arrows r x y w =
   let x_offset = w / 3 in
   let y_offset = x_offset / arrow_width_height_ratio in
   let w_key = (100 - percent_key_padding) * x_offset / 100 in
   let h_key = (100 - percent_key_padding) * y_offset / 100 in
 
-  let left_state = if Model.get_song () |> Song.get_sound_pack = 0 then KSDown else KSUp in
-  let up_state = if Model.get_song () |> Song.get_sound_pack = 1 then KSDown else KSUp in
-  let down_state = if Model.get_song () |> Song.get_sound_pack = 2 then KSDown else KSUp in
-  let right_state = if Model.get_song () |> Song.get_sound_pack = 3 then KSDown else KSUp in
+  let sound_pack = Model.get_song () |> Song.get_sound_pack in
+  let get_state i = if sound_pack = i then KSDown else KSUp in
+  let left_state = get_state 0 in
+  let up_state = get_state 1 in
+  let down_state = get_state 2 in
+  let right_state = get_state 3 in
 
   (* draw left *)
-  Gui_utils.draw_key r x (y + y_offset) w_key h_key keyboard_pressed_color key_background keyboard_border_color left_state;
-  Gui_utils.draw_left r x (y + y_offset) w_key h_key;
+  let left_y = y + y_offset in
+  Gui_utils.draw_key r x left_y w_key h_key keyboard_pressed_color key_background keyboard_border_color left_state;
+  Gui_utils.draw_left r x left_y w_key h_key;
 
   (* draw down *)
-  Gui_utils.draw_key r (x + x_offset) (y + y_offset) w_key h_key keyboard_pressed_color key_background keyboard_border_color down_state;
-  Gui_utils.draw_down r (x + x_offset) (y + y_offset) w_key h_key;
+  let down_x = x + x_offset in
+  let down_y = left_y in
+  Gui_utils.draw_key r down_x down_y w_key h_key keyboard_pressed_color key_background keyboard_border_color down_state;
+  Gui_utils.draw_down r down_x down_y w_key h_key;
 
   (* draw up *)
-  Gui_utils.draw_key r (x + x_offset) y w_key h_key keyboard_pressed_color key_background keyboard_border_color up_state;
-  Gui_utils.draw_up r (x + x_offset) y w_key h_key;
+  let up_x = down_x in
+  Gui_utils.draw_key r up_x y w_key h_key keyboard_pressed_color key_background keyboard_border_color up_state;
+  Gui_utils.draw_up r up_x y w_key h_key;
 
   (* draw right *)
-  Gui_utils.draw_key r (x + 2 * x_offset) (y + y_offset) w_key h_key keyboard_pressed_color key_background keyboard_border_color right_state;
-  Gui_utils.draw_right r (x + 2 * x_offset) (y + y_offset) w_key h_key;
+  let right_x = x + 2 * x_offset in
+  let right_y = down_y in
+  Gui_utils.draw_key r right_x right_y w_key h_key keyboard_pressed_color key_background keyboard_border_color right_state;
+  Gui_utils.draw_right r right_x right_y w_key h_key;
   2 * y_offset
 
 let draw_buttons r x y w =
@@ -97,6 +127,47 @@ let draw_buttons r x y w =
     Button_standard.draw b r in
   List.iteri iter buttons;
   size
+
+let draw_play_button r x y w =
+  let b = Model.get_play_button() in
+  let h = w / 5 in
+  Button_standard.set_area b x y w h;
+  Button_standard.draw b r;
+  h
+
+let draw_synth_button r x y w =
+  let b = Model.get_synth_button() in
+  let h = w / 5 in
+  Button_standard.set_area b x y w h;
+  Button_standard.draw b r;
+  h
+
+let draw_filter_buttons r x y w h =
+  let buttons = Model.get_filter_buttons() in
+  let offset = h / (List.length buttons) in
+  let button_h = (100 - percent_key_padding) * offset / 100 in
+  let iter i b =
+    let button_y = y + i * offset in
+    Button_standard.set_area b x button_y w button_h;
+    Button_standard.draw b r in
+  List.iteri iter buttons
+
+let draw_wave_buttons r x y w h =
+  let buttons = Model.get_wave_buttons() in
+  let offset = h / (List.length buttons) in
+  let button_h = (100 - percent_key_padding) * offset / 100 in
+  let iter i b =
+    let button_y = y + i * offset in
+    Button_standard.set_area b x button_y w button_h;
+    Button_standard.draw b r in
+  List.iteri iter buttons
+
+let draw_grid r x y w =
+  let b = Model.get_synth_grid() in
+  let h = w in
+  Button_standard.set_area b x y w h;
+  Button_standard.draw b r;
+  h
 
 let draw_bpm r y =
   let size = 20 in
@@ -257,7 +328,7 @@ let get_amplitudes size =
   in *)
   Array.init size init_i
 
-let draw_output r =
+let draw_keyboard_visual r =
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
 
@@ -281,25 +352,7 @@ let draw_output r =
                    (100 * keyboard_cols - percent_key_padding) in
   let keyboard_h = draw_keyboard r keyboard_layout keyboard
       keyboard_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
-
-  let arrows_w = keyboard_w / 6 in
-  let arrows_x = keyboard_x + keyboard_w - arrows_w - 5 in
-  let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
-  let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
-
-  (* draw midi buttons below keyboard to left of screen *)
-  let buttons_w = arrows_w * 2 in
-  let buttons_x = keyboard_x in
-  let buttons_y = arrows_y in
-  let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
-
-  let bpm_y = arrows_y + arrows_h + 3 * keyboard_padding_h / 2 in
-  let _ = draw_bpm r bpm_y in
-
-  (* draw scrub below midi buttons *)
-  let scrub_y = buttons_y + buttons_h + 2 * keyboard_padding_h in
-  let _ = draw_scrub r scrub_y in
-  ()
+  (keyboard_x, keyboard_y, keyboard_w, keyboard_h)
 
 let draw_file_buttons r x y w =
   let offset = w / 2 in
@@ -330,6 +383,86 @@ let draw_filename_buttons r x y w =
   List.iteri iter buttons;
   button_h
 
+let draw_adsr_sliders r' y gap =
+  let size_x = 10 in
+  let size_y = 20 in
+
+  let start = Model.get_adsr_pos_min() |> int_of_float in
+  let line_length = Model.get_adsr_pos_max() -. Model.get_adsr_pos_min() in
+  let line_h = 3 in
+  let line1 = Sdl.Rect.create start y (line_length |> int_of_float) line_h in
+  let line2 = Sdl.Rect.create start (y + gap) (line_length |> int_of_float)
+      line_h in
+  let line3 = Sdl.Rect.create start (y + (2*gap)) (line_length |> int_of_float)
+      line_h in
+  let line4 = Sdl.Rect.create start  (y+(3*gap)) (line_length |> int_of_float)
+      line_h in
+  let _ = Sdl.render_fill_rect r' (Some line1) in
+  let _ = Sdl.render_fill_rect r' (Some line2) in
+  let _ = Sdl.render_fill_rect r' (Some line3) in
+  let _ = Sdl.render_fill_rect r' (Some line4) in
+
+  Gui_utils.draw_text r' (start-15) y 20 black "A";
+  Gui_utils.draw_text r' (start-15) (y+gap) 20 black "D";
+  Gui_utils.draw_text r' (start-15) (y+(2*gap)) 20 black "S";
+  Gui_utils.draw_text r' (start-15) (y+(3*gap)) 20 black "R";
+
+  let (a,d,s,r) = Model.get_adsr_params() in
+  let a_pos = int_of_float (a *. line_length) in
+  let d_pos = int_of_float (d *. line_length) in
+  let s_pos = int_of_float (s *. line_length) in
+  let r_pos = int_of_float (r *. line_length) in
+  let rect1 = Sdl.Rect.create (start + a_pos) (y - (size_y/2)) size_x size_y in
+  let rect2 = Sdl.Rect.create (start + d_pos) ((y + gap) - (size_y/2)) size_x
+      size_y in
+  let rect3 = Sdl.Rect.create (start + s_pos) ((y + (2*gap)) - (size_y/2))
+      size_x size_y in
+  let rect4 = Sdl.Rect.create (start + r_pos) ((y + (3*gap)) - (size_y/2))
+      size_x size_y in
+  a_slider := Some rect1;
+  d_slider := Some rect2;
+  s_slider := Some rect3;
+  r_slider := Some rect4;
+  let _ = Sdl.render_fill_rect r' (Some rect1) in
+  let _ = Sdl.render_fill_rect r' (Some rect2) in
+  let _ = Sdl.render_fill_rect r' (Some rect3) in
+  let _ = Sdl.render_fill_rect r' (Some rect4) in
+
+  let tail = Model.get_adsr_pos_max() |> int_of_float in
+  Gui_utils.draw_text r' (tail+45) y 20 black (Printf.sprintf "%.4f" a);
+  Gui_utils.draw_text r' (tail+45) (y+gap) 20 black (Printf.sprintf "%.4f" d);
+  Gui_utils.draw_text r' (tail+45) (y+(2*gap)) 20 black (Printf.sprintf "%.4f" s);
+  Gui_utils.draw_text r' (tail+45) (y+(3*gap)) 20 black (Printf.sprintf "%.4f" r);
+  ()
+
+let draw_song_player r =
+  let keyboard_coords = draw_keyboard_visual r in
+  let keyboard_x, keyboard_y, keyboard_w, keyboard_h = keyboard_coords in
+
+  let arrows_w = keyboard_w / 6 in
+  let arrows_x = keyboard_x + keyboard_w - arrows_w - 5 in
+  let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
+  let arrows_h = draw_arrows r arrows_x arrows_y arrows_w in
+
+
+  let buttons_w = arrows_w * 2 in
+  let buttons_x = keyboard_x in
+  let buttons_y = arrows_y in
+  let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
+
+
+  let synth_button_x = arrows_x in
+  let synth_button_y = arrows_y + 5 * arrows_h / 4 in
+  let synth_button_w = arrows_w -  arrows_w / 21 in
+  let _ = draw_synth_button r synth_button_x synth_button_y synth_button_w in
+
+  let bpm_y = arrows_y + arrows_h + 3 * keyboard_padding_h / 2 in
+  let _ = draw_bpm r bpm_y in
+
+  let scrub_y = buttons_y + buttons_h + 2 * keyboard_padding_h in
+  let _ = draw_scrub r scrub_y in
+  ()
+
 let draw_filechooser r =
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
@@ -345,20 +478,59 @@ let draw_filechooser r =
   let _ = draw_file_buttons r buttons_x buttons_y buttons_w in
   ()
 
+let draw_synthesizer r =
+  let keyboard_coords = draw_keyboard_visual r in
+  let keyboard_x, keyboard_y, keyboard_w, keyboard_h = keyboard_coords in
+
+  let grid_x = keyboard_x in
+  let grid_y = 21 * keyboard_h / 20 + keyboard_y in
+  let grid_w = keyboard_w / 6 - 10 in
+  let grid_h = draw_grid r grid_x grid_y grid_w in
+
+  let filters_x = grid_x + 11 * grid_w / 10 in
+  let filters_y = grid_y + 4 in
+  let filters_w = 3 * grid_w / 4 in
+  let filters_h = grid_h in
+  draw_filter_buttons r filters_x filters_y filters_w filters_h;
+
+  let waves_x = filters_x + 11 * filters_w / 10 in
+  let waves_y = filters_y in
+  let waves_w = filters_w in
+  let waves_h = filters_h in
+  draw_wave_buttons r waves_x waves_y waves_w waves_h;
+
+  let synth_button_w = grid_w in
+  let synth_button_x = keyboard_x + keyboard_w - synth_button_w - 15 in
+  let synth_button_y = grid_y in
+  let _ = draw_play_button r synth_button_x synth_button_y synth_button_w in
+
+  let adsr_sliders_h = grid_y + 30 in
+  let gap = (Model.get_height() - grid_y) / 6 in
+  let _ = draw_adsr_sliders r adsr_sliders_h gap in
+  ()
+
 
 let draw r =
   clear r;
   begin
     match Model.get_state () with
-    | SKeyboard | SSynthesizer -> draw_output r
+    | SKeyboard -> draw_song_player r
     | SFileChooser -> draw_filechooser r
+    | SSynthesizer -> draw_synthesizer r
   end;
     present r
 
 (*is [s] is "scrub" then for midi slider, if "bpm" then for bpm slider*)
 let scrub_pressed (x,y) s =
-  let matched = if s = "scrub" then
-      !scrub else !bpm in
+  let matched =
+    match s with
+    | "scrub" -> !scrub
+    | "bpm" -> !bpm
+    | "a_slider" -> !a_slider
+    | "d_slider" -> !d_slider
+    | "s_slider" -> !s_slider
+    | "r_slider" -> !r_slider
+    | _ -> None in
   match matched with
   | None -> false
   | Some rect ->

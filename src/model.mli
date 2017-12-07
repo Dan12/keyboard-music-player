@@ -6,6 +6,9 @@ open Song
 
 type state = SKeyboard | SFileChooser | SSynthesizer
 
+(* The waveform of the synthesized sound *)
+type waveform = Sine | Triangle | Saw | Square
+
 (* [get_width] returns the current window width. *)
 val get_width : unit -> int
 
@@ -41,6 +44,24 @@ val get_midi_buttons : unit -> Button_standard.button list
 
 (* [get_file_buttons] returns the file buttons. *)
 val get_file_buttons : unit -> Button_standard.button list
+
+(* [get_synth_button] returns the to synth button. *)
+val get_synth_button : unit -> Button_standard.button
+
+(* [get_filter_buttons] returns the synth filter buttons. *)
+val get_filter_buttons : unit -> Button_standard.button list
+
+(* [get_wave_buttons] returns the waveform buttons. *)
+val get_wave_buttons : unit -> Button_standard.button list
+
+(* [get_synth_grid] returns the pitch grid. *)
+val get_synth_grid : unit -> Button_standard.button
+
+(* [get_play_button] returns the to play button. *)
+val get_play_button : unit -> Button_standard.button
+
+(* [get_current_waveform] returns the current sythn waveform. *)
+val get_current_waveform : unit -> waveform
 
 (* [get_file_location] returns the path to all the song/midi files. *)
 val get_file_location : unit -> string
@@ -136,6 +157,26 @@ val get_buffer : unit -> Complex.t array
 val get_adsr_params : unit -> float*float*float*float
 
 val set_adsr_params : float*float*float*float -> unit
+
+val get_adsr_pos_min : unit -> float
+
+val get_adsr_pos_max : unit -> float
+
+val set_a_sliding : bool -> unit
+
+val get_a_sliding : unit -> bool
+
+val set_d_sliding : bool -> unit
+
+val get_d_sliding : unit -> bool
+
+val set_s_sliding : bool -> unit
+
+val get_s_sliding : unit -> bool
+
+val set_r_sliding : bool -> unit
+
+val get_r_sliding : unit -> bool
 
 val get_filter : unit -> Filter.filter_t
 

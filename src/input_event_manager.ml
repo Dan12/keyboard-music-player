@@ -23,6 +23,7 @@ let handle_keyboard_output output =
       let song = Model.get_song () in
       Song.set_sound_pack i song
     | Keyboard_layout.KOSpace ->
+      if Model.get_state() = SKeyboard then
       if Model.midi_is_playing() then Model.pause_midi()
       else Model.start_midi()
     | _ -> ()
@@ -59,25 +60,85 @@ let handle_mouse_up x y t =
       Model.set_bpm_scrubbing false;
       clear_keyboard();
     end;
+  
+  Model.set_a_sliding false;
+  Model.set_d_sliding false;
+  Model.set_s_sliding false;
+  Model.set_r_sliding false;
+  
+  let iter = fun _ b -> Button_standard.up_press b (x, y) in
   match Model.get_state () with
   | SKeyboard ->
-    (* deselect all midi buttons *)
-    let iter = fun _ b -> Button_standard.up_press b (x, y) in
-    List.iteri iter (Model.get_midi_buttons())
+    List.iteri iter (Model.get_midi_buttons());
+    iter () (Model.get_synth_button())
   | SFileChooser ->
-    let iter = fun i b -> Button_standard.up_press b (x, y) in
     List.iteri iter (Model.get_file_buttons());
     List.iteri iter (Model.get_filename_buttons())
-  | SSynthesizer -> ()
+  | SSynthesizer ->
+    iter () (Model.get_play_button());
+    iter () (Model.get_synth_grid());
+    List.iteri iter (Model.get_filter_buttons());
+    List.iteri iter (Model.get_wave_buttons())
+
 
 let handle_mouse_down x y =
+  let iter = fun _ b -> Button_standard.down_press b (x, y) in
   match Model.get_state() with
   | SKeyboard ->
     (* begin changing any sliders if those were clicked *)
     Model.set_scrubbing (Gui.scrub_pressed (x, y) "scrub");
-    Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) "bpm")
+    Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) "bpm");
   | SFileChooser -> ()
-  | SSynthesizer -> ()
+  | SSynthesizer ->
+    Model.set_a_sliding (Gui.scrub_pressed (x,y) "a_slider");
+    Model.set_d_sliding (Gui.scrub_pressed (x,y) "d_slider");
+    Model.set_s_sliding (Gui.scrub_pressed (x,y) "s_slider");
+    Model.set_r_sliding (Gui.scrub_pressed (x,y) "r_slider");
+    iter () (Model.get_synth_grid())
+
+let handle_scrubbing x =
+  let set_scrub mini maxi =
+    let curr = float_of_int x in
+    if curr > maxi then maxi
+    else if curr < mini then mini
+    else curr in
+  if Model.is_scrubbing() then
+    begin
+      let scrub_x = set_scrub (Model.get_scrub_pos_min())
+          (Model.get_scrub_pos_max()) in
+      Model.set_scrub_pos scrub_x
+    end;
+  if Model.is_bpm_scrubbing() then
+    begin
+      let scrub_x = set_scrub (Model.get_bpm_pos_min())
+          (Model.get_bpm_pos_max()) in
+      Model.set_bpm_pos scrub_x
+    end;
+  let adsr_length = Model.get_adsr_pos_max() -. Model.get_adsr_pos_min() in
+  let (a,d,s,r) = Model.get_adsr_params() in
+  let scrub_x = set_scrub (Model.get_adsr_pos_min())
+      (Model.get_adsr_pos_max()) in
+  let new_val = (scrub_x -. Model.get_adsr_pos_min()) /. adsr_length in
+  if Model.get_a_sliding() then
+      Model.set_adsr_params (new_val,d,s,r);
+  if Model.get_d_sliding() then
+    Model.set_adsr_params (a,new_val,s,r);
+  if Model.get_s_sliding() then
+    Model.set_adsr_params (a,d,new_val,r);
+  if Model.get_r_sliding() then
+    Model.set_adsr_params (a,d,s,new_val);
+  ()
+
+let handle_mouse_move x y =
+  let iter = fun _ b -> Button_standard.on_move b (x, y) in
+  match Model.get_state() with
+  | SKeyboard ->
+    handle_scrubbing x
+  | SFileChooser -> ()
+  | SSynthesizer ->
+    handle_scrubbing x;
+    iter () (Model.get_synth_grid())
+
 
 let event_callback event =
   match enum (get event typ) with
@@ -100,30 +161,9 @@ let event_callback event =
     handle_mouse_up mouse_x mouse_y click;
     recent_click := click
   | `Mouse_motion ->
-    let mouse_x = get event mouse_button_x |> float_of_int in
-    (* if the mouse moves while scrub/bpm slider is moving, update them. *)
-    if Model.is_scrubbing() then
-    begin
-      let scrub_x = (
-        if mouse_x > Model.get_scrub_pos_max() then
-          Model.get_scrub_pos_max()
-        else if mouse_x < Model.get_scrub_pos_min() then
-          Model.get_scrub_pos_min()
-        else
-          mouse_x) in
-      Model.set_scrub_pos scrub_x
-    end;
-    if Model.is_bpm_scrubbing() then
-    begin
-      let scrub_x = (
-        if mouse_x > Model.get_bpm_pos_max() then
-          Model.get_bpm_pos_max()
-        else if mouse_x < Model.get_bpm_pos_min() then
-          Model.get_bpm_pos_min()
-        else
-          mouse_x) in
-      Model.set_bpm_pos scrub_x
-    end
+    let mouse_x = get event mouse_button_x in
+    let mouse_y = get event mouse_button_y in
+    handle_mouse_move mouse_x mouse_y
   | `Mouse_wheel ->
     (* let scroll_dx = get event mouse_wheel_x in
     let scroll_dy = get event mouse_wheel_y in *)

@@ -10,6 +10,9 @@ open Song
  *)
 type state = SKeyboard | SFileChooser | SSynthesizer
 
+(* The waveform of the synthesized sound *)
+type waveform = Sine | Triangle | Saw | Square
+
 (* The fft instance to use when computing fft on
  * the current audio buffer
  *)
@@ -27,6 +30,11 @@ type model = {
   mutable file_buttons: Button_standard.button list;
   mutable filename_buttons : Button_standard.button list;
   mutable current_filename_button: int;
+  mutable synth_button: Button_standard.button option;
+  mutable synth_grid: Button_standard.button option;
+  mutable synth_buttons : Button_standard.button list;
+  mutable wave_buttons : Button_standard.button list;
+  mutable play_button: Button_standard.button option;
   mutable selected_filename: string option;
   mutable file_location: string;
   mutable midi_filename: string;
@@ -40,11 +48,19 @@ type model = {
   scrub_pos_max: float;
   bpm_pos_min: float;
   bpm_pos_max: float;
+  adsr_pos_min: float;
+  adsr_pos_max: float;
+  mutable a_sliding: bool;
+  mutable d_sliding: bool;
+  mutable s_sliding: bool;
+  mutable r_sliding: bool;
   mutable buffer: Complex.t array;
   mutable playing_song : bool;
   mutable beats_in_midi: float;
   mutable adsr_params: float*float*float*float;
   mutable filter: Filter.filter_t;
+  mutable current_filter: Filter.filter_kind*float*float;
+  mutable current_waveform: waveform;
 }
 
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
@@ -103,13 +119,18 @@ let model:model =
     keyboard = keyboard;
     keyboard_layout = keyboard_layout;
     song = eq_song;
-    state = SSynthesizer;
+    state = SKeyboard;
     midi_buttons = [];
     current_midi_button = 3;
     file_buttons = [];
     selected_filename = None;
     filename_buttons = [];
     current_filename_button = -1;
+    synth_button = None;
+    synth_grid = None;
+    synth_buttons = [];
+    wave_buttons = [];
+    play_button = None;
     file_location = "resources/";
     midi_filename = "resources/eq_data/eq_0_midi.json";
     should_load_midi = true;
@@ -122,11 +143,19 @@ let model:model =
     scrub_pos_max = (float_of_int window_w) -. scrub_margin;
     bpm_pos_min = bpm_margin;
     bpm_pos_max = (float_of_int (window_w / 3)) -. bpm_margin;
+    adsr_pos_min = float_of_int window_w *. 7.0 /. 15.0;
+    adsr_pos_max = float_of_int window_w *. 11.0 /. 15.0;
+    a_sliding = false;
+    d_sliding = false;
+    s_sliding = false;
+    r_sliding = false;
     buffer = buffer;
     playing_song = true;
     beats_in_midi = 0.0;
     adsr_params = (0.0, 0.0, 1.0, 0.0);
-    filter = Filter.make 44100 Filter.FKNone 1000.0 1.0;
+    filter = Filter.make 44100 Filter.FKNone 100.0 1.0;
+    current_filter = Filter.FKNone, 100.0, 1.0;
+    current_waveform = Sine;
   }
 
 let get_width () =
@@ -162,6 +191,28 @@ let get_midi_buttons () =
 let get_file_buttons () =
   model.file_buttons
 
+let get_filter_buttons () =
+  model.synth_buttons
+
+let get_wave_buttons () =
+  model.wave_buttons
+
+let get_synth_button () =
+  match model.synth_button with
+  | Some b -> b
+  | None -> failwith "synth_button not made"
+
+let get_synth_grid () =
+  match model.synth_grid with
+  | Some b -> b
+  | None -> failwith "synth_grid not made"
+
+let get_play_button () =
+  match model.play_button with
+  | Some b -> b
+  | None -> failwith "play_button not made"
+
+
 let get_file_location () =
   model.file_location
 
@@ -178,10 +229,12 @@ let start_midi () =
   if model.is_playing = false then
     Metronome.unpause();
     model.is_playing <- true;
-  model.should_load_midi <- false
+  model.should_load_midi <- false;
+ model.current_midi_button <- 1
 
 let pause_midi () =
-  model.is_playing <- false
+  model.is_playing <- false;
+  model.current_midi_button <- 2
 
 let stop_midi () =
   (* reset, the scrub, the bpm slider, etc. *)
@@ -260,6 +313,9 @@ let get_scrub_pos_max () =
 let get_beats () =
   model.beats_in_midi
 
+let get_current_waveform () =
+  model.current_waveform
+
 let set_beats beats =
   model.beats_in_midi <- beats
 
@@ -297,6 +353,49 @@ let commit_selected_filename () =
       set_midi_filename ((get_file_location())^folder^"_data/"^folder^"_0_midi.json")
   | None -> ()
 
+let get_adsr_params () =
+  model.adsr_params
+
+let set_adsr_params p =
+  model.adsr_params <- p
+
+let get_adsr_pos_min () =
+  model.adsr_pos_min
+
+let get_adsr_pos_max () =
+  model.adsr_pos_max
+
+let set_a_sliding b =
+  model.a_sliding <- b
+
+let get_a_sliding () =
+  model.a_sliding
+
+let set_d_sliding b =
+  model.d_sliding <- b
+
+let get_d_sliding () =
+  model.d_sliding
+
+let set_s_sliding b =
+  model.s_sliding <- b
+
+let get_s_sliding () =
+  model.s_sliding
+
+let set_r_sliding b =
+  model.r_sliding <- b
+
+let get_r_sliding () =
+  model.r_sliding
+
+let get_filter () =
+  model.filter
+
+let set_filter_params p =
+  model.current_filter <- p;
+  let (filter_kind, filter_freq, filter_q) = p in
+  model.filter <- Filter.make 44100 filter_kind filter_freq filter_q
 
 
 let set_filename_buttons dir =
@@ -329,7 +428,7 @@ let set_filename_buttons dir =
       Gui_utils.draw_text r (x + w / 2) (y + h / 2) font_size keyboard_text_color str in
 
 
-    let button = Button_standard.create_button ignore button_up in
+    let button = Button_standard.create_button ignore button_up ignore in
     Button_standard.set_draw button (button_draw button);
     button in
 
@@ -354,7 +453,7 @@ let create_midi_buttons () =
     let font_size = 3 * w / 8 in
     Gui_utils.draw_text r (x + w/2) (y + h/2) font_size keyboard_text_color "Load" in
 
-  let load = Button_standard.create_button ignore load_up in
+  let load = Button_standard.create_button ignore load_up ignore in
   let load_draw = button_draw load ((=) 0) load_drawer in
   Button_standard.set_draw load load_draw;
 
@@ -363,7 +462,7 @@ let create_midi_buttons () =
     model.current_midi_button <- 1;
     start_midi() in
 
-  let play = Button_standard.create_button ignore play_up in
+  let play = Button_standard.create_button ignore play_up ignore in
   let play_draw = button_draw play ((=) 1) Gui_utils.draw_play in
   Button_standard.set_draw play play_draw;
 
@@ -372,7 +471,7 @@ let create_midi_buttons () =
     model.current_midi_button <- 2;
     pause_midi() in
 
-  let pause = Button_standard.create_button ignore pause_up in
+  let pause = Button_standard.create_button ignore pause_up ignore in
   let pause_draw = button_draw pause ((=) 2) Gui_utils.draw_pause in
   Button_standard.set_draw pause pause_draw;
 
@@ -382,7 +481,7 @@ let create_midi_buttons () =
     stop_midi();
     clear_keyboard() in
 
-  let stop = Button_standard.create_button ignore stop_up in
+  let stop = Button_standard.create_button ignore stop_up ignore in
   let stop_draw = button_draw stop ((=) 3) Gui_utils.draw_stop in
   Button_standard.set_draw stop stop_draw;
   [load; play; pause; stop]
@@ -401,7 +500,7 @@ let create_file_buttons () =
     remove_selected_filename();
     set_state SKeyboard in
 
-  let cancel = Button_standard.create_button ignore cancel_up in
+  let cancel = Button_standard.create_button ignore cancel_up ignore in
   let cancel_draw = button_draw cancel "Cancel" in
   Button_standard.set_draw cancel cancel_draw;
 
@@ -411,26 +510,156 @@ let create_file_buttons () =
     remove_selected_filename();
     set_state SKeyboard  in
 
-  let select = Button_standard.create_button ignore select_up in
+  let select = Button_standard.create_button ignore select_up ignore in
   let select_draw = button_draw select "Select" in
   Button_standard.set_draw select select_draw;
   [cancel; select]
+
+let create_transition_button state text =
+  let transition_draw b = fun r ->
+    let (x, y, w, h) = Button_standard.get_area b in
+
+    Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color KSUp;
+
+    let font_size = w / 6 in
+    Gui_utils.draw_text r (x + w/2) (y + h/2) font_size keyboard_text_color text in
+
+
+  let transition_up _ =
+    set_state state in
+
+  let transition = Button_standard.create_button ignore transition_up ignore in
+  let transition_draw = transition_draw transition in
+  Button_standard.set_draw transition transition_draw;
+  transition
+
+let create_synth_grid () =
+  let is_moving = ref false in
+  let prev_x = ref 0.0 in
+  let prev_y = ref 0.0 in
+
+  let grid_draw b = fun r ->
+    let (x, y, w, h) = Button_standard.get_area b in
+    Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color KSUp;
+
+    let pressed_x = x + int_of_float ((float_of_int w) *. !prev_x) in
+    let pressed_y = y + int_of_float ((float_of_int h) *. !prev_y) in
+
+    let _ = Tsdl.Sdl.render_draw_line r (pressed_x - 5) pressed_y (pressed_x + 5) pressed_y in
+    let _ = Tsdl.Sdl.render_draw_line r pressed_x (pressed_y - 5) pressed_x (pressed_y + 5) in
+    () in
+
+
+  let set_params (x, y) =
+    prev_x := x;
+    prev_y := y;
+    let slope = 4.301029995664 -. 2.0 in
+    (* 100 -- 20000 = 10^2 -- 10^4.301303 *)
+    let x_scaled = 10.0 ** (x *. slope +. 2.0) in
+    let y_scaled = ((1.0 -. y) *. 9.9) +. 0.1 in
+
+    let filter, _, _ = model.current_filter in
+    set_filter_params (filter, x_scaled, y_scaled) in
+
+  let grid_down p =
+    is_moving := true;
+    set_params p in
+
+  let grid_up p =
+    if !is_moving then set_params p;
+    is_moving := false in
+
+  let grid_move p =
+    if !is_moving then set_params p in
+
+  let grid = Button_standard.create_button grid_down grid_up grid_move in
+  let grid_draw = grid_draw grid in
+  Button_standard.set_draw grid grid_draw;
+  grid
+
+let create_synth_buttons () =
+  let count = ref 1 in
+  let pressed = ref 5 in
+
+  let button_draw b text =
+    let button_id = !count in
+    fun r ->
+      let (x, y, w, h) = Button_standard.get_area b in
+
+      let state = if !pressed = button_id then KSDown else KSUp in
+      Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
+
+      let font_size = w / 7 in
+      Gui_utils.draw_text r (x + w/2) (y + h/2) font_size keyboard_text_color text in
+
+  let on_up filter =
+    let button_id = !count in
+    fun _ ->
+      pressed := button_id;
+      let _, x, y = model.current_filter in
+      set_filter_params (filter, x, y) in
+
+
+  let make_button filter text =
+    let button_up = on_up filter in
+    let button = Button_standard.create_button ignore button_up ignore in
+    let my_button_draw = button_draw button text in
+    Button_standard.set_draw button my_button_draw;
+    count := !count + 1;
+    button in
+
+  let high = make_button Filter.FKHigh_pass "High Pass" in
+  let low = make_button Filter.FKLow_pass "Low Pass" in
+  let band = make_button Filter.FKBand_pass "Band Pass" in
+  let notch = make_button Filter.FKNotch "Notch" in
+  let none = make_button Filter.FKNone "None" in
+  [high; low; band; notch; none]
+
+let create_waveform_buttons () =
+  let count = ref 1 in
+  let pressed = ref 1 in
+
+  let button_draw b text =
+    let button_id = !count in
+    fun r ->
+      let (x, y, w, h) = Button_standard.get_area b in
+
+      let state = if !pressed = button_id then KSDown else KSUp in
+      Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
+
+      let font_size = w / 7 in
+      Gui_utils.draw_text r (x + w/2) (y + h/2) font_size keyboard_text_color text in
+
+  let on_up wave =
+    let button_id = !count in
+    fun _ ->
+      pressed := button_id;
+      model.current_waveform <- wave in
+
+
+  let make_button wave text =
+    let button_up = on_up wave in
+    let button = Button_standard.create_button ignore button_up ignore in
+    let my_button_draw = button_draw button text in
+    Button_standard.set_draw button my_button_draw;
+    count := !count + 1;
+    button in
+
+  let sine = make_button Sine "Sine Wave" in
+  let triangle = make_button  Triangle "Triangle Wave" in
+  let saw = make_button Saw "Saw Wave" in
+  let square = make_button Square "Square Wave" in
+  [sine; triangle; saw; square]
 
 
 
 let _ = set_filename_buttons (get_file_location())
 let _ = model.midi_buttons <- create_midi_buttons()
 let _ = model.file_buttons <- create_file_buttons()
-
-let get_adsr_params () =
-  model.adsr_params
-
-let set_adsr_params p =
-  model.adsr_params <- p
-
-let get_filter () =
-  model.filter
-
-let set_filter_params p =
-  let (filter_kind, filter_freq, filter_q) = p in
-  model.filter <- Filter.make 44100 filter_kind filter_freq filter_q
+let _ = model.synth_button <-
+    Some (create_transition_button SSynthesizer "Synthesize")
+let _ = model.play_button <-
+    Some (create_transition_button SKeyboard "Play")
+let _ = model.synth_grid <- Some (create_synth_grid ())
+let _ = model.synth_buttons <- create_synth_buttons ()
+let _ = model.wave_buttons <- create_waveform_buttons()

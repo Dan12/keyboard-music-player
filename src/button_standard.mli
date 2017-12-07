@@ -2,10 +2,11 @@
 
 type button
 
-type point = int*int
+type ipoint = int*int
+type fpoint = float*float
 
-(* create a button with the on down event, on up event *)
-val create_button : (point -> unit) -> (point -> unit) -> button
+(* create a button with the on down event, on up event, and on move event *)
+val create_button : (fpoint -> unit) -> (fpoint -> unit) -> (fpoint -> unit) -> button
 
 (* move the button to the x, y, width, height *)
 val set_area : button -> int -> int -> int -> int -> unit
@@ -14,10 +15,13 @@ val set_area : button -> int -> int -> int -> int -> unit
 val get_area : button -> int*int*int*int
 
 (* if the button contains the point, execute the pressed callback *)
-val down_press : button -> point -> unit
+val down_press : button -> ipoint -> unit
 
 (* if the button contains the point, execute the released callback *)
-val up_press : button -> point -> unit
+val up_press : button -> ipoint -> unit
+
+(* if the button contains the point, execute the released callback *)
+val on_move : button -> ipoint -> unit
 
 (* set the function to be executed when draw is called *)
 val set_draw : button -> (Tsdl.Sdl.renderer -> unit) -> unit
