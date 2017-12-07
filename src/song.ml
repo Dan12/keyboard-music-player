@@ -84,6 +84,7 @@ let get_sound (r,c) song =
         | Empty -> None
 
 let set_sound_pack s song =
+  (* only update the soundpack if it is reasonable *)
   if s < 0 || s >= Array.length song.soundpacks then
     ()
   else
