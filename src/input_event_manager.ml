@@ -50,11 +50,15 @@ let clear_keyboard () =
 let handle_mouse_up x y t =
   (* stop updating any sliders according to the mouse's movements *)
   if Model.is_scrubbing() then
-    (Model.set_scrubbing false;
-     clear_keyboard());
+    begin
+      Model.set_scrubbing false;
+      clear_keyboard();
+    end;
   if Model.is_bpm_scrubbing() then
-     Model.set_bpm_scrubbing false;
-  clear_keyboard();
+    begin
+      Model.set_bpm_scrubbing false;
+      clear_keyboard();
+    end;
   match Model.get_state () with
   | SKeyboard ->
     (* deselect all midi buttons *)
