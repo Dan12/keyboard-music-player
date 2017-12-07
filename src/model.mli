@@ -146,6 +146,26 @@ val get_adsr_params : unit -> float*float*float*float
 
 val set_adsr_params : float*float*float*float -> unit
 
+val get_adsr_pos_min : unit -> float
+
+val get_adsr_pos_max : unit -> float
+
+val set_a_sliding : bool -> unit
+
+val get_a_sliding : unit -> bool
+
+val set_d_sliding : bool -> unit
+
+val get_d_sliding : unit -> bool
+
+val set_s_sliding : bool -> unit
+
+val get_s_sliding : unit -> bool
+
+val set_r_sliding : bool -> unit
+
+val get_r_sliding : unit -> bool
+
 val get_filter : unit -> Filter.filter_t
 
 val set_filter_params : Filter.filter_kind*float*float -> unit

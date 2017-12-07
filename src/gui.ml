@@ -5,9 +5,14 @@ open Keyboard_layout
 open Keyboard
 open Model
 
-let scrub:(Sdl.rect option ref) = ref None
+type slider = Sdl.rect option ref
 
-let bpm:(Sdl.rect option ref) = ref None
+let scrub:slider = ref None
+let bpm:slider = ref None
+let a_slider:slider = ref None
+let d_slider:slider = ref None
+let s_slider:slider = ref None
+let r_slider:slider = ref None
 
 let keyboard_padding_w = 20
 let keyboard_padding_h = 30
@@ -330,6 +335,58 @@ let draw_filename_buttons r x y w =
   List.iteri iter buttons;
   button_h
 
+let draw_adsr_sliders r' y gap =
+  let size_x = 10 in
+  let size_y = 20 in
+
+  let start = Model.get_adsr_pos_min() |> int_of_float in
+  let line_length = Model.get_adsr_pos_max() -. Model.get_adsr_pos_min() in
+  let line_h = 3 in
+  let line1 = Sdl.Rect.create start y (line_length |> int_of_float) line_h in
+  let line2 = Sdl.Rect.create start (y + gap) (line_length |> int_of_float)
+      line_h in
+  let line3 = Sdl.Rect.create start (y + (2*gap)) (line_length |> int_of_float)
+      line_h in
+  let line4 = Sdl.Rect.create start  (y+(3*gap)) (line_length |> int_of_float)
+      line_h in
+  let _ = Sdl.render_fill_rect r' (Some line1) in
+  let _ = Sdl.render_fill_rect r' (Some line2) in
+  let _ = Sdl.render_fill_rect r' (Some line3) in
+  let _ = Sdl.render_fill_rect r' (Some line4) in
+
+  Gui_utils.draw_text r' (start-15) y 20 black "A";
+  Gui_utils.draw_text r' (start-15) (y+gap) 20 black "D";
+  Gui_utils.draw_text r' (start-15) (y+(2*gap)) 20 black "S";
+  Gui_utils.draw_text r' (start-15) (y+(3*gap)) 20 black "R";
+
+  let (a,d,s,r) = Model.get_adsr_params() in
+  let a_pos = int_of_float (a *. line_length) in
+  let d_pos = int_of_float (d *. line_length) in
+  let s_pos = int_of_float (s *. line_length) in
+  let r_pos = int_of_float (r *. line_length) in
+  let rect1 = Sdl.Rect.create (start + a_pos) (y - (size_y/2)) size_x size_y in
+  let rect2 = Sdl.Rect.create (start + d_pos) ((y + gap) - (size_y/2)) size_x
+      size_y in
+  let rect3 = Sdl.Rect.create (start + s_pos) ((y + (2*gap)) - (size_y/2))
+      size_x size_y in
+  let rect4 = Sdl.Rect.create (start + r_pos) ((y + (3*gap)) - (size_y/2))
+      size_x size_y in
+  a_slider := Some rect1;
+  d_slider := Some rect2;
+  s_slider := Some rect3;
+  r_slider := Some rect4;
+  let _ = Sdl.render_fill_rect r' (Some rect1) in
+  let _ = Sdl.render_fill_rect r' (Some rect2) in
+  let _ = Sdl.render_fill_rect r' (Some rect3) in
+  let _ = Sdl.render_fill_rect r' (Some rect4) in
+
+  let tail = Model.get_adsr_pos_max() |> int_of_float in
+  Gui_utils.draw_text r' (tail+45) y 20 black (Printf.sprintf "%.4f" a);
+  Gui_utils.draw_text r' (tail+45) (y+gap) 20 black (Printf.sprintf "%.4f" d);
+  Gui_utils.draw_text r' (tail+45) (y+(2*gap)) 20 black (Printf.sprintf "%.4f" s);
+  Gui_utils.draw_text r' (tail+45) (y+(3*gap)) 20 black (Printf.sprintf "%.4f" r);
+  ()
+
 let draw_song_player r =
   let keyboard = Model.get_keyboard () in
   let keyboard_coords = draw_keyboard_visual r in
@@ -387,6 +444,10 @@ let draw_synthesizer r =
   let synth_button_x = keyboard_x + keyboard_w - synth_button_w - 15 in
   let synth_button_y = grid_y in
   let _ = draw_play_button r synth_button_x synth_button_y synth_button_w in
+
+  let adsr_sliders_h = grid_y + 30 in
+  let gap = (Model.get_height() - grid_y) / 6 in
+  let _ = draw_adsr_sliders r adsr_sliders_h gap in
   ()
 
 
@@ -402,8 +463,15 @@ let draw r =
 
 (*is [s] is "scrub" then for midi slider, if "bpm" then for bpm slider*)
 let scrub_pressed (x,y) s =
-  let matched = if s = "scrub" then
-      !scrub else !bpm in
+  let matched =
+    match s with
+    | "scrub" -> !scrub
+    | "bpm" -> !bpm
+    | "a_slider" -> !a_slider
+    | "d_slider" -> !d_slider
+    | "s_slider" -> !s_slider
+    | "r_slider" -> !r_slider
+    | _ -> None in
   match matched with
   | None -> false
   | Some rect ->

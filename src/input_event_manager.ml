@@ -48,11 +48,13 @@ let clear_keyboard () =
   done
 
 let handle_mouse_up x y t =
-  if Model.is_scrubbing() then
-    (Model.set_scrubbing false;
-     clear_keyboard());
-  if Model.is_bpm_scrubbing() then
-     Model.set_bpm_scrubbing false;
+  (Model.set_scrubbing false;
+  clear_keyboard());
+  Model.set_bpm_scrubbing false;
+  Model.set_a_sliding false;
+  Model.set_d_sliding false;
+  Model.set_s_sliding false;
+  Model.set_r_sliding false;
   clear_keyboard();
   let iter = fun _ b -> Button_standard.up_press b (x, y) in
   match Model.get_state () with
@@ -72,35 +74,47 @@ let handle_mouse_down x y =
   match Model.get_state() with
   | SKeyboard ->
     Model.set_scrubbing (Gui.scrub_pressed (x, y) "scrub");
-    Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) "bpm")
+    Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) "bpm");
   | SFileChooser -> ()
   | SSynthesizer ->
+    Model.set_a_sliding (Gui.scrub_pressed (x,y) "a_slider");
+    Model.set_d_sliding (Gui.scrub_pressed (x,y) "d_slider");
+    Model.set_s_sliding (Gui.scrub_pressed (x,y) "s_slider");
+    Model.set_r_sliding (Gui.scrub_pressed (x,y) "r_slider");
     iter () (Model.get_synth_grid())
 
 let handle_scrubbing x =
-  let mouse_x = float_of_int x in
+  let set_scrub mini maxi =
+    let curr = float_of_int x in
+    if curr > maxi then maxi
+    else if curr < mini then mini
+    else curr in
   if Model.is_scrubbing() then
     begin
-      let scrub_x = (
-        if mouse_x > Model.get_scrub_pos_max() then
-          Model.get_scrub_pos_max()
-        else if mouse_x < Model.get_scrub_pos_min() then
-          Model.get_scrub_pos_min()
-        else
-          mouse_x) in
+      let scrub_x = set_scrub (Model.get_scrub_pos_min())
+          (Model.get_scrub_pos_max()) in
       Model.set_scrub_pos scrub_x
     end;
   if Model.is_bpm_scrubbing() then
     begin
-      let scrub_x = (
-        if mouse_x > Model.get_bpm_pos_max() then
-          Model.get_bpm_pos_max()
-        else if mouse_x < Model.get_bpm_pos_min() then
-          Model.get_bpm_pos_min()
-        else
-          mouse_x) in
+      let scrub_x = set_scrub (Model.get_bpm_pos_min())
+          (Model.get_bpm_pos_max()) in
       Model.set_bpm_pos scrub_x
-    end
+    end;
+  let adsr_length = Model.get_adsr_pos_max() -. Model.get_adsr_pos_min() in
+  let (a,d,s,r) = Model.get_adsr_params() in
+  let scrub_x = set_scrub (Model.get_adsr_pos_min())
+      (Model.get_adsr_pos_max()) in
+  let new_val = (scrub_x -. Model.get_adsr_pos_min()) /. adsr_length in
+  if Model.get_a_sliding() then
+      Model.set_adsr_params (new_val,d,s,r);
+  if Model.get_d_sliding() then
+    Model.set_adsr_params (a,new_val,s,r);
+  if Model.get_s_sliding() then
+    Model.set_adsr_params (a,d,new_val,r);
+  if Model.get_r_sliding() then
+    Model.set_adsr_params (a,d,s,new_val);
+  ()
 
 let handle_mouse_move x y =
   let iter = fun _ b -> Button_standard.on_move b (x, y) in
@@ -109,6 +123,7 @@ let handle_mouse_move x y =
     handle_scrubbing x
   | SFileChooser -> ()
   | SSynthesizer ->
+    handle_scrubbing x;
     iter () (Model.get_synth_grid())
 
 

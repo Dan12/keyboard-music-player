@@ -43,6 +43,12 @@ type model = {
   scrub_pos_max: float;
   bpm_pos_min: float;
   bpm_pos_max: float;
+  adsr_pos_min: float;
+  adsr_pos_max: float;
+  mutable a_sliding: bool;
+  mutable d_sliding: bool;
+  mutable s_sliding: bool;
+  mutable r_sliding: bool;
   mutable buffer: Complex.t array;
   mutable playing_song : bool;
   mutable beats_in_midi: float;
@@ -128,6 +134,12 @@ let model:model =
     scrub_pos_max = (float_of_int window_w) -. scrub_margin;
     bpm_pos_min = bpm_margin;
     bpm_pos_max = (float_of_int (window_w / 3)) -. bpm_margin;
+    adsr_pos_min = float_of_int window_w /. 5.0;
+    adsr_pos_max = float_of_int window_w /. 2.0;
+    a_sliding = false;
+    d_sliding = false;
+    s_sliding = false;
+    r_sliding = false;
     buffer = buffer;
     playing_song = true;
     beats_in_midi = 0.0;
@@ -323,6 +335,36 @@ let get_adsr_params () =
 
 let set_adsr_params p =
   model.adsr_params <- p
+
+let get_adsr_pos_min () =
+  model.adsr_pos_min
+
+let get_adsr_pos_max () =
+  model.adsr_pos_max
+
+let set_a_sliding b =
+  model.a_sliding <- b
+
+let get_a_sliding () =
+  model.a_sliding
+
+let set_d_sliding b =
+  model.d_sliding <- b
+
+let get_d_sliding () =
+  model.d_sliding
+
+let set_s_sliding b =
+  model.s_sliding <- b
+
+let get_s_sliding () =
+  model.s_sliding
+
+let set_r_sliding b =
+  model.r_sliding <- b
+
+let get_r_sliding () =
+  model.r_sliding
 
 let get_filter () =
   model.filter
