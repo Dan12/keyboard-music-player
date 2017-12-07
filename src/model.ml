@@ -25,16 +25,16 @@ type model = {
   mutable keyboard_layout: keyboard_layout;
   mutable song: song;
   mutable state: state;
-  mutable midi_buttons: Button_standard.button list;
+  mutable midi_buttons: Button.button list;
   mutable current_midi_button: int;
-  mutable file_buttons: Button_standard.button list;
-  mutable filename_buttons : Button_standard.button list;
+  mutable file_buttons: Button.button list;
+  mutable filename_buttons : Button.button list;
   mutable current_filename_button: int;
-  mutable synth_button: Button_standard.button option;
-  mutable synth_grid: Button_standard.button option;
-  mutable synth_buttons : Button_standard.button list;
-  mutable wave_buttons : Button_standard.button list;
-  mutable play_button: Button_standard.button option;
+  mutable synth_button: Button.button option;
+  mutable synth_grid: Button.button option;
+  mutable synth_buttons : Button.button list;
+  mutable wave_buttons : Button.button list;
+  mutable play_button: Button.button option;
   mutable selected_filename: string option;
   mutable file_location: string;
   mutable midi_filename: string;
@@ -413,7 +413,7 @@ let set_filename_buttons dir =
 
 
     let button_draw b = fun r ->
-      let (x, y, w, h) = Button_standard.get_area b in
+      let (x, y, w, h) = Button.get_area b in
 
       let state = if model.current_filename_button = index then KSDown else KSUp in
       Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
@@ -422,15 +422,15 @@ let set_filename_buttons dir =
       Gui_utils.draw_text r (x + w / 2) (y + h / 2) font_size keyboard_text_color str in
 
 
-    let button = Button_standard.create_button ignore button_up ignore in
-    Button_standard.set_draw button (button_draw button);
+    let button = Button.create_button ignore button_up ignore in
+    Button.set_draw button (button_draw button);
     button in
 
   model.filename_buttons <- List.mapi string_to_button files
 
 let create_midi_buttons () =
   let button_draw b is_current_down draw_icon = fun r ->
-    let (x, y, w, h) = Button_standard.get_area b in
+    let (x, y, w, h) = Button.get_area b in
 
     let state = if is_current_down model.current_midi_button then KSDown else KSUp in
     Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
@@ -447,27 +447,27 @@ let create_midi_buttons () =
     let font_size = 3 * w / 8 in
     Gui_utils.draw_text r (x + w/2) (y + h/2) font_size keyboard_text_color "Load" in
 
-  let load = Button_standard.create_button ignore load_up ignore in
+  let load = Button.create_button ignore load_up ignore in
   let load_draw = button_draw load ((=) 0) load_drawer in
-  Button_standard.set_draw load load_draw;
+  Button.set_draw load load_draw;
 
 
   let play_up _ =
     model.current_midi_button <- 1;
     start_midi() in
 
-  let play = Button_standard.create_button ignore play_up ignore in
+  let play = Button.create_button ignore play_up ignore in
   let play_draw = button_draw play ((=) 1) Gui_utils.draw_play in
-  Button_standard.set_draw play play_draw;
+  Button.set_draw play play_draw;
 
 
   let pause_up _ =
     model.current_midi_button <- 2;
     pause_midi() in
 
-  let pause = Button_standard.create_button ignore pause_up ignore in
+  let pause = Button.create_button ignore pause_up ignore in
   let pause_draw = button_draw pause ((=) 2) Gui_utils.draw_pause in
-  Button_standard.set_draw pause pause_draw;
+  Button.set_draw pause pause_draw;
 
 
   let stop_up _ =
@@ -475,14 +475,14 @@ let create_midi_buttons () =
     stop_midi();
     clear_keyboard() in
 
-  let stop = Button_standard.create_button ignore stop_up ignore in
+  let stop = Button.create_button ignore stop_up ignore in
   let stop_draw = button_draw stop ((=) 3) Gui_utils.draw_stop in
-  Button_standard.set_draw stop stop_draw;
+  Button.set_draw stop stop_draw;
   [load; play; pause; stop]
 
 let create_file_buttons () =
   let button_draw b text = fun r ->
-    let (x, y, w, h) = Button_standard.get_area b in
+    let (x, y, w, h) = Button.get_area b in
 
     Gui_utils.draw_key r x (y + 2*h/5) w (h - 2*h/5) keyboard_pressed_color key_background keyboard_border_color KSUp;
 
@@ -494,9 +494,9 @@ let create_file_buttons () =
     remove_selected_filename();
     set_state SKeyboard in
 
-  let cancel = Button_standard.create_button ignore cancel_up ignore in
+  let cancel = Button.create_button ignore cancel_up ignore in
   let cancel_draw = button_draw cancel "Cancel" in
-  Button_standard.set_draw cancel cancel_draw;
+  Button.set_draw cancel cancel_draw;
 
 
   let select_up _ =
@@ -504,14 +504,14 @@ let create_file_buttons () =
     remove_selected_filename();
     set_state SKeyboard  in
 
-  let select = Button_standard.create_button ignore select_up ignore in
+  let select = Button.create_button ignore select_up ignore in
   let select_draw = button_draw select "Select" in
-  Button_standard.set_draw select select_draw;
+  Button.set_draw select select_draw;
   [cancel; select]
 
 let create_transition_button state text =
   let transition_draw b = fun r ->
-    let (x, y, w, h) = Button_standard.get_area b in
+    let (x, y, w, h) = Button.get_area b in
 
     Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color KSUp;
 
@@ -522,9 +522,9 @@ let create_transition_button state text =
   let transition_up _ =
     set_state state in
 
-  let transition = Button_standard.create_button ignore transition_up ignore in
+  let transition = Button.create_button ignore transition_up ignore in
   let transition_draw = transition_draw transition in
-  Button_standard.set_draw transition transition_draw;
+  Button.set_draw transition transition_draw;
   transition
 
 let create_synth_grid () =
@@ -533,7 +533,7 @@ let create_synth_grid () =
   let prev_y = ref 0.0 in
 
   let grid_draw b = fun r ->
-    let (x, y, w, h) = Button_standard.get_area b in
+    let (x, y, w, h) = Button.get_area b in
     Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color KSUp;
 
     let pressed_x = x + int_of_float ((float_of_int w) *. !prev_x) in
@@ -566,9 +566,9 @@ let create_synth_grid () =
   let grid_move p =
     if !is_moving then set_params p in
 
-  let grid = Button_standard.create_button grid_down grid_up grid_move in
+  let grid = Button.create_button grid_down grid_up grid_move in
   let grid_draw = grid_draw grid in
-  Button_standard.set_draw grid grid_draw;
+  Button.set_draw grid grid_draw;
   grid
 
 let create_synth_buttons () =
@@ -578,7 +578,7 @@ let create_synth_buttons () =
   let button_draw b text =
     let button_id = !count in
     fun r ->
-      let (x, y, w, h) = Button_standard.get_area b in
+      let (x, y, w, h) = Button.get_area b in
 
       let state = if !pressed = button_id then KSDown else KSUp in
       Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
@@ -596,9 +596,9 @@ let create_synth_buttons () =
 
   let make_button filter text =
     let button_up = on_up filter in
-    let button = Button_standard.create_button ignore button_up ignore in
+    let button = Button.create_button ignore button_up ignore in
     let my_button_draw = button_draw button text in
-    Button_standard.set_draw button my_button_draw;
+    Button.set_draw button my_button_draw;
     count := !count + 1;
     button in
 
@@ -616,7 +616,7 @@ let create_waveform_buttons () =
   let button_draw b text =
     let button_id = !count in
     fun r ->
-      let (x, y, w, h) = Button_standard.get_area b in
+      let (x, y, w, h) = Button.get_area b in
 
       let state = if !pressed = button_id then KSDown else KSUp in
       Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
@@ -633,9 +633,9 @@ let create_waveform_buttons () =
 
   let make_button wave text =
     let button_up = on_up wave in
-    let button = Button_standard.create_button ignore button_up ignore in
+    let button = Button.create_button ignore button_up ignore in
     let my_button_draw = button_draw button text in
-    Button_standard.set_draw button my_button_draw;
+    Button.set_draw button my_button_draw;
     count := !count + 1;
     button in
 

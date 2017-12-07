@@ -119,8 +119,8 @@ let draw_arrows r x y w =
 
 (* draw a button with the given bounds [x], [y], [w], and [h] *)
 let draw_button b r x y w h =
-  Button_standard.set_area b x y w h;
-  Button_standard.draw b r
+  Button.set_area b x y w h;
+  Button.draw b r
 
 (* Draw buttons evenly spaced horizontally to cover the given bounds *)
 let draw_horizontal_buttons bs r x y w h =
@@ -371,8 +371,8 @@ let draw_filename_buttons r x y w =
     let button_x = x + (i / 8) * x_offset in
     let button_y = y + (i mod 8) * y_offset in
 
-    Button_standard.set_area b button_x button_y button_w button_h;
-    Button_standard.draw b r in
+    Button.set_area b button_x button_y button_w button_h;
+    Button.draw b r in
   List.iteri draw_button buttons;
   button_h
 

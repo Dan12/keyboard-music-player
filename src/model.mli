@@ -40,25 +40,25 @@ val set_state : state -> unit
 val get_state : unit -> state
 
 (* [get_buttons] returns the buttons & their state. *)
-val get_midi_buttons : unit -> Button_standard.button list
+val get_midi_buttons : unit -> Button.button list
 
 (* [get_file_buttons] returns the file buttons. *)
-val get_file_buttons : unit -> Button_standard.button list
+val get_file_buttons : unit -> Button.button list
 
 (* [get_synth_button] returns the to synth button. *)
-val get_synth_button : unit -> Button_standard.button
+val get_synth_button : unit -> Button.button
 
 (* [get_filter_buttons] returns the synth filter buttons. *)
-val get_filter_buttons : unit -> Button_standard.button list
+val get_filter_buttons : unit -> Button.button list
 
 (* [get_wave_buttons] returns the waveform buttons. *)
-val get_wave_buttons : unit -> Button_standard.button list
+val get_wave_buttons : unit -> Button.button list
 
 (* [get_synth_grid] returns the pitch grid. *)
-val get_synth_grid : unit -> Button_standard.button
+val get_synth_grid : unit -> Button.button
 
 (* [get_play_button] returns the to play button. *)
-val get_play_button : unit -> Button_standard.button
+val get_play_button : unit -> Button.button
 
 (* [get_current_waveform] returns the current sythn waveform. *)
 val get_current_waveform : unit -> waveform
@@ -72,7 +72,7 @@ val set_selected_filename : string -> unit
 val set_filename_buttons : string -> unit
 
 (* [get_filename_buttons] returns all the song/midi files. *)
-val get_filename_buttons : unit -> Button_standard.button list
+val get_filename_buttons : unit -> Button.button list
 
 (* [get_num_filename_buttons] returns the number of filenames. *)
 (* val get_num_filename_buttons : unit -> int *)
