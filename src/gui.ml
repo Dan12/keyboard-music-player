@@ -557,13 +557,12 @@ let draw r =
 let scrub_pressed (x,y) s =
   let matched =
     match s with
-    | "scrub" -> !scrub
-    | "bpm" -> !bpm
-    | "a_slider" -> !a_slider
-    | "d_slider" -> !d_slider
-    | "s_slider" -> !s_slider
-    | "r_slider" -> !r_slider
-    | _ -> None in
+    | Scrub -> !scrub
+    | BPM -> !bpm
+    | A_slider -> !a_slider
+    | D_slider -> !d_slider
+    | S_slider -> !s_slider
+    | R_slider -> !r_slider in
   match matched with
   | None -> false
   | Some rect ->

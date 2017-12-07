@@ -11,4 +11,4 @@ val draw : Tsdl.Sdl.renderer -> unit
  * requires:
  *      - [(x,y)] represents the x,y coordinates of the press
  *      - [s] represents the string identifier of which slider is pressed. *)
-val scrub_pressed : (int * int) -> string -> bool
+val scrub_pressed : (int * int) -> Model.scrubs -> bool
