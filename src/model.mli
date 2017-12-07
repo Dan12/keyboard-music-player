@@ -6,6 +6,9 @@ open Song
 
 type state = SKeyboard | SFileChooser | SSynthesizer
 
+(* The waveform of the synthesized sound *)
+type waveform = Sine | Triangle | Saw | Square
+
 (* [get_width] returns the current window width. *)
 val get_width : unit -> int
 
@@ -45,14 +48,20 @@ val get_file_buttons : unit -> Button_standard.button list
 (* [get_synth_button] returns the to synth button. *)
 val get_synth_button : unit -> Button_standard.button
 
-(* [get_filter_buttons] returns to synth filter buttons. *)
+(* [get_filter_buttons] returns the synth filter buttons. *)
 val get_filter_buttons : unit -> Button_standard.button list
+
+(* [get_wave_buttons] returns the waveform buttons. *)
+val get_wave_buttons : unit -> Button_standard.button list
 
 (* [get_synth_grid] returns the pitch grid. *)
 val get_synth_grid : unit -> Button_standard.button
 
 (* [get_play_button] returns the to play button. *)
 val get_play_button : unit -> Button_standard.button
+
+(* [get_current_waveform] returns the current sythn waveform. *)
+val get_current_waveform : unit -> waveform
 
 (* [get_file_location] returns the path to all the song/midi files. *)
 val get_file_location : unit -> string

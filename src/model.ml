@@ -10,6 +10,9 @@ open Song
  *)
 type state = SKeyboard | SFileChooser | SSynthesizer
 
+(* The waveform of the synthesized sound *)
+type waveform = Sine | Triangle | Saw | Square
+
 (* The fft instance to use when computing fft on
  * the current audio buffer
  *)
@@ -30,6 +33,7 @@ type model = {
   mutable synth_button: Button_standard.button option;
   mutable synth_grid: Button_standard.button option;
   mutable synth_buttons : Button_standard.button list;
+  mutable wave_buttons : Button_standard.button list;
   mutable play_button: Button_standard.button option;
   mutable selected_filename: string option;
   mutable file_location: string;
@@ -50,6 +54,7 @@ type model = {
   mutable adsr_params: float*float*float*float;
   mutable filter: Filter.filter_t;
   mutable current_filter: Filter.filter_kind*float*float;
+  mutable current_waveform: waveform;
 }
 
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
@@ -118,6 +123,7 @@ let model:model =
     synth_button = None;
     synth_grid = None;
     synth_buttons = [];
+    wave_buttons = [];
     play_button = None;
     file_location = "resources/";
     midi_filename = "resources/eq_data/eq_0_midi.json";
@@ -137,6 +143,7 @@ let model:model =
     adsr_params = (0.0, 0.0, 1.0, 0.0);
     filter = Filter.make 44100 Filter.FKNone 100.0 1.0;
     current_filter = Filter.FKNone, 100.0, 1.0;
+    current_waveform = Sine;
   }
 
 let get_width () =
@@ -174,6 +181,9 @@ let get_file_buttons () =
 
 let get_filter_buttons () =
   model.synth_buttons
+
+let get_wave_buttons () =
+  model.wave_buttons
 
 let get_synth_button () =
   match model.synth_button with
@@ -287,6 +297,9 @@ let get_scrub_pos_max () =
 
 let get_beats () =
   model.beats_in_midi
+
+let get_current_waveform () =
+  model.current_waveform
 
 let set_beats beats =
   model.beats_in_midi <- beats
@@ -526,20 +539,20 @@ let create_synth_buttons () =
   let button_draw b text =
     let button_id = !count in
     fun r ->
-    let (x, y, w, h) = Button_standard.get_area b in
+      let (x, y, w, h) = Button_standard.get_area b in
 
-    let state = if !pressed = button_id then KSDown else KSUp in
-    Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
+      let state = if !pressed = button_id then KSDown else KSUp in
+      Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
 
-    let font_size = w / 7 in
-    Gui_utils.draw_text r (x + w/2) (y + h/2) font_size keyboard_text_color text in
+      let font_size = w / 7 in
+      Gui_utils.draw_text r (x + w/2) (y + h/2) font_size keyboard_text_color text in
 
   let on_up filter =
     let button_id = !count in
     fun _ ->
-    pressed := button_id;
-    let _, x, y = model.current_filter in
-    set_filter_params (filter, x, y) in
+      pressed := button_id;
+      let _, x, y = model.current_filter in
+      set_filter_params (filter, x, y) in
 
 
   let make_button filter text =
@@ -557,6 +570,42 @@ let create_synth_buttons () =
   let none = make_button Filter.FKNone "None" in
   [high; low; band; notch; none]
 
+let create_waveform_buttons () =
+  let count = ref 1 in
+  let pressed = ref 1 in
+
+  let button_draw b text =
+    let button_id = !count in
+    fun r ->
+      let (x, y, w, h) = Button_standard.get_area b in
+
+      let state = if !pressed = button_id then KSDown else KSUp in
+      Gui_utils.draw_key r x y w h keyboard_pressed_color key_background keyboard_border_color state;
+
+      let font_size = w / 7 in
+      Gui_utils.draw_text r (x + w/2) (y + h/2) font_size keyboard_text_color text in
+
+  let on_up wave =
+    let button_id = !count in
+    fun _ ->
+      pressed := button_id;
+      model.current_waveform <- wave in
+
+
+  let make_button wave text =
+    let button_up = on_up wave in
+    let button = Button_standard.create_button ignore button_up ignore in
+    let my_button_draw = button_draw button text in
+    Button_standard.set_draw button my_button_draw;
+    count := !count + 1;
+    button in
+
+  let sine = make_button Sine "Sine Wave" in
+  let triangle = make_button  Triangle "Triangle Wave" in
+  let saw = make_button Saw "Saw Wave" in
+  let square = make_button Square "Square Wave" in
+  [sine; triangle; saw; square]
+
 
 
 let _ = set_filename_buttons (get_file_location())
@@ -568,3 +617,4 @@ let _ = model.play_button <-
     Some (create_transition_button SKeyboard "Play")
 let _ = model.synth_grid <- Some (create_synth_grid ())
 let _ = model.synth_buttons <- create_synth_buttons ()
+let _ = model.wave_buttons <- create_waveform_buttons()

@@ -65,7 +65,8 @@ let handle_mouse_up x y t =
   | SSynthesizer ->
     iter () (Model.get_play_button());
     iter () (Model.get_synth_grid());
-    List.iteri iter (Model.get_filter_buttons())
+    List.iteri iter (Model.get_filter_buttons());
+    List.iteri iter (Model.get_wave_buttons())
 
 
 let handle_mouse_down x y =

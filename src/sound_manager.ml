@@ -20,7 +20,7 @@ let key_pressed row_col =
       | Some s ->
         Synth.start s
       | None ->
-        let new_sound = Synth.create Synth.Square row_col in
+        let new_sound = Synth.create (Model.get_current_waveform()) row_col in
         manager.synth_sounds_playing <- new_sound::manager.synth_sounds_playing
     end
   | Model.SKeyboard ->
@@ -129,4 +129,3 @@ let audio_callback output =
       Array1.fill output (Int32.of_int 0)
   end;
   Model.set_buffer output
-  
