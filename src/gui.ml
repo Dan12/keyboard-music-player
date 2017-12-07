@@ -354,25 +354,6 @@ let draw_keyboard_visual r =
       keyboard_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
   (keyboard_x, keyboard_y, keyboard_w, keyboard_h)
 
-  (* let arrows_w = keyboard_w / 6 in
-  let arrows_x = keyboard_x + keyboard_w - arrows_w - 5 in
-  let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
-  let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
-
-  (* draw midi buttons below keyboard to left of screen *)
-  let buttons_w = arrows_w * 2 in
-  let buttons_x = keyboard_x in
-  let buttons_y = arrows_y in
-  let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
-
-  let bpm_y = arrows_y + arrows_h + 3 * keyboard_padding_h / 2 in
-  let _ = draw_bpm r bpm_y in
-
-  (* draw scrub below midi buttons *)
-  let scrub_y = buttons_y + buttons_h + 2 * keyboard_padding_h in
-  let _ = draw_scrub r scrub_y in
-  () *)
-
 let draw_file_buttons r x y w =
   let offset = w / 2 in
   let size = (100 - percent_key_padding) * offset / 100 in

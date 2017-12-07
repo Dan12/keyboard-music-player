@@ -164,30 +164,6 @@ let event_callback event =
     let mouse_x = get event mouse_button_x in
     let mouse_y = get event mouse_button_y in
     handle_mouse_move mouse_x mouse_y
-    (* let mouse_x = get event mouse_button_x |> float_of_int in
-    (* if the mouse moves while scrub/bpm slider is moving, update them. *)
-    if Model.is_scrubbing() then
-    begin
-      let scrub_x = (
-        if mouse_x > Model.get_scrub_pos_max() then
-          Model.get_scrub_pos_max()
-        else if mouse_x < Model.get_scrub_pos_min() then
-          Model.get_scrub_pos_min()
-        else
-          mouse_x) in
-      Model.set_scrub_pos scrub_x
-    end;
-    if Model.is_bpm_scrubbing() then
-    begin
-      let scrub_x = (
-        if mouse_x > Model.get_bpm_pos_max() then
-          Model.get_bpm_pos_max()
-        else if mouse_x < Model.get_bpm_pos_min() then
-          Model.get_bpm_pos_min()
-        else
-          mouse_x) in
-      Model.set_bpm_pos scrub_x
-    end *)
   | `Mouse_wheel ->
     (* let scroll_dx = get event mouse_wheel_x in
     let scroll_dy = get event mouse_wheel_y in *)
