@@ -154,18 +154,25 @@ val set_buffer : (int32, Bigarray.int32_elt, Bigarray.c_layout) Bigarray.Array1.
 (* [get_buffer] get the most recent fft *)
 val get_buffer : unit -> Complex.t array
 
+(* [get_adsr_params] returns the values of adsr. *)
 val get_adsr_params : unit -> float*float*float*float
 
+(* [set_adsr_params (a,s,d,r)] sets the current values of asdr to those inputed. *)
 val set_adsr_params : float*float*float*float -> unit
 
+(* [get_adsr_pos_min] returns the min position of the adsr slider. *)
 val get_adsr_pos_min : unit -> float
 
+(* [get_adsr_pos_max] returns the max position of the adsr slider. *)
 val get_adsr_pos_max : unit -> float
 
+(* [set_a_sliding b] sets whether the a slider is currently in use. *)
 val set_a_sliding : bool -> unit
 
+(* [get_a_sliding] returns whether the a slider is currently in use. *)
 val get_a_sliding : unit -> bool
 
+(* [set_d_sliding b] sets whether the d slider is currently in use. *)
 val set_d_sliding : bool -> unit
 
 val get_d_sliding : unit -> bool
