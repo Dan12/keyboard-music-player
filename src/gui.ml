@@ -383,10 +383,19 @@ let draw_filename_buttons r x y w =
   List.iteri iter buttons;
   button_h
 
+(* [draw_adsr_sliders r' y gap] draws the 4 sliders for adsr in the synthesizer.
+ * It takes in the renderer, the y-coordinate of the highest slider, and the
+ * gap between each slider. It draws the four sliders, the labels 'A' 'D' 'S'
+ * 'R' and the current value of a,d,s,r.
+ * requires:
+ *     - [r'] is a valid renderer
+ *     - [y] is a coordinate position of the y value of the first slider
+ *     - [gap] is the distance between each slider. *)
 let draw_adsr_sliders r' y gap =
   let size_x = 10 in
   let size_y = 20 in
 
+  (* Draws the four slider lines. *)
   let start = Model.get_adsr_pos_min() |> int_of_float in
   let line_length = Model.get_adsr_pos_max() -. Model.get_adsr_pos_min() in
   let line_h = 3 in
@@ -402,11 +411,14 @@ let draw_adsr_sliders r' y gap =
   let _ = Sdl.render_fill_rect r' (Some line3) in
   let _ = Sdl.render_fill_rect r' (Some line4) in
 
+  (* Draws the labels for each slider. *)
   Gui_utils.draw_text r' (start-15) y 20 black "A";
   Gui_utils.draw_text r' (start-15) (y+gap) 20 black "D";
   Gui_utils.draw_text r' (start-15) (y+(2*gap)) 20 black "S";
   Gui_utils.draw_text r' (start-15) (y+(3*gap)) 20 black "R";
 
+  (* Draws the rectangle of the slider.at the corresponding position to its
+   * value. *)
   let (a,d,s,r) = Model.get_adsr_params() in
   let a_pos = int_of_float (a *. line_length) in
   let d_pos = int_of_float (d *. line_length) in
@@ -428,6 +440,7 @@ let draw_adsr_sliders r' y gap =
   let _ = Sdl.render_fill_rect r' (Some rect3) in
   let _ = Sdl.render_fill_rect r' (Some rect4) in
 
+  (* Draws the four values of a,d,s,r next to their slider. *)
   let tail = Model.get_adsr_pos_max() |> int_of_float in
   Gui_utils.draw_text r' (tail+45) y 20 black (Printf.sprintf "%.4f" a);
   Gui_utils.draw_text r' (tail+45) (y+gap) 20 black (Printf.sprintf "%.4f" d);
@@ -463,6 +476,10 @@ let draw_song_player r =
   let _ = draw_scrub r scrub_y in
   ()
 
+(* [draw_filechooser r] draws the file chooser window with all the files to be
+ * selected and then a 'Cancel' and 'Select' button.
+ * requires:
+ *      - [r] is a valid renderer. *)
 let draw_filechooser r =
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
@@ -520,7 +537,6 @@ let draw r =
   end;
     present r
 
-(*is [s] is "scrub" then for midi slider, if "bpm" then for bpm slider*)
 let scrub_pressed (x,y) s =
   let matched =
     match s with

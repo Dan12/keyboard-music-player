@@ -63,6 +63,7 @@ type model = {
   mutable current_waveform: waveform;
 }
 
+
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
 let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
 
@@ -98,7 +99,7 @@ let get_filenames dir =
 
 let model:model =
   let window_w = 1280 in
-  let bpm_margin = 80.0 in
+  let bpm_margin = 50.0 in
   let scrub_margin = 160.0 in
   let eq_song = Song.parse_song_file "resources/eq_data/eq_song.json" in
   let keyboard_layout = Keyboard_layout.parse_layout
