@@ -16,12 +16,10 @@ let key_pressed row_col =
   match Model.get_state () with
   | Model.SSynthesizer ->
     begin
-      match List.find_opt (Synth.is_equal row_col) manager.synth_sounds_playing with
-      | Some s ->
-        Synth.start s
-      | None ->
-        let new_sound = Synth.create (Model.get_current_waveform()) row_col in
-        manager.synth_sounds_playing <- new_sound::manager.synth_sounds_playing
+      let not_equal s = not (Synth.is_equal row_col s) in
+      let filtered_list = List.filter not_equal manager.synth_sounds_playing in
+      let new_sound = Synth.create (Model.get_current_waveform()) row_col in
+      manager.synth_sounds_playing <- new_sound::filtered_list
     end
   | Model.SKeyboard ->
     begin

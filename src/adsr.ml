@@ -5,6 +5,7 @@ type adsr_t = int*int*float*int
 type adsr_state = {
   mutable state: int;
   mutable sample_pos: int;
+  mutable prev_scalar: float;
 }
 
 (* converts samples to seconds *)
@@ -21,6 +22,7 @@ let init_state () =
   {
     state = 0;
     sample_pos = 0;
+    prev_scalar = 0.;
   }
 
 let release_state state =
@@ -40,6 +42,7 @@ let process_sample adsr state sample =
         let scalar = (float_of_int state.sample_pos) /. (float_of_int a) in
         (* increment the sample position *)
         state.sample_pos <- state.sample_pos+1;
+        state.prev_scalar <- scalar;
         (* set to the next state if at that position *)
         if state.sample_pos >= a then
           begin
@@ -61,6 +64,7 @@ let process_sample adsr state sample =
         let scalar = 1. +. ((s -. 1.) *. (float_of_int state.sample_pos)) /. (float_of_int d) in
         (* increment the sample position *)
         state.sample_pos <- state.sample_pos+1;
+        state.prev_scalar <- scalar;
         (* set to the next state if at that position *)
         if state.sample_pos >= d then
           begin
@@ -76,12 +80,13 @@ let process_sample adsr state sample =
         sample
       end
   | 2 ->
+    state.prev_scalar <- s;
     sample *. s
   | 3 ->
     if r <> 0 then
       begin
         (* calculate the gain scalar in release phase *)
-        let scalar = s -. ((s *. (float_of_int state.sample_pos)) /. (float_of_int r)) in
+        let scalar = state.prev_scalar -. ((state.prev_scalar *. (float_of_int state.sample_pos)) /. (float_of_int r)) in
         (* increment the sample position *)
         state.sample_pos <- state.sample_pos+1;
         (* set to the next state if at that position *)
