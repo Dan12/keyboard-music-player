@@ -175,16 +175,23 @@ val get_a_sliding : unit -> bool
 (* [set_d_sliding b] sets whether the d slider is currently in use. *)
 val set_d_sliding : bool -> unit
 
+(* [get_d_sliding] returns whether the d slider is currently in use. *)
 val get_d_sliding : unit -> bool
 
+(* [set_s_sliding b] sets whether the s slider is currently in use. *)
 val set_s_sliding : bool -> unit
 
+(* [get_s_sliding] returns whether the s slider is currently in use. *)
 val get_s_sliding : unit -> bool
 
+(* [set_r_sliding b] sets whether the r slider is currently in use. *)
 val set_r_sliding : bool -> unit
 
+(* [get_r_sliding] returns whether the r slider is currently in use. *)
 val get_r_sliding : unit -> bool
 
+(* [get_filer] returns the current filer in use. *)
 val get_filter : unit -> Filter.filter_t
 
+(* [set_filter_params (f,f1,f2)] sets the current filter parameters. *)
 val set_filter_params : Filter.filter_kind*float*float -> unit
