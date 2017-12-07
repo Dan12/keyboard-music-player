@@ -18,6 +18,7 @@ type waveform = Sine | Triangle | Saw | Square
  *)
 let fft = ref (Fft.init 10)
 
+(* a record of the entire state of out project *)
 type model = {
   window_w: int;
   window_h: int;
@@ -137,7 +138,7 @@ let model:model =
     wave_buttons = [];
     play_button = None;
     file_location = "resources/";
-    midi_filename = "resources/eq_data/eq_0_midi.json";
+    midi_filename = "resources/eq_data/eq_full_midi.json";
     should_load_midi = true;
     is_playing = false;
     bpm_pos = bpm_margin;
