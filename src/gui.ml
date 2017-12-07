@@ -136,12 +136,14 @@ let draw_bpm r y =
   ()
 
 let draw_scrub r y =
+  (* draw square scrub *)
   let size = 30 in
   let scrub_pos = Model.get_scrub_pos() |> int_of_float in
   let x = scrub_pos - size/2 in
   let rect = Sdl.Rect.create x y size size in
   scrub := Some rect;
 
+  (* draw red & black time lines across the screen *)
   let scrub_start_x = Model.get_scrub_pos_min() |> int_of_float in
   let scrub_end_x = Model.get_scrub_pos_max() |> int_of_float in
   let line_y = y + size / 2 - 1 in
@@ -155,6 +157,7 @@ let draw_scrub r y =
       (scrub_end_x - scrub_pos) line_h in
   let _ = Sdl.render_fill_rect r (Some remaining_line) in
 
+  (* text for current beats & total number of beats *)
   let current_beat = Metronome.get_beat() |> int_of_float |> string_of_int in
   let total_beats = Model.get_beats() |> int_of_float |> string_of_int in
   let text = current_beat ^ "/" ^ total_beats in
@@ -284,7 +287,7 @@ let draw_output r =
   let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
   let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
 
-
+  (* draw midi buttons below keyboard to left of screen *)
   let buttons_w = arrows_w * 2 in
   let buttons_x = keyboard_x in
   let buttons_y = arrows_y in
@@ -293,6 +296,7 @@ let draw_output r =
   let bpm_y = arrows_y + arrows_h + 3 * keyboard_padding_h / 2 in
   let _ = draw_bpm r bpm_y in
 
+  (* draw scrub below midi buttons *)
   let scrub_y = buttons_y + buttons_h + 2 * keyboard_padding_h in
   let _ = draw_scrub r scrub_y in
   ()

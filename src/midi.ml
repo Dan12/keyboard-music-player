@@ -33,6 +33,8 @@ let note_end_time = function
   | Soundpack s -> s.beat +. s.length
   | Note n -> n.beat +. n.length
 
+(* [length_of_notes notes] returns the total number of beats necessary to play
+   every note in [notes]. *)
 let length_of_notes (notes:midi_data list) =
   List.fold_left (fun longest_end_time note ->
       let note_length = note_end_time note in
@@ -81,6 +83,9 @@ let rec set_key_downs notes beat =
         (handle_keyboard_output (Keyboard_layout.KOKeydown (n.row, n.col)));
       set_note play h t beat
 
+(* [set_note play note remaining beat] sets puts [note] in the list of notes
+   that have just been played if [play] is true, then checks the next note in
+   the [remaining] list. Otherwise, [note] is put in the [remaining] list. *)
 and set_note play note remaining beat =
   if play then
     let (child_notes, child_played_notes) = set_key_downs remaining beat in
@@ -88,6 +93,8 @@ and set_note play note remaining beat =
   else
     (note::remaining, [])
 
+(* [set_key_ups played_notes beat] sets notes in [played_notes] to [KOKeyup] if
+the note has finished playing. *)
 let rec set_key_ups played_notes beat =
   match played_notes with
   | [] -> []
@@ -109,6 +116,7 @@ let tick midi beat =
   midi.notes <- new_notes;
   midi.played_notes <- List.rev_append new_played_notes remaining_played_notes
 
+(* [beat_of_note] returns note.[beat] *)
 let beat_of_note = function
   | Soundpack s -> s.beat
   | Note n -> n.beat

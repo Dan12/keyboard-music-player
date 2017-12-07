@@ -48,6 +48,7 @@ let clear_keyboard () =
   done
 
 let handle_mouse_up x y t =
+  (* stop updating any sliders according to the mouse's movements *)
   if Model.is_scrubbing() then
     (Model.set_scrubbing false;
      clear_keyboard());
@@ -56,6 +57,7 @@ let handle_mouse_up x y t =
   clear_keyboard();
   match Model.get_state () with
   | SKeyboard ->
+    (* deselect all midi buttons *)
     let iter = fun _ b -> Button_standard.up_press b (x, y) in
     List.iteri iter (Model.get_midi_buttons())
   | SFileChooser ->
@@ -67,6 +69,7 @@ let handle_mouse_up x y t =
 let handle_mouse_down x y =
   match Model.get_state() with
   | SKeyboard ->
+    (* begin changing any sliders if those were clicked *)
     Model.set_scrubbing (Gui.scrub_pressed (x, y) "scrub");
     Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) "bpm")
   | SFileChooser -> ()
@@ -94,6 +97,7 @@ let event_callback event =
     recent_click := click
   | `Mouse_motion ->
     let mouse_x = get event mouse_button_x |> float_of_int in
+    (* if the mouse moves while scrub/bpm slider is moving, update them. *)
     if Model.is_scrubbing() then
     begin
       let scrub_x = (

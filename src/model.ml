@@ -184,6 +184,7 @@ let pause_midi () =
   model.is_playing <- false
 
 let stop_midi () =
+  (* reset, the scrub, the bpm slider, etc. *)
   model.is_playing <- false;
   model.should_load_midi <- true;
   Metronome.reset();
