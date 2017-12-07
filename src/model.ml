@@ -3,6 +3,8 @@ open Keyboard
 open Keyboard_layout
 open Song
 
+type scrubs = Scrub | BPM | A_slider | D_slider | S_slider | R_slider
+
 (* The possible states of the interface
  * The keyboard lets the user play songs
  * The file chooser lets a user choose a file
@@ -18,7 +20,6 @@ type waveform = Sine | Triangle | Saw | Square
  *)
 let fft = ref (Fft.init 10)
 
-(* a record of the entire state of out project *)
 type model = {
   window_w: int;
   window_h: int;
@@ -99,17 +100,7 @@ let get_filenames dir =
   List.sort (compare) json_list
 
 let model:model =
-  let (width,height) =
-    if Array.length Sys.argv = 3 then
-      (int_of_string Sys.argv.(1), int_of_string Sys.argv.(2))
-    else if Array.length Sys.argv = 2 then
-      let width = int_of_string Sys.argv.(1) in
-      let height = (float_of_int width) *. (720. /. 1280.) in
-      (width, int_of_float(height))
-    else
-      (1280, 720)
-  in
-  let window_w = width in
+  let window_w = 1280 in
   let bpm_margin = 21.0 in
   let scrub_margin = 160.0 in
   let eq_song = Song.parse_song_file "resources/eq_data/eq_song.json" in
@@ -121,7 +112,7 @@ let model:model =
   let buffer = Array.make 1024 {Complex.re = 0.; Complex.im = 0.;} in
   {
     window_w = window_w;
-    window_h = height;
+    window_h = 720;
     keyboard = keyboard;
     keyboard_layout = keyboard_layout;
     song = eq_song;
@@ -138,7 +129,7 @@ let model:model =
     wave_buttons = [];
     play_button = None;
     file_location = "resources/";
-    midi_filename = "resources/eq_data/eq_full_midi.json";
+    midi_filename = "resources/eq_data/eq_0_midi.json";
     should_load_midi = true;
     is_playing = false;
     bpm_pos = bpm_margin;

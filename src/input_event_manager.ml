@@ -102,14 +102,14 @@ let handle_mouse_down x y =
   let iter = fun _ b -> Button.down_press b (x, y) in
   match Model.get_state() with
   | SKeyboard ->
-    Model.set_scrubbing (Gui.scrub_pressed (x, y) "scrub");
-    Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) "bpm");
+    Model.set_scrubbing (Gui.scrub_pressed (x, y) Model.Scrub);
+    Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) Model.BPM);
   | SFileChooser -> ()
   | SSynthesizer ->
-    Model.set_a_sliding (Gui.scrub_pressed (x,y) "a_slider");
-    Model.set_d_sliding (Gui.scrub_pressed (x,y) "d_slider");
-    Model.set_s_sliding (Gui.scrub_pressed (x,y) "s_slider");
-    Model.set_r_sliding (Gui.scrub_pressed (x,y) "r_slider");
+    Model.set_a_sliding (Gui.scrub_pressed (x,y) Model.A_slider);
+    Model.set_d_sliding (Gui.scrub_pressed (x,y) Model.D_slider);
+    Model.set_s_sliding (Gui.scrub_pressed (x,y) Model.S_slider);
+    Model.set_r_sliding (Gui.scrub_pressed (x,y) Model.R_slider);
     iter () (Model.get_synth_grid())
 
 (* [handle_scrubbing x] handles the effects of moving one of the 6 sliders in
