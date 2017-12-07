@@ -60,7 +60,7 @@ let up_press b p =
   else ()
 
 
-(* if the button contains the point, execute the released callback *)
+(* if the button contains the point, execute the moved callback *)
 let on_move b p =
   if contains b p
   then b.moved_at (convert_to_local_coords b p)

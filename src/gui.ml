@@ -131,7 +131,7 @@ let draw_horizontal_buttons bs r x y w h =
 
 (* Draw buttons evenly spaced vertically to cover the given bounds *)
 let draw_vertical_buttons bs r x y w h =
-  let offset = w / (List.length bs) in
+  let offset = h / (List.length bs) in
   let height = (100 - percent_key_padding) * offset / 100 in
   let iter i b = draw_button b r x (i * offset + y) w height in
   List.iteri iter bs

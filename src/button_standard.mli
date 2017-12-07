@@ -20,7 +20,7 @@ val down_press : button -> ipoint -> unit
 (* if the button contains the point, execute the released callback *)
 val up_press : button -> ipoint -> unit
 
-(* if the button contains the point, execute the released callback *)
+(* if the button contains the point, execute the moved callback *)
 val on_move : button -> ipoint -> unit
 
 (* set the function to be executed when draw is called *)
