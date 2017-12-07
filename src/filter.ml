@@ -85,7 +85,9 @@ let make sr kind ?(gain=0.) freq q =
 
 let process filter sample =
   let x0 = sample in
+  (* compute the output of the biquad filter *)
   let y0 = (filter.p0 *. x0) +. (filter.p1 *. filter.x1) +. (filter.p2 *. filter.x2) -. (filter.q1 *. filter.y1) -. (filter.q2 *. filter.y2) in
+  (* update the biquad filter for the next sample *)
   filter.x2 <- filter.x1;
   filter.x1 <- x0;
   filter.y2 <- filter.y1;

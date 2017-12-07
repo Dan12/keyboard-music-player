@@ -10,9 +10,12 @@ type synth = {
   adsr_state: Adsr.adsr_state;
 }
 
+(* The base volume, makes it comparable with the level of the songs *)
 let volume = 0.25
+(* The sample rate of the audio system *)
 let sample_rate = 44100.
 let pi = 3.14159265358979323846
+(* only get 4 octaves, so start at octave 3 *)
 let octave_shift = 3
 
 let create w (octave, note) =
@@ -46,22 +49,22 @@ let get_next_sample s =
   let actual_freq = s.freq /. sample_rate in
   let amp =
     begin
-    match s.waveform with
-    | Model.Sine ->
-      let theta = 2. *. pi *. actual_freq in
-      sin(theta *. t)
-    | Model.Square ->
-      let theta = fracf (t *. actual_freq) in
-      if theta < 0.5 then 1. else -1.
-    | Model.Saw ->
-      let x = fracf (t *. actual_freq) in
-      2. *. x -. 1.
-    | Model.Triangle ->
-      let x = fracf (t *. actual_freq) +. 0.25 in
-      if x < 0.5 then
-        4. *. x -. 1.
-      else
-        4. *. (1. -. x) -. 1.
+      match s.waveform with
+      | Model.Sine ->
+        let theta = 2. *. pi *. actual_freq in
+        sin(theta *. t)
+      | Model.Square ->
+        let theta = fracf (t *. actual_freq) in
+        if theta < 0.5 then 1. else -1.
+      | Model.Saw ->
+        let x = fracf (t *. actual_freq) in
+        2. *. x -. 1.
+      | Model.Triangle ->
+        let x = fracf (t *. actual_freq) +. 0.25 in
+        if x < 0.5 then
+          4. *. x -. 1.
+        else
+          4. *. (1. -. x) -. 1.
     end
   in
   let adsr_ctrl = Adsr.process_sample s.adsr_config s.adsr_state amp in

@@ -40,37 +40,44 @@ let complex_create (buf:(int32, Bigarray.int32_elt, Bigarray.c_layout) Bigarray.
   (left, right)
 
 let fft f d =
-  (* TODO: greater should be ok too? *)
-  assert (Array.length d = f.n);
-  let ( +~ ) = Complex.add in
-  let ( -~ ) = Complex.sub in
-  let ( *~ ) = Complex.mul in
-  let rec fft
-    t (* temporary buffer *)
-    d (* data *)
-    s (* stride in the data array *)
-    n (* number of samples *)
-    =
-    if (n > 1) then
-      let h = n / 2 in
-      for i = 0 to h - 1 do
-        t.(s + i) <- d.(s + 2 * i);          (* even *)
-        t.(s + h + i) <- d.(s + 2 * i + 1)   (* odd  *)
-      done;
-      fft d t s h;
-      fft d t (s + h) h;
-      let a = f.n / n in
-      for i = 0 to h - 1 do
-        let wkt = f.circle.(i * a) *~ t.(s + h + i) in
-        d.(s + i) <- t.(s + i) +~ wkt ;
-        d.(s + h + i) <- t.(s + i) -~ wkt
-      done
-  in
-  fft f.temp d 0 f.n
+  if Array.length d = f.n then
+    begin
+      let ( +~ ) = Complex.add in
+      let ( -~ ) = Complex.sub in
+      let ( *~ ) = Complex.mul in
+      let rec fft
+        t (* temporary buffer *)
+        d (* data *)
+        s (* stride in the data array *)
+        n (* number of samples *)
+        =
+        if (n > 1) then
+          let h = n / 2 in
+          for i = 0 to h - 1 do
+            t.(s + i) <- d.(s + 2 * i);          (* even *)
+            t.(s + h + i) <- d.(s + 2 * i + 1)   (* odd  *)
+          done;
+          fft d t s h;
+          fft d t (s + h) h;
+          let a = f.n / n in
+          for i = 0 to h - 1 do
+            let wkt = f.circle.(i * a) *~ t.(s + h + i) in
+            d.(s + i) <- t.(s + i) +~ wkt ;
+            d.(s + h + i) <- t.(s + i) -~ wkt
+          done
+      in
+      fft f.temp d 0 f.n
+    end
+  else
+    print_endline "Couldn't compute fft, array dims don't match"
 
+(* [ccoef coef complex] scale [complex] by [coef] *)
 let ccoef k c =
   {Complex.re = k *. c.Complex.re; Complex.im = k *. c.Complex.im}
 
+(* [iter func data] apply the scaling function [func] to every
+ * i'th in [data]
+ *)
 let iter f d =
   let len = Array.length d in
   let n = float len in
