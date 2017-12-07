@@ -64,7 +64,7 @@ type model = {
   mutable current_waveform: waveform;
 }
 
-
+(* define standard colors for use with buttons *)
 let keyboard_border_color = Sdl.Color.create 0 0 0 255
 let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
 
@@ -72,6 +72,7 @@ let key_background = Sdl.Color.create 255 255 255 220
 
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
 
+(* returns true if [s2] contains [s1] *)
 let contains s1 s2 =
   let size = String.length s1 in
   let contain = ref false in
@@ -82,6 +83,7 @@ let contains s1 s2 =
   done;
   !contain
 
+(* returns a list of files within a directory *)
 let get_filenames dir =
   let folder_list =
     if Sys.is_directory dir
@@ -98,6 +100,7 @@ let get_filenames dir =
         then s::j else j) [] filename_list in
   List.sort (compare) json_list
 
+(* Initialize the model's state *)
 let model:model =
   let window_w = 1280 in
   let bpm_margin = 21.0 in
@@ -244,6 +247,7 @@ let stop_midi () =
               (model.bpm_pos_max -. model.bpm_pos_min)) +. model.bpm_pos_min);
   model.current_midi_button <- 3
 
+(* clear the state's current keyboard keys *)
 let clear_keyboard () =
   let layout = get_keyboard_layout() in
   let keyboard = get_keyboard() in
@@ -333,16 +337,9 @@ let set_buffer b =
 let get_buffer () =
   model.buffer
 
-let remove_selected_filename () =
-  model.selected_filename <- None
-
-let get_selected_filename () = model.selected_filename
-
-let set_selected_filename file =
-  model.selected_filename <- Some file
-
+(* update the current song and or current midi file with the selected file *)
 let commit_selected_filename () =
-  match get_selected_filename() with
+  match model.selected_filename with
   | Some name ->
     let index = String.index name '_' in
     let folder = String.sub name 0 index in
@@ -404,7 +401,7 @@ let set_filename_buttons dir =
   let string_to_button index str =
     let recent_click = ref 0.0 in
     let button_up _ =
-      set_selected_filename str;
+      model.selected_filename <- Some str;
       model.current_filename_button <- index;
       let time = Unix.gettimeofday() in
       begin
@@ -412,7 +409,7 @@ let set_filename_buttons dir =
         then
           begin
             commit_selected_filename();
-            remove_selected_filename();
+            model.selected_filename <- None;
             set_state SKeyboard
           end
       end;
@@ -435,6 +432,8 @@ let set_filename_buttons dir =
 
   model.filename_buttons <- List.mapi string_to_button files
 
+(* create the array of buttons that will represent load, play, pause, and stop
+ * in the main play screen *)
 let create_midi_buttons () =
   let button_draw b is_current_down draw_icon = fun r ->
     let (x, y, w, h) = Button.get_area b in
@@ -487,6 +486,8 @@ let create_midi_buttons () =
   Button.set_draw stop stop_draw;
   [load; play; pause; stop]
 
+(* create the array of buttons that will represent cancel and select in the
+ * file chooser screen  *)
 let create_file_buttons () =
   let button_draw b text = fun r ->
     let (x, y, w, h) = Button.get_area b in
@@ -498,7 +499,7 @@ let create_file_buttons () =
 
 
   let cancel_up _ =
-    remove_selected_filename();
+    model.selected_filename <- None;
     set_state SKeyboard in
 
   let cancel = Button.create_button ignore cancel_up ignore in
@@ -508,7 +509,7 @@ let create_file_buttons () =
 
   let select_up _ =
     commit_selected_filename();
-    remove_selected_filename();
+    model.selected_filename <- None;
     set_state SKeyboard  in
 
   let select = Button.create_button ignore select_up ignore in
@@ -516,6 +517,7 @@ let create_file_buttons () =
   Button.set_draw select select_draw;
   [cancel; select]
 
+(* create a button that transitions the window to [state] with [text] *)
 let create_transition_button state text =
   let transition_draw b = fun r ->
     let (x, y, w, h) = Button.get_area b in
@@ -534,6 +536,7 @@ let create_transition_button state text =
   Button.set_draw transition transition_draw;
   transition
 
+(* create the synthesizer 2d grid *)
 let create_synth_grid () =
   let is_moving = ref false in
   let prev_x = ref 0.0 in
@@ -578,7 +581,8 @@ let create_synth_grid () =
   Button.set_draw grid grid_draw;
   grid
 
-let create_synth_buttons () =
+(* create the synthesizer's choose filter buttons *)
+let create_filter_buttons () =
   let count = ref 1 in
   let pressed = ref 5 in
 
@@ -616,6 +620,7 @@ let create_synth_buttons () =
   let none = make_button Filter.FKNone "None" in
   [high; low; band; notch; none]
 
+(* create the synthesizer's choose waveform buttons *)
 let create_waveform_buttons () =
   let count = ref 1 in
   let pressed = ref 1 in
@@ -652,7 +657,7 @@ let create_waveform_buttons () =
   let square = make_button Square "Square Wave" in
   [sine; triangle; saw; square]
 
-(* Initialize *)
+(* Initialize all the GUI's buttons at the end, because they depend on the model *)
 let _ = set_filename_buttons (get_file_location())
 let _ = model.midi_buttons <- create_midi_buttons()
 let _ = model.file_buttons <- create_file_buttons()
@@ -661,5 +666,5 @@ let _ = model.synth_button <-
 let _ = model.play_button <-
     Some (create_transition_button SKeyboard "Play")
 let _ = model.synth_grid <- Some (create_synth_grid ())
-let _ = model.synth_buttons <- create_synth_buttons ()
+let _ = model.synth_buttons <- create_filter_buttons ()
 let _ = model.wave_buttons <- create_waveform_buttons()
