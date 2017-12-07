@@ -1,20 +1,29 @@
-(* TODO add comments for non mli variables *)
-
+(* [start_time] is the start time of the midi song to keep track of where
+ * in the song is playing at a given time. *)
 let start_time = ref (Unix.gettimeofday())
+(* [last_time] is the most recent time set by tick() which tells the system
+ * where in the song the system currently is in. *)
 let last_time = ref (Unix.gettimeofday())
+(* [cached_beat] is the current beat/location in the midi. *)
 let cached_beat = ref 0.0
+(* [bpm] is the bpm that the system is currently set to. *)
 let bpm = ref 0
+(* [min_bpm] is the set minimum bpm allowed. *)
 let min_bpm = 50.0
+(* [max_bpm] is the set maximum bpm allowed. *)
 let max_bpm = 300.0
 
+(* [prev_minutes_elapsed] represents the time elapsed before the tick. *)
 let prev_minutes_elapsed = ref 0.0
+(* [current_minutes_elapsed] represents the time elapsed after the tick. *)
 let current_minutes_elapsed = ref 0.0
+(* [minutes_elapsed] re-evaluates [prev_minutes_elapsed] and
+ * [current_minutes_elapsed]. *)
 let minutes_elapsed () =
   let temp = (!last_time -. !start_time) /. 60.0 in
   prev_minutes_elapsed := !current_minutes_elapsed;
   current_minutes_elapsed := temp
 
-let recent = ref (Unix.gettimeofday())
 let tick () =
   last_time := Unix.gettimeofday();
   cached_beat := !cached_beat +. (!bpm |> float_of_int) *.
