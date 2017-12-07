@@ -18,6 +18,7 @@ type waveform = Sine | Triangle | Saw | Square
  *)
 let fft = ref (Fft.init 10)
 
+(* a record of the entire state of out project *)
 type model = {
   window_w: int;
   window_h: int;
