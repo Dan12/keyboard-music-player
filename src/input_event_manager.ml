@@ -23,6 +23,7 @@ let handle_keyboard_output output =
       let song = Model.get_song () in
       Song.set_sound_pack i song
     | Keyboard_layout.KOSpace ->
+      if Model.get_state() = SKeyboard then
       if Model.midi_is_playing() then Model.pause_midi()
       else Model.start_midi()
     | _ -> ()
