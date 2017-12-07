@@ -152,7 +152,7 @@ let draw_bpm r y =
   let line_h = 3 in
   let line = Sdl.Rect.create (Model.get_bpm_pos_min()|> int_of_float)
       (y + (size / 2) - 1) ((Model.get_bpm_pos_max()|> int_of_float)-
-                            (Model.get_bpm_pos_min()|> int_of_float)) line_h in
+      (Model.get_bpm_pos_min()|> int_of_float)) line_h in
   Gui_utils.set_color r black;
   let _ = Sdl.render_fill_rect r (Some line) in
 
@@ -162,7 +162,7 @@ let draw_bpm r y =
   let percent = ((float_of_int song_bpm)-.Metronome.get_min_bpm())/. bpm_diff in
   let bpm_pos = int_of_float
       ((percent *. (Model.get_bpm_pos_max() -. Model.get_bpm_pos_min())) +.
-       Model.get_bpm_pos_min()) in
+      Model.get_bpm_pos_min()) in
   let def_line = Sdl.Rect.create (bpm_pos-1) (y - (size / 2)) (2) (size*2) in
   Gui_utils.set_color r red;
   let _ = Sdl.render_fill_rect r (Some def_line) in
@@ -542,7 +542,7 @@ let draw_synthesizer r =
   let _ = draw_adsr_sliders r adsr_sliders_h gap in
   ()
 
-(* this is the main draw function of the gui. This will draw the current
+(* This is the main draw function of the gui. This will draw the current
  * window and should be called 60 times a second. *)
 let draw r =
   clear r;
