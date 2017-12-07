@@ -49,14 +49,23 @@ let clear_keyboard () =
   done
 
 let handle_mouse_up x y t =
-  (Model.set_scrubbing false;
-  clear_keyboard());
-  Model.set_bpm_scrubbing false;
+  (* stop updating any sliders according to the mouse's movements *)
+  if Model.is_scrubbing() then
+    begin
+      Model.set_scrubbing false;
+      clear_keyboard();
+    end;
+  if Model.is_bpm_scrubbing() then
+    begin
+      Model.set_bpm_scrubbing false;
+      clear_keyboard();
+    end;
+  
   Model.set_a_sliding false;
   Model.set_d_sliding false;
   Model.set_s_sliding false;
   Model.set_r_sliding false;
-  clear_keyboard();
+  
   let iter = fun _ b -> Button_standard.up_press b (x, y) in
   match Model.get_state () with
   | SKeyboard ->
@@ -76,6 +85,7 @@ let handle_mouse_down x y =
   let iter = fun _ b -> Button_standard.down_press b (x, y) in
   match Model.get_state() with
   | SKeyboard ->
+    (* begin changing any sliders if those were clicked *)
     Model.set_scrubbing (Gui.scrub_pressed (x, y) "scrub");
     Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) "bpm");
   | SFileChooser -> ()
@@ -154,6 +164,30 @@ let event_callback event =
     let mouse_x = get event mouse_button_x in
     let mouse_y = get event mouse_button_y in
     handle_mouse_move mouse_x mouse_y
+    (* let mouse_x = get event mouse_button_x |> float_of_int in
+    (* if the mouse moves while scrub/bpm slider is moving, update them. *)
+    if Model.is_scrubbing() then
+    begin
+      let scrub_x = (
+        if mouse_x > Model.get_scrub_pos_max() then
+          Model.get_scrub_pos_max()
+        else if mouse_x < Model.get_scrub_pos_min() then
+          Model.get_scrub_pos_min()
+        else
+          mouse_x) in
+      Model.set_scrub_pos scrub_x
+    end;
+    if Model.is_bpm_scrubbing() then
+    begin
+      let scrub_x = (
+        if mouse_x > Model.get_bpm_pos_max() then
+          Model.get_bpm_pos_max()
+        else if mouse_x < Model.get_bpm_pos_min() then
+          Model.get_bpm_pos_min()
+        else
+          mouse_x) in
+      Model.set_bpm_pos scrub_x
+    end *)
   | `Mouse_wheel ->
     (* let scroll_dx = get event mouse_wheel_x in
     let scroll_dy = get event mouse_wheel_y in *)
