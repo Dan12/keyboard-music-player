@@ -4,6 +4,7 @@ open Song
 (* This module implements the singleton model by accessing all of our data
    from here. *)
 
+(* represents the types of the windows *)
 type state = SKeyboard | SFileChooser | SSynthesizer
 
 (* The waveform of the synthesized sound *)
