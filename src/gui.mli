@@ -1,6 +1,6 @@
-(* This module will contain a draw call called by the Tsdl loop and
- * receive input events from the sound manager to update the draw state.
-*)
+(* This module will contain a draw call called by the Tsdl loop. This model
+ * will draw the window depending on the model's window state.
+ *)
 
 (* [draw renderer] the draw callback that makes draw calls using
  * [renderer] to display the state.
