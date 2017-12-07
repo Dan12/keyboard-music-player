@@ -376,7 +376,6 @@ let draw_filename_buttons r x y w =
   List.iteri draw_button buttons;
   button_h
 
-<<<<<<< HEAD
 (* [draw_adsr_sliders r' y gap] draws the 4 sliders for adsr in the synthesizer.
  * It takes in the renderer, the y-coordinate of the highest slider, and the
  * gap between each slider. It draws the four sliders, the labels 'A' 'D' 'S'
@@ -385,9 +384,6 @@ let draw_filename_buttons r x y w =
  *     - [r'] is a valid renderer
  *     - [y] is a coordinate position of the y value of the first slider
  *     - [gap] is the distance between each slider. *)
-=======
-(* draw the adsr (Attack Decay Sustain Release) sliders for the sythesizer. *)
->>>>>>> 8a25bb8e9ef57a31df8c33b797e09a3cd09ba7ec
 let draw_adsr_sliders r' y gap =
   let size_x = 10 in
   let size_y = 20 in
@@ -485,15 +481,11 @@ let draw_song_player r =
   let _ = draw_scrub r scrub_y in
   ()
 
-<<<<<<< HEAD
+
 (* [draw_filechooser r] draws the file chooser window with all the files to be
  * selected and then a 'Cancel' and 'Select' button.
  * requires:
  *      - [r] is a valid renderer. *)
-=======
-(* draw the file chooser window, with file buttons, and select and
- * cancel buttons. *)
->>>>>>> 8a25bb8e9ef57a31df8c33b797e09a3cd09ba7ec
 let draw_filechooser r =
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
