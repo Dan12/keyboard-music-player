@@ -14,25 +14,39 @@ let d_slider:slider = ref None
 let s_slider:slider = ref None
 let r_slider:slider = ref None
 
+(* amount of padded from the edge of the window to the keyboard *)
 let keyboard_padding_w = 20
 let keyboard_padding_h = 30
+
+(* percentage of space we put between keys based on keysize *)
 let percent_key_padding = 10
 
+(* for the soundpack arrows, the width is 2* the height *)
 let arrow_width_height_ratio = 2
 
+(* number of bars in the sound visualizer *)
 let num_graphic_bars = 48
+
+(* amount of padded from the edge of the window to the visual bounds *)
 let graphic_padding_w = 25
 let graphic_padding_h = 20
+
+(* percentage of space we put between columns based on width *)
 let percent_graphic_padding = 16
+
+(* capped amplitude for the graphic visualizer *)
 let max_amplitude = 60
+(* we only look at the lower [max_frequency] frequencies to visualize *)
 let max_frequency = 63 (* >= num_graphic_bars/2 - 1*)
 
+(* here we define standard colors that we use throughout the gui *)
+let white = Sdl.Color.create 255 255 255 255
 let black = Sdl.Color.create 0 0 0 255
 let red = Sdl.Color.create 204 24 30 255
 
-let background_color = Sdl.Color.create 255 255 255 255
-let keyboard_text_color = Sdl.Color.create 0 0 0 255
-let keyboard_border_color = Sdl.Color.create 0 0 0 255
+let background_color = white
+let keyboard_text_color = black
+let keyboard_border_color = black
 
 let keyboard_pressed_color = Sdl.Color.create 128 128 255 255
 let key_background = Sdl.Color.create 255 255 255 192
@@ -43,7 +57,8 @@ let max_graphic_color = Sdl.Color.create 255 0 0 255
 
 
 (*
- * Assumes the key list has length of [row] * [col]
+ * Draws a keyboard to the gui starting a (x, y) with a width of w. The height
+ * is calculated based on the width.
  *)
 let draw_keyboard renderer keyboard_layout keyboard x y w rows cols =
   let offset = w / cols in
@@ -61,35 +76,45 @@ let draw_keyboard renderer keyboard_layout keyboard x y w rows cols =
   done;
   offset * rows
 
-  (*
-   * Assumes the key list has length of [row] * [col]
-   *)
-let draw_arrows r keyboard x y w =
+(*
+ * Draws the sound pack manager. There are a maximum of four sound packs.
+ * Therefore, we use all arrow keys. The dimensions are the same as in
+ * [draw_keyboard].
+ *)
+let draw_arrows r x y w =
   let x_offset = w / 3 in
   let y_offset = x_offset / arrow_width_height_ratio in
   let w_key = (100 - percent_key_padding) * x_offset / 100 in
   let h_key = (100 - percent_key_padding) * y_offset / 100 in
 
-  let left_state = if Model.get_song () |> Song.get_sound_pack = 0 then KSDown else KSUp in
-  let up_state = if Model.get_song () |> Song.get_sound_pack = 1 then KSDown else KSUp in
-  let down_state = if Model.get_song () |> Song.get_sound_pack = 2 then KSDown else KSUp in
-  let right_state = if Model.get_song () |> Song.get_sound_pack = 3 then KSDown else KSUp in
+  let sound_pack = Model.get_song () |> Song.get_sound_pack in
+  let get_state i = if sound_pack = i then KSDown else KSUp in
+  let left_state = get_state 0 in
+  let up_state = get_state 1 in
+  let down_state = get_state 2 in
+  let right_state = get_state 3 in
 
   (* draw left *)
-  Gui_utils.draw_key r x (y + y_offset) w_key h_key keyboard_pressed_color key_background keyboard_border_color left_state;
-  Gui_utils.draw_left r x (y + y_offset) w_key h_key;
+  let left_y = y + y_offset in
+  Gui_utils.draw_key r x left_y w_key h_key keyboard_pressed_color key_background keyboard_border_color left_state;
+  Gui_utils.draw_left r x left_y w_key h_key;
 
   (* draw down *)
-  Gui_utils.draw_key r (x + x_offset) (y + y_offset) w_key h_key keyboard_pressed_color key_background keyboard_border_color down_state;
-  Gui_utils.draw_down r (x + x_offset) (y + y_offset) w_key h_key;
+  let down_x = x + x_offset in
+  let down_y = left_y in
+  Gui_utils.draw_key r down_x down_y w_key h_key keyboard_pressed_color key_background keyboard_border_color down_state;
+  Gui_utils.draw_down r down_x down_y w_key h_key;
 
   (* draw up *)
-  Gui_utils.draw_key r (x + x_offset) y w_key h_key keyboard_pressed_color key_background keyboard_border_color up_state;
-  Gui_utils.draw_up r (x + x_offset) y w_key h_key;
+  let up_x = down_x in
+  Gui_utils.draw_key r up_x y w_key h_key keyboard_pressed_color key_background keyboard_border_color up_state;
+  Gui_utils.draw_up r up_x y w_key h_key;
 
   (* draw right *)
-  Gui_utils.draw_key r (x + 2 * x_offset) (y + y_offset) w_key h_key keyboard_pressed_color key_background keyboard_border_color right_state;
-  Gui_utils.draw_right r (x + 2 * x_offset) (y + y_offset) w_key h_key;
+  let right_x = x + 2 * x_offset in
+  let right_y = down_y in
+  Gui_utils.draw_key r right_x right_y w_key h_key keyboard_pressed_color key_background keyboard_border_color right_state;
+  Gui_utils.draw_right r right_x right_y w_key h_key;
   2 * y_offset
 
 let draw_buttons r x y w =
@@ -408,14 +433,13 @@ let draw_adsr_sliders r' y gap =
   ()
 
 let draw_song_player r =
-  let keyboard = Model.get_keyboard () in
   let keyboard_coords = draw_keyboard_visual r in
   let keyboard_x, keyboard_y, keyboard_w, keyboard_h = keyboard_coords in
 
   let arrows_w = keyboard_w / 6 in
   let arrows_x = keyboard_x + keyboard_w - arrows_w - 5 in
   let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
-  let arrows_h = draw_arrows r keyboard arrows_x arrows_y arrows_w in
+  let arrows_h = draw_arrows r arrows_x arrows_y arrows_w in
 
 
   let buttons_w = arrows_w * 2 in
