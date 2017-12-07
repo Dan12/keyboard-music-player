@@ -117,58 +117,29 @@ let draw_arrows r x y w =
   Gui_utils.draw_right r right_x right_y w_key h_key;
   2 * y_offset
 
-let draw_buttons r x y w =
-  let buttons = Model.get_midi_buttons() in
-  let offset = w / (List.length buttons) in
-  let size = (100 - percent_key_padding) * offset / 100 in
-  let iter = fun i b ->
-    let button_x = i * offset + x in
-    Button_standard.set_area b button_x y size size;
-    Button_standard.draw b r in
-  List.iteri iter buttons;
-  size
-
-let draw_play_button r x y w =
-  let b = Model.get_play_button() in
-  let h = w / 5 in
+(* draw a button with the given bounds [x], [y], [w], and [h] *)
+let draw_button b r x y w h =
   Button_standard.set_area b x y w h;
-  Button_standard.draw b r;
-  h
+  Button_standard.draw b r
 
-let draw_synth_button r x y w =
-  let b = Model.get_synth_button() in
-  let h = w / 5 in
-  Button_standard.set_area b x y w h;
-  Button_standard.draw b r;
-  h
+(* Draw buttons evenly spaced horizontally to cover the given bounds *)
+let draw_horizontal_buttons bs r x y w h =
+  let offset = w / (List.length bs) in
+  let width = (100 - percent_key_padding) * offset / 100 in
+  let iter i b = draw_button b r (i * offset + x) y width h in
+  List.iteri iter bs
 
-let draw_filter_buttons r x y w h =
-  let buttons = Model.get_filter_buttons() in
-  let offset = h / (List.length buttons) in
-  let button_h = (100 - percent_key_padding) * offset / 100 in
-  let iter i b =
-    let button_y = y + i * offset in
-    Button_standard.set_area b x button_y w button_h;
-    Button_standard.draw b r in
-  List.iteri iter buttons
+(* Draw buttons evenly spaced vertically to cover the given bounds *)
+let draw_vertical_buttons bs r x y w h =
+  let offset = w / (List.length bs) in
+  let height = (100 - percent_key_padding) * offset / 100 in
+  let iter i b = draw_button b r x (i * offset + y) w height in
+  List.iteri iter bs
 
-let draw_wave_buttons r x y w h =
-  let buttons = Model.get_wave_buttons() in
-  let offset = h / (List.length buttons) in
-  let button_h = (100 - percent_key_padding) * offset / 100 in
-  let iter i b =
-    let button_y = y + i * offset in
-    Button_standard.set_area b x button_y w button_h;
-    Button_standard.draw b r in
-  List.iteri iter buttons
-
-let draw_grid r x y w =
-  let b = Model.get_synth_grid() in
-  let h = w in
-  Button_standard.set_area b x y w h;
-  Button_standard.draw b r;
-  h
-
+(*
+ * draw the BPM slider at the given y value. the x value has been defined
+ * externally in the model.
+ *)
 let draw_bpm r y =
   let size = 20 in
   let x = ((Model.get_bpm_pos()|> int_of_float) - size/2) in
@@ -206,6 +177,10 @@ let draw_bpm r y =
     (y + (size / 2) - 1) size black text;
   ()
 
+(*
+ * Draw the song position scrubber to the gui at the given [y] value. The other
+ * bounds are defined externally in the model.
+ *)
 let draw_scrub r y =
   (* draw square scrub *)
   let size = 30 in
@@ -239,19 +214,32 @@ let draw_scrub r y =
   let _ = Sdl.render_fill_rect r (Some rect) in
   ()
 
+(* clear the gui's view to have just the background *)
 let clear r =
   Gui_utils.set_color r background_color;
   let _ = Sdl.render_clear r in
   ()
 
-(* flush the buffer *)
+(*
+ * flush the gui buffer to the screen. This updates the gui and should be
+ * called 60 times a second.
+ *)
 let present r =
   let _ = Sdl.render_present r in
   ()
 
+(*
+ * given the ratio between [amp] and [max_amplitude] return the value with the
+ * same ratio to [max - min]
+ *)
 let get_amplitude_color_element min max amp =
   min + amp * ((max - min) / max_amplitude)
 
+(*
+ * get the color that corresponds to the given [amp] based on
+ * [min_graphic_color] and [max_graphic_color] and the ratio between [amp]
+ * and [max_amplitude].
+ *)
 let get_amplitude_color amp =
   let min_r = Sdl.Color.r min_graphic_color in
   let min_g = Sdl.Color.g min_graphic_color in
@@ -266,6 +254,10 @@ let get_amplitude_color amp =
   let b = get_amplitude_color_element min_b max_b amp in
   Sdl.Color.create r g b 255
 
+(*
+ * draw a segment of the sound visualizer with the requested bounds at the
+ * given amplitude.
+ *)
 let draw_graphic_segment r amp x y w h =
   let segment_color = get_amplitude_color amp in
   Gui_utils.set_color r segment_color;
@@ -273,11 +265,16 @@ let draw_graphic_segment r amp x y w h =
   let _ = Sdl.render_fill_rect r (Some rect) in
   ()
 
+(* return true if the array has only 0's in the given range, false otherwise. *)
 let rec is_zero arr i =
   if i >= Array.length arr
   then true
   else arr.(i) = 0 && (is_zero arr (i + 1))
 
+(*
+ * draw a visualization of each frequencies amplitude. Uses the given bounds.
+ * amplidudes grow up and attempt to fill the entire bouding box.
+ *)
 let draw_graphics r amplitudes x y w h =
   let should_noise = is_zero amplitudes 0 in
   let num_bars = Array.length amplitudes in
@@ -294,40 +291,44 @@ let draw_graphics r amplitudes x y w h =
     done;
   done
 
+(* return the sum of each element in an array within the given bounds *)
 let rec sum_array arr from_i to_i =
-  if from_i >= to_i
-  then 0
+  if from_i >= to_i then 0
   else arr.(from_i) + (sum_array arr (from_i + 1) to_i)
 
+(*
+ * return an array of amplitudes of raising frequencies, the number of elements
+ * is given by [size]. If size is too small, the array will be condensed by
+ * averaging the elements that fit into each index. [size] must be less than or
+ * equal to the total number of available frequencies.
+ *)
 let get_amplitudes size =
   let complex_arr = Model.get_buffer () in
 
-  let normalize = fun compl ->
-    int_of_float (2.0 *. (Complex.norm compl))
-  in
-
+  let normalize compl = int_of_float (2.0 *. (Complex.norm compl)) in
   let normalized = Array.map normalize complex_arr in
-  let normalized_len = min (max_frequency + 1) (Array.length normalized) in (* truncate unwanted frequencies *)
+
+  (* truncate unwanted frequencies *)
+  let normalized_len = min (max_frequency + 1) (Array.length normalized) in
 
   let condensed_len = size / 2 in
+  (* create index i of the condensed array but averaging the index range
+   * this element contains *)
   let condense i =
     let ratio = normalized_len / condensed_len in
     let from_i = i * ratio in
     let to_i = (i + 1) * ratio in
-    (sum_array normalized from_i to_i) / ratio
-  in
+    (sum_array normalized from_i to_i) / ratio in
   let condensed = Array.init condensed_len condense in
 
   let init_i i = (* meet base in the middle *)
-    condensed.(abs(condensed_len - 1 + i / condensed_len - i))
-  in
-  (* let init_i i = (* put base on the ends *)
-    if (i >= condensed_len)
-    then condensed.(size - 1 - i)
-    else condensed.(i)
-  in *)
+    condensed.(abs(condensed_len - 1 + i / condensed_len - i)) in
   Array.init size init_i
 
+(*
+ * draw the keyboard and the graphical visualization of the current sounds
+ * playing.
+ *)
 let draw_keyboard_visual r =
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
@@ -335,6 +336,7 @@ let draw_keyboard_visual r =
   let keyboard = Model.get_keyboard () in
   let keyboard_layout = Model.get_keyboard_layout () in
 
+  (* draw graphics *)
   let amplitudes = get_amplitudes num_graphic_bars in
   let num_bars = Array.length amplitudes + 1 in
   let graphics_x = graphic_padding_w in
@@ -344,6 +346,7 @@ let draw_keyboard_visual r =
   let graphics_h = window_h - 2 * graphic_padding_h in
   draw_graphics r amplitudes graphics_x graphics_y graphics_w graphics_h;
 
+  (* draw keyboard *)
   let keyboard_x = keyboard_padding_w in
   let keyboard_y = keyboard_padding_h in
   let keyboard_rows = Keyboard_layout.get_rows keyboard_layout in
@@ -354,16 +357,7 @@ let draw_keyboard_visual r =
       keyboard_x keyboard_y keyboard_w keyboard_rows keyboard_cols in
   (keyboard_x, keyboard_y, keyboard_w, keyboard_h)
 
-let draw_file_buttons r x y w =
-  let offset = w / 2 in
-  let size = (100 - percent_key_padding) * offset / 100 in
-  let iter i b =
-    let button_x = i * offset + x in
-    Button_standard.set_area b button_x y size size;
-    Button_standard.draw b r in
-  List.iteri iter (Model.get_file_buttons());
-  size
-
+(* draw the buttons that correspond to possible files the user may load. *)
 let draw_filename_buttons r x y w =
   let buttons = Model.get_filename_buttons() in
 
@@ -373,16 +367,16 @@ let draw_filename_buttons r x y w =
   let button_w = (100 - percent_key_padding) * x_offset / 100 in
   let button_h = (100 - percent_key_padding) * y_offset / 100 in
 
-  let iter i b =
+  let draw_button i b =
     let button_x = x + (i / 8) * x_offset in
     let button_y = y + (i mod 8) * y_offset in
 
     Button_standard.set_area b button_x button_y button_w button_h;
-    Button_standard.draw b r
-  in
-  List.iteri iter buttons;
+    Button_standard.draw b r in
+  List.iteri draw_button buttons;
   button_h
 
+(* draw the adsr (Attack Decay Sustain Release) sliders for the sythesizer. *)
 let draw_adsr_sliders r' y gap =
   let size_x = 10 in
   let size_y = 20 in
@@ -435,6 +429,8 @@ let draw_adsr_sliders r' y gap =
   Gui_utils.draw_text r' (tail+45) (y+(3*gap)) 20 black (Printf.sprintf "%.4f" r);
   ()
 
+(* draw the main window layout, with a keyboard mapped to a song, sound visuals,
+ * and song managers. *)
 let draw_song_player r =
   let keyboard_coords = draw_keyboard_visual r in
   let keyboard_x, keyboard_y, keyboard_w, keyboard_h = keyboard_coords in
@@ -444,17 +440,26 @@ let draw_song_player r =
   let arrows_y = 21 * keyboard_h / 20 + keyboard_y in
   let arrows_h = draw_arrows r arrows_x arrows_y arrows_w in
 
-
+  (*
+   * draw the midi's load, play, pause, and stop buttons with the given bounds,
+   * the height bound is calculated based on [w]. Returns the computed height.
+   *)
+  let midi_buttons = Model.get_midi_buttons() in
   let buttons_w = arrows_w * 2 in
   let buttons_x = keyboard_x in
   let buttons_y = arrows_y in
-  let buttons_h = draw_buttons r buttons_x buttons_y buttons_w in
+  let buttons_offset = buttons_w / (List.length midi_buttons) in
+  let buttons_h = (100 - percent_key_padding) * buttons_offset / 100 in
+  draw_horizontal_buttons midi_buttons r buttons_x buttons_y buttons_w buttons_h;
 
 
-  let synth_button_x = arrows_x in
-  let synth_button_y = arrows_y + 5 * arrows_h / 4 in
-  let synth_button_w = arrows_w -  arrows_w / 21 in
-  let _ = draw_synth_button r synth_button_x synth_button_y synth_button_w in
+  let synth = Model.get_synth_button() in
+  let synth_x = arrows_x in
+  let synth_y = arrows_y + 5 * arrows_h / 4 in
+  let synth_w = arrows_w -  arrows_w / 21 in
+  let synth_h = synth_w / 5 in
+  draw_button synth r synth_x synth_y synth_w synth_h;
+
 
   let bpm_y = arrows_y + arrows_h + 3 * keyboard_padding_h / 2 in
   let _ = draw_bpm r bpm_y in
@@ -463,6 +468,8 @@ let draw_song_player r =
   let _ = draw_scrub r scrub_y in
   ()
 
+(* draw the file chooser window, with file buttons, and select and
+ * cancel buttons. *)
 let draw_filechooser r =
   let window_w = Model.get_width () in
   let window_h = Model.get_height () in
@@ -472,44 +479,55 @@ let draw_filechooser r =
   let filename_buttons_w = window_h * 3 / 4 in
   let _ = draw_filename_buttons r filename_buttons_x filename_buttons_y filename_buttons_w in
 
-  let buttons_x = window_w - window_w / 5 in
-  let buttons_y = window_h - window_h / 6 in
-  let buttons_w = window_w / 5 in
-  let _ = draw_file_buttons r buttons_x buttons_y buttons_w in
-  ()
+  let file = Model.get_file_buttons() in
+  let file_x = window_w - window_w / 5 in
+  let file_y = window_h - window_h / 6 in
+  let file_w = window_w / 5 in
+  let file_offset = file_w / (List.length file) in
+  let file_h = (100 - percent_key_padding) * file_offset / 100 in
+  draw_horizontal_buttons file r file_x file_y file_w file_h
 
+(* draw the visualizer window. This includes a keyboard mapped to tones,
+ * a sound visualizer, and different ways to modify the tones. *)
 let draw_synthesizer r =
   let keyboard_coords = draw_keyboard_visual r in
   let keyboard_x, keyboard_y, keyboard_w, keyboard_h = keyboard_coords in
 
+  let grid = Model.get_synth_grid() in
   let grid_x = keyboard_x in
   let grid_y = 21 * keyboard_h / 20 + keyboard_y in
   let grid_w = keyboard_w / 6 - 10 in
-  let grid_h = draw_grid r grid_x grid_y grid_w in
+  let grid_h = grid_w in
+  draw_button grid r grid_x grid_y grid_w grid_h;
 
+  let filters = Model.get_filter_buttons() in
   let filters_x = grid_x + 11 * grid_w / 10 in
   let filters_y = grid_y + 4 in
   let filters_w = 3 * grid_w / 4 in
   let filters_h = grid_h in
-  draw_filter_buttons r filters_x filters_y filters_w filters_h;
+  draw_vertical_buttons filters r filters_x filters_y filters_w filters_h;
 
+  let waves = Model.get_wave_buttons() in
   let waves_x = filters_x + 11 * filters_w / 10 in
   let waves_y = filters_y in
   let waves_w = filters_w in
   let waves_h = filters_h in
-  draw_wave_buttons r waves_x waves_y waves_w waves_h;
+  draw_vertical_buttons waves r waves_x waves_y waves_w waves_h;
 
-  let synth_button_w = grid_w in
-  let synth_button_x = keyboard_x + keyboard_w - synth_button_w - 15 in
-  let synth_button_y = grid_y in
-  let _ = draw_play_button r synth_button_x synth_button_y synth_button_w in
+  let synth = Model.get_play_button() in
+  let synth_w = grid_w in
+  let synth_x = keyboard_x + keyboard_w - synth_w - 15 in
+  let synth_y = grid_y in
+  let synth_h = synth_w / 5 in
+  draw_button synth r synth_x synth_y synth_w synth_h;
 
   let adsr_sliders_h = grid_y + 30 in
   let gap = (Model.get_height() - grid_y) / 6 in
   let _ = draw_adsr_sliders r adsr_sliders_h gap in
   ()
 
-
+(* this is the main draw function of the gui. This will draw the current
+ * window and should be called 60 times a second. *)
 let draw r =
   clear r;
   begin
@@ -518,7 +536,7 @@ let draw r =
     | SFileChooser -> draw_filechooser r
     | SSynthesizer -> draw_synthesizer r
   end;
-    present r
+  present r
 
 (*is [s] is "scrub" then for midi slider, if "bpm" then for bpm slider*)
 let scrub_pressed (x,y) s =
