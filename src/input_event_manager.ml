@@ -30,6 +30,8 @@ let handle_keyboard_output output =
           Model.start_midi()
     | _ -> ()
 
+(* [handle_keyboard input_event] handles the effects of pressing and releasing
+ * a key on the keyboard which is encoded in [input_event]. *)
 let handle_keyboard input_event =
   match Model.get_state () with
   | SKeyboard | SSynthesizer->
@@ -57,7 +59,7 @@ let clear_keyboard () =
  * Changes include setting is_scrubbing fields to false and executing
  * the effects of various buttons. *)
 let handle_mouse_up x y =
-  (* stop updating any sliders *)
+  (* Stops scrubbing and sliding by setting is_scrubbing fields to false. *)
   if Model.is_scrubbing() then
     begin
       Model.set_scrubbing false;
@@ -74,6 +76,8 @@ let handle_mouse_up x y =
   Model.set_s_sliding false;
   Model.set_r_sliding false;
 
+  (* Executes the effects of whatever button is pressed if any button was in
+   * fact pressed. *)
   let iter = fun _ b -> Button.up_press b (x, y) in
   match Model.get_state () with
   | SKeyboard ->
@@ -98,7 +102,6 @@ let handle_mouse_down x y =
   let iter = fun _ b -> Button.down_press b (x, y) in
   match Model.get_state() with
   | SKeyboard ->
-    (* begin changing any sliders if those were clicked *)
     Model.set_scrubbing (Gui.scrub_pressed (x, y) "scrub");
     Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) "bpm");
   | SFileChooser -> ()
@@ -109,24 +112,37 @@ let handle_mouse_down x y =
     Model.set_r_sliding (Gui.scrub_pressed (x,y) "r_slider");
     iter () (Model.get_synth_grid())
 
+(* [handle_scrubbing x] handles the effects of moving one of the 6 sliders in
+ * our GUI. Since they are all horizontal sliders, [x] represents the x
+ * coordinate of where the slider is.
+ *
+ * Effects of manipulating the slider include updating the GUI with the new
+ * position for the slider and setting whatever variable the slider represents
+ * to its new value based on the new location of the slider. *)
 let handle_scrubbing x =
   let set_scrub mini maxi =
     let curr = float_of_int x in
     if curr > maxi then maxi
     else if curr < mini then mini
     else curr in
+
+  (* Handles scrubbing for the midi player. *)
   if Model.is_scrubbing() then
     begin
       let scrub_x = set_scrub (Model.get_scrub_pos_min())
           (Model.get_scrub_pos_max()) in
       Model.set_scrub_pos scrub_x
     end;
+
+  (* Handles sliding for the bpm_slider. *)
   if Model.is_bpm_scrubbing() then
     begin
       let scrub_x = set_scrub (Model.get_bpm_pos_min())
           (Model.get_bpm_pos_max()) in
       Model.set_bpm_pos scrub_x
     end;
+
+  (* Handles sliding for the four adsr slider in synthesizer. *)
   let adsr_length = Model.get_adsr_pos_max() -. Model.get_adsr_pos_min() in
   let (a,d,s,r) = Model.get_adsr_params() in
   let scrub_x = set_scrub (Model.get_adsr_pos_min())
@@ -142,6 +158,9 @@ let handle_scrubbing x =
     Model.set_adsr_params (a,d,s,new_val);
   ()
 
+(* [handle_mouse_move x y] handles the effects of dragging the mouse to a new
+ * position with coordinates (x,y). Effects include the dragging of various
+ * sliders as well as the drawing in the synthesizer grid. *)
 let handle_mouse_move x y =
   let iter = fun _ b -> Button.on_move b (x, y) in
   match Model.get_state() with
