@@ -1,8 +1,11 @@
 (* This module will handle creation and use of buttons. *)
 
+(* represents a point (x, y) with ints *)
 type ipoint = int*int
+(* represents a point (x, y) with floats *)
 type fpoint = float*float
 
+(* represents a button, a button is a recangular surface mapped with events  *)
 type button = {
   mutable corner:ipoint;
   mutable w:int;
@@ -22,7 +25,7 @@ let create_button on_down on_up moved_at =
     on_down = on_down;
     on_up = on_up;
     moved_at = moved_at;
-    draw = None
+    draw = None;
   }
 
 let set_area b x y w h =
@@ -34,10 +37,14 @@ let get_area b =
   let b_x, b_y = b.corner in
   (b_x, b_y, b.w, b.h)
 
+(* returns true if the point [(x, y)] is within the given button [b],
+ * false otherwise *)
 let contains b (x, y) =
   let b_x, b_y = b.corner in
   x >= b_x && y >= b_y && x <= (b_x + b.w) && y <= (b_y + b.h)
 
+(* converts the point [(x, y)] to be in the terms of the size ratios and
+ * position of the button [b] *)
 let convert_to_local_coords b (x, y) =
   let b_x, b_y = b.corner in
   let f_x = float_of_int (x - b_x) in
@@ -48,23 +55,20 @@ let convert_to_local_coords b (x, y) =
 
 (* if the button contains the point, execute the pressed callback *)
 let down_press b p =
-  if contains b p
-  then b.on_down (convert_to_local_coords b p)
-  else ()
+  if contains b p then
+    b.on_down (convert_to_local_coords b p)
 
 
 (* if the button contains the point, execute the released callback *)
 let up_press b p =
-  if contains b p
-  then b.on_up (convert_to_local_coords b p)
-  else ()
+  if contains b p then
+    b.on_up (convert_to_local_coords b p)
 
 
 (* if the button contains the point, execute the moved callback *)
 let on_move b p =
-  if contains b p
-  then b.moved_at (convert_to_local_coords b p)
-  else ()
+  if contains b p then
+    b.moved_at (convert_to_local_coords b p)
 
 
 (* set the function to be executed when draw is called *)

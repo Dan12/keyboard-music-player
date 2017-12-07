@@ -24,7 +24,7 @@ let handle_keyboard_output output =
       Song.set_sound_pack i song
     | Keyboard_layout.KOSpace ->
       if Model.get_state() = SKeyboard then
-        if Model.midi_is_playing() then 
+        if Model.midi_is_playing() then
           Model.pause_midi()
         else
           Model.start_midi()
@@ -62,13 +62,13 @@ let handle_mouse_up x y t =
       Model.set_bpm_scrubbing false;
       clear_keyboard();
     end;
-  
+
   Model.set_a_sliding false;
   Model.set_d_sliding false;
   Model.set_s_sliding false;
   Model.set_r_sliding false;
-  
-  let iter = fun _ b -> Button_standard.up_press b (x, y) in
+
+  let iter = fun _ b -> Button.up_press b (x, y) in
   match Model.get_state () with
   | SKeyboard ->
     List.iteri iter (Model.get_midi_buttons());
@@ -84,7 +84,7 @@ let handle_mouse_up x y t =
 
 
 let handle_mouse_down x y =
-  let iter = fun _ b -> Button_standard.down_press b (x, y) in
+  let iter = fun _ b -> Button.down_press b (x, y) in
   match Model.get_state() with
   | SKeyboard ->
     (* begin changing any sliders if those were clicked *)
@@ -132,7 +132,7 @@ let handle_scrubbing x =
   ()
 
 let handle_mouse_move x y =
-  let iter = fun _ b -> Button_standard.on_move b (x, y) in
+  let iter = fun _ b -> Button.on_move b (x, y) in
   match Model.get_state() with
   | SKeyboard ->
     handle_scrubbing x

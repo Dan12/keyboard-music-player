@@ -7,5 +7,8 @@
  *)
 val draw : Tsdl.Sdl.renderer -> unit
 
-(* [scrub_pressed x y] returns whether or not the scrub was pressed. *)
+(* [scrub_pressed (x,y) s] returns whether or not the scrub was pressed.
+ * requires:
+ *      - [(x,y)] represents the x,y coordinates of the press
+ *      - [s] represents the string identifier of which slider is pressed. *)
 val scrub_pressed : (int * int) -> string -> bool
