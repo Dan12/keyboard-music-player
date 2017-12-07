@@ -1,9 +1,7 @@
 (* code adapted from: https://github.com/savonet/ocaml-mm *)
 
-type waveform = Sine | Triangle | Saw | Square
-
 type synth = {
-  waveform : waveform;
+  waveform : Model.waveform;
   freq : float;
   note_ocate : int*int;
   mutable sample : int;
@@ -49,16 +47,16 @@ let get_next_sample s =
   let amp =
     begin
     match s.waveform with
-    | Sine ->
+    | Model.Sine ->
       let theta = 2. *. pi *. actual_freq in
       sin(theta *. t)
-    | Square ->
+    | Model.Square ->
       let theta = fracf (t *. actual_freq) in
       if theta < 0.5 then 1. else -1.
-    | Saw ->
+    | Model.Saw ->
       let x = fracf (t *. actual_freq) in
       2. *. x -. 1.
-    | Triangle ->
+    | Model.Triangle ->
       let x = fracf (t *. actual_freq) +. 0.25 in
       if x < 0.5 then
         4. *. x -. 1.

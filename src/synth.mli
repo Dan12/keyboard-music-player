@@ -1,6 +1,3 @@
-(* The waveform of the synthesized sound *)
-type waveform = Sine | Triangle | Saw | Square
-
 (* The synthesized sound type *)
 type synth
 
@@ -8,7 +5,7 @@ type synth
  * synthesized sound with the given waveform at the given
  * [octave] and [note].
  *)
-val create : waveform -> int*int -> synth
+val create : Model.waveform -> int*int -> synth
 
 (* [start synth] starts the synth *)
 val start : synth -> unit
