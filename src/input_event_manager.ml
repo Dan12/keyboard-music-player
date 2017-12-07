@@ -49,14 +49,23 @@ let clear_keyboard () =
   done
 
 let handle_mouse_up x y t =
-  (Model.set_scrubbing false;
-  clear_keyboard());
-  Model.set_bpm_scrubbing false;
+  (* stop updating any sliders according to the mouse's movements *)
+  if Model.is_scrubbing() then
+    begin
+      Model.set_scrubbing false;
+      clear_keyboard();
+    end;
+  if Model.is_bpm_scrubbing() then
+    begin
+      Model.set_bpm_scrubbing false;
+      clear_keyboard();
+    end;
+  
   Model.set_a_sliding false;
   Model.set_d_sliding false;
   Model.set_s_sliding false;
   Model.set_r_sliding false;
-  clear_keyboard();
+  
   let iter = fun _ b -> Button_standard.up_press b (x, y) in
   match Model.get_state () with
   | SKeyboard ->
@@ -76,6 +85,7 @@ let handle_mouse_down x y =
   let iter = fun _ b -> Button_standard.down_press b (x, y) in
   match Model.get_state() with
   | SKeyboard ->
+    (* begin changing any sliders if those were clicked *)
     Model.set_scrubbing (Gui.scrub_pressed (x, y) "scrub");
     Model.set_bpm_scrubbing (Gui.scrub_pressed (x, y) "bpm");
   | SFileChooser -> ()

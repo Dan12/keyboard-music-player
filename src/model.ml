@@ -70,19 +70,15 @@ let key_background = Sdl.Color.create 255 255 255 220
 
 let keyboard_text_color = Sdl.Color.create 0 0 0 255
 
-
-
-
 let contains s1 s2 =
-let size = String.length s1 in
-let contain = ref false in
-let i = ref 0 in
-while !i < (String.length s2 - size + 1) && !contain = false do
-  if String.sub s2 !i size = s1 then contain := true
-  else i := !i + 1
-done;
-!contain
-
+  let size = String.length s1 in
+  let contain = ref false in
+  let i = ref 0 in
+  while !i < (String.length s2 - size + 1) && !contain = false do
+    if String.sub s2 !i size = s1 then contain := true
+    else i := !i + 1
+  done;
+  !contain
 
 let get_filenames dir =
   let folder_list =
@@ -99,8 +95,6 @@ let get_filenames dir =
       (fun j s -> if contains ".json" s
         then s::j else j) [] filename_list in
   List.sort (compare) json_list
-
-
 
 let model:model =
   let window_w = 1280 in
@@ -237,6 +231,7 @@ let pause_midi () =
   model.current_midi_button <- 2
 
 let stop_midi () =
+  (* reset, the scrub, the bpm slider, etc. *)
   model.is_playing <- false;
   model.should_load_midi <- true;
   Metronome.reset();
@@ -650,8 +645,7 @@ let create_waveform_buttons () =
   let square = make_button Square "Square Wave" in
   [sine; triangle; saw; square]
 
-
-
+(* Initialize *)
 let _ = set_filename_buttons (get_file_location())
 let _ = model.midi_buttons <- create_midi_buttons()
 let _ = model.file_buttons <- create_file_buttons()
