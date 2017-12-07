@@ -1,5 +1,3 @@
-(* TODO needs comments for all functions and variables except draw *)
-
 open Tsdl
 open Keyboard_layout
 open Keyboard

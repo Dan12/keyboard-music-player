@@ -4,6 +4,7 @@ open Song
 (* This module implements the singleton model by accessing all of our data
    from here. *)
 
+(* Represents which slider is currently in use. *)
 type scrubs = Scrub | BPM | A_slider | D_slider | S_slider | R_slider
 
 (* represents the types of the windows *)
