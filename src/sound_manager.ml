@@ -17,8 +17,11 @@ let key_pressed row_col =
   | Model.SSynthesizer ->
     begin
       let not_equal s = not (Synth.is_equal row_col s) in
+      (* if the sound is currently playing, stop it *)
       let filtered_list = List.filter not_equal manager.synth_sounds_playing in
+      (* create the new sound *)
       let new_sound = Synth.create (Model.get_current_waveform()) row_col in
+      (* add it to the list *)
       manager.synth_sounds_playing <- new_sound::filtered_list
     end
   | Model.SKeyboard ->
@@ -41,7 +44,7 @@ let key_pressed row_col =
         if List.mem sound new_sounds then
           ()
         else
-        manager.sounds_playing <- sound::new_sounds
+          manager.sounds_playing <- sound::new_sounds
     end
   | Model.SFileChooser -> ()
 
@@ -67,7 +70,7 @@ let key_released row_col =
             manager.sounds_playing <- removed_list
           end
         else
-          (* TODO if looping and not hold to play, then stop  *)
+          (* Don't immediatley stop if not hold_to_play *)
           ()
     end
   | Model.SFileChooser -> ()
@@ -80,9 +83,10 @@ let add_custom_sound cur sound =
   let sample = Synth.get_next_sample sound in
   cur +. sample
 
-
+(* The maximum values for signed 32 bit ints *)
 let max_32 = 2147483647
 let min_32 = -2147483648
+(* [clip sample] clips the sample to be within a signed 32 bit int *)
 let clip s =
   if s > max_32 then
     max_32
@@ -106,7 +110,7 @@ let audio_callback output =
           output.{2*i} <- Int32.of_int (sample_clipped);
           output.{2*i + 1} <- Int32.of_int (sample_clipped);
         done;
-        (* filter out the only the sounds being played *)
+        (* filter out the only the synths being played *)
         manager.synth_sounds_playing <- List.filter Synth.is_playing manager.synth_sounds_playing
       end
     | Model.SKeyboard ->

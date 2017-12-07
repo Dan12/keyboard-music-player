@@ -314,12 +314,16 @@ let set_beats beats =
   model.beats_in_midi <- beats
 
 let set_buffer b =
+  (* split the buffer into a complex left and right float array *)
   let (left, _) = Fft.complex_create b in
+  (* Throw out the right and apply a cosine window function to the signal *)
   Fft.cosine left;
+  (* potentially adjust the fft dims *)
   if Bigarray.Array1.dim b = 1024 then
     fft := Fft.init 9
   else
     ();
+  (* compute the fft on the left buffer *)
   Fft.fft (!fft) left;
   model.buffer <- left
 
