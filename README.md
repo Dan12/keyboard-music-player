@@ -33,3 +33,13 @@ Don’t know how to play the song? Our midi player can help you out. Press the p
 
 ### Some screenshots
 ![The keyboard interface](screenshot1.png)
+The keyboard interface
+
+![A sound beng played](screenshot2.png)
+A sound beng played
+
+![The synthesizer](screenshot3.png)
+The synthesizer
+
+![A song beng played using the midi file](screenshot4.png)
+A song beng played using the midi file
