@@ -100,6 +100,7 @@ let audio_callback output =
     match Model.get_state () with
     | Model.SSynthesizer ->
       begin
+        manager.sounds_playing <- [];
         let arr_len = ((Array1.dim output / 2) - 1) in
         for i = 0 to arr_len do
           let sample = List.fold_left add_custom_sound 0. manager.synth_sounds_playing in
@@ -115,6 +116,7 @@ let audio_callback output =
       end
     | Model.SKeyboard ->
       begin
+        manager.synth_sounds_playing <- [];
         let arr_len = ((Array1.dim output / 2) - 1) in
         for i = 0 to arr_len do
           let (sample_l, sample_r) = List.fold_left add_sound (0,0) manager.sounds_playing in
@@ -128,6 +130,8 @@ let audio_callback output =
         manager.sounds_playing <- filtered_sounds;
       end
     | _ ->
+      manager.sounds_playing <- [];
+      manager.synth_sounds_playing <- [];
       Array1.fill output (Int32.of_int 0)
   end;
   Model.set_buffer output

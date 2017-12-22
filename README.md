@@ -32,4 +32,4 @@ Don’t know how to play the song? Our midi player can help you out. Press the p
 - Notice those bars in Keyboard mode when you play a song? Those are a visualization of the Fast Fourier Transform (FFT) of the audio buffer. What it does is it attempts to deconstruct the audio data into its fundamental frequencies and figures out the amplitude of each of those frequencies. So you’ll notice that if you play a very low sound, the bars toward the middle will increase in amplitude. If you play a sound with a higher frequency, bars further away from the middle will increase their amplitudes.
 
 ### Some screenshots
-![The keyboard interface](Screen Shot 2017-12-22 at 12.03.54 AM.png)
+![The keyboard interface](screenshot1.png)

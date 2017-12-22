@@ -1,0 +1,4145 @@
+commit 281d419c3439ddd124a74a8f0198aa54b3ce8264
+Merge: 78f0779 8efa11b
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Thu Dec 7 13:59:31 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 78f077975a1e58ce8fa89fe57c71cc23a1c5b04c
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Thu Dec 7 13:59:27 2017 -0500
+
+    d
+
+ src/gui.ml    | 2 --
+ src/model.mli | 1 +
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+commit 8efa11b34e51112195d457e7525204894f2e068f
+Merge: 1a688f3 29ffe1d
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 13:59:23 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 1a688f31dc228e030aebc33525617aa5bc66bd6c
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 13:59:17 2017 -0500
+
+    removed TODO
+
+ src/song.mli | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 29ffe1dd806cd839dbadfd145f1c98df9f66a480
+Merge: b97f32e 47513d6
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Thu Dec 7 13:58:29 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit b97f32e3c491eedb419ace6b5eca6bb27555252b
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Thu Dec 7 13:58:27 2017 -0500
+
+    slider variants
+
+ src/gui.ml                 | 13 ++++++-------
+ src/gui.mli                |  2 +-
+ src/input_event_manager.ml | 12 ++++++------
+ src/model.ml               | 19 +++++--------------
+ src/model.mli              |  2 ++
+ 5 files changed, 20 insertions(+), 28 deletions(-)
+
+commit 47513d6ce3fef1c06ea086dc2466b2148d3b0ffe
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 13:54:09 2017 -0500
+
+    added midi_player comment
+
+ src/midi_player.ml  | 3 +--
+ src/midi_player.mli | 1 +
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 2ced2047e609dc7ce2b74d9760225b1192f2304b
+Merge: 8119a68 c22d13d
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 13:39:08 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 8119a688c15f614d85db0e6a7b0e7ff1d29dffcd
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 13:38:54 2017 -0500
+
+    comment model
+
+ src/model.ml  | 39 ++++++++++++++++++++++-----------------
+ src/model.mli |  8 +++-----
+ 2 files changed, 25 insertions(+), 22 deletions(-)
+
+commit c22d13d06e78f5897c4381fd3404b6787ad8c978
+Merge: 6f79a19 7f46046
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Dec 7 13:24:47 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 6f79a195a65a0803e1e76e1d6e0203b9422563c4
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Dec 7 13:24:39 2017 -0500
+
+    updated run instruction
+
+ 3110 Final Project Doc.pdf | Bin 240971 -> 243729 bytes
+ README.md                  |   4 ++++
+ 2 files changed, 4 insertions(+)
+
+commit 7f460463b19e6b31f5a6214f34e0958f92a16324
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Thu Dec 7 13:18:17 2017 -0500
+
+    commenting
+
+ src/gui.ml | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit c6eb62e3aabf2285b53f6070629e4ea92377712f
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Thu Dec 7 13:16:09 2017 -0500
+
+    commenting
+
+ src/input_event_manager.ml | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
+
+commit 86f4a7d50c6666da78f77f04375b203fea9a8e57
+Merge: 4f5fa5f 7d420d7
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Thu Dec 7 13:16:03 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 7d420d7a953d2762501e0d6a222cc5b751cabec8
+Merge: 69fd95c c3ad77d
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Dec 7 13:15:49 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 69fd95c9d07541ec0e5f17af541f4da8d480cad3
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Dec 7 13:15:38 2017 -0500
+
+    added command line width and height arguments
+
+ src/model.ml | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+commit c3ad77db0aad1e2271572c4f62e88d23d2ecb02c
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 13:13:54 2017 -0500
+
+    made _5_midi _full_midi
+
+ src/model.ml                                                      | 2 +-
+ src/resources/elec_data/{elec_5_midi.json => elec_full_midi.json} | 0
+ src/resources/eq_data/{eq_5_midi.json => eq_full_midi.json}       | 0
+ src/resources/kpsk_data/{kpsk_5_midi.json => kpsk_full_midi.json} | 0
+ 4 files changed, 1 insertion(+), 1 deletion(-)
+
+commit 2679b7832c45af4a74d34a4f509a19a82705ec09
+Merge: 16c6361 bf7713a
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 13:10:50 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 16c6361e7f991f2ce544cb5861b3f9cd1e953b53
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 13:10:41 2017 -0500
+
+    added mas comments
+
+ src/keyboard_layout.mli | 14 +++++---------
+ src/model.ml            |  1 +
+ src/model.mli           |  1 +
+ 3 files changed, 7 insertions(+), 9 deletions(-)
+
+commit 4f5fa5f9040006f56b4881a3b17b83da005a9a4d
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Thu Dec 7 13:06:24 2017 -0500
+
+    comments
+
+ src/input_event_manager.ml | 21 +++++++++++++++------
+ src/metronome.ml           | 15 ++++++++++++---
+ 2 files changed, 27 insertions(+), 9 deletions(-)
+
+commit bf7713a16bfb1308e96389cd2c044a15b90a5d30
+Merge: e3c63a9 7e3f252
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Dec 7 12:54:18 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit e3c63a91095aba0ce6702dab2a91f83f16eee8bf
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Dec 7 12:53:48 2017 -0500
+
+    added full midi files
+
+ lines.py                                 |   16 +
+ src/resources/conversions/app_midi.js    |   35 +
+ src/resources/elec_data/elec_5_midi.json | 2235 +++++++++++++++++
+ src/resources/eq_data/eq_5_midi.json     | 2920 ++++++++++++++++++++++
+ src/resources/kpsk_data/kpsk_5_midi.json | 3950 ++++++++++++++++++++++++++++++
+ 5 files changed, 9156 insertions(+)
+
+commit 7e3f2521cff30434a6fd1f7d7e2299da66e20337
+Merge: 81214b2 a160b08
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 12:48:11 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 81214b21b15edb80dd51b27dda6adb553ce1d34d
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 12:47:50 2017 -0500
+
+    commented gui_utils
+
+ src/gui_utils.ml | 76 ++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 43 insertions(+), 33 deletions(-)
+
+commit a160b08c14604c1c349cf0affb8361f26529605e
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Thu Dec 7 12:43:25 2017 -0500
+
+    bpm slider
+
+ src/gui.ml                 | 10 +---------
+ src/input_event_manager.ml |  2 +-
+ src/model.ml               |  5 +++--
+ 3 files changed, 5 insertions(+), 12 deletions(-)
+
+commit 252ffe920987c3e73db461986f362cda6c24d078
+Merge: bf5a15b 8a25bb8
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Thu Dec 7 12:36:52 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit bf5a15b590659036038a4b4cabfdf8ebf5da66c2
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Thu Dec 7 12:36:17 2017 -0500
+
+    d
+
+ src/gui.ml   | 18 +++++++++++++++++-
+ src/gui.mli  |  5 ++++-
+ src/model.ml |  3 ++-
+ 3 files changed, 23 insertions(+), 3 deletions(-)
+
+commit 8a25bb8e9ef57a31df8c33b797e09a3cd09ba7ec
+Merge: 77a271b ad274dc
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 12:14:50 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 77a271be6df5c056565344d06eb9e57dae9f9621
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 12:14:42 2017 -0500
+
+    changed button_standard to button
+
+ src/{button_standard.ml => button.ml}   | 24 ++++++-----
+ src/{button_standard.mli => button.mli} |  4 ++
+ src/gui.ml                              |  8 ++--
+ src/input_event_manager.ml              | 10 ++---
+ src/model.ml                            | 74 ++++++++++++++++-----------------
+ src/model.mli                           | 16 +++----
+ 6 files changed, 72 insertions(+), 64 deletions(-)
+
+commit ad274dc971fb4b92fc3f4110c00993a107bd3db5
+Merge: a215dd0 7b7c068
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Dec 7 12:11:27 2017 -0500
+
+    merged
+
+commit a215dd012e105884150d5fdcc20d13f162459bfc
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Dec 7 12:11:03 2017 -0500
+
+    added comments and cleanup
+
+ src/audio_effects.ml       | 82 ----------------------------------------------
+ src/fft.ml                 | 61 +++++++++++++++++++---------------
+ src/filter.ml              |  2 ++
+ src/input_event_manager.ml |  6 ++--
+ src/model.ml               |  4 +++
+ src/song.ml                |  1 +
+ src/sound_manager.ml       | 12 ++++---
+ src/synth.ml               | 35 +++++++++++---------
+ 8 files changed, 72 insertions(+), 131 deletions(-)
+
+commit 7b7c0688710f146fee03bfceeae377823fb42762
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 11:57:53 2017 -0500
+
+    added clarification functions/removed unneeded parens
+
+ src/gui.ml | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
+
+commit 96177ec494eca77b34242795ccead6962b696999
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 00:59:23 2017 -0500
+
+    fixed cop paste errors
+
+ src/button_standard.ml  | 2 +-
+ src/button_standard.mli | 2 +-
+ src/gui.ml              | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+commit b589eb2d29efe3e81ec2d1ce98aa1745ab1159ad
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 00:40:37 2017 -0500
+
+    changed comment in gui.mli
+
+ src/gui.mli | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit bdaf941af367b3fe5fd36c671518b95a25d043dc
+Merge: d566d75 dacee41
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 00:38:24 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit d566d75fd0a70dfbcf8f9ed9bffa63f09e544d48
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Thu Dec 7 00:38:08 2017 -0500
+
+    cleaned and commented gui.ml
+
+ src/gui.ml | 220 +++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 119 insertions(+), 101 deletions(-)
+
+commit 70e2f2e054a64d1956259be6522f4c03094b3487
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Dec 6 23:40:42 2017 -0500
+
+    updated main makefile
+
+ Makefile | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit dacee413eee03e6e6122d957f1fd0b1448f7092f
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Dec 6 23:34:27 2017 -0500
+
+    added readme
+
+ README.md | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+commit cf748a020172df6f6c6908ba517788738d9a352f
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Wed Dec 6 23:25:48 2017 -0500
+
+    comments
+
+ src/model.mli | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit da9915c0d3d68d4dbfc8aa6c64221cc1c2ec62dd
+Merge: 620e4a6 60dc0eb
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Wed Dec 6 23:23:05 2017 -0500
+
+    Merge branch 'master' into synth_gui
+
+commit 620e4a61380f3b8508a42ea4fbae499cd29666b1
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Wed Dec 6 23:22:40 2017 -0500
+
+    comment
+
+ src/model.mli | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit 60dc0ebe37c062380e071f61803b1173488d886d
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Dec 6 23:17:38 2017 -0500
+
+    cleanup
+
+ src/model.ml | 25 +++++++++----------------
+ 1 file changed, 9 insertions(+), 16 deletions(-)
+
+commit af4e7279b28f9e72824a468182f7a345ef78d347
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Dec 6 23:03:40 2017 -0500
+
+    minor sound manager and adsr fixes
+
+ src/adsr.ml          |  7 ++++++-
+ src/sound_manager.ml | 10 ++++------
+ 2 files changed, 10 insertions(+), 7 deletions(-)
+
+commit d8ceb6c04ca1af8940a93580c578295310f32563
+Merge: 6ccc316 595e892
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Wed Dec 6 22:52:24 2017 -0500
+
+    Merge pull request #49 from dw475/synth_gui
+    
+    Synth gui
+
+commit 595e892e01ee56f77f8edff5b83dd52872cd343b
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Dec 6 22:51:05 2017 -0500
+
+    removed merged comments
+
+ src/gui.ml                 | 19 -------------------
+ src/input_event_manager.ml | 24 ------------------------
+ 2 files changed, 43 deletions(-)
+
+commit 9cd95285bc8c2464f154573ceb04fc098ee43a79
+Merge: c77a4a7 6ccc316
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Dec 6 22:49:27 2017 -0500
+
+    merged
+
+commit c77a4a7385b1af79729e56a56ea69eb4fc191721
+Merge: 02bfd5b eec5eef
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Dec 6 22:37:29 2017 -0500
+
+    merged
+
+commit 02bfd5be49f2bedcf93d8d1751d37d0585fde9fe
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Dec 6 22:37:06 2017 -0500
+
+    adsr bugfixes
+
+ src/adsr.ml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit eec5eefcc9eaf17ec3ef1ab613a8aebb5f452585
+Merge: 6d221c4 c4f0ddf
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Wed Dec 6 22:30:09 2017 -0500
+
+    Merge branch 'synth_gui' of https://github.coecis.cornell.edu/dw475/3110-final into synth_gui
+
+commit 6d221c42f6dadfc3c4161efb65613efbdd31fcf4
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Wed Dec 6 22:30:06 2017 -0500
+
+    spacebar fix
+
+ src/input_event_manager.ml | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit c4f0ddfa35be9b4d513d0c0cf3e7673fcf2243cb
+Merge: d48788c 5220012
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Wed Dec 6 22:26:39 2017 -0500
+
+    Merge branch 'synth_gui' of https://github.coecis.cornell.edu/dw475/3110-final into synth_gui
+
+commit d48788c780269a499cd67ff232168e7cfa1a5929
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Wed Dec 6 22:26:36 2017 -0500
+
+    added some comments to gui
+
+ src/gui.ml | 68 ++++++++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 46 insertions(+), 22 deletions(-)
+
+commit 5220012ae01f107dad9c38a2527e0f8d6033d8e6
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Wed Dec 6 22:26:24 2017 -0500
+
+    space bar
+
+ src/model.ml | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+commit 806cfc700c003712ec19ff2683562c8ace168154
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Wed Dec 6 22:23:41 2017 -0500
+
+    sliders
+
+ src/model.ml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 080298e5f9a240ae9a4a5bd59f8f7f11578a2da4
+Merge: 933c763 676612d
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Wed Dec 6 22:20:55 2017 -0500
+
+    Merge branch 'synth_gui' of https://github.coecis.cornell.edu/dw475/3110-final into synth_gui
+
+commit 933c763313089997b239bc88008af891647c4ce9
+Author: David Zhang <davidzhang@dhcp-mcfad-1119.redrover.cornell.edu>
+Date:   Wed Dec 6 22:20:53 2017 -0500
+
+    sliders
+
+ src/gui.ml                 | 76 +++++++++++++++++++++++++++++++++++++++++++---
+ src/input_event_manager.ml | 59 +++++++++++++++++++++--------------
+ src/model.ml               | 42 +++++++++++++++++++++++++
+ src/model.mli              | 20 ++++++++++++
+ 4 files changed, 171 insertions(+), 26 deletions(-)
+
+commit 6ccc3163b30dce24b32687e985c71658568f0ecb
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Dec 6 21:51:08 2017 -0500
+
+    minor clear keyboard bugfix
+
+ src/input_event_manager.ml | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+commit cf8346d270d30d97815874ff4a88204d695adb8e
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Wed Dec 6 20:55:48 2017 -0500
+
+    added comments
+
+ src/gui.ml                 | 6 +++++-
+ src/input_event_manager.ml | 4 ++++
+ src/midi.ml                | 8 ++++++++
+ src/model.ml               | 3 ++-
+ src/tick.ml                | 6 +++++-
+ 5 files changed, 24 insertions(+), 3 deletions(-)
+
+commit 676612d16c5e76459150335d1e43f2d4262e0651
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Wed Dec 6 19:56:18 2017 -0500
+
+    added waveform selectors
+
+ src/gui.ml                 | 20 ++++++++++++--
+ src/input_event_manager.ml |  3 ++-
+ src/model.ml               | 66 ++++++++++++++++++++++++++++++++++++++++------
+ src/model.mli              | 11 +++++++-
+ src/sound_manager.ml       |  3 +--
+ src/synth.ml               | 12 ++++-----
+ src/synth.mli              |  5 +---
+ 7 files changed, 95 insertions(+), 25 deletions(-)
+
+commit 0959cff6d8079b9d3067031c47d5dfc6246941e4
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Dec 6 19:24:59 2017 -0500
+
+    added doc
+
+ 3110 Final Project Doc.pdf | Bin 0 -> 240971 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 7a044d7374afdf46fe1bba29ef32f63049947b6b
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Wed Dec 6 18:54:34 2017 -0500
+
+    added synth buttons
+
+ src/gui.ml                 | 18 +++++++++++++-
+ src/input_event_manager.ml |  3 ++-
+ src/model.ml               | 61 +++++++++++++++++++++++++++++++++++++++-------
+ src/model.mli              |  3 +++
+ 4 files changed, 74 insertions(+), 11 deletions(-)
+
+commit 17dfc36b504fe8e50b654778a4cf5b11f6998e2b
+Merge: 88f4efb 491eb46
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Dec 6 13:40:16 2017 -0500
+
+    merged
+
+commit 491eb4667fcc35af027b7fab0b5c1a9d4d2708fa
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Dec 6 13:34:34 2017 -0500
+
+    made filter a global filter instead of one per sound
+
+ src/model.ml         | 11 ++++++-----
+ src/model.mli        |  2 +-
+ src/sound_manager.ml | 18 ++++++++++--------
+ src/synth.ml         | 10 ++--------
+ src/synth.mli        |  4 ++--
+ 5 files changed, 21 insertions(+), 24 deletions(-)
+
+commit 88f4efb7bceb24e8ca9aa52bf0e6232732f96e7b
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Wed Dec 6 01:43:52 2017 -0500
+
+    added more precision... cuz why not
+
+ src/model.ml | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit ea62cee84fae438f102ed161d1f979d1bef2731a
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Wed Dec 6 01:36:44 2017 -0500
+
+    added buttons to go to the synth and back, also added grid (works?)
+
+ src/button_standard.ml     |  32 ++++++++---
+ src/button_standard.mli    |  14 +++--
+ src/gui.ml                 |  89 +++++++++++++++++++++++-------
+ src/input_event_manager.ml |  76 ++++++++++++++++----------
+ src/main.ml                |   2 +-
+ src/model.ml               | 131 ++++++++++++++++++++++++++++++++++++++-------
+ src/model.mli              |  11 +++-
+ 7 files changed, 274 insertions(+), 81 deletions(-)
+
+commit 18178f7a4b25cafeb64807ca61c588636370d4ff
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Dec 5 22:56:25 2017 -0500
+
+    updated install scripts for ounit and yojson
+
+ install/mac_install.sh | 2 ++
+ install/vm_install.sh  | 5 ++++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+commit 2806ebc43fe239c7d2b5bf0411813c152fdd9002
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Dec 5 22:36:58 2017 -0500
+
+    fixed filters and adsr and added the params to the model
+
+ src/adsr.ml          | 84 +++++++++++++++++++++++++++++++++-------------------
+ src/filter.ml        | 22 ++++++++------
+ src/filter.mli       |  9 +++---
+ src/gui.ml           |  3 +-
+ src/model.ml         | 18 ++++++++++-
+ src/model.mli        |  8 +++++
+ src/sound_manager.ml |  2 +-
+ src/synth.ml         |  9 +++---
+ 8 files changed, 102 insertions(+), 53 deletions(-)
+
+commit 8820f5258a33a972b4bd4c699f33e682b7f11733
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Dec 5 21:19:20 2017 -0500
+
+    added a tick module
+
+ src/main.ml  | 54 +++++++++---------------------------------------------
+ src/tick.ml  | 37 +++++++++++++++++++++++++++++++++++++
+ src/tick.mli |  6 ++++++
+ 3 files changed, 52 insertions(+), 45 deletions(-)
+
+commit b5674927a303eec8cc6df1acf09105a47a0cac03
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Tue Dec 5 13:05:18 2017 -0500
+
+    Scrub shows beats/total beats on the right side
+
+ src/gui.ml    |  5 +++++
+ src/main.ml   |  1 +
+ src/model.ml  | 10 +++++++++-
+ src/model.mli |  6 ++++++
+ 4 files changed, 21 insertions(+), 1 deletion(-)
+
+commit 6326793e3d25acbc3206cfa9a953534280a6e348
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 12:12:57 2017 -0500
+
+    format
+
+ src/gui.ml   | 24 +++++++++++++++++++-----
+ src/model.ml |  3 ++-
+ 2 files changed, 21 insertions(+), 6 deletions(-)
+
+commit e55cea8e16b20f878f2ca89db2b7c12689833d7b
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 12:09:29 2017 -0500
+
+    bpm text
+
+ src/gui.ml        | 17 ++++++++++++++---
+ src/main.ml       |  2 +-
+ src/metronome.ml  |  6 +++++-
+ src/metronome.mli |  6 ++++++
+ src/model.ml      |  2 +-
+ src/model.mli     |  2 +-
+ 6 files changed, 28 insertions(+), 7 deletions(-)
+
+commit 8634cd0ff59b0e0caf801a8ad84aadcfe0082230
+Merge: 3249e38 7ae4aad
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Tue Dec 5 02:35:31 2017 -0500
+
+    Merge pull request #46 from dw475/bpm_slider
+    
+    BPM slider
+
+commit 7ae4aad04e9b6c7df102a179b0de1f876065eff7
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Tue Dec 5 02:31:14 2017 -0500
+
+    moved elements around slightly
+
+ src/gui.ml | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit fdcc4f7e28818cf14916aea6c8918a1ba8a02836
+Merge: 2c46327 3249e38
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Tue Dec 5 02:20:48 2017 -0500
+
+    merged
+
+commit 3249e385cc4b8b8daf6ef175d81d9bc1c2a1fc34
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Dec 5 01:48:37 2017 -0500
+
+    fixed static
+
+ src/sound_manager.ml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit a8fca425f922e7356f3bbb489613832e45d27eb2
+Merge: 87bf5b1 904fba3
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Dec 5 01:34:14 2017 -0500
+
+    merged
+
+commit 87bf5b102d350f483d3b4a2e071d59c2a248121a
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Dec 5 01:32:24 2017 -0500
+
+    minor filter modification
+
+ src/filter.ml              |  4 +---
+ src/gui.ml                 |  3 +--
+ src/input_event_manager.ml |  2 +-
+ src/model.ml               |  2 +-
+ src/synth.ml               | 13 +++++++------
+ 5 files changed, 11 insertions(+), 13 deletions(-)
+
+commit 2c463272850f0e055af514be81fdd638afcce3b1
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 01:32:12 2017 -0500
+
+    clear keyboard
+
+ src/input_event_manager.mli | 4 ++++
+ src/main.ml                 | 5 ++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
+
+commit f0db5a1bc3e601b24cca1cadc6c5554c97d8df57
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 01:26:31 2017 -0500
+
+    bpm slider
+
+ src/model.ml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 904fba313b670ee859bc87e9e2122f18efa85439
+Merge: c13651f b6104f2
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Tue Dec 5 01:23:31 2017 -0500
+
+    merged
+
+commit 5fde8e5ae05320ee99abdadacff6e28c197d16bd
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 01:15:19 2017 -0500
+
+    format
+
+ src/metronome.ml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 30997e6219803ca2e883a16efc7b190f40f8194e
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 01:11:54 2017 -0500
+
+    fix
+
+ src/metronome.ml | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit c13651fe69bbdd9791b88ed427ff134f9ba3c814
+Merge: 091cafa a6e39f4
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Tue Dec 5 01:10:36 2017 -0500
+
+    merged
+
+commit 4dce1ff02b92c6a3cf661c10a82065f893e85ffd
+Merge: 5ba6a28 33740d7
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:52:30 2017 -0500
+
+    Merge branch 'bpm_slider' of https://github.coecis.cornell.edu/dw475/3110-final into bpm_slider
+
+commit 5ba6a284775b3cb4d6c493b3b950331fdf747c70
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:52:29 2017 -0500
+
+    reverse
+
+ src/gui.ml                 | 64 +++++++++++++++++++++++++++++++++++++++-
+ src/gui.mli                |  3 ++
+ src/input_event_manager.ml | 52 ++++++++++++++++++++++++++++-----
+ src/main.ml                | 39 +++++++++++++++++++++----
+ src/metronome.ml           | 16 ++++++++++
+ src/metronome.mli          | 12 ++++++++
+ src/midi.ml                | 38 ++++++++++++++++++++++--
+ src/midi.mli               | 11 +++++++
+ src/midi_player.ml         |  1 -
+ src/model.ml               | 73 +++++++++++++++++++++++++++++++++++++++-------
+ src/model.mli              | 48 ++++++++++++++++++++++++++----
+ 11 files changed, 322 insertions(+), 35 deletions(-)
+
+commit 33740d7b79126861a004e6f3e70ac20c473374da
+Merge: 6bcc4b7 13ac0e7
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:49:30 2017 -0500
+
+    Merge branch 'bpm_slider' of https://github.coecis.cornell.edu/dw475/3110-final into bpm_slider
+
+commit 6bcc4b7869a457594a02a10cf14673cff1a0c969
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:49:27 2017 -0500
+
+    k
+
+ src/model.ml | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit a6e39f4b8de9848f53ad65d033d5c4201c9ee2b7
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Tue Dec 5 00:41:46 2017 -0500
+
+    fixed graphical bug with select and cancel
+
+ src/gui.ml | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+commit 13ac0e71cea548ccf8560e8b0afbad5eab2e9799
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:37:47 2017 -0500
+
+    d
+
+ src/model.ml | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 7ba25a964e11114a56ba454fca1db326b74b06ee
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:30:48 2017 -0500
+
+    ds
+
+ src/model.ml | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit b6104f2ee23a00d0888fd4a681ef2491b0fde0db
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Dec 5 00:28:45 2017 -0500
+
+    added zip script and fixed unmatched patterns
+
+ Makefile                   |  2 ++
+ src/Makefile               |  2 +-
+ src/eq.json                | 21 ------------
+ src/gui.ml                 |  1 +
+ src/input_event_manager.ml | 83 ++++++++++++++++++++++++----------------------
+ 5 files changed, 47 insertions(+), 62 deletions(-)
+
+commit 585564fb09ab3eb8e61aae2e93fb23959682da42
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:26:57 2017 -0500
+
+    bpm start
+
+ src/input_event_manager.ml | 6 ++++--
+ src/main.ml                | 1 +
+ src/model.ml               | 1 -
+ 3 files changed, 5 insertions(+), 3 deletions(-)
+
+commit de52806963245df0fec0737aa232a6c0a934af57
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Tue Dec 5 00:23:09 2017 -0500
+
+    removed unused files
+
+ src/file_button.ml         | 86 ----------------------------------------------
+ src/file_button.mli        | 33 ------------------
+ src/gui.ml                 |  4 +--
+ src/input_event_manager.ml |  1 -
+ 4 files changed, 2 insertions(+), 122 deletions(-)
+
+commit 71025f8629c6962ffccbbf7788cb696432d0b0a7
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:21:12 2017 -0500
+
+    slider
+
+ src/main.ml | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit e1eaeac541619966f306b4c410a9ec1e64693a40
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:18:42 2017 -0500
+
+    slider
+
+ src/metronome.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b226445f52c92a6fd115ccf756b9b25d6389a063
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Tue Dec 5 00:17:18 2017 -0500
+
+    converted all buttons to use the modular syntax
+
+ src/gui.ml                 | 72 +++++++++++++++++++++-------------------------
+ src/gui.mli                |  6 ----
+ src/input_event_manager.ml | 17 ++---------
+ src/model.ml               | 49 +++++++++++++++++--------------
+ src/model.mli              |  2 +-
+ 5 files changed, 63 insertions(+), 83 deletions(-)
+
+commit 3c1bce8eb01c08f810cd84ed316241ab0d340163
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:16:50 2017 -0500
+
+    metronome
+
+ src/metronome.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b44f316a7e6081c714ffcf9bc37536194caa7c3f
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:14:57 2017 -0500
+
+    bpm slider
+
+ src/gui.ml        | 1 -
+ src/main.ml       | 2 ++
+ src/metronome.ml  | 4 ++++
+ src/metronome.mli | 5 ++++-
+ src/model.ml      | 5 ++++-
+ 5 files changed, 14 insertions(+), 3 deletions(-)
+
+commit 5bcafd41933174aa2ff7727c1dc9097371046e0b
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Dec 5 00:12:01 2017 -0500
+
+    changed mac install error message
+
+ install/mac_install.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit add5fdddf85c14f97c6cce34df9d4665cbb1e594
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Dec 5 00:08:37 2017 -0500
+
+    made install scripts executable and removed unused files
+
+ audio_test/.merlin               |   4 -
+ audio_test/Makefile              |   6 --
+ audio_test/_tags                 |   3 -
+ audio_test/a0.mp3                | Bin 23822 -> 0 bytes
+ audio_test/a0.wav                | Bin 249934 -> 0 bytes
+ audio_test/agane.ttf             | Bin 66416 -> 0 bytes
+ audio_test/draw.ml               |  34 --------
+ audio_test/install.sh            |   5 --
+ audio_test/linux_install_deps.sh |  20 -----
+ audio_test/mac_install_deps.sh   |   1 -
+ audio_test/notes                 |   3 -
+ audio_test/test.ml               | 171 ---------------------------------------
+ audio_test/ttf_install.sh        |   2 -
+ audio_test/virtual_box_setup.sh  |  34 --------
+ graphics_test/Makefile           |   6 --
+ graphics_test/_tags              |   3 -
+ graphics_test/test.ml            |  28 -------
+ gtk_test/.merlin                 |   2 -
+ gtk_test/Makefile                |  15 ----
+ gtk_test/_tags                   |   1 -
+ gtk_test/graph.ml                | 107 ------------------------
+ gtk_test/graphtest               | Bin 2132019 -> 0 bytes
+ gtk_test/install.sh              |   1 -
+ gtk_test/mac_install_deps.sh     |   1 -
+ gtk_test/simple                  | Bin 2093854 -> 0 bytes
+ gtk_test/simple.cmi              | Bin 1731 -> 0 bytes
+ gtk_test/simple.cmo              | Bin 7208 -> 0 bytes
+ gtk_test/simple.ml               |  32 --------
+ gtk_test/test.ml                 |  45 -----------
+ gtk_test/tutorial.ml             |   5 --
+ install/mac_install.sh           |   0
+ install/vm_install.sh            |   0
+ 32 files changed, 529 deletions(-)
+
+commit b72c16bce27cf7be35c1c0753d0bcb0eefa2fe23
+Merge: 91ca723 bf6b120
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:04:02 2017 -0500
+
+    Merge branch 'feature_34' into bpm_slider
+
+commit bf6b120f65e819fc785623f52824f2c2276ff543
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Tue Dec 5 00:03:07 2017 -0500
+
+    gui
+
+ src/gui.ml                 |  7 ++++---
+ src/input_event_manager.ml |  9 ++++-----
+ src/metronome.ml           |  5 +++++
+ src/metronome.mli          |  3 +++
+ src/model.ml               | 10 +++++-----
+ src/model.mli              |  8 ++++----
+ 6 files changed, 25 insertions(+), 17 deletions(-)
+
+commit b87190ce2ee5408703bd1584b51e14efb23f36be
+Merge: 217b3f1 7a1852c
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Mon Dec 4 23:09:43 2017 -0500
+
+    Merge branch 'feature_34' of https://github.coecis.cornell.edu/dw475/3110-final into feature_34
+
+commit 217b3f1199158169d016f4219f1df98fddf16238
+Author: David Zhang <davidzhang@dhcp-mcfad-7991.eduroam.cornell.edu>
+Date:   Mon Dec 4 23:09:38 2017 -0500
+
+    bpm slider
+
+ src/gui.ml                 | 7 ++++++-
+ src/input_event_manager.ml | 9 +++++----
+ 2 files changed, 11 insertions(+), 5 deletions(-)
+
+commit ba28631a4c70b966982f826f5041ae0faa88d9a2
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Dec 4 23:06:49 2017 -0500
+
+    added model code for new buttons
+
+ src/gui.ml    | 22 ++------------
+ src/model.ml  | 94 +++++++++++++++++++++++++++++++++++++++++++++--------------
+ src/model.mli |  4 +--
+ 3 files changed, 76 insertions(+), 44 deletions(-)
+
+commit eb3d766e16d0e7c12285e6530a903cc7f696adb9
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Dec 4 20:46:30 2017 -0500
+
+    removed un-used files
+
+ src/button.ml              | 41 -----------------------------------------
+ src/button.mli             | 19 -------------------
+ src/gui.ml                 |  6 +++---
+ src/input_event_manager.ml |  1 -
+ 4 files changed, 3 insertions(+), 64 deletions(-)
+
+commit dcd0d1ee52034d063afb4df2b8cd47c1a96b57bd
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Dec 4 20:40:35 2017 -0500
+
+    removed previous file button code
+
+ src/gui.ml                 | 19 -------------------
+ src/gui.mli                |  4 ----
+ src/input_event_manager.ml | 45 +++++++--------------------------------------
+ src/model.ml               | 41 +++++++++++++++++++++++------------------
+ 4 files changed, 30 insertions(+), 79 deletions(-)
+
+commit 946bcf48a0547688f373050a4051cb7ecf544409
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Dec 4 20:40:25 2017 -0500
+
+    added new state to model
+
+ src/model.ml         |   7 ++-
+ src/model.mli        |   4 +-
+ src/sound_manager.ml | 162 ++++++++++++++++++++++++++++-----------------------
+ 3 files changed, 95 insertions(+), 78 deletions(-)
+
+commit cd4f1a4af65857f6db18a03196ce15113fa63330
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Dec 4 20:25:51 2017 -0500
+
+    added install scripts
+
+ install/mac_install.sh | 10 ++++++++++
+ install/vm_install.sh  | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 44 insertions(+)
+
+commit 4c640742b01d198f2b0215ae4d8e025031f95d4e
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Dec 4 20:09:00 2017 -0500
+
+    started converting file buttons
+
+ src/gui.ml                 | 23 ++++------------
+ src/input_event_manager.ml |  7 +++--
+ src/model.ml               | 66 ++++++++++++++++++++++++++++++++++++++++++----
+ src/model.mli              |  4 ++-
+ 4 files changed, 74 insertions(+), 26 deletions(-)
+
+commit ebe97658b367a7ba98dbb2e5141eb24a80f713b3
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Dec 4 13:56:19 2017 -0500
+
+    removed redundant filter and added comments
+
+ src/adsr.ml          |  2 ++
+ src/biquad.ml        | 87 ----------------------------------------------------
+ src/filter.ml        |  2 ++
+ src/filter.mli       |  5 +++
+ src/sound_manager.ml |  3 +-
+ src/synth.ml         | 11 +++----
+ 6 files changed, 15 insertions(+), 95 deletions(-)
+
+commit 38435838c2c6e4c463f8e74a0943203008b875c2
+Merge: 091cafa d00365a
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Mon Dec 4 12:48:58 2017 -0500
+
+    Merge pull request #39 from dw475/feature_35_custom
+    
+    Custom sounds
+
+commit d00365a09c5a0568e01b5e427378bf11590a287f
+Merge: e0d5a3d 091cafa
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Dec 4 12:46:25 2017 -0500
+
+    merged
+
+commit 091cafae12821f836979f6766f61adf34381cd2e
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Dec 4 06:05:16 2017 -0500
+
+    fixed variable missnaming from merge
+
+ src/gui.ml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit ed54b85a9a5575d940c19a46848364db0cd5b63c
+Merge: 54add2f 9c29efb
+Author: Stephen John Buttolph <sjb274@cornell.edu>
+Date:   Mon Dec 4 06:02:53 2017 -0500
+
+    Merge pull request #44 from dw475/symmetric_visuals
+    
+    Symmetric visuals
+
+commit 9c29efb990f9c6a2f073c970aa2ed609e3322944
+Merge: c44c52d 54add2f
+Author: Stephen John Buttolph <sjb274@cornell.edu>
+Date:   Mon Dec 4 06:02:45 2017 -0500
+
+    Merge branch 'master' into symmetric_visuals
+
+commit caf8907759f7843fa58034f8ff4e7ac24e42327b
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Dec 4 05:56:43 2017 -0500
+
+    removed midi pressed handler in gui
+
+ src/gui.ml  | 16 ----------------
+ src/gui.mli |  4 ----
+ 2 files changed, 20 deletions(-)
+
+commit ada87dd53f108cc21ef5c4fedfebff683cfa47b9
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Dec 4 05:52:12 2017 -0500
+
+    added current button to the state record, will next for button management later
+
+ src/model.ml | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+commit 96f6b6fbc27bb92636e2037e810f1ceb830547a7
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Dec 4 05:31:57 2017 -0500
+
+    removed old code
+
+ src/input_event_manager.ml | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+commit 075223f3f7d41dde95496021197d80034f43f9a9
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Dec 4 05:27:26 2017 -0500
+
+    made midi buttons from standard button layout
+
+ src/button_standard.ml     |  60 +++++++++++++++++++
+ src/button_standard.mli    |  26 +++++++++
+ src/gui.ml                 |  38 ++----------
+ src/gui_utils.ml           | 143 +++++++++++++++++++++++++++++++++++++++++++++
+ src/input_event_manager.ml |   8 ++-
+ src/model.ml               |  97 ++++++++++++++++++++++++++----
+ src/model.mli              |   2 +-
+ 7 files changed, 327 insertions(+), 47 deletions(-)
+
+commit e0d5a3dac237e8c0bb3559259ceb582e5ed11736
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Dec 4 02:48:01 2017 -0500
+
+    removed print
+
+ src/biquad.ml | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 54add2f06c41cc93b031ce66caf348880b5a5cc3
+Merge: a7d2f55 592d5c9
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Mon Dec 4 02:27:32 2017 -0500
+
+    Merge pull request #40 from dw475/feature_38
+    
+    End of midi/loading midi updates to stop state
+
+commit 592d5c93747d73d453a746370ad8a41a15e949e1
+Merge: a7d2f55 5256dde
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Dec 4 02:27:08 2017 -0500
+
+    merged
+
+commit 3fb297b49abb1de785321595d538e005d7300e5a
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Dec 4 02:19:01 2017 -0500
+
+    minor fix
+
+ src/synth.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 7a1852c6d5454705f887a72c8471e04855806fe7
+Author: dc788 <dc788@cornell.edu>
+Date:   Mon Dec 4 02:16:48 2017 -0500
+
+    finishing song won't restart
+
+ src/main.ml | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit ebe5c46becb777015cb4054d2e4d80ec8cd8047a
+Merge: be6fd6f 3a0bfcc
+Author: David Zhang <davidzhang@dhcp-mcfad-1706.redrover.cornell.edu>
+Date:   Mon Dec 4 02:16:17 2017 -0500
+
+    Merge branch 'feature_34' of https://github.coecis.cornell.edu/dw475/3110-final into feature_34
+
+commit cc26c53b0afdab085944aaf623231f4995909acd
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Dec 4 02:14:18 2017 -0500
+
+    syntax fix
+
+ src/synth.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit daf66a2bc80ba10b74b34c2a369d42249b8a6814
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Dec 4 02:14:09 2017 -0500
+
+    tried wiring up filters, didn't work
+
+ src/adsr.ml                        | 34 +++++++++------
+ src/adsr.mli                       |  6 +--
+ src/biquad.ml                      | 88 ++++++++++++++++++++++++++++++++++++++
+ src/{audio_effects.ml => fft.ml}   |  0
+ src/{audio_effects.mli => fft.mli} | 11 ++---
+ src/filter.ml                      | 21 ++++-----
+ src/filter.mli                     |  6 +--
+ src/model.ml                       | 10 ++---
+ src/sound_manager.ml               |  2 +-
+ src/synth.ml                       | 21 +++++++--
+ src/synth.mli                      | 12 ++++++
+ 11 files changed, 166 insertions(+), 45 deletions(-)
+
+commit be6fd6f5ae30086f27cea54bbe435dcd4b8bd317
+Author: David Zhang <davidzhang@dhcp-mcfad-1706.redrover.cornell.edu>
+Date:   Mon Dec 4 02:14:06 2017 -0500
+
+    bpm slider
+
+ src/gui.ml                 | 19 +++++++++++++++++--
+ src/gui.mli                |  2 +-
+ src/input_event_manager.ml | 16 +++++++++++++++-
+ src/metronome.ml           |  2 ++
+ src/metronome.mli          |  3 +++
+ src/model.ml               | 27 +++++++++++++++++++++++++++
+ src/model.mli              | 18 ++++++++++++++++++
+ 7 files changed, 83 insertions(+), 4 deletions(-)
+
+commit 3a0bfccc1990830cd9efa0ae254d82731483353e
+Author: dc788 <dc788@cornell.edu>
+Date:   Mon Dec 4 02:04:26 2017 -0500
+
+    Scrub works.
+
+ src/gui.ml    | 23 +++++++++++++++++++++--
+ src/main.ml   | 48 ++++++++++++++++++++++++++++--------------------
+ src/model.ml  |  2 ++
+ src/model.mli |  3 +++
+ 4 files changed, 54 insertions(+), 22 deletions(-)
+
+commit a7d2f55128834c27d297cdfe53711615ae021de6
+Merge: 35caade f1e8f2a
+Author: Stephen John Buttolph <sjb274@cornell.edu>
+Date:   Mon Dec 4 01:32:53 2017 -0500
+
+    Merge pull request #42 from dw475/cleanup_gui
+    
+    made gui_utils
+
+commit f1e8f2a7f95b9fb6c47b5bf70296a70b19fb64da
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Dec 4 01:29:54 2017 -0500
+
+    made gui_utils
+
+ src/gui.ml       | 185 ++++++++++++++++++++++---------------------------------
+ src/gui_utils.ml | 115 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 189 insertions(+), 111 deletions(-)
+
+commit 91ca723ece5b297446fd76864ccd9cc3a71e3926
+Author: David Zhang <davidzhang@dhcp-mcfad-1706.redrover.cornell.edu>
+Date:   Mon Dec 4 01:20:58 2017 -0500
+
+    metronome
+
+ src/input_event_manager.ml |  2 +-
+ src/metronome.ml           | 14 +++++++++++---
+ 2 files changed, 12 insertions(+), 4 deletions(-)
+
+commit 68a26ecce8f55f7a4535880e74fe2a63da5797fa
+Author: dc788 <dc788@cornell.edu>
+Date:   Mon Dec 4 01:19:07 2017 -0500
+
+    scrub end clears keyboard
+
+ src/input_event_manager.ml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 3da20fd43805662172ef92a17edb5d581c08da8e
+Author: dc788 <dc788@cornell.edu>
+Date:   Mon Dec 4 01:18:30 2017 -0500
+
+    scrub goes back now
+
+ src/input_event_manager.ml |  4 +++-
+ src/midi.ml                | 19 ++++++++-----------
+ 2 files changed, 11 insertions(+), 12 deletions(-)
+
+commit d70d459ea6fbce73dcb37141c8f8e25382bcfad7
+Author: dc788 <dc788@cornell.edu>
+Date:   Mon Dec 4 00:50:41 2017 -0500
+
+    Scrub forward is working, scrub moves as song plays
+
+ src/main.ml        | 33 ++++++++++++++++++++++++---------
+ src/midi.ml        | 15 +++++++++++++++
+ src/midi.mli       |  4 ++++
+ src/midi_player.ml |  1 -
+ 4 files changed, 43 insertions(+), 10 deletions(-)
+
+commit cad2573fcc81976fd3f799ea021c90617409243d
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Dec 4 00:33:28 2017 -0500
+
+    added filters and cleaned up synth
+
+ src/custom_sound.mli              | 15 -------
+ src/filter.ml                     | 88 +++++++++++++++++++++++++++++++++++++++
+ src/filter.mli                    |  9 ++++
+ src/sound_manager.ml              | 14 +++----
+ src/{custom_sound.ml => synth.ml} |  4 +-
+ src/synth.mli                     | 17 ++++++++
+ 6 files changed, 123 insertions(+), 24 deletions(-)
+
+commit 35caade4e0e264b0d7459aa57fea9325087c3028
+Author: David Zhang <davidzhang@dhcp-mcfad-1706.redrover.cornell.edu>
+Date:   Sun Dec 3 23:50:42 2017 -0500
+
+    file chooser compatability
+
+ src/input_event_manager.ml                                     | 6 ++++--
+ src/model.ml                                                   | 4 ++--
+ src/resources/elec_data/{elec_midi_0.json => elec_0_midi.json} | 0
+ src/resources/elec_data/{elec_midi_1.json => elec_1_midi.json} | 0
+ src/resources/elec_data/{elec_midi_2.json => elec_2_midi.json} | 0
+ src/resources/elec_data/{elec_midi_3.json => elec_3_midi.json} | 2 +-
+ 6 files changed, 7 insertions(+), 5 deletions(-)
+
+commit 217cf311794aaaab8559edc657285d75c48c9b73
+Author: dc788 <dc788@cornell.edu>
+Date:   Sun Dec 3 23:42:47 2017 -0500
+
+    metronome allows setting the beat
+
+ src/metronome.ml  | 5 +++++
+ src/metronome.mli | 3 +++
+ 2 files changed, 8 insertions(+)
+
+commit 9ad7bf0ee7b88231b8441030240144a8bfd5a933
+Author: dc788 <dc788@cornell.edu>
+Date:   Sun Dec 3 23:34:45 2017 -0500
+
+    draggable scrub
+
+ src/gui.ml                 | 25 ++++++++++++++++++++++++-
+ src/gui.mli                |  3 +++
+ src/input_event_manager.ml | 29 +++++++++++++++++++++++------
+ src/model.ml               | 29 ++++++++++++++++++++++-------
+ src/model.mli              | 24 +++++++++++++++++-------
+ 5 files changed, 89 insertions(+), 21 deletions(-)
+
+commit 6f13c45c931e65b8e2c0b6865466b991dc181448
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Dec 3 23:09:28 2017 -0500
+
+    added adsr
+
+ src/adsr.ml          | 69 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/adsr.mli         | 25 +++++++++++++++++++
+ src/custom_sound.ml  | 10 +++++++-
+ src/custom_sound.mli |  6 ++++-
+ src/sound_manager.ml | 28 ++++++++++++---------
+ 5 files changed, 124 insertions(+), 14 deletions(-)
+
+commit d8027b4a038ea3f60bf68eb398e2eaed1180f131
+Merge: 8730c4a c9ef68f
+Author: David Y Zhang <dyz3@cornell.edu>
+Date:   Sun Dec 3 22:52:40 2017 -0500
+
+    Merge pull request #41 from dw475/space_bar
+    
+    space bar
+
+commit c9ef68f21ec0199a0083fe885c6ac67902d2f454
+Author: David Zhang <davidzhang@dhcp-mcfad-1706.redrover.cornell.edu>
+Date:   Sun Dec 3 22:52:03 2017 -0500
+
+    space bar
+
+ src/input_event_manager.ml                  | 21 ++++++++++++---------
+ src/keyboard.ml                             |  2 +-
+ src/keyboard_layout.ml                      |  9 +++++++--
+ src/keyboard_layout.mli                     |  1 +
+ src/resources/standard_keyboard_layout.json |  3 ++-
+ 5 files changed, 23 insertions(+), 13 deletions(-)
+
+commit bd2ac8d88098ec2a7850be5afda92da75d984a2d
+Author: dc788 <dc788@cornell.edu>
+Date:   Sun Dec 3 22:34:39 2017 -0500
+
+    Preparing model for scrubbing. Window_x and Window_y no longer mutable
+
+ src/model.ml  | 23 +++++++++++++++--------
+ src/model.mli | 17 +++++++++++------
+ 2 files changed, 26 insertions(+), 14 deletions(-)
+
+commit 4adfaca66c1584dd933df7fcf57bdfbe59702c0e
+Author: dc788 <dc788@cornell.edu>
+Date:   Sun Dec 3 22:33:47 2017 -0500
+
+    midi calculates length on parse
+
+ src/midi.ml  | 23 ++++++++++++++++++++---
+ src/midi.mli |  4 ++++
+ 2 files changed, 24 insertions(+), 3 deletions(-)
+
+commit c44c52dffaf55b3433d157ebf739056b90145be6
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Sun Dec 3 22:05:46 2017 -0500
+
+    added code for only randomizing whe nnothing is playing
+
+ src/gui.ml   | 10 ++++++++--
+ src/model.ml |  2 +-
+ 2 files changed, 9 insertions(+), 3 deletions(-)
+
+commit 5256ddeb91ba5c0e431b6bb55d8c4be646741ceb
+Author: dc788 <dc788@cornell.edu>
+Date:   Sun Dec 3 21:57:52 2017 -0500
+
+    End of midi/loading midi updates to stop state
+
+ src/input_event_manager.ml | 21 +++++++++++----------
+ src/main.ml                |  6 ++++--
+ src/midi.ml                |  3 +++
+ src/midi.mli               |  3 +++
+ src/model.ml               |  2 +-
+ 5 files changed, 22 insertions(+), 13 deletions(-)
+
+commit dc76a87b27e3f5747978936f5f14e243766fc9a7
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Dec 3 00:02:54 2017 -0500
+
+    minor bug fix
+
+ src/sound_manager.ml | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
+
+commit cfdf0f885e67e689433f726c6cfb3a807ef42e54
+Merge: de36acf 8730c4a
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sat Dec 2 23:54:36 2017 -0500
+
+    merged
+
+commit 8730c4a0e311a945fc06bbf3e8fe6e884989fd8a
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sat Dec 2 23:47:33 2017 -0500
+
+    code cleanup
+
+ src/file_button.ml         | 59 +++++++++++++++++++----------
+ src/gui.ml                 |  2 +
+ src/input_event_manager.ml | 94 +++++++++++++++++++++++++---------------------
+ src/keyboard.ml            |  3 +-
+ src/keyboard_layout.ml     | 13 +++++++
+ src/keyboard_layout.mli    |  4 ++
+ src/main.ml                |  3 +-
+ src/metronome.ml           |  2 +
+ src/metronome.mli          | 12 +++---
+ src/midi.ml                | 12 +++---
+ src/midi_player.ml         |  2 +
+ src/model.ml               |  8 ++++
+ src/song.ml                |  9 +++++
+ src/sound.ml               |  4 +-
+ src/sound_manager.ml       |  1 +
+ src/tsdl_wrapper.ml        | 38 ++++++++++++++-----
+ src/tsdl_wrapper.mli       |  5 ---
+ 17 files changed, 179 insertions(+), 92 deletions(-)
+
+commit 0fb0665b7a6c1cab5cdc3012ff10cdb15e5e7d25
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sat Dec 2 23:10:06 2017 -0500
+
+    simplified sound manager and added comments
+
+ src/gui.ml            |   2 +-
+ src/main.ml           |   1 -
+ src/sound.ml          |   2 +
+ src/sound_manager.ml  | 123 ++++++++++++++++++--------------------------------
+ src/sound_manager.mli |   3 --
+ src/test.ml           |  19 +-------
+ src/tsdl_wrapper.ml   |  18 ++++++++
+ 7 files changed, 67 insertions(+), 101 deletions(-)
+
+commit 71ea0b9d010285e589a0256b81790b50af3f0123
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Sat Dec 2 18:28:05 2017 -0500
+
+    set default to meet in the middle, code is commented to have the base at the end, also removed random noise as it made one song's visuals very poor
+
+ src/audio_effects.ml |  6 ++---
+ src/gui.ml           | 62 ++++++++++++++++++++++++++++++++++------------------
+ 2 files changed, 44 insertions(+), 24 deletions(-)
+
+commit de36acfce6f4ab44e8566728138ca832eb1626e5
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sat Dec 2 02:12:20 2017 -0500
+
+    added clipping
+
+ src/custom_sound.ml  |  2 +-
+ src/sound_manager.ml | 19 +++++++++++++++++--
+ 2 files changed, 18 insertions(+), 3 deletions(-)
+
+commit 1a60544a25f5a4bb2f07634530a1e1c0640ccb24
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sat Dec 2 02:02:12 2017 -0500
+
+    added 3 other waveforms
+
+ src/custom_sound.ml  | 46 ++++++++++++++++++++++++++++++++++++++--------
+ src/custom_sound.mli |  2 +-
+ 2 files changed, 39 insertions(+), 9 deletions(-)
+
+commit 54cba836b571c919c91141d92aaa0c6e112695e5
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sat Dec 2 01:48:07 2017 -0500
+
+    got sine waves working
+
+ src/custom_sound.ml  |  41 ++++++++++++++++++++
+ src/custom_sound.mli |  11 ++++++
+ src/sound_manager.ml | 104 ++++++++++++++++++++++++++++++++-------------------
+ 3 files changed, 117 insertions(+), 39 deletions(-)
+
+commit adbc43acb72e1fc39a3de3952f3bfa87925b6760
+Author: dc788 <dc788@cornell.edu>
+Date:   Sat Dec 2 01:38:26 2017 -0500
+
+    center buttons in gui
+
+ src/gui.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 00a3e4f8c734e7bfb25fc078ad4c5917809117fb
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sat Dec 2 01:04:28 2017 -0500
+
+    fixed alpha problem and visualizer oob issue
+
+ src/audio_effects.ml  |  2 ++
+ src/audio_effects.mli |  2 ++
+ src/gui.ml            | 23 +++++++++++++----------
+ src/model.ml          | 13 ++++++++-----
+ src/tsdl_wrapper.ml   |  2 +-
+ 5 files changed, 26 insertions(+), 16 deletions(-)
+
+commit d1ab38f539dbbe8e8c78a9a005873b0e211a4728
+Author: David Zhang <davidzhang@dhcp-gs-9375.redrover.cornell.edu>
+Date:   Fri Dec 1 17:42:22 2017 -0500
+
+    double clicking
+
+ src/gui.ml                 |  1 -
+ src/input_event_manager.ml | 18 +++++++++++++++---
+ 2 files changed, 15 insertions(+), 4 deletions(-)
+
+commit fc0103a63cf0e60ef5b3906847828e29f548ee09
+Author: David Zhang <davidzhang@dhcp-gs-9375.redrover.cornell.edu>
+Date:   Fri Dec 1 17:23:51 2017 -0500
+
+    columns
+
+ src/gui.ml | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
+
+commit 9b48bb653c62e40cfe432c56f213ed4ce6c12ee5
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Fri Dec 1 16:58:32 2017 -0500
+
+    added another song
+
+ src/resources/conversions/conv_midi_json.js |    2 +-
+ src/resources/conversions/conv_song_json.js |    2 +-
+ src/resources/conversions/elec_midi.json    |    1 +
+ src/resources/conversions/elec_old.json     |   51 +
+ src/resources/elec_data/chain1_wav/a0.wav   |  Bin 0 -> 131150 bytes
+ src/resources/elec_data/chain1_wav/a1.wav   |  Bin 0 -> 44110 bytes
+ src/resources/elec_data/chain1_wav/a10.wav  |  Bin 0 -> 129102 bytes
+ src/resources/elec_data/chain1_wav/a11.wav  |  Bin 0 -> 131150 bytes
+ src/resources/elec_data/chain1_wav/a12.wav  |  Bin 0 -> 50254 bytes
+ src/resources/elec_data/chain1_wav/a15.wav  |  Bin 0 -> 49230 bytes
+ src/resources/elec_data/chain1_wav/a2.wav   |  Bin 0 -> 46158 bytes
+ src/resources/elec_data/chain1_wav/a3.wav   |  Bin 0 -> 129102 bytes
+ src/resources/elec_data/chain1_wav/a7.wav   |  Bin 0 -> 253006 bytes
+ src/resources/elec_data/chain1_wav/a8.wav   |  Bin 0 -> 52302 bytes
+ src/resources/elec_data/chain1_wav/a9.wav   |  Bin 0 -> 53326 bytes
+ src/resources/elec_data/chain1_wav/b0.wav   |  Bin 0 -> 128078 bytes
+ src/resources/elec_data/chain1_wav/b1.wav   |  Bin 0 -> 46158 bytes
+ src/resources/elec_data/chain1_wav/b10.wav  |  Bin 0 -> 129102 bytes
+ src/resources/elec_data/chain1_wav/b11.wav  |  Bin 0 -> 129102 bytes
+ src/resources/elec_data/chain1_wav/b12.wav  |  Bin 0 -> 47182 bytes
+ src/resources/elec_data/chain1_wav/b13.wav  |  Bin 0 -> 168014 bytes
+ src/resources/elec_data/chain1_wav/b15.wav  |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain1_wav/b2.wav   |  Bin 0 -> 48206 bytes
+ src/resources/elec_data/chain1_wav/b3.wav   |  Bin 0 -> 131150 bytes
+ src/resources/elec_data/chain1_wav/b7.wav   |  Bin 0 -> 254030 bytes
+ src/resources/elec_data/chain1_wav/b8.wav   |  Bin 0 -> 49230 bytes
+ src/resources/elec_data/chain1_wav/b9.wav   |  Bin 0 -> 48206 bytes
+ src/resources/elec_data/chain1_wav/c0.wav   |  Bin 0 -> 45134 bytes
+ src/resources/elec_data/chain1_wav/c11.wav  |  Bin 0 -> 67662 bytes
+ src/resources/elec_data/chain1_wav/c12.wav  |  Bin 0 -> 1329230 bytes
+ src/resources/elec_data/chain1_wav/c13.wav  |  Bin 0 -> 668750 bytes
+ src/resources/elec_data/chain1_wav/c14.wav  |  Bin 0 -> 335950 bytes
+ src/resources/elec_data/chain1_wav/c15.wav  |  Bin 0 -> 47182 bytes
+ src/resources/elec_data/chain1_wav/c3.wav   |  Bin 0 -> 46158 bytes
+ src/resources/elec_data/chain1_wav/c4.wav   |  Bin 0 -> 47182 bytes
+ src/resources/elec_data/chain1_wav/c7.wav   |  Bin 0 -> 47182 bytes
+ src/resources/elec_data/chain1_wav/c8.wav   |  Bin 0 -> 68686 bytes
+ src/resources/elec_data/chain1_wav/d0.wav   |  Bin 0 -> 66638 bytes
+ src/resources/elec_data/chain1_wav/d10.wav  |  Bin 0 -> 46158 bytes
+ src/resources/elec_data/chain1_wav/d11.wav  |  Bin 0 -> 67662 bytes
+ src/resources/elec_data/chain1_wav/d12.wav  |  Bin 0 -> 170062 bytes
+ src/resources/elec_data/chain1_wav/d14.wav  |  Bin 0 -> 46158 bytes
+ src/resources/elec_data/chain1_wav/d15.wav  |  Bin 0 -> 45134 bytes
+ src/resources/elec_data/chain1_wav/d3.wav   |  Bin 0 -> 66638 bytes
+ src/resources/elec_data/chain1_wav/d4.wav   |  Bin 0 -> 66638 bytes
+ src/resources/elec_data/chain1_wav/d7.wav   |  Bin 0 -> 49230 bytes
+ src/resources/elec_data/chain1_wav/d8.wav   |  Bin 0 -> 50254 bytes
+ src/resources/elec_data/chain1_wav/d9.wav   |  Bin 0 -> 46158 bytes
+ src/resources/elec_data/chain2_wav/a0.wav   |  Bin 0 -> 176206 bytes
+ src/resources/elec_data/chain2_wav/a1.wav   |  Bin 0 -> 172110 bytes
+ src/resources/elec_data/chain2_wav/a2.wav   |  Bin 0 -> 57422 bytes
+ src/resources/elec_data/chain2_wav/a3.wav   |  Bin 0 -> 151630 bytes
+ src/resources/elec_data/chain2_wav/a4.wav   |  Bin 0 -> 94286 bytes
+ src/resources/elec_data/chain2_wav/a6.wav   |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain2_wav/a7.wav   |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain2_wav/b0.wav   |  Bin 0 -> 102478 bytes
+ src/resources/elec_data/chain2_wav/b1.wav   |  Bin 0 -> 63566 bytes
+ src/resources/elec_data/chain2_wav/b10.wav  |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain2_wav/b11.wav  |  Bin 0 -> 59470 bytes
+ src/resources/elec_data/chain2_wav/b12.wav  |  Bin 0 -> 96334 bytes
+ src/resources/elec_data/chain2_wav/b13.wav  |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain2_wav/b14.wav  |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain2_wav/b15.wav  |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain2_wav/b2.wav   |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain2_wav/b3.wav   |  Bin 0 -> 55374 bytes
+ src/resources/elec_data/chain2_wav/b4.wav   |  Bin 0 -> 55374 bytes
+ src/resources/elec_data/chain2_wav/b5.wav   |  Bin 0 -> 53326 bytes
+ src/resources/elec_data/chain2_wav/b6.wav   |  Bin 0 -> 59470 bytes
+ src/resources/elec_data/chain2_wav/b7.wav   |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain2_wav/b8.wav   |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain2_wav/b9.wav   |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain2_wav/c14.wav  |  Bin 0 -> 43086 bytes
+ src/resources/elec_data/chain2_wav/c2.wav   |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain2_wav/c3.wav   |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain2_wav/c8.wav   |  Bin 0 -> 71758 bytes
+ src/resources/elec_data/chain2_wav/d0.wav   |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain2_wav/d10.wav  |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain2_wav/d11.wav  |  Bin 0 -> 90190 bytes
+ src/resources/elec_data/chain2_wav/d12.wav  |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain2_wav/d14.wav  |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain2_wav/d15.wav  |  Bin 0 -> 53326 bytes
+ src/resources/elec_data/chain2_wav/d3.wav   |  Bin 0 -> 176206 bytes
+ src/resources/elec_data/chain2_wav/d5.wav   |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain2_wav/d6.wav   |  Bin 0 -> 49230 bytes
+ src/resources/elec_data/chain2_wav/d7.wav   |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain2_wav/d8.wav   |  Bin 0 -> 94286 bytes
+ src/resources/elec_data/chain2_wav/d9.wav   |  Bin 0 -> 49230 bytes
+ src/resources/elec_data/chain3_wav/a1.wav   |  Bin 0 -> 174158 bytes
+ src/resources/elec_data/chain3_wav/a10.wav  |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain3_wav/a11.wav  |  Bin 0 -> 59470 bytes
+ src/resources/elec_data/chain3_wav/a12.wav  |  Bin 0 -> 94286 bytes
+ src/resources/elec_data/chain3_wav/a4.wav   |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain3_wav/a6.wav   |  Bin 0 -> 94286 bytes
+ src/resources/elec_data/chain3_wav/b10.wav  |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain3_wav/b11.wav  |  Bin 0 -> 59470 bytes
+ src/resources/elec_data/chain3_wav/b12.wav  |  Bin 0 -> 96334 bytes
+ src/resources/elec_data/chain3_wav/b14.wav  |  Bin 0 -> 53326 bytes
+ src/resources/elec_data/chain3_wav/b15.wav  |  Bin 0 -> 49230 bytes
+ src/resources/elec_data/chain3_wav/b2.wav   |  Bin 0 -> 49230 bytes
+ src/resources/elec_data/chain3_wav/b3.wav   |  Bin 0 -> 53326 bytes
+ src/resources/elec_data/chain3_wav/b4.wav   |  Bin 0 -> 49230 bytes
+ src/resources/elec_data/chain3_wav/b5.wav   |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain3_wav/b6.wav   |  Bin 0 -> 90190 bytes
+ src/resources/elec_data/chain3_wav/b8.wav   |  Bin 0 -> 90190 bytes
+ src/resources/elec_data/chain3_wav/b9.wav   |  Bin 0 -> 90190 bytes
+ src/resources/elec_data/chain3_wav/c1.wav   |  Bin 0 -> 57422 bytes
+ src/resources/elec_data/chain3_wav/c11.wav  |  Bin 0 -> 98382 bytes
+ src/resources/elec_data/chain3_wav/c14.wav  |  Bin 0 -> 41038 bytes
+ src/resources/elec_data/chain3_wav/c15.wav  |  Bin 0 -> 176206 bytes
+ src/resources/elec_data/chain3_wav/c2.wav   |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain3_wav/c3.wav   |  Bin 0 -> 90190 bytes
+ src/resources/elec_data/chain3_wav/c5.wav   |  Bin 0 -> 96334 bytes
+ src/resources/elec_data/chain3_wav/c6.wav   |  Bin 0 -> 53326 bytes
+ src/resources/elec_data/chain3_wav/c7.wav   |  Bin 0 -> 90190 bytes
+ src/resources/elec_data/chain3_wav/c8.wav   |  Bin 0 -> 65614 bytes
+ src/resources/elec_data/chain3_wav/d0.wav   |  Bin 0 -> 90190 bytes
+ src/resources/elec_data/chain3_wav/d10.wav  |  Bin 0 -> 94286 bytes
+ src/resources/elec_data/chain3_wav/d11.wav  |  Bin 0 -> 90190 bytes
+ src/resources/elec_data/chain3_wav/d12.wav  |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain3_wav/d13.wav  |  Bin 0 -> 88142 bytes
+ src/resources/elec_data/chain3_wav/d14.wav  |  Bin 0 -> 49230 bytes
+ src/resources/elec_data/chain3_wav/d15.wav  |  Bin 0 -> 57422 bytes
+ src/resources/elec_data/chain3_wav/d2.wav   |  Bin 0 -> 49230 bytes
+ src/resources/elec_data/chain3_wav/d3.wav   |  Bin 0 -> 49230 bytes
+ src/resources/elec_data/chain3_wav/d4.wav   |  Bin 0 -> 145486 bytes
+ src/resources/elec_data/chain3_wav/d5.wav   |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain3_wav/d6.wav   |  Bin 0 -> 51278 bytes
+ src/resources/elec_data/chain3_wav/d7.wav   |  Bin 0 -> 47182 bytes
+ src/resources/elec_data/chain3_wav/d8.wav   |  Bin 0 -> 92238 bytes
+ src/resources/elec_data/chain3_wav/d9.wav   |  Bin 0 -> 94286 bytes
+ src/resources/elec_data/chain4_wav/a0.wav   |  Bin 0 -> 340046 bytes
+ src/resources/elec_data/chain4_wav/a12.wav  |  Bin 0 -> 337998 bytes
+ src/resources/elec_data/chain4_wav/a13.wav  |  Bin 0 -> 503886 bytes
+ src/resources/elec_data/chain4_wav/a14.wav  |  Bin 0 -> 526414 bytes
+ src/resources/elec_data/chain4_wav/a4.wav   |  Bin 0 -> 340046 bytes
+ src/resources/elec_data/chain4_wav/a5.wav   |  Bin 0 -> 503886 bytes
+ src/resources/elec_data/chain4_wav/a8.wav   |  Bin 0 -> 337998 bytes
+ src/resources/elec_data/chain4_wav/a9.wav   |  Bin 0 -> 172110 bytes
+ src/resources/elec_data/chain4_wav/b10.wav  |  Bin 0 -> 174158 bytes
+ src/resources/elec_data/chain4_wav/b11.wav  |  Bin 0 -> 337998 bytes
+ src/resources/elec_data/chain4_wav/b13.wav  |  Bin 0 -> 174158 bytes
+ src/resources/elec_data/chain4_wav/b14.wav  |  Bin 0 -> 503886 bytes
+ src/resources/elec_data/chain4_wav/b15.wav  |  Bin 0 -> 340046 bytes
+ src/resources/elec_data/chain4_wav/b3.wav   |  Bin 0 -> 342094 bytes
+ src/resources/elec_data/chain4_wav/b6.wav   |  Bin 0 -> 94286 bytes
+ src/resources/elec_data/chain4_wav/b7.wav   |  Bin 0 -> 340046 bytes
+ src/resources/elec_data/chain4_wav/c12.wav  |  Bin 0 -> 174158 bytes
+ src/resources/elec_data/chain4_wav/c13.wav  |  Bin 0 -> 90190 bytes
+ src/resources/elec_data/chain4_wav/c14.wav  |  Bin 0 -> 90190 bytes
+ src/resources/elec_data/chain4_wav/c15.wav  |  Bin 0 -> 90190 bytes
+ src/resources/elec_data/chain4_wav/e0.wav   |  Bin 0 -> 1333326 bytes
+ src/resources/elec_data/chain4_wav/e1.wav   |  Bin 0 -> 5300302 bytes
+ src/resources/elec_data/chain4_wav/e2.wav   |  Bin 0 -> 2656334 bytes
+ src/resources/elec_data/chain4_wav/e3.wav   |  Bin 0 -> 2658382 bytes
+ src/resources/elec_data/chain4_wav/e4.wav   |  Bin 0 -> 5300302 bytes
+ src/resources/elec_data/elec_midi_0.json    |  225 ++++
+ src/resources/elec_data/elec_midi_1.json    |  855 +++++++++++++++
+ src/resources/elec_data/elec_midi_2.json    |  840 +++++++++++++++
+ src/resources/elec_data/elec_midi_3.json    |  110 ++
+ src/resources/elec_data/elec_song.json      | 1533 +++++++++++++++++++++++++++
+ 160 files changed, 3617 insertions(+), 2 deletions(-)
+
+commit c99d4a2a5c687b87e9b4d4c7c23156a3164aaddf
+Author: David Zhang <davidzhang@dhcp-gs-9375.redrover.cornell.edu>
+Date:   Fri Dec 1 16:52:20 2017 -0500
+
+    file chooser for songs
+
+ src/input_event_manager.ml | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+commit 0b2c4abbc8a1b7bb1e61f5ffbc3754d38f0b728d
+Author: David Zhang <davidzhang@dhcp-gs-9375.redrover.cornell.edu>
+Date:   Fri Dec 1 16:47:51 2017 -0500
+
+    file chooser for songs too
+
+ src/file_button.ml         | 13 ++++++++++---
+ src/gui.ml                 |  4 ++--
+ src/input_event_manager.ml |  8 +++++---
+ src/model.ml               |  2 +-
+ 4 files changed, 18 insertions(+), 9 deletions(-)
+
+commit 8a203b54d013691de97cfbdf46d3489ca104305b
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 30 02:12:11 2017 -0500
+
+    changed default names
+
+ src/model.ml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit e49dfc26f5ddfd6f0f6f10d8b7166af25cb6aa73
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 30 02:11:49 2017 -0500
+
+    renamed song to new format
+
+ src/resources/eq_data/{eq_midi_0.json => eq_0_midi.json} | 0
+ src/resources/eq_data/{eq_midi_1.json => eq_1_midi.json} | 0
+ src/resources/eq_data/{eq_midi_2.json => eq_2_midi.json} | 0
+ src/resources/eq_data/{eq_midi_3.json => eq_3_midi.json} | 0
+ src/resources/eq_data/{eq.json => eq_song.json}          | 0
+ 5 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 9a59bccbe720d7a05f2eceb589687cdbc3f6745b
+Merge: 4c30e25 c80c7a1
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 30 02:09:54 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 4c30e258c88ce9b10f113340018cea05464f8d98
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 30 02:09:44 2017 -0500
+
+    added new sound pack and reverted some gui changes
+
+ src/gui.ml                                   |    8 +-
+ src/model.ml                                 |    6 +-
+ src/resources/conversions/conv_midi_json.js  |    9 +-
+ src/resources/conversions/conv_song_json.js  |    2 +-
+ src/resources/conversions/ghet_midi.json     |    1 +
+ src/resources/conversions/ghet_old.json      |   52 +
+ src/resources/kpsk_data/chain1_wav/a12.wav   |  Bin 0 -> 102478 bytes
+ src/resources/kpsk_data/chain1_wav/b0.wav    |  Bin 0 -> 127054 bytes
+ src/resources/kpsk_data/chain1_wav/b1.wav    |  Bin 0 -> 139342 bytes
+ src/resources/kpsk_data/chain1_wav/b10.wav   |  Bin 0 -> 114766 bytes
+ src/resources/kpsk_data/chain1_wav/b11.wav   |  Bin 0 -> 131150 bytes
+ src/resources/kpsk_data/chain1_wav/b12.wav   |  Bin 0 -> 106574 bytes
+ src/resources/kpsk_data/chain1_wav/b13.wav   |  Bin 0 -> 147534 bytes
+ src/resources/kpsk_data/chain1_wav/b14.wav   |  Bin 0 -> 102478 bytes
+ src/resources/kpsk_data/chain1_wav/b15.wav   |  Bin 0 -> 110670 bytes
+ src/resources/kpsk_data/chain1_wav/b2.wav    |  Bin 0 -> 118862 bytes
+ src/resources/kpsk_data/chain1_wav/b3.wav    |  Bin 0 -> 114766 bytes
+ src/resources/kpsk_data/chain1_wav/b4.wav    |  Bin 0 -> 127054 bytes
+ src/resources/kpsk_data/chain1_wav/b5.wav    |  Bin 0 -> 127054 bytes
+ src/resources/kpsk_data/chain1_wav/b6.wav    |  Bin 0 -> 110670 bytes
+ src/resources/kpsk_data/chain1_wav/b7.wav    |  Bin 0 -> 145486 bytes
+ src/resources/kpsk_data/chain1_wav/b8.wav    |  Bin 0 -> 92238 bytes
+ src/resources/kpsk_data/chain1_wav/b9.wav    |  Bin 0 -> 100430 bytes
+ src/resources/kpsk_data/chain1_wav/c10.wav   |  Bin 0 -> 110670 bytes
+ src/resources/kpsk_data/chain1_wav/d0.wav    |  Bin 0 -> 131150 bytes
+ src/resources/kpsk_data/chain1_wav/d1.wav    |  Bin 0 -> 200782 bytes
+ src/resources/kpsk_data/chain1_wav/d10.wav   |  Bin 0 -> 110670 bytes
+ src/resources/kpsk_data/chain1_wav/d11.wav   |  Bin 0 -> 96334 bytes
+ src/resources/kpsk_data/chain1_wav/d12.wav   |  Bin 0 -> 135246 bytes
+ src/resources/kpsk_data/chain1_wav/d13.wav   |  Bin 0 -> 133198 bytes
+ src/resources/kpsk_data/chain1_wav/d14.wav   |  Bin 0 -> 127054 bytes
+ src/resources/kpsk_data/chain1_wav/d2.wav    |  Bin 0 -> 137294 bytes
+ src/resources/kpsk_data/chain1_wav/d3.wav    |  Bin 0 -> 137294 bytes
+ src/resources/kpsk_data/chain1_wav/d4.wav    |  Bin 0 -> 129102 bytes
+ src/resources/kpsk_data/chain1_wav/d5.wav    |  Bin 0 -> 102478 bytes
+ src/resources/kpsk_data/chain1_wav/d6.wav    |  Bin 0 -> 127054 bytes
+ src/resources/kpsk_data/chain1_wav/d7.wav    |  Bin 0 -> 137294 bytes
+ src/resources/kpsk_data/chain1_wav/d8.wav    |  Bin 0 -> 100430 bytes
+ src/resources/kpsk_data/chain1_wav/d9.wav    |  Bin 0 -> 102478 bytes
+ src/resources/kpsk_data/chain1_wav/e2.wav    |  Bin 0 -> 114766 bytes
+ src/resources/kpsk_data/chain1_wav/e3.wav    |  Bin 0 -> 118862 bytes
+ src/resources/kpsk_data/chain2_wav/a0.wav    |  Bin 0 -> 108622 bytes
+ src/resources/kpsk_data/chain2_wav/a1.wav    |  Bin 0 -> 114766 bytes
+ src/resources/kpsk_data/chain2_wav/a10.wav   |  Bin 0 -> 137294 bytes
+ src/resources/kpsk_data/chain2_wav/a11.wav   |  Bin 0 -> 232526 bytes
+ src/resources/kpsk_data/chain2_wav/a12.wav   |  Bin 0 -> 104526 bytes
+ src/resources/kpsk_data/chain2_wav/a13.wav   |  Bin 0 -> 886862 bytes
+ src/resources/kpsk_data/chain2_wav/a14.wav   |  Bin 0 -> 129102 bytes
+ src/resources/kpsk_data/chain2_wav/a4.wav    |  Bin 0 -> 95310 bytes
+ src/resources/kpsk_data/chain2_wav/a5.wav    |  Bin 0 -> 116814 bytes
+ src/resources/kpsk_data/chain2_wav/a6.wav    |  Bin 0 -> 108622 bytes
+ src/resources/kpsk_data/chain2_wav/a9.wav    |  Bin 0 -> 132174 bytes
+ src/resources/kpsk_data/chain2_wav/b0.wav    |  Bin 0 -> 118862 bytes
+ src/resources/kpsk_data/chain2_wav/b1.wav    |  Bin 0 -> 135246 bytes
+ src/resources/kpsk_data/chain2_wav/b10.wav   |  Bin 0 -> 97358 bytes
+ src/resources/kpsk_data/chain2_wav/b11.wav   |  Bin 0 -> 138318 bytes
+ src/resources/kpsk_data/chain2_wav/b12.wav   |  Bin 0 -> 194638 bytes
+ src/resources/kpsk_data/chain2_wav/b13.wav   |  Bin 0 -> 140366 bytes
+ src/resources/kpsk_data/chain2_wav/b14.wav   |  Bin 0 -> 106574 bytes
+ src/resources/kpsk_data/chain2_wav/b15.wav   |  Bin 0 -> 97358 bytes
+ src/resources/kpsk_data/chain2_wav/b2.wav    |  Bin 0 -> 118862 bytes
+ src/resources/kpsk_data/chain2_wav/b3.wav    |  Bin 0 -> 114766 bytes
+ src/resources/kpsk_data/chain2_wav/b7.wav    |  Bin 0 -> 139342 bytes
+ src/resources/kpsk_data/chain2_wav/b8.wav    |  Bin 0 -> 121934 bytes
+ src/resources/kpsk_data/chain2_wav/b9.wav    |  Bin 0 -> 119886 bytes
+ src/resources/kpsk_data/chain2_wav/c1.wav    |  Bin 0 -> 187470 bytes
+ src/resources/kpsk_data/chain2_wav/c10.wav   |  Bin 0 -> 114766 bytes
+ src/resources/kpsk_data/chain2_wav/c13.wav   |  Bin 0 -> 938062 bytes
+ src/resources/kpsk_data/chain2_wav/c2.wav    |  Bin 0 -> 944206 bytes
+ src/resources/kpsk_data/chain2_wav/c3.wav    |  Bin 0 -> 402510 bytes
+ src/resources/kpsk_data/chain2_wav/d0.wav    |  Bin 0 -> 128078 bytes
+ src/resources/kpsk_data/chain2_wav/d1.wav    |  Bin 0 -> 194638 bytes
+ src/resources/kpsk_data/chain2_wav/d10.wav   |  Bin 0 -> 139342 bytes
+ src/resources/kpsk_data/chain2_wav/d11.wav   |  Bin 0 -> 139342 bytes
+ src/resources/kpsk_data/chain2_wav/d12.wav   |  Bin 0 -> 186446 bytes
+ src/resources/kpsk_data/chain2_wav/d13.wav   |  Bin 0 -> 131150 bytes
+ src/resources/kpsk_data/chain2_wav/d14.wav   |  Bin 0 -> 122958 bytes
+ src/resources/kpsk_data/chain2_wav/d15.wav   |  Bin 0 -> 201806 bytes
+ src/resources/kpsk_data/chain2_wav/d2.wav    |  Bin 0 -> 135246 bytes
+ src/resources/kpsk_data/chain2_wav/d3.wav    |  Bin 0 -> 133198 bytes
+ src/resources/kpsk_data/chain2_wav/d4.wav    |  Bin 0 -> 136270 bytes
+ src/resources/kpsk_data/chain2_wav/d5.wav    |  Bin 0 -> 128078 bytes
+ src/resources/kpsk_data/chain2_wav/d6.wav    |  Bin 0 -> 97358 bytes
+ src/resources/kpsk_data/chain2_wav/d7.wav    |  Bin 0 -> 95310 bytes
+ src/resources/kpsk_data/chain2_wav/d8.wav    |  Bin 0 -> 135246 bytes
+ src/resources/kpsk_data/chain2_wav/d9.wav    |  Bin 0 -> 140366 bytes
+ src/resources/kpsk_data/chain2_wav/e2.wav    |  Bin 0 -> 114766 bytes
+ src/resources/kpsk_data/chain2_wav/e3.wav    |  Bin 0 -> 118862 bytes
+ src/resources/kpsk_data/chain3_wav/a0.wav    |  Bin 0 -> 128078 bytes
+ src/resources/kpsk_data/chain3_wav/a12.wav   |  Bin 0 -> 97358 bytes
+ src/resources/kpsk_data/chain3_wav/a13.wav   |  Bin 0 -> 118862 bytes
+ src/resources/kpsk_data/chain3_wav/a14.wav   |  Bin 0 -> 189518 bytes
+ src/resources/kpsk_data/chain3_wav/b1.wav    |  Bin 0 -> 105550 bytes
+ src/resources/kpsk_data/chain3_wav/b10.wav   |  Bin 0 -> 99406 bytes
+ src/resources/kpsk_data/chain3_wav/b11.wav   |  Bin 0 -> 143438 bytes
+ src/resources/kpsk_data/chain3_wav/b12.wav   |  Bin 0 -> 143438 bytes
+ src/resources/kpsk_data/chain3_wav/b14.wav   |  Bin 0 -> 150606 bytes
+ src/resources/kpsk_data/chain3_wav/b15.wav   |  Bin 0 -> 122958 bytes
+ src/resources/kpsk_data/chain3_wav/b2.wav    |  Bin 0 -> 116814 bytes
+ src/resources/kpsk_data/chain3_wav/b3.wav    |  Bin 0 -> 110670 bytes
+ src/resources/kpsk_data/chain3_wav/b4.wav    |  Bin 0 -> 149582 bytes
+ src/resources/kpsk_data/chain3_wav/b6.wav    |  Bin 0 -> 110670 bytes
+ src/resources/kpsk_data/chain3_wav/b7.wav    |  Bin 0 -> 149582 bytes
+ src/resources/kpsk_data/chain3_wav/b9.wav    |  Bin 0 -> 117838 bytes
+ src/resources/kpsk_data/chain3_wav/c10.wav   |  Bin 0 -> 110670 bytes
+ src/resources/kpsk_data/chain3_wav/c4.wav    |  Bin 0 -> 154702 bytes
+ src/resources/kpsk_data/chain3_wav/d0.wav    |  Bin 0 -> 101454 bytes
+ src/resources/kpsk_data/chain3_wav/d10.wav   |  Bin 0 -> 147534 bytes
+ src/resources/kpsk_data/chain3_wav/d11.wav   |  Bin 0 -> 217166 bytes
+ src/resources/kpsk_data/chain3_wav/d12.wav   |  Bin 0 -> 103502 bytes
+ src/resources/kpsk_data/chain3_wav/d13.wav   |  Bin 0 -> 101454 bytes
+ src/resources/kpsk_data/chain3_wav/d14.wav   |  Bin 0 -> 125006 bytes
+ src/resources/kpsk_data/chain3_wav/d15.wav   |  Bin 0 -> 148558 bytes
+ src/resources/kpsk_data/chain3_wav/d2.wav    |  Bin 0 -> 112718 bytes
+ src/resources/kpsk_data/chain3_wav/d3.wav    |  Bin 0 -> 111694 bytes
+ src/resources/kpsk_data/chain3_wav/d4.wav    |  Bin 0 -> 111694 bytes
+ src/resources/kpsk_data/chain3_wav/d5.wav    |  Bin 0 -> 110670 bytes
+ src/resources/kpsk_data/chain3_wav/d6.wav    |  Bin 0 -> 114766 bytes
+ src/resources/kpsk_data/chain3_wav/d7.wav    |  Bin 0 -> 134222 bytes
+ src/resources/kpsk_data/chain3_wav/d8.wav    |  Bin 0 -> 145486 bytes
+ src/resources/kpsk_data/chain3_wav/d9.wav    |  Bin 0 -> 148558 bytes
+ src/resources/kpsk_data/chain4_wav/a12.wav   |  Bin 0 -> 101454 bytes
+ src/resources/kpsk_data/chain4_wav/a13.wav   |  Bin 0 -> 312398 bytes
+ src/resources/kpsk_data/chain4_wav/b1.wav    |  Bin 0 -> 106574 bytes
+ src/resources/kpsk_data/chain4_wav/b10.wav   |  Bin 0 -> 81998 bytes
+ src/resources/kpsk_data/chain4_wav/b11.wav   |  Bin 0 -> 77902 bytes
+ src/resources/kpsk_data/chain4_wav/b12.wav   |  Bin 0 -> 151630 bytes
+ src/resources/kpsk_data/chain4_wav/b13.wav   |  Bin 0 -> 88142 bytes
+ src/resources/kpsk_data/chain4_wav/b14.wav   |  Bin 0 -> 99406 bytes
+ src/resources/kpsk_data/chain4_wav/b15.wav   |  Bin 0 -> 84046 bytes
+ src/resources/kpsk_data/chain4_wav/b2.wav    |  Bin 0 -> 101454 bytes
+ src/resources/kpsk_data/chain4_wav/b5.wav    |  Bin 0 -> 128078 bytes
+ src/resources/kpsk_data/chain4_wav/b6.wav    |  Bin 0 -> 121934 bytes
+ src/resources/kpsk_data/chain4_wav/b7.wav    |  Bin 0 -> 94286 bytes
+ src/resources/kpsk_data/chain4_wav/b8.wav    |  Bin 0 -> 126030 bytes
+ src/resources/kpsk_data/chain4_wav/b9.wav    |  Bin 0 -> 95310 bytes
+ src/resources/kpsk_data/chain4_wav/c10.wav   |  Bin 0 -> 102478 bytes
+ src/resources/kpsk_data/chain4_wav/d1.wav    |  Bin 0 -> 80974 bytes
+ src/resources/kpsk_data/chain4_wav/d13.wav   |  Bin 0 -> 156750 bytes
+ src/resources/kpsk_data/chain4_wav/d14.wav   |  Bin 0 -> 165966 bytes
+ src/resources/kpsk_data/chain4_wav/d15.wav   |  Bin 0 -> 164942 bytes
+ src/resources/kpsk_data/chain4_wav/d2.wav    |  Bin 0 -> 101454 bytes
+ src/resources/kpsk_data/chain4_wav/d3.wav    |  Bin 0 -> 78926 bytes
+ src/resources/kpsk_data/chain4_wav/ea12.wav  |  Bin 0 -> 94798 bytes
+ src/resources/kpsk_data/chain4_wav/ea13.wav  |  Bin 0 -> 936526 bytes
+ src/resources/kpsk_data/chain4_wav/eb11.wav  |  Bin 0 -> 400974 bytes
+ src/resources/kpsk_data/chain4_wav/eb13.wav  |  Bin 0 -> 122958 bytes
+ src/resources/kpsk_data/chain4_wav/eb15.wav  |  Bin 0 -> 918606 bytes
+ src/resources/kpsk_data/chain4_wav/eb6.wav   |  Bin 0 -> 171598 bytes
+ src/resources/kpsk_data/chain4_wav/eb7.wav   |  Bin 0 -> 152142 bytes
+ src/resources/kpsk_data/chain4_wav/ec10.wav  |  Bin 0 -> 104526 bytes
+ src/resources/kpsk_data/chain4_wav/ed4_1.wav |  Bin 0 -> 144462 bytes
+ src/resources/kpsk_data/chain4_wav/ed4_2.wav |  Bin 0 -> 145486 bytes
+ src/resources/kpsk_data/chain4_wav/ed8_1.wav |  Bin 0 -> 125006 bytes
+ src/resources/kpsk_data/chain4_wav/ed8_2.wav |  Bin 0 -> 138830 bytes
+ src/resources/kpsk_data/kpsk_0_midi.json     |  265 +++++
+ src/resources/kpsk_data/kpsk_1_midi.json     |  575 +++++++++
+ src/resources/kpsk_data/kpsk_2_midi.json     |  810 +++++++++++++
+ src/resources/kpsk_data/kpsk_3_midi.json     |  705 +++++++++++
+ src/resources/kpsk_data/kpsk_4_midi.json     | 1615 ++++++++++++++++++++++++++
+ src/resources/kpsk_data/kpsk_song.json       | 1478 +++++++++++++++++++++++
+ src/tsdl_wrapper.ml                          |    2 +-
+ 162 files changed, 5517 insertions(+), 11 deletions(-)
+
+commit c80c7a1769c7036cbddbe8b460a9f3675f6e5a53
+Merge: d957930 5a5cf75
+Author: David Y Zhang <dyz3@cornell.edu>
+Date:   Thu Nov 30 01:37:07 2017 -0500
+
+    Merge pull request #33 from dw475/filechooser
+    
+    Filechooser
+
+commit 5a5cf75caaf2870861b4209347b52fa01dd5bc01
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 30 01:33:29 2017 -0500
+
+    updated midi files to be correct soundpack keys
+
+ src/resources/eq_data/eq_midi_1.json | 2 +-
+ src/resources/eq_data/eq_midi_2.json | 2 +-
+ src/resources/eq_data/eq_midi_3.json | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+commit d21175fda0ef61f7e755b476a402fb8b6c8482bf
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 30 01:27:46 2017 -0500
+
+    trying some changes
+
+ src/audio_effects.ml  | 15 ++++++++++++++-
+ src/audio_effects.mli |  2 ++
+ src/gui.ml            |  9 +++++++--
+ src/model.ml          |  7 ++++---
+ src/tsdl_wrapper.ml   |  1 +
+ 5 files changed, 28 insertions(+), 6 deletions(-)
+
+commit 4df66e60e3cb829284b09fab036ca5a4e82c5482
+Author: David Zhang <davidzhang@dhcp-mcfad-1706.redrover.cornell.edu>
+Date:   Thu Nov 30 01:25:45 2017 -0500
+
+    file chooser for midi
+
+ src/Makefile               |  2 +-
+ src/file_button.ml         | 58 ++++++++++++++++++++++++++++++++++++++++++++++
+ src/file_button.mli        | 20 ++++++++++++++++
+ src/gui.ml                 | 43 ++++++++++++++++++++++++++++++++++
+ src/gui.mli                |  6 ++++-
+ src/input_event_manager.ml | 20 ++++++++++++----
+ src/main.ml                |  1 +
+ src/model.ml               | 23 ++++++++++++++++++
+ src/model.mli              | 15 ++++++++++++
+ 9 files changed, 182 insertions(+), 6 deletions(-)
+
+commit f888dcb3b7e0b1424b5d91fdc7685be928322d5a
+Author: David Zhang <davidzhang@dhcp-mcfad-1706.redrover.cornell.edu>
+Date:   Wed Nov 29 01:10:25 2017 -0500
+
+    new file chooser window!
+
+ src/file_button.ml         | 21 +++++++++++++++++
+ src/file_button.mli        | 13 +++++++++++
+ src/gui.ml                 | 58 +++++++++++++++++++++++++++++++++++++++++++++-
+ src/gui.mli                |  4 ++++
+ src/input_event_manager.ml | 36 +++++++++++++++++++---------
+ src/model.ml               |  5 ++++
+ src/model.mli              |  3 +++
+ 7 files changed, 128 insertions(+), 12 deletions(-)
+
+commit d957930676cd592d63e4f3a5f42f32b2355d6d42
+Merge: 42c5619 0510f8b
+Author: David Zhang <davidzhang@dhcp-mcfad-1706.redrover.cornell.edu>
+Date:   Tue Nov 28 22:47:14 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 42c56194facaa0c36bf64fb58bac9247b0840a26
+Author: David Zhang <davidzhang@dhcp-mcfad-1706.redrover.cornell.edu>
+Date:   Tue Nov 28 22:47:12 2017 -0500
+
+    guo
+
+ src/gui.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 0510f8b969dfa8b91c8853e8ca0091905ff4eea6
+Merge: c113841 097651c
+Author: David Y Zhang <dyz3@cornell.edu>
+Date:   Tue Nov 28 22:46:30 2017 -0500
+
+    Merge pull request #32 from dw475/feature_13
+    
+    Feature 13
+
+commit 097651c88fdc74a35d1beea2392812e54761d764
+Merge: ebd8e83 c113841
+Author: David Y Zhang <dyz3@cornell.edu>
+Date:   Tue Nov 28 22:46:22 2017 -0500
+
+    Merge branch 'master' into feature_13
+
+commit ebd8e83d0701f4e68d6b7cb9275837da49a1be80
+Author: David Zhang <davidzhang@dhcp-mcfad-1706.redrover.cornell.edu>
+Date:   Tue Nov 28 22:42:01 2017 -0500
+
+    gui
+
+ src/gui.ml | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
+
+commit c11384108cb897882b88304fdf1f6ab27afab5f7
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 21:11:41 2017 -0500
+
+    commented out potentially buggy code
+
+ src/model.ml | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+commit 34fcc872f728598b398b026600b98056adc76d26
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 21:08:03 2017 -0500
+
+    commented out unused vars
+
+ src/input_event_manager.ml | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+commit 1bd64ca044b4234a1251d225e89ce0a7f8870e40
+Merge: e24d018 0769dce
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Tue Nov 28 21:03:21 2017 -0500
+
+    Merge pull request #31 from dw475/feature_13
+    
+    Feature 13
+
+commit 0769dce722d39d2e1a60fb5296c611f6a16db438
+Merge: 2aec638 e24d018
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 21:02:58 2017 -0500
+
+    Merge branch 'master' into feature_13
+    
+    # Conflicts:
+    #       src/keyboard.ml
+
+commit e24d0188fa80a75424c5e6e5e0994f2c6a3f2a60
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 18:39:34 2017 -0500
+
+    fixed buffer not being updated
+
+ src/sound_manager.ml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 2aec6387de5a649688a8419bb22c80ebb585fab0
+Author: dc788 <dc788@cornell.edu>
+Date:   Tue Nov 28 17:45:53 2017 -0500
+
+    Buttons show color on click :D
+
+ src/button.ml  | 36 +++++++++++++++++++++++++++++++++++-
+ src/button.mli | 13 +++++++++++--
+ src/gui.ml     | 23 +++++++++++++----------
+ src/model.ml   | 14 +++++++++++---
+ src/model.mli  |  3 +++
+ 5 files changed, 73 insertions(+), 16 deletions(-)
+
+commit 021893b47d33353c30b9cf664e1bd5054a19919e
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 17:32:33 2017 -0500
+
+    crappy fft
+
+ src/gui.ml | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+commit 530fa70cdefb2ce69c7947d15a57454ba5b367de
+Author: dc788 <dc788@cornell.edu>
+Date:   Tue Nov 28 17:15:19 2017 -0500
+
+    stop clears the keys
+
+ src/input_event_manager.ml | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+commit bc6ab98187c01472392c842c1804faf782d15bc9
+Author: dc788 <dc788@cornell.edu>
+Date:   Tue Nov 28 17:01:43 2017 -0500
+
+    stop button works
+
+ src/input_event_manager.ml |  7 +++----
+ src/main.ml                |  5 ++---
+ src/metronome.ml           |  2 +-
+ src/model.ml               | 13 ++++++++++++-
+ src/model.mli              |  6 ++++++
+ 5 files changed, 24 insertions(+), 9 deletions(-)
+
+commit a968a94ca871695c0376bfd355e72bc4aae730f5
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Tue Nov 28 16:54:56 2017 -0500
+
+    added in random lines because fft isn't visualizing yet
+
+ src/gui.ml | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
+
+commit 57b57b81f88bb1c2f62c5cbc4f750968b724a41a
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Tue Nov 28 16:52:21 2017 -0500
+
+    connected bars? maybe?
+
+ src/gui.ml | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
+
+commit 8087f2004ae62a2da7b5ae708440a9a767be209f
+Author: dc788 <dc788@cornell.edu>
+Date:   Tue Nov 28 16:48:41 2017 -0500
+
+    Working on stop button (doesn't restart properly)
+
+ src/button.ml              |  3 ++-
+ src/button.mli             |  1 +
+ src/gui.ml                 |  9 ++++++---
+ src/input_event_manager.ml |  3 ++-
+ src/metronome.ml           | 10 ++++++++--
+ src/model.ml               |  4 ++++
+ src/model.mli              |  7 +++++--
+ 7 files changed, 28 insertions(+), 9 deletions(-)
+
+commit 61f8cf0ed751b2021e862bf70ad501e81ab1256b
+Merge: c38e2c9 ad378f6
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Tue Nov 28 16:42:23 2017 -0500
+
+    Merge pull request #30 from dw475/feature_17
+    
+    added fft
+
+commit ad378f6adf992da69cecebf6c940f7af047e827e
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 16:41:51 2017 -0500
+
+    added fft
+
+ src/audio_effects.ml  | 67 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/audio_effects.mli | 16 ++++++++++++
+ src/model.ml          | 17 +++++++++++--
+ src/model.mli         |  4 +++
+ src/sound_manager.ml  |  3 ++-
+ 5 files changed, 104 insertions(+), 3 deletions(-)
+
+commit 96c2205389c508df3b2c59c226b543ff7daf4253
+Author: dc788 <dc788@cornell.edu>
+Date:   Tue Nov 28 16:35:03 2017 -0500
+
+    play & pause midi works
+
+ src/gui.ml                 |  2 +-
+ src/input_event_manager.ml |  7 ++++++-
+ src/main.ml                | 11 +++++------
+ src/metronome.ml           |  4 ++++
+ src/metronome.mli          |  3 +++
+ src/midi_player.ml         |  2 ++
+ src/model.ml               | 17 +++++++++++++++--
+ src/model.mli              |  9 +++++++++
+ 8 files changed, 45 insertions(+), 10 deletions(-)
+
+commit 7824692d20c79a0aada449815269068eda94b40b
+Merge: 4b19308 9fc0cfd
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 16:17:29 2017 -0500
+
+    Merge branch 'master' into feature_13
+
+commit 4b193087e6491bc73f981d26ca5dd838a2e65d4a
+Merge: 06c8416 b5dc134
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 16:17:20 2017 -0500
+
+    Merge branch 'feature_13' of https://github.coecis.cornell.edu/dw475/3110-final into feature_13
+
+commit 06c8416562732357fe8610d133f9a7ef5930f67e
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 16:16:55 2017 -0500
+
+    file manager
+
+ src/gui.ml                 | 54 +++++++++++++++++++++++++++++-----------------
+ src/input_event_manager.ml | 10 ++++++++-
+ 2 files changed, 43 insertions(+), 21 deletions(-)
+
+commit c38e2c9b774cc8c836cce026e9156c81313c78a3
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Tue Nov 28 16:15:28 2017 -0500
+
+    made gui use the new Model
+
+ src/gui.ml  | 8 +++++++-
+ src/gui.mli | 2 +-
+ src/main.ml | 5 +----
+ 3 files changed, 9 insertions(+), 6 deletions(-)
+
+commit 478dc57af2bf0ea5d008c699d636eaeb214d0d40
+Merge: 9fc0cfd f86bd97
+Author: Stephen John Buttolph <sjb274@cornell.edu>
+Date:   Tue Nov 28 16:11:25 2017 -0500
+
+    Merge pull request #29 from dw475/coolio_graphical_rectangles
+    
+    added amplitude bars with stub for fft
+
+commit f86bd97729035fb383240fe2c606c01b727e288a
+Merge: 7fcb5dc 9fc0cfd
+Author: Stephen John Buttolph <sjb274@cornell.edu>
+Date:   Tue Nov 28 16:10:11 2017 -0500
+
+    Merge branch 'master' into coolio_graphical_rectangles
+
+commit 7fcb5dce35dabc91ddb54524f47882e0e3bea81c
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Tue Nov 28 16:06:08 2017 -0500
+
+    added amplitude bars with stub for fft
+
+ src/gui.ml  | 85 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ src/gui.mli |  2 +-
+ src/main.ml | 15 ++++++++---
+ 3 files changed, 91 insertions(+), 11 deletions(-)
+
+commit b5dc13450690185a8db100fdbac9e6044ea62a42
+Author: dc788 <dc788@cornell.edu>
+Date:   Tue Nov 28 16:02:12 2017 -0500
+
+    Midi plays with keyboard press
+
+ src/input_event_manager.ml  | 39 +++++++++++++++++++++------------------
+ src/input_event_manager.mli |  6 +++++-
+ src/main.ml                 | 11 ++++++++++-
+ src/metronome.ml            |  4 ++--
+ src/metronome.mli           |  2 +-
+ src/midi.ml                 | 15 ++++++++-------
+ src/midi_player.mli         |  2 ++
+ src/song.ml                 |  9 ++++++---
+ src/song.mli                |  5 ++++-
+ 9 files changed, 59 insertions(+), 34 deletions(-)
+
+commit 9fc0cfdc18a17b4d6606b57571777f14cd56bcbb
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 15:35:46 2017 -0500
+
+    arrows
+
+ src/gui.ml | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit d23b19ee1fa8d7e685be1b3996b45db44483ddb3
+Author: dc788 <dc788@cornell.edu>
+Date:   Tue Nov 28 15:33:24 2017 -0500
+
+    Merging
+
+ src/main.ml | 3 +++
+ src/midi.ml | 8 +++++---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
+
+commit ede85795360433aaf4b6e0514d86433bddfdf944
+Merge: b6a606b d0ac5fa
+Author: dc788 <dc788@cornell.edu>
+Date:   Tue Nov 28 15:26:37 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final into feature_13
+
+commit d0ac5fafcc1e9e8d3f1a42e96e125afba7e5f13a
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 15:26:18 2017 -0500
+
+    fixed circular dependencies
+
+ src/main.ml          | 4 +++-
+ src/tsdl_wrapper.ml  | 6 ++----
+ src/tsdl_wrapper.mli | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+commit b6a606b42053a59ac2201d8842e02174b219cf7a
+Merge: a1f7c82 53c9c20
+Author: dc788 <dc788@cornell.edu>
+Date:   Tue Nov 28 15:22:29 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final into feature_13
+
+commit a1f7c82de692f7013d16bc8a4cea8f5c9bbc00f1
+Author: dc788 <dc788@cornell.edu>
+Date:   Tue Nov 28 15:20:23 2017 -0500
+
+    Midi should work, haven't tested yet
+
+ src/midi.ml         | 58 +++++++++++++++++++++++++++++++++++++++++++++++++----
+ src/midi.mli        |  8 ++++++++
+ src/midi_player.ml  |  7 +++++++
+ src/midi_player.mli |  4 ++++
+ 4 files changed, 73 insertions(+), 4 deletions(-)
+
+commit 53c9c20fce9a2a1b8eaacd060b151921f072cf4a
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 15:19:30 2017 -0500
+
+    minor wrapper updates
+
+ src/main.ml          | 2 +-
+ src/tsdl_wrapper.ml  | 8 +++++---
+ src/tsdl_wrapper.mli | 2 +-
+ 3 files changed, 7 insertions(+), 5 deletions(-)
+
+commit 9f8fff596dc83aa504d12faa35aa2033b1d183a5
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 15:16:52 2017 -0500
+
+    format
+
+ src/model.ml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 2ae7c8ce817cbbda767e0cb5067d97b22799420c
+Merge: f7177c2 6486058
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Tue Nov 28 15:13:36 2017 -0500
+
+    Merge pull request #28 from dw475/feature_27
+    
+    Feature 27
+
+commit 64860583a4e5a594f334f2881b1a8912d988a79f
+Merge: e402efe f7177c2
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 15:13:03 2017 -0500
+
+    Merge branch 'master' into feature_27
+    
+    # Conflicts:
+    #       src/keyboard.ml
+
+commit e402efee0c2cbd54e41b385de853fdb94db193d4
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 15:10:11 2017 -0500
+
+    get
+
+ src/model.ml | 4 ----
+ 1 file changed, 4 deletions(-)
+
+commit 971b7a221a1a11b7a1b49221bb7082b432e5ec4d
+Merge: bc5d4ec 0d2142a
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 15:09:56 2017 -0500
+
+    Merge branch 'feature_27' of https://github.coecis.cornell.edu/dw475/3110-final into feature_27
+
+commit bc5d4ec352041a6817186d315c4087fc533a4ef8
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 15:09:28 2017 -0500
+
+    get
+
+ src/model.mli | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 5414afeeba58cb706c0b0889ac6fbc8399dab0fe
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 15:09:16 2017 -0500
+
+    get
+
+ src/model.mli | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 50e3c8853c037ced337043caba7539a5727b0eae
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 15:09:02 2017 -0500
+
+    gets
+
+ src/model.ml | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+commit 0d2142a43e9a33fb24a1e5bb7357e865bff8e482
+Merge: f954f99 4ce68d3
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 15:06:24 2017 -0500
+
+    merged
+
+commit 4ce68d367449a45f19c8399be611ba3dc8533784
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 15:05:42 2017 -0500
+
+    update
+
+ src/model.ml  | 16 ++++++++++++++++
+ src/model.mli | 19 +++++++++++++------
+ 2 files changed, 29 insertions(+), 6 deletions(-)
+
+commit f954f9979dd27641207c40910c463be6d4e6b6ae
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 15:05:10 2017 -0500
+
+    refactored input event manager, main, and removed state manager
+
+ src/gui.ml                  | 14 +++++------
+ src/input_event_manager.ml  | 59 ++++++++++++++++++---------------------------
+ src/input_event_manager.mli |  5 ----
+ src/main.ml                 | 12 +++------
+ src/model.ml                | 30 +++++++++++------------
+ src/state_manager.ml        | 10 --------
+ src/state_manager.mli       | 12 ---------
+ 7 files changed, 49 insertions(+), 93 deletions(-)
+
+commit a93b13ff395dba07f0acf3c97f40e2929818d583
+Merge: 3c91aeb 3d1ac3a
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 14:54:33 2017 -0500
+
+    Merge branch 'feature_27' of https://github.coecis.cornell.edu/dw475/3110-final into feature_27
+
+commit 3d1ac3ae4ded6ccc081b3ed2768fd1937a3fc271
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 14:47:01 2017 -0500
+
+    .mli update
+
+ src/model.mli | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+commit a0555aebfeeb979ec54d2013a39d0d71241eee53
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 14:43:53 2017 -0500
+
+    model
+
+ src/model.ml  | 41 ++++++++++++++++++++++++++++++++++++++++-
+ src/model.mli |  9 +++++++++
+ 2 files changed, 49 insertions(+), 1 deletion(-)
+
+commit 3c91aebe10d766992e095583aa6945b04b7f5b46
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 14:39:15 2017 -0500
+
+    removed song from sound manager and added get soundpack
+
+ src/song.ml           |  5 ++++-
+ src/song.mli          |  5 ++++-
+ src/sound_manager.ml  | 25 ++-----------------------
+ src/sound_manager.mli |  8 --------
+ 4 files changed, 10 insertions(+), 33 deletions(-)
+
+commit c4e7e48ddb65381bdd911d9b3b92bf1d8ba7e102
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 28 14:27:25 2017 -0500
+
+    reverted keyboard
+
+ src/keyboard.ml  | 38 +++++---------------------------------
+ src/keyboard.mli |  7 +------
+ 2 files changed, 6 insertions(+), 39 deletions(-)
+
+commit 0435b8db4aae070e89af7a734ff9c3bf615d6958
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 14:27:22 2017 -0500
+
+    model
+
+ src/model.ml                   | 10 ++++++++++
+ src/{general.mli => model.mli} |  6 +++---
+ 2 files changed, 13 insertions(+), 3 deletions(-)
+
+commit b46357f757d476b7a25eb18e27f3fd28e2d280b4
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 14:12:12 2017 -0500
+
+    update
+
+ src/general.ml | 3 ---
+ 1 file changed, 3 deletions(-)
+
+commit 63470de2b2475aaeb70b0b76abefdbca040b59d8
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 13:59:13 2017 -0500
+
+    general
+
+ src/general.ml  | 3 +++
+ src/general.mli | 6 +++---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+commit 7929bd6462eabca9fea48770be6c773c8f6b274f
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 01:38:27 2017 -0500
+
+    .mli file
+
+ src/general.mli | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+commit f5db7a785a3a560970ed8453bf90526fbf357a75
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Tue Nov 28 01:31:25 2017 -0500
+
+    Mouse up events are detected within midi buttons
+
+ src/gui.ml                 | 16 ++++++++++++++++
+ src/gui.mli                |  4 ++++
+ src/input_event_manager.ml |  5 ++++-
+ 3 files changed, 24 insertions(+), 1 deletion(-)
+
+commit ddc79f88b1df1a419bb6e33ec723e7910107c075
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Tue Nov 28 01:11:51 2017 -0500
+
+    Made buttons positions dynamic and moved to gui.ml
+
+ src/button.ml  | 18 ------------------
+ src/button.mli |  7 -------
+ src/gui.ml     | 42 ++++++++++++++++++++++++++++++------------
+ 3 files changed, 30 insertions(+), 37 deletions(-)
+
+commit 1a0c13a3cd356ce83651577eeb03d35bf90905e5
+Merge: 340ba6a f7177c2
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Tue Nov 28 00:44:03 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 340ba6a9ef7b5ffb0a33cc08d8c68c0d3761938a
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Tue Nov 28 00:43:58 2017 -0500
+
+    midi buttons
+
+ src/button.ml  | 24 ++++++++++++++++++++++++
+ src/button.mli | 16 ++++++++++++++++
+ src/midi.ml    | 39 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 79 insertions(+)
+
+commit f7177c235403e16582b2b12aad968e2a12faf006
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Tue Nov 28 00:43:20 2017 -0500
+
+    removed print statement
+
+ src/keyboard.ml | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit b819badf799328162ba4fc48c4f7680f40249210
+Merge: 143c6c6 67304f4
+Author: David Chu <dc788@cornell.edu>
+Date:   Tue Nov 28 00:41:46 2017 -0500
+
+    Merge pull request #26 from dw475/feature_13
+    
+    Feature 13
+
+commit 67304f4d0bd6073cd020d4c198424798d0a39bd0
+Merge: cfca3fd 143c6c6
+Author: David Chu <dc788@cornell.edu>
+Date:   Tue Nov 28 00:41:39 2017 -0500
+
+    Merge branch 'master' into feature_13
+
+commit 143c6c6aa44cea765abd5179f44f3b405515b92f
+Merge: abc64f4 e94d32e
+Author: Stephen John Buttolph <sjb274@cornell.edu>
+Date:   Tue Nov 28 00:40:38 2017 -0500
+
+    Merge pull request #25 from dw475/soundpacks_on_gui
+    
+    Soundpacks on gui
+
+commit e94d32ed832022e33baa70d2a56c7ad55b7bd770
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Tue Nov 28 00:24:06 2017 -0500
+
+    added height return
+
+ src/gui.ml | 44 +++++++++++++++++++++-----------------------
+ 1 file changed, 21 insertions(+), 23 deletions(-)
+
+commit abc64f4c7173e0f13c30b24887ad0ea214b777cc
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 00:22:38 2017 -0500
+
+    pull
+
+ gtk_test/Makefile    |   9 +++++++++
+ gtk_test/graphtest   | Bin 0 -> 2132019 bytes
+ gtk_test/simple      | Bin 0 -> 2093854 bytes
+ gtk_test/simple.cmi  | Bin 0 -> 1731 bytes
+ gtk_test/simple.cmo  | Bin 0 -> 7208 bytes
+ gtk_test/simple.ml   |  32 ++++++++++++++++++++++++++++++++
+ gtk_test/test.ml     |   2 +-
+ gtk_test/tutorial.ml |   5 +++++
+ 8 files changed, 47 insertions(+), 1 deletion(-)
+
+commit ca2fe6d3326c239a05d6002197c4e920fd2f2f27
+Merge: 69f968f f71d1af
+Author: David Zhang <davidzhang@dhcp-mcfad-1622.redrover.cornell.edu>
+Date:   Tue Nov 28 00:22:23 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit cfca3fdb3f4f909b2dfe76372da47ae561547e78
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Tue Nov 28 00:20:58 2017 -0500
+
+    preparing for midi buttons
+
+ src/button.ml              | 24 ++++++++++++++++++++++++
+ src/button.mli             | 16 ++++++++++++++++
+ src/gui.ml                 | 24 ++++++++++++++++++++++++
+ src/input_event_manager.ml |  7 +++++--
+ src/midi.mli               |  4 ++++
+ 5 files changed, 73 insertions(+), 2 deletions(-)
+
+commit a5410d85e95992e94e243485cc71d149c15da93d
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Nov 27 23:28:52 2017 -0500
+
+    added arrows to gui
+
+ src/gui.ml | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
+
+commit 67270868c35cea2b8db750ca791529c40ef26f0d
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Nov 27 22:58:43 2017 -0500
+
+    added reactive soundpacks (no labels)
+
+ src/gui.ml             | 63 ++++++++++++++++++++++++++++++++++++++++++--------
+ src/keyboard.ml        | 36 +++++++++++++++++++++++++----
+ src/keyboard.mli       |  7 +++++-
+ src/keyboard_layout.ml | 13 +++++------
+ 4 files changed, 97 insertions(+), 22 deletions(-)
+
+commit d0335526420942069cec3da2b550e1f10e58d193
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Mon Nov 27 21:28:12 2017 -0500
+
+    parse_midi to convert midi.json into a midi record
+
+ src/midi.ml | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+commit f71d1af68ea94e7423d1d29c63a40ba5c9694169
+Merge: 96602ec 9cf2a1a
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Mon Nov 27 20:38:19 2017 -0500
+
+    Merge pull request #24 from dw475/feature-14
+    
+    Metronome implemented
+
+commit 9cf2a1a181535d3aac443f3b2b4bb3960cbed61e
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Mon Nov 27 20:37:03 2017 -0500
+
+    Move tsdl_wrapper modifications for metronome to main
+
+ src/main.ml         | 1 +
+ src/tsdl_wrapper.ml | 3 +--
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 96013ad0fa175580ae8d26630bf6605ca595cf71
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Mon Nov 27 20:32:34 2017 -0500
+
+    remove unnecessary import
+
+ src/metronome.ml | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit 8f20b307574e054ac775421776d8174629ab6a45
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Mon Nov 27 20:32:10 2017 -0500
+
+    Style fixes, added to callback
+
+ src/metronome.ml    | 5 ++++-
+ src/metronome.mli   | 2 +-
+ src/tsdl_wrapper.ml | 5 +++--
+ 3 files changed, 8 insertions(+), 4 deletions(-)
+
+commit 3c2e3930398c55fda45ee891ccfd85d389d3bc18
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Mon Nov 27 20:11:47 2017 -0500
+
+    Metronome implemented
+
+ src/metronome.ml  | 15 +++++++++++++++
+ src/metronome.mli | 19 +++++++++++++++++++
+ 2 files changed, 34 insertions(+)
+
+commit 96602ecae858797c377b0372ab5eaf976796858c
+Merge: 031af67 5bba261
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Mon Nov 27 19:17:05 2017 -0500
+
+    Merge pull request #20 from dw475/feature_11
+    
+    bugfixes in sound manager, added sound data and conversion scripts
+
+commit 5bba261bff4081c27a03bd0071ff6367e31426b9
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 27 19:14:40 2017 -0500
+
+    added wav files and reorganized resources
+
+ .gitignore                                        |   3 +--
+ src/resources/{eq_data => conversions}/conv.sh    |   0
+ src/resources/{ => conversions}/conv_midi_json.js |   0
+ src/resources/{ => conversions}/conv_song_json.js |   0
+ src/resources/{ => conversions}/eq_midi.json      |   0
+ src/resources/{ => conversions}/eq_old.json       |   0
+ src/resources/eq_data/chain1/a0.mp3               | Bin 23822 -> 0 bytes
+ src/resources/eq_data/chain1/a1.mp3               | Bin 3760 -> 0 bytes
+ src/resources/eq_data/chain1/a10.mp3              | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain1/a11.mp3              | Bin 5850 -> 0 bytes
+ src/resources/eq_data/chain1/a12.mp3              | Bin 6686 -> 0 bytes
+ src/resources/eq_data/chain1/a13.mp3              | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain1/a14.mp3              | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain1/a15.mp3              | Bin 5850 -> 0 bytes
+ src/resources/eq_data/chain1/a2.mp3               | Bin 4178 -> 0 bytes
+ src/resources/eq_data/chain1/a3.mp3               | Bin 5432 -> 0 bytes
+ src/resources/eq_data/chain1/a5.mp3               | Bin 5432 -> 0 bytes
+ src/resources/eq_data/chain1/a6.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain1/a7.mp3               | Bin 5850 -> 0 bytes
+ src/resources/eq_data/chain1/a9.mp3               | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain1/b0.mp3               | Bin 5850 -> 0 bytes
+ src/resources/eq_data/chain1/b1.mp3               | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain1/b10.mp3              | Bin 5850 -> 0 bytes
+ src/resources/eq_data/chain1/b11.mp3              | Bin 5850 -> 0 bytes
+ src/resources/eq_data/chain1/b12.mp3              | Bin 11283 -> 0 bytes
+ src/resources/eq_data/chain1/b13.mp3              | Bin 6686 -> 0 bytes
+ src/resources/eq_data/chain1/b14.mp3              | Bin 11283 -> 0 bytes
+ src/resources/eq_data/chain1/b15.mp3              | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain1/b2.mp3               | Bin 7104 -> 0 bytes
+ src/resources/eq_data/chain1/b3.mp3               | Bin 14627 -> 0 bytes
+ src/resources/eq_data/chain1/b4.mp3               | Bin 5014 -> 0 bytes
+ src/resources/eq_data/chain1/b5.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain1/b6.mp3               | Bin 14627 -> 0 bytes
+ src/resources/eq_data/chain1/b7.mp3               | Bin 7940 -> 0 bytes
+ src/resources/eq_data/chain1/b8.mp3               | Bin 4178 -> 0 bytes
+ src/resources/eq_data/chain1/b9.mp3               | Bin 3760 -> 0 bytes
+ src/resources/eq_data/chain1/c1.mp3               | Bin 25494 -> 0 bytes
+ src/resources/eq_data/chain1/c2.mp3               | Bin 71052 -> 0 bytes
+ src/resources/eq_data/chain1/c3.mp3               | Bin 56423 -> 0 bytes
+ src/resources/eq_data/chain1/c5.mp3               | Bin 25076 -> 0 bytes
+ src/resources/eq_data/chain1/c6.mp3               | Bin 72306 -> 0 bytes
+ src/resources/eq_data/chain1/c7.mp3               | Bin 48064 -> 0 bytes
+ src/resources/eq_data/chain1/d0.mp3               | Bin 7940 -> 0 bytes
+ src/resources/eq_data/chain1/d1.mp3               | Bin 11283 -> 0 bytes
+ src/resources/eq_data/chain1/d12.mp3              | Bin 6268 -> 0 bytes
+ src/resources/eq_data/chain1/d2.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain1/d3.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain1/d4.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain1/d5.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain1/d6.mp3               | Bin 5014 -> 0 bytes
+ src/resources/eq_data/chain1/d8.mp3               | Bin 6268 -> 0 bytes
+ src/resources/eq_data/chain1/e0.mp3               | Bin 11283 -> 0 bytes
+ src/resources/eq_data/chain1/e1.mp3               | Bin 17971 -> 0 bytes
+ src/resources/{ => eq_data/chain1_wav}/a0.wav     | Bin 249934 -> 249934 bytes
+ src/resources/eq_data/chain1_wav/a1.wav           | Bin 0 -> 28750 bytes
+ src/resources/eq_data/chain1_wav/a10.wav          | Bin 0 -> 79438 bytes
+ src/resources/eq_data/chain1_wav/a11.wav          | Bin 0 -> 51278 bytes
+ src/resources/eq_data/chain1_wav/a12.wav          | Bin 0 -> 59982 bytes
+ src/resources/eq_data/chain1_wav/a13.wav          | Bin 0 -> 36942 bytes
+ src/resources/eq_data/chain1_wav/a14.wav          | Bin 0 -> 81998 bytes
+ src/resources/eq_data/chain1_wav/a15.wav          | Bin 0 -> 52302 bytes
+ src/resources/eq_data/chain1_wav/a2.wav           | Bin 0 -> 31822 bytes
+ src/resources/eq_data/chain1_wav/a3.wav           | Bin 0 -> 45646 bytes
+ src/resources/eq_data/chain1_wav/a5.wav           | Bin 0 -> 44110 bytes
+ src/resources/eq_data/chain1_wav/a6.wav           | Bin 0 -> 76878 bytes
+ src/resources/eq_data/chain1_wav/a7.wav           | Bin 0 -> 49230 bytes
+ src/resources/eq_data/chain1_wav/a9.wav           | Bin 0 -> 36430 bytes
+ src/resources/eq_data/chain1_wav/b0.wav           | Bin 0 -> 51790 bytes
+ src/resources/eq_data/chain1_wav/b1.wav           | Bin 0 -> 35406 bytes
+ src/resources/eq_data/chain1_wav/b10.wav          | Bin 0 -> 51790 bytes
+ src/resources/eq_data/chain1_wav/b11.wav          | Bin 0 -> 51278 bytes
+ src/resources/eq_data/chain1_wav/b12.wav          | Bin 0 -> 111694 bytes
+ src/resources/eq_data/chain1_wav/b13.wav          | Bin 0 -> 57934 bytes
+ src/resources/eq_data/chain1_wav/b14.wav          | Bin 0 -> 110158 bytes
+ src/resources/eq_data/chain1_wav/b15.wav          | Bin 0 -> 37454 bytes
+ src/resources/eq_data/chain1_wav/b2.wav           | Bin 0 -> 65102 bytes
+ src/resources/eq_data/chain1_wav/b3.wav           | Bin 0 -> 149070 bytes
+ src/resources/eq_data/chain1_wav/b4.wav           | Bin 0 -> 40014 bytes
+ src/resources/eq_data/chain1_wav/b5.wav           | Bin 0 -> 76366 bytes
+ src/resources/eq_data/chain1_wav/b6.wav           | Bin 0 -> 147534 bytes
+ src/resources/eq_data/chain1_wav/b7.wav           | Bin 0 -> 75854 bytes
+ src/resources/eq_data/chain1_wav/b8.wav           | Bin 0 -> 31822 bytes
+ src/resources/eq_data/chain1_wav/b9.wav           | Bin 0 -> 25678 bytes
+ src/resources/eq_data/chain1_wav/c1.wav           | Bin 0 -> 266318 bytes
+ src/resources/eq_data/chain1_wav/c2.wav           | Bin 0 -> 769614 bytes
+ src/resources/eq_data/chain1_wav/c3.wav           | Bin 0 -> 607822 bytes
+ src/resources/eq_data/chain1_wav/c5.wav           | Bin 0 -> 263758 bytes
+ src/resources/eq_data/chain1_wav/c6.wav           | Bin 0 -> 785486 bytes
+ src/resources/eq_data/chain1_wav/c7.wav           | Bin 0 -> 515150 bytes
+ src/resources/eq_data/chain1_wav/d0.wav           | Bin 0 -> 73806 bytes
+ src/resources/eq_data/chain1_wav/d1.wav           | Bin 0 -> 109134 bytes
+ src/resources/eq_data/chain1_wav/d12.wav          | Bin 0 -> 57422 bytes
+ src/resources/eq_data/chain1_wav/d2.wav           | Bin 0 -> 84046 bytes
+ src/resources/eq_data/chain1_wav/d3.wav           | Bin 0 -> 84558 bytes
+ src/resources/eq_data/chain1_wav/d4.wav           | Bin 0 -> 76878 bytes
+ src/resources/eq_data/chain1_wav/d5.wav           | Bin 0 -> 84046 bytes
+ src/resources/eq_data/chain1_wav/d6.wav           | Bin 0 -> 41038 bytes
+ src/resources/eq_data/chain1_wav/d8.wav           | Bin 0 -> 57422 bytes
+ src/resources/eq_data/chain1_wav/e0.wav           | Bin 0 -> 110670 bytes
+ src/resources/eq_data/chain1_wav/e1.wav           | Bin 0 -> 182350 bytes
+ src/resources/eq_data/chain2/a13.mp3              | Bin 23822 -> 0 bytes
+ src/resources/eq_data/chain2/a14.mp3              | Bin 15045 -> 0 bytes
+ src/resources/eq_data/chain2/a15.mp3              | Bin 23822 -> 0 bytes
+ src/resources/eq_data/chain2/b0.mp3               | Bin 5850 -> 0 bytes
+ src/resources/eq_data/chain2/b1.mp3               | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain2/b10.mp3              | Bin 5850 -> 0 bytes
+ src/resources/eq_data/chain2/b11.mp3              | Bin 5850 -> 0 bytes
+ src/resources/eq_data/chain2/b12.mp3              | Bin 11283 -> 0 bytes
+ src/resources/eq_data/chain2/b13.mp3              | Bin 6686 -> 0 bytes
+ src/resources/eq_data/chain2/b14.mp3              | Bin 11283 -> 0 bytes
+ src/resources/eq_data/chain2/b15.mp3              | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain2/b2.mp3               | Bin 7104 -> 0 bytes
+ src/resources/eq_data/chain2/b3.mp3               | Bin 14627 -> 0 bytes
+ src/resources/eq_data/chain2/b4.mp3               | Bin 5014 -> 0 bytes
+ src/resources/eq_data/chain2/b5.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain2/b6.mp3               | Bin 14627 -> 0 bytes
+ src/resources/eq_data/chain2/b7.mp3               | Bin 7940 -> 0 bytes
+ src/resources/eq_data/chain2/b8.mp3               | Bin 4178 -> 0 bytes
+ src/resources/eq_data/chain2/b9.mp3               | Bin 3760 -> 0 bytes
+ src/resources/eq_data/chain2/c0.mp3               | Bin 6268 -> 0 bytes
+ src/resources/eq_data/chain2/c1.mp3               | Bin 15045 -> 0 bytes
+ src/resources/eq_data/chain2/c10.mp3              | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain2/c11.mp3              | Bin 3760 -> 0 bytes
+ src/resources/eq_data/chain2/c12.mp3              | Bin 6268 -> 0 bytes
+ src/resources/eq_data/chain2/c13.mp3              | Bin 4178 -> 0 bytes
+ src/resources/eq_data/chain2/c14.mp3              | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain2/c15.mp3              | Bin 12955 -> 0 bytes
+ src/resources/eq_data/chain2/c2.mp3               | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain2/c3.mp3               | Bin 4178 -> 0 bytes
+ src/resources/eq_data/chain2/c4.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain2/c5.mp3               | Bin 24658 -> 0 bytes
+ src/resources/eq_data/chain2/c6.mp3               | Bin 15045 -> 0 bytes
+ src/resources/eq_data/chain2/c7.mp3               | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain2/c8.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain2/c9.mp3               | Bin 3760 -> 0 bytes
+ src/resources/eq_data/chain2/d0.mp3               | Bin 7940 -> 0 bytes
+ src/resources/eq_data/chain2/d1.mp3               | Bin 11283 -> 0 bytes
+ src/resources/eq_data/chain2/d12.mp3              | Bin 6268 -> 0 bytes
+ src/resources/eq_data/chain2/d15.mp3              | Bin 28420 -> 0 bytes
+ src/resources/eq_data/chain2/d2.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain2/d3.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain2/d4.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain2/d5.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain2/d6.mp3               | Bin 5014 -> 0 bytes
+ src/resources/eq_data/chain2/d8.mp3               | Bin 6268 -> 0 bytes
+ src/resources/eq_data/chain2/e0.mp3               | Bin 65200 -> 0 bytes
+ src/resources/eq_data/chain2_wav/a13.wav          | Bin 0 -> 250958 bytes
+ src/resources/eq_data/chain2_wav/a14.wav          | Bin 0 -> 150606 bytes
+ src/resources/eq_data/chain2_wav/a15.wav          | Bin 0 -> 250958 bytes
+ src/resources/eq_data/chain2_wav/b0.wav           | Bin 0 -> 51790 bytes
+ src/resources/eq_data/chain2_wav/b1.wav           | Bin 0 -> 35406 bytes
+ src/resources/eq_data/chain2_wav/b10.wav          | Bin 0 -> 51790 bytes
+ src/resources/eq_data/chain2_wav/b11.wav          | Bin 0 -> 51278 bytes
+ src/resources/eq_data/chain2_wav/b12.wav          | Bin 0 -> 111694 bytes
+ src/resources/eq_data/chain2_wav/b13.wav          | Bin 0 -> 57934 bytes
+ src/resources/eq_data/chain2_wav/b14.wav          | Bin 0 -> 110158 bytes
+ src/resources/eq_data/chain2_wav/b15.wav          | Bin 0 -> 37454 bytes
+ src/resources/eq_data/chain2_wav/b2.wav           | Bin 0 -> 65102 bytes
+ src/resources/eq_data/chain2_wav/b3.wav           | Bin 0 -> 149070 bytes
+ src/resources/eq_data/chain2_wav/b4.wav           | Bin 0 -> 40014 bytes
+ src/resources/eq_data/chain2_wav/b5.wav           | Bin 0 -> 76366 bytes
+ src/resources/eq_data/chain2_wav/b6.wav           | Bin 0 -> 147534 bytes
+ src/resources/eq_data/chain2_wav/b7.wav           | Bin 0 -> 75854 bytes
+ src/resources/eq_data/chain2_wav/b8.wav           | Bin 0 -> 31822 bytes
+ src/resources/eq_data/chain2_wav/b9.wav           | Bin 0 -> 25678 bytes
+ src/resources/eq_data/chain2_wav/c0.wav           | Bin 0 -> 54350 bytes
+ src/resources/eq_data/chain2_wav/c1.wav           | Bin 0 -> 151630 bytes
+ src/resources/eq_data/chain2_wav/c10.wav          | Bin 0 -> 78926 bytes
+ src/resources/eq_data/chain2_wav/c11.wav          | Bin 0 -> 29774 bytes
+ src/resources/eq_data/chain2_wav/c12.wav          | Bin 0 -> 53326 bytes
+ src/resources/eq_data/chain2_wav/c13.wav          | Bin 0 -> 32846 bytes
+ src/resources/eq_data/chain2_wav/c14.wav          | Bin 0 -> 78926 bytes
+ src/resources/eq_data/chain2_wav/c15.wav          | Bin 0 -> 129102 bytes
+ src/resources/eq_data/chain2_wav/c2.wav           | Bin 0 -> 34894 bytes
+ src/resources/eq_data/chain2_wav/c3.wav           | Bin 0 -> 30798 bytes
+ src/resources/eq_data/chain2_wav/c4.wav           | Bin 0 -> 78926 bytes
+ src/resources/eq_data/chain2_wav/c5.wav           | Bin 0 -> 259150 bytes
+ src/resources/eq_data/chain2_wav/c6.wav           | Bin 0 -> 151630 bytes
+ src/resources/eq_data/chain2_wav/c7.wav           | Bin 0 -> 34894 bytes
+ src/resources/eq_data/chain2_wav/c8.wav           | Bin 0 -> 79950 bytes
+ src/resources/eq_data/chain2_wav/c9.wav           | Bin 0 -> 29774 bytes
+ src/resources/eq_data/chain2_wav/d0.wav           | Bin 0 -> 73806 bytes
+ src/resources/eq_data/chain2_wav/d1.wav           | Bin 0 -> 109134 bytes
+ src/resources/eq_data/chain2_wav/d12.wav          | Bin 0 -> 57422 bytes
+ src/resources/eq_data/chain2_wav/d15.wav          | Bin 0 -> 301134 bytes
+ src/resources/eq_data/chain2_wav/d2.wav           | Bin 0 -> 84046 bytes
+ src/resources/eq_data/chain2_wav/d3.wav           | Bin 0 -> 84558 bytes
+ src/resources/eq_data/chain2_wav/d4.wav           | Bin 0 -> 76878 bytes
+ src/resources/eq_data/chain2_wav/d5.wav           | Bin 0 -> 84046 bytes
+ src/resources/eq_data/chain2_wav/d6.wav           | Bin 0 -> 41038 bytes
+ src/resources/eq_data/chain2_wav/d8.wav           | Bin 0 -> 57422 bytes
+ src/resources/eq_data/chain2_wav/e0.wav           | Bin 0 -> 706638 bytes
+ src/resources/eq_data/chain3/a0.mp3               | Bin 24240 -> 0 bytes
+ src/resources/eq_data/chain3/a1.mp3               | Bin 10448 -> 0 bytes
+ src/resources/eq_data/chain3/a10.mp3              | Bin 5014 -> 0 bytes
+ src/resources/eq_data/chain3/a11.mp3              | Bin 5014 -> 0 bytes
+ src/resources/eq_data/chain3/a12.mp3              | Bin 6686 -> 0 bytes
+ src/resources/eq_data/chain3/a13.mp3              | Bin 5850 -> 0 bytes
+ src/resources/eq_data/chain3/a14.mp3              | Bin 5014 -> 0 bytes
+ src/resources/eq_data/chain3/a15.mp3              | Bin 5014 -> 0 bytes
+ src/resources/eq_data/chain3/a3.mp3               | Bin 16299 -> 0 bytes
+ src/resources/eq_data/chain3/a5.mp3               | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain3/a6.mp3               | Bin 4178 -> 0 bytes
+ src/resources/eq_data/chain3/a7.mp3               | Bin 5014 -> 0 bytes
+ src/resources/eq_data/chain3/a9.mp3               | Bin 5432 -> 0 bytes
+ src/resources/eq_data/chain3/b0.mp3               | Bin 14627 -> 0 bytes
+ src/resources/eq_data/chain3/b1.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain3/b11.mp3              | Bin 9612 -> 0 bytes
+ src/resources/eq_data/chain3/b12.mp3              | Bin 7104 -> 0 bytes
+ src/resources/eq_data/chain3/b13.mp3              | Bin 6686 -> 0 bytes
+ src/resources/eq_data/chain3/b14.mp3              | Bin 6686 -> 0 bytes
+ src/resources/eq_data/chain3/b2.mp3               | Bin 15463 -> 0 bytes
+ src/resources/eq_data/chain3/b3.mp3               | Bin 15881 -> 0 bytes
+ src/resources/eq_data/chain3/b4.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain3/b5.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain3/b6.mp3               | Bin 15463 -> 0 bytes
+ src/resources/eq_data/chain3/b7.mp3               | Bin 9612 -> 0 bytes
+ src/resources/eq_data/chain3/b8.mp3               | Bin 5432 -> 0 bytes
+ src/resources/eq_data/chain3/b9.mp3               | Bin 6268 -> 0 bytes
+ src/resources/eq_data/chain3/c0.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain3/c1.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain3/c10.mp3              | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain3/c11.mp3              | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain3/c12.mp3              | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain3/c13.mp3              | Bin 5014 -> 0 bytes
+ src/resources/eq_data/chain3/c14.mp3              | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain3/c15.mp3              | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain3/c2.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain3/c3.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain3/c4.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain3/c5.mp3               | Bin 4178 -> 0 bytes
+ src/resources/eq_data/chain3/c6.mp3               | Bin 3760 -> 0 bytes
+ src/resources/eq_data/chain3/c7.mp3               | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain3/c8.mp3               | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain3/c9.mp3               | Bin 5432 -> 0 bytes
+ src/resources/eq_data/chain3/d0.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain3/d1.mp3               | Bin 9194 -> 0 bytes
+ src/resources/eq_data/chain3/d10.mp3              | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain3/d11.mp3              | Bin 15045 -> 0 bytes
+ src/resources/eq_data/chain3/d12.mp3              | Bin 3760 -> 0 bytes
+ src/resources/eq_data/chain3/d14.mp3              | Bin 15045 -> 0 bytes
+ src/resources/eq_data/chain3/d15.mp3              | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain3/d2.mp3               | Bin 4596 -> 0 bytes
+ src/resources/eq_data/chain3/d3.mp3               | Bin 15045 -> 0 bytes
+ src/resources/eq_data/chain3/d4.mp3               | Bin 4178 -> 0 bytes
+ src/resources/eq_data/chain3/d5.mp3               | Bin 15045 -> 0 bytes
+ src/resources/eq_data/chain3/d6.mp3               | Bin 15463 -> 0 bytes
+ src/resources/eq_data/chain3/d7.mp3               | Bin 15045 -> 0 bytes
+ src/resources/eq_data/chain3/d8.mp3               | Bin 5432 -> 0 bytes
+ src/resources/eq_data/chain3/d9.mp3               | Bin 15045 -> 0 bytes
+ src/resources/eq_data/chain3/e0.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain3/e1.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain3/e2.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain3/e3.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain3/e4.mp3               | Bin 8776 -> 0 bytes
+ src/resources/eq_data/chain3/e5.mp3               | Bin 9612 -> 0 bytes
+ src/resources/eq_data/chain3_wav/a0.wav           | Bin 0 -> 254030 bytes
+ src/resources/eq_data/chain3_wav/a1.wav           | Bin 0 -> 99406 bytes
+ src/resources/eq_data/chain3_wav/a10.wav          | Bin 0 -> 41038 bytes
+ src/resources/eq_data/chain3_wav/a11.wav          | Bin 0 -> 41038 bytes
+ src/resources/eq_data/chain3_wav/a12.wav          | Bin 0 -> 59470 bytes
+ src/resources/eq_data/chain3_wav/a13.wav          | Bin 0 -> 50254 bytes
+ src/resources/eq_data/chain3_wav/a14.wav          | Bin 0 -> 42062 bytes
+ src/resources/eq_data/chain3_wav/a15.wav          | Bin 0 -> 42062 bytes
+ src/resources/eq_data/chain3_wav/a3.wav           | Bin 0 -> 163918 bytes
+ src/resources/eq_data/chain3_wav/a5.wav           | Bin 0 -> 37966 bytes
+ src/resources/eq_data/chain3_wav/a6.wav           | Bin 0 -> 30798 bytes
+ src/resources/eq_data/chain3_wav/a7.wav           | Bin 0 -> 42062 bytes
+ src/resources/eq_data/chain3_wav/a9.wav           | Bin 0 -> 44110 bytes
+ src/resources/eq_data/chain3_wav/b0.wav           | Bin 0 -> 148558 bytes
+ src/resources/eq_data/chain3_wav/b1.wav           | Bin 0 -> 80974 bytes
+ src/resources/eq_data/chain3_wav/b11.wav          | Bin 0 -> 91214 bytes
+ src/resources/eq_data/chain3_wav/b12.wav          | Bin 0 -> 62542 bytes
+ src/resources/eq_data/chain3_wav/b13.wav          | Bin 0 -> 61518 bytes
+ src/resources/eq_data/chain3_wav/b14.wav          | Bin 0 -> 58446 bytes
+ src/resources/eq_data/chain3_wav/b2.wav           | Bin 0 -> 155726 bytes
+ src/resources/eq_data/chain3_wav/b3.wav           | Bin 0 -> 159822 bytes
+ src/resources/eq_data/chain3_wav/b4.wav           | Bin 0 -> 77902 bytes
+ src/resources/eq_data/chain3_wav/b5.wav           | Bin 0 -> 78926 bytes
+ src/resources/eq_data/chain3_wav/b6.wav           | Bin 0 -> 156750 bytes
+ src/resources/eq_data/chain3_wav/b7.wav           | Bin 0 -> 92238 bytes
+ src/resources/eq_data/chain3_wav/b8.wav           | Bin 0 -> 48206 bytes
+ src/resources/eq_data/chain3_wav/b9.wav           | Bin 0 -> 57422 bytes
+ src/resources/eq_data/chain3_wav/c0.wav           | Bin 0 -> 76878 bytes
+ src/resources/eq_data/chain3_wav/c1.wav           | Bin 0 -> 79950 bytes
+ src/resources/eq_data/chain3_wav/c10.wav          | Bin 0 -> 34894 bytes
+ src/resources/eq_data/chain3_wav/c11.wav          | Bin 0 -> 38990 bytes
+ src/resources/eq_data/chain3_wav/c12.wav          | Bin 0 -> 37966 bytes
+ src/resources/eq_data/chain3_wav/c13.wav          | Bin 0 -> 43086 bytes
+ src/resources/eq_data/chain3_wav/c14.wav          | Bin 0 -> 38990 bytes
+ src/resources/eq_data/chain3_wav/c15.wav          | Bin 0 -> 76878 bytes
+ src/resources/eq_data/chain3_wav/c2.wav           | Bin 0 -> 84046 bytes
+ src/resources/eq_data/chain3_wav/c3.wav           | Bin 0 -> 77902 bytes
+ src/resources/eq_data/chain3_wav/c4.wav           | Bin 0 -> 83022 bytes
+ src/resources/eq_data/chain3_wav/c5.wav           | Bin 0 -> 32846 bytes
+ src/resources/eq_data/chain3_wav/c6.wav           | Bin 0 -> 28750 bytes
+ src/resources/eq_data/chain3_wav/c7.wav           | Bin 0 -> 35918 bytes
+ src/resources/eq_data/chain3_wav/c8.wav           | Bin 0 -> 37966 bytes
+ src/resources/eq_data/chain3_wav/c9.wav           | Bin 0 -> 47182 bytes
+ src/resources/eq_data/chain3_wav/d0.wav           | Bin 0 -> 79950 bytes
+ src/resources/eq_data/chain3_wav/d1.wav           | Bin 0 -> 88142 bytes
+ src/resources/eq_data/chain3_wav/d10.wav          | Bin 0 -> 83022 bytes
+ src/resources/eq_data/chain3_wav/d11.wav          | Bin 0 -> 153678 bytes
+ src/resources/eq_data/chain3_wav/d12.wav          | Bin 0 -> 29774 bytes
+ src/resources/eq_data/chain3_wav/d14.wav          | Bin 0 -> 152654 bytes
+ src/resources/eq_data/chain3_wav/d15.wav          | Bin 0 -> 35918 bytes
+ src/resources/eq_data/chain3_wav/d2.wav           | Bin 0 -> 36942 bytes
+ src/resources/eq_data/chain3_wav/d3.wav           | Bin 0 -> 153678 bytes
+ src/resources/eq_data/chain3_wav/d4.wav           | Bin 0 -> 33870 bytes
+ src/resources/eq_data/chain3_wav/d5.wav           | Bin 0 -> 150606 bytes
+ src/resources/eq_data/chain3_wav/d6.wav           | Bin 0 -> 155726 bytes
+ src/resources/eq_data/chain3_wav/d7.wav           | Bin 0 -> 151630 bytes
+ src/resources/eq_data/chain3_wav/d8.wav           | Bin 0 -> 48206 bytes
+ src/resources/eq_data/chain3_wav/d9.wav           | Bin 0 -> 152654 bytes
+ src/resources/eq_data/chain3_wav/e0.wav           | Bin 0 -> 80974 bytes
+ src/resources/eq_data/chain3_wav/e1.wav           | Bin 0 -> 80974 bytes
+ src/resources/eq_data/chain3_wav/e2.wav           | Bin 0 -> 78926 bytes
+ src/resources/eq_data/chain3_wav/e3.wav           | Bin 0 -> 83022 bytes
+ src/resources/eq_data/chain3_wav/e4.wav           | Bin 0 -> 81998 bytes
+ src/resources/eq_data/chain3_wav/e5.wav           | Bin 0 -> 92238 bytes
+ src/resources/eq_data/chain4/a15.mp3              | Bin 28002 -> 0 bytes
+ src/resources/eq_data/chain4/b15.mp3              | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain4/c0.mp3               | Bin 6268 -> 0 bytes
+ src/resources/eq_data/chain4/c11.mp3              | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain4/c12.mp3              | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain4/c15.mp3              | Bin 28002 -> 0 bytes
+ src/resources/eq_data/chain4/c3.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain4/c4.mp3               | Bin 3760 -> 0 bytes
+ src/resources/eq_data/chain4/c7.mp3               | Bin 21314 -> 0 bytes
+ src/resources/eq_data/chain4/c8.mp3               | Bin 8358 -> 0 bytes
+ src/resources/eq_data/chain4/d10.mp3              | Bin 6268 -> 0 bytes
+ src/resources/eq_data/chain4/d11.mp3              | Bin 11283 -> 0 bytes
+ src/resources/eq_data/chain4/d12.mp3              | Bin 4178 -> 0 bytes
+ src/resources/eq_data/chain4/d13.mp3              | Bin 3760 -> 0 bytes
+ src/resources/eq_data/chain4/d14.mp3              | Bin 6268 -> 0 bytes
+ src/resources/eq_data/chain4/d3.mp3               | Bin 16717 -> 0 bytes
+ src/resources/eq_data/chain4/d6.mp3               | Bin 15045 -> 0 bytes
+ src/resources/eq_data/chain4/d7.mp3               | Bin 6268 -> 0 bytes
+ src/resources/eq_data/chain4/d8.mp3               | Bin 10448 -> 0 bytes
+ src/resources/eq_data/chain4/d9.mp3               | Bin 6268 -> 0 bytes
+ src/resources/eq_data/chain4_wav/a15.wav          | Bin 0 -> 294990 bytes
+ src/resources/eq_data/chain4_wav/b15.wav          | Bin 0 -> 78926 bytes
+ src/resources/eq_data/chain4_wav/c0.wav           | Bin 0 -> 53326 bytes
+ src/resources/eq_data/chain4_wav/c11.wav          | Bin 0 -> 78926 bytes
+ src/resources/eq_data/chain4_wav/c12.wav          | Bin 0 -> 77902 bytes
+ src/resources/eq_data/chain4_wav/c15.wav          | Bin 0 -> 297038 bytes
+ src/resources/eq_data/chain4_wav/c3.wav           | Bin 0 -> 78926 bytes
+ src/resources/eq_data/chain4_wav/c4.wav           | Bin 0 -> 29774 bytes
+ src/resources/eq_data/chain4_wav/c7.wav           | Bin 0 -> 223310 bytes
+ src/resources/eq_data/chain4_wav/c8.wav           | Bin 0 -> 76878 bytes
+ src/resources/eq_data/chain4_wav/d10.wav          | Bin 0 -> 54350 bytes
+ src/resources/eq_data/chain4_wav/d11.wav          | Bin 0 -> 110670 bytes
+ src/resources/eq_data/chain4_wav/d12.wav          | Bin 0 -> 30798 bytes
+ src/resources/eq_data/chain4_wav/d13.wav          | Bin 0 -> 28750 bytes
+ src/resources/eq_data/chain4_wav/d14.wav          | Bin 0 -> 53326 bytes
+ src/resources/eq_data/chain4_wav/d3.wav           | Bin 0 -> 169038 bytes
+ src/resources/eq_data/chain4_wav/d6.wav           | Bin 0 -> 150606 bytes
+ src/resources/eq_data/chain4_wav/d7.wav           | Bin 0 -> 54350 bytes
+ src/resources/eq_data/chain4_wav/d8.wav           | Bin 0 -> 103502 bytes
+ src/resources/eq_data/chain4_wav/d9.wav           | Bin 0 -> 53326 bytes
+ src/resources/{ => eq_data}/eq_midi_0.json        |   0
+ src/resources/{ => eq_data}/eq_midi_1.json        |   0
+ src/resources/{ => eq_data}/eq_midi_2.json        |   0
+ src/resources/{ => eq_data}/eq_midi_3.json        |   0
+ 364 files changed, 1 insertion(+), 2 deletions(-)
+
+commit cad0c61f150bee75fbc54b0ecee8f195cba49900
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 27 19:09:51 2017 -0500
+
+    added sounpack switching to sound manager and increased audio sample rate
+
+ src/input_event_manager.ml |  5 ++++-
+ src/sound_manager.ml       | 18 ++++++++++++++++--
+ src/sound_manager.mli      |  5 +++++
+ src/tsdl_wrapper.ml        |  2 +-
+ 4 files changed, 26 insertions(+), 4 deletions(-)
+
+commit 434db328a69ac0811f530b86d60baf8a438ba082
+Merge: cbf7a9c 031af67
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 27 18:45:37 2017 -0500
+
+    Merge branch 'master' into feature_11
+
+commit 031af6770f52a4d5caa5b3d1efef57b7deba7f88
+Merge: a02563c e370aec
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Mon Nov 27 18:43:27 2017 -0500
+
+    Merge pull request #22 from dw475/feature_16
+    
+    Feature 16
+
+commit e370aec1f4381ea95029d8c040f50684d8feb4c1
+Merge: 3f32e06 a02563c
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 27 18:41:20 2017 -0500
+
+    Merge branch 'master' into feature_16
+
+commit a02563c44e9982b6b86477cb95c679228236e2d4
+Merge: 0bcc0f4 40489fe
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Mon Nov 27 18:38:35 2017 -0500
+
+    Merge pull request #19 from dw475/Reactive-GUI-Feature
+    
+    Reactive gui feature
+
+commit 40489fe98daf1f303f109d1a61b667ad60e09abf
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 27 18:37:33 2017 -0500
+
+    fixed style issues
+
+ src/keyboard_layout.ml | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
+
+commit d7f3fc118aa8df659873999a3e5ff55673706a66
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Nov 27 18:10:09 2017 -0500
+
+    moved keys into layout
+
+ src/gui.ml                                  |  9 ++---
+ src/gui.mli                                 |  3 +-
+ src/keyboard.ml                             | 40 ++++------------------
+ src/keyboard.mli                            | 12 -------
+ src/keyboard_layout.ml                      | 51 ++++++++++++++++++++++++++---
+ src/keyboard_layout.mli                     | 24 ++++++++++++--
+ src/main.ml                                 |  6 ++--
+ src/resources/standard_keyboard_layout.json | 12 +++++--
+ 8 files changed, 96 insertions(+), 61 deletions(-)
+
+commit 3f32e065604c4b229fb01c479b9b6712d44d4647
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 27 17:33:30 2017 -0500
+
+    added tick callback
+
+ src/tsdl_wrapper.ml  | 12 ++++++++++--
+ src/tsdl_wrapper.mli |  8 +++++++-
+ 2 files changed, 17 insertions(+), 3 deletions(-)
+
+commit 62ddc192e49ccc26d7c666b19b021e3e20dc4ab8
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 27 16:48:40 2017 -0500
+
+    updated refresh code
+
+ src/tsdl_wrapper.ml | 30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
+
+commit a54d732d218a9fcdf5e2af1baea529a98f7fa05d
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 27 16:21:15 2017 -0500
+
+    fixed hiding problem, idk why tho
+
+ src/gui.ml | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit cbf7a9cb776097dfcc092172377e4605a8cfb226
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 27 15:21:55 2017 -0500
+
+    added midi data
+
+ src/resources/conv_midi_json.js                    |   19 +
+ .../{eq_midi_website.json => eq_midi.json}         |    0
+ src/resources/eq_midi_0.json                       | 1330 ++++++++++++++++++++
+ src/resources/eq_midi_1.json                       |  310 +++++
+ src/resources/eq_midi_2.json                       |  350 ++++++
+ src/resources/eq_midi_3.json                       |  945 ++++++++++++++
+ 6 files changed, 2954 insertions(+)
+
+commit 2b0914f037964e1a9f19a57c6e91ff57356e5932
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 27 15:14:18 2017 -0500
+
+    bugfixes in sound manager, added sound data and conversion scripts
+
+ .gitignore                              |    1 +
+ audio_test/notes                        |    2 +-
+ src/main.ml                             |    2 +-
+ src/resources/conv_song_json.js         |   77 ++
+ src/resources/eq_data/chain1/a0.mp3     |  Bin 0 -> 23822 bytes
+ src/resources/eq_data/chain1/a1.mp3     |  Bin 0 -> 3760 bytes
+ src/resources/eq_data/chain1/a10.mp3    |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain1/a11.mp3    |  Bin 0 -> 5850 bytes
+ src/resources/eq_data/chain1/a12.mp3    |  Bin 0 -> 6686 bytes
+ src/resources/eq_data/chain1/a13.mp3    |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain1/a14.mp3    |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain1/a15.mp3    |  Bin 0 -> 5850 bytes
+ src/resources/eq_data/chain1/a2.mp3     |  Bin 0 -> 4178 bytes
+ src/resources/eq_data/chain1/a3.mp3     |  Bin 0 -> 5432 bytes
+ src/resources/eq_data/chain1/a5.mp3     |  Bin 0 -> 5432 bytes
+ src/resources/eq_data/chain1/a6.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain1/a7.mp3     |  Bin 0 -> 5850 bytes
+ src/resources/eq_data/chain1/a9.mp3     |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain1/b0.mp3     |  Bin 0 -> 5850 bytes
+ src/resources/eq_data/chain1/b1.mp3     |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain1/b10.mp3    |  Bin 0 -> 5850 bytes
+ src/resources/eq_data/chain1/b11.mp3    |  Bin 0 -> 5850 bytes
+ src/resources/eq_data/chain1/b12.mp3    |  Bin 0 -> 11283 bytes
+ src/resources/eq_data/chain1/b13.mp3    |  Bin 0 -> 6686 bytes
+ src/resources/eq_data/chain1/b14.mp3    |  Bin 0 -> 11283 bytes
+ src/resources/eq_data/chain1/b15.mp3    |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain1/b2.mp3     |  Bin 0 -> 7104 bytes
+ src/resources/eq_data/chain1/b3.mp3     |  Bin 0 -> 14627 bytes
+ src/resources/eq_data/chain1/b4.mp3     |  Bin 0 -> 5014 bytes
+ src/resources/eq_data/chain1/b5.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain1/b6.mp3     |  Bin 0 -> 14627 bytes
+ src/resources/eq_data/chain1/b7.mp3     |  Bin 0 -> 7940 bytes
+ src/resources/eq_data/chain1/b8.mp3     |  Bin 0 -> 4178 bytes
+ src/resources/eq_data/chain1/b9.mp3     |  Bin 0 -> 3760 bytes
+ src/resources/eq_data/chain1/c1.mp3     |  Bin 0 -> 25494 bytes
+ src/resources/eq_data/chain1/c2.mp3     |  Bin 0 -> 71052 bytes
+ src/resources/eq_data/chain1/c3.mp3     |  Bin 0 -> 56423 bytes
+ src/resources/eq_data/chain1/c5.mp3     |  Bin 0 -> 25076 bytes
+ src/resources/eq_data/chain1/c6.mp3     |  Bin 0 -> 72306 bytes
+ src/resources/eq_data/chain1/c7.mp3     |  Bin 0 -> 48064 bytes
+ src/resources/eq_data/chain1/d0.mp3     |  Bin 0 -> 7940 bytes
+ src/resources/eq_data/chain1/d1.mp3     |  Bin 0 -> 11283 bytes
+ src/resources/eq_data/chain1/d12.mp3    |  Bin 0 -> 6268 bytes
+ src/resources/eq_data/chain1/d2.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain1/d3.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain1/d4.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain1/d5.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain1/d6.mp3     |  Bin 0 -> 5014 bytes
+ src/resources/eq_data/chain1/d8.mp3     |  Bin 0 -> 6268 bytes
+ src/resources/eq_data/chain1/e0.mp3     |  Bin 0 -> 11283 bytes
+ src/resources/eq_data/chain1/e1.mp3     |  Bin 0 -> 17971 bytes
+ src/resources/eq_data/chain2/a13.mp3    |  Bin 0 -> 23822 bytes
+ src/resources/eq_data/chain2/a14.mp3    |  Bin 0 -> 15045 bytes
+ src/resources/eq_data/chain2/a15.mp3    |  Bin 0 -> 23822 bytes
+ src/resources/eq_data/chain2/b0.mp3     |  Bin 0 -> 5850 bytes
+ src/resources/eq_data/chain2/b1.mp3     |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain2/b10.mp3    |  Bin 0 -> 5850 bytes
+ src/resources/eq_data/chain2/b11.mp3    |  Bin 0 -> 5850 bytes
+ src/resources/eq_data/chain2/b12.mp3    |  Bin 0 -> 11283 bytes
+ src/resources/eq_data/chain2/b13.mp3    |  Bin 0 -> 6686 bytes
+ src/resources/eq_data/chain2/b14.mp3    |  Bin 0 -> 11283 bytes
+ src/resources/eq_data/chain2/b15.mp3    |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain2/b2.mp3     |  Bin 0 -> 7104 bytes
+ src/resources/eq_data/chain2/b3.mp3     |  Bin 0 -> 14627 bytes
+ src/resources/eq_data/chain2/b4.mp3     |  Bin 0 -> 5014 bytes
+ src/resources/eq_data/chain2/b5.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain2/b6.mp3     |  Bin 0 -> 14627 bytes
+ src/resources/eq_data/chain2/b7.mp3     |  Bin 0 -> 7940 bytes
+ src/resources/eq_data/chain2/b8.mp3     |  Bin 0 -> 4178 bytes
+ src/resources/eq_data/chain2/b9.mp3     |  Bin 0 -> 3760 bytes
+ src/resources/eq_data/chain2/c0.mp3     |  Bin 0 -> 6268 bytes
+ src/resources/eq_data/chain2/c1.mp3     |  Bin 0 -> 15045 bytes
+ src/resources/eq_data/chain2/c10.mp3    |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain2/c11.mp3    |  Bin 0 -> 3760 bytes
+ src/resources/eq_data/chain2/c12.mp3    |  Bin 0 -> 6268 bytes
+ src/resources/eq_data/chain2/c13.mp3    |  Bin 0 -> 4178 bytes
+ src/resources/eq_data/chain2/c14.mp3    |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain2/c15.mp3    |  Bin 0 -> 12955 bytes
+ src/resources/eq_data/chain2/c2.mp3     |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain2/c3.mp3     |  Bin 0 -> 4178 bytes
+ src/resources/eq_data/chain2/c4.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain2/c5.mp3     |  Bin 0 -> 24658 bytes
+ src/resources/eq_data/chain2/c6.mp3     |  Bin 0 -> 15045 bytes
+ src/resources/eq_data/chain2/c7.mp3     |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain2/c8.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain2/c9.mp3     |  Bin 0 -> 3760 bytes
+ src/resources/eq_data/chain2/d0.mp3     |  Bin 0 -> 7940 bytes
+ src/resources/eq_data/chain2/d1.mp3     |  Bin 0 -> 11283 bytes
+ src/resources/eq_data/chain2/d12.mp3    |  Bin 0 -> 6268 bytes
+ src/resources/eq_data/chain2/d15.mp3    |  Bin 0 -> 28420 bytes
+ src/resources/eq_data/chain2/d2.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain2/d3.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain2/d4.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain2/d5.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain2/d6.mp3     |  Bin 0 -> 5014 bytes
+ src/resources/eq_data/chain2/d8.mp3     |  Bin 0 -> 6268 bytes
+ src/resources/eq_data/chain2/e0.mp3     |  Bin 0 -> 65200 bytes
+ src/resources/eq_data/chain3/a0.mp3     |  Bin 0 -> 24240 bytes
+ src/resources/eq_data/chain3/a1.mp3     |  Bin 0 -> 10448 bytes
+ src/resources/eq_data/chain3/a10.mp3    |  Bin 0 -> 5014 bytes
+ src/resources/eq_data/chain3/a11.mp3    |  Bin 0 -> 5014 bytes
+ src/resources/eq_data/chain3/a12.mp3    |  Bin 0 -> 6686 bytes
+ src/resources/eq_data/chain3/a13.mp3    |  Bin 0 -> 5850 bytes
+ src/resources/eq_data/chain3/a14.mp3    |  Bin 0 -> 5014 bytes
+ src/resources/eq_data/chain3/a15.mp3    |  Bin 0 -> 5014 bytes
+ src/resources/eq_data/chain3/a3.mp3     |  Bin 0 -> 16299 bytes
+ src/resources/eq_data/chain3/a5.mp3     |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain3/a6.mp3     |  Bin 0 -> 4178 bytes
+ src/resources/eq_data/chain3/a7.mp3     |  Bin 0 -> 5014 bytes
+ src/resources/eq_data/chain3/a9.mp3     |  Bin 0 -> 5432 bytes
+ src/resources/eq_data/chain3/b0.mp3     |  Bin 0 -> 14627 bytes
+ src/resources/eq_data/chain3/b1.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain3/b11.mp3    |  Bin 0 -> 9612 bytes
+ src/resources/eq_data/chain3/b12.mp3    |  Bin 0 -> 7104 bytes
+ src/resources/eq_data/chain3/b13.mp3    |  Bin 0 -> 6686 bytes
+ src/resources/eq_data/chain3/b14.mp3    |  Bin 0 -> 6686 bytes
+ src/resources/eq_data/chain3/b2.mp3     |  Bin 0 -> 15463 bytes
+ src/resources/eq_data/chain3/b3.mp3     |  Bin 0 -> 15881 bytes
+ src/resources/eq_data/chain3/b4.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain3/b5.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain3/b6.mp3     |  Bin 0 -> 15463 bytes
+ src/resources/eq_data/chain3/b7.mp3     |  Bin 0 -> 9612 bytes
+ src/resources/eq_data/chain3/b8.mp3     |  Bin 0 -> 5432 bytes
+ src/resources/eq_data/chain3/b9.mp3     |  Bin 0 -> 6268 bytes
+ src/resources/eq_data/chain3/c0.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain3/c1.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain3/c10.mp3    |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain3/c11.mp3    |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain3/c12.mp3    |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain3/c13.mp3    |  Bin 0 -> 5014 bytes
+ src/resources/eq_data/chain3/c14.mp3    |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain3/c15.mp3    |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain3/c2.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain3/c3.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain3/c4.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain3/c5.mp3     |  Bin 0 -> 4178 bytes
+ src/resources/eq_data/chain3/c6.mp3     |  Bin 0 -> 3760 bytes
+ src/resources/eq_data/chain3/c7.mp3     |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain3/c8.mp3     |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain3/c9.mp3     |  Bin 0 -> 5432 bytes
+ src/resources/eq_data/chain3/d0.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain3/d1.mp3     |  Bin 0 -> 9194 bytes
+ src/resources/eq_data/chain3/d10.mp3    |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain3/d11.mp3    |  Bin 0 -> 15045 bytes
+ src/resources/eq_data/chain3/d12.mp3    |  Bin 0 -> 3760 bytes
+ src/resources/eq_data/chain3/d14.mp3    |  Bin 0 -> 15045 bytes
+ src/resources/eq_data/chain3/d15.mp3    |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain3/d2.mp3     |  Bin 0 -> 4596 bytes
+ src/resources/eq_data/chain3/d3.mp3     |  Bin 0 -> 15045 bytes
+ src/resources/eq_data/chain3/d4.mp3     |  Bin 0 -> 4178 bytes
+ src/resources/eq_data/chain3/d5.mp3     |  Bin 0 -> 15045 bytes
+ src/resources/eq_data/chain3/d6.mp3     |  Bin 0 -> 15463 bytes
+ src/resources/eq_data/chain3/d7.mp3     |  Bin 0 -> 15045 bytes
+ src/resources/eq_data/chain3/d8.mp3     |  Bin 0 -> 5432 bytes
+ src/resources/eq_data/chain3/d9.mp3     |  Bin 0 -> 15045 bytes
+ src/resources/eq_data/chain3/e0.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain3/e1.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain3/e2.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain3/e3.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain3/e4.mp3     |  Bin 0 -> 8776 bytes
+ src/resources/eq_data/chain3/e5.mp3     |  Bin 0 -> 9612 bytes
+ src/resources/eq_data/chain4/a15.mp3    |  Bin 0 -> 28002 bytes
+ src/resources/eq_data/chain4/b15.mp3    |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain4/c0.mp3     |  Bin 0 -> 6268 bytes
+ src/resources/eq_data/chain4/c11.mp3    |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain4/c12.mp3    |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain4/c15.mp3    |  Bin 0 -> 28002 bytes
+ src/resources/eq_data/chain4/c3.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain4/c4.mp3     |  Bin 0 -> 3760 bytes
+ src/resources/eq_data/chain4/c7.mp3     |  Bin 0 -> 21314 bytes
+ src/resources/eq_data/chain4/c8.mp3     |  Bin 0 -> 8358 bytes
+ src/resources/eq_data/chain4/d10.mp3    |  Bin 0 -> 6268 bytes
+ src/resources/eq_data/chain4/d11.mp3    |  Bin 0 -> 11283 bytes
+ src/resources/eq_data/chain4/d12.mp3    |  Bin 0 -> 4178 bytes
+ src/resources/eq_data/chain4/d13.mp3    |  Bin 0 -> 3760 bytes
+ src/resources/eq_data/chain4/d14.mp3    |  Bin 0 -> 6268 bytes
+ src/resources/eq_data/chain4/d3.mp3     |  Bin 0 -> 16717 bytes
+ src/resources/eq_data/chain4/d6.mp3     |  Bin 0 -> 15045 bytes
+ src/resources/eq_data/chain4/d7.mp3     |  Bin 0 -> 6268 bytes
+ src/resources/eq_data/chain4/d8.mp3     |  Bin 0 -> 10448 bytes
+ src/resources/eq_data/chain4/d9.mp3     |  Bin 0 -> 6268 bytes
+ src/resources/eq_data/conv.sh           |   36 +
+ src/resources/eq_data/eq.json           | 1614 +++++++++++++++++++++++++++++++
+ src/resources/eq_midi_website.json      |    1 +
+ src/resources/eq_old.json               |   51 +
+ src/resources/{eq.json => eq_test.json} |    0
+ src/sound_manager.ml                    |   17 +-
+ 187 files changed, 1793 insertions(+), 8 deletions(-)
+
+commit d630301622342d015ef0e6896688f5255b33743c
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Fri Nov 17 23:46:54 2017 -0500
+
+    added visuals for key status
+
+ src/gui.ml             | 22 +++++++++++++++-------
+ src/keyboard.ml        |  2 +-
+ src/keyboard_layout.ml | 29 +++++++++++++++++++----------
+ 3 files changed, 35 insertions(+), 18 deletions(-)
+
+commit 69f968f6862b989710bf3a116bce9877230b4de0
+Author: David Zhang <davidzhang@dhcp-mcfad-2643.redrover.cornell.edu>
+Date:   Fri Nov 17 16:58:22 2017 -0500
+
+    jsons
+
+ src/eq.json                       | 21 +++++++++++++++++++++
+ src/standard_keyboard_layout.json | 10 ++++++++++
+ 2 files changed, 31 insertions(+)
+
+commit 606c01f1ebcb54020ffabe93f5ce0134df0cf548
+Merge: ecfa247 0bcc0f4
+Author: David Zhang <davidzhang@dhcp-mcfad-2643.redrover.cornell.edu>
+Date:   Fri Nov 17 16:57:04 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit ecfa2479c04414ccdae05ffcb544feace52115f7
+Author: David Zhang <davidzhang@dhcp-mcfad-2643.redrover.cornell.edu>
+Date:   Fri Nov 17 16:57:02 2017 -0500
+
+    temp commit
+
+ gtk_test/test.ml      | 2 +-
+ src/gui.mli           | 8 --------
+ src/state_manager.mli | 2 +-
+ 3 files changed, 2 insertions(+), 10 deletions(-)
+
+commit cbba1d2d19a56e6d4712c67b06244419b83fd037
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Fri Nov 17 03:07:48 2017 -0500
+
+    moved key visual definitions into the Keyboard module
+
+ src/gui.ml       | 81 +++++++-------------------------------------------------
+ src/gui.mli      |  3 ++-
+ src/keyboard.ml  | 47 +++++++++++++++++++++++++-------
+ src/keyboard.mli | 16 +++++++++--
+ src/main.ml      |  2 +-
+ 5 files changed, 64 insertions(+), 85 deletions(-)
+
+commit 0bcc0f4724c641f71e01b01df9c90c078bb28e08
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 16 23:30:23 2017 -0500
+
+    made a resources folder
+
+ src/gui.ml                                        |   2 +-
+ src/main.ml                                       |   4 ++--
+ src/{ => resources}/a0.wav                        | Bin
+ src/{ => resources}/agane.ttf                     | Bin
+ src/{ => resources}/eq.json                       |   0
+ src/{ => resources}/standard_keyboard_layout.json |   0
+ src/song.ml                                       |  18 +++++++++++-------
+ src/test.ml                                       |   2 +-
+ src/tsdl_wrapper.ml                               |   2 +-
+ 9 files changed, 16 insertions(+), 12 deletions(-)
+
+commit eace3606d6f59b3b1d78c41fb923f84615a9c22e
+Merge: ddbb5f7 8d37887
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Thu Nov 16 23:03:19 2017 -0500
+
+    Merge pull request #10 from dw475/feature_9
+    
+    wired everything up
+
+commit 8d37887b72911d78c5342ca37866588bf5e96c3b
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 16 23:02:22 2017 -0500
+
+    wired everything up
+
+ src/input_event_manager.ml  |  8 +++++---
+ src/input_event_manager.mli |  2 +-
+ src/main.ml                 | 14 +++++++++++++-
+ src/sound_manager.ml        | 12 ++++++++----
+ src/tsdl_wrapper.ml         |  2 +-
+ 5 files changed, 28 insertions(+), 10 deletions(-)
+
+commit ddbb5f72ae77b556f74b558764a591c5e61d27db
+Merge: c58c869 f116720
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Thu Nov 16 22:38:55 2017 -0500
+
+    Merge pull request #8 from dw475/feature_3
+    
+    Feature 3
+
+commit f11672011bc2a07c024ee0da597709e3a70e83ba
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 16 22:37:40 2017 -0500
+
+    wired up input event manager to sound manager
+
+ src/input_event_manager.ml | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
+
+commit d57ba127f5339e51e04a7c1d18ebd6656130e80f
+Merge: 36f780a c58c869
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 16 22:33:09 2017 -0500
+
+    merged
+
+commit c58c869739b4f66c6f4eaad6b1f4584b77986138
+Merge: 5fc5698 7c00faf
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Thu Nov 16 22:31:05 2017 -0500
+
+    Merge pull request #7 from dw475/feature_1
+    
+    implemented keyboard.ml
+
+commit 7c00faf9edae5e44ae23bcd843c948d46ade8488
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 16 22:30:22 2017 -0500
+
+    added keyboard tests and changed name
+
+ src/keyboard.ml  |  2 +-
+ src/keyboard.mli |  4 ++--
+ src/test.ml      | 13 ++++++++++++-
+ 3 files changed, 15 insertions(+), 4 deletions(-)
+
+commit 6b254cbff9533b88987b501ca65ab7ff9ce6cfd9
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 16 22:24:40 2017 -0500
+
+    implemented keyboard.ml
+
+ src/keyboard.ml  | 32 ++++++++++++++++++++++++++++++++
+ src/keyboard.mli |  3 +--
+ 2 files changed, 33 insertions(+), 2 deletions(-)
+
+commit 36f780ad32cb58c55f8e5faf7a8dfa24c1ae5000
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 16 22:15:49 2017 -0500
+
+    started handle event
+
+ src/input_event_manager.ml | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit 57caf03eb78f85abb8386962350cf7d3d7020262
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 16 22:11:09 2017 -0500
+
+    added new state and state tests, basic input event manager implementation
+
+ src/input_event_manager.ml  | 40 ++++++++++++++++++++++++++++++++++++++++
+ src/input_event_manager.mli |  6 ++++--
+ src/state_manager.ml        |  2 +-
+ src/test.ml                 | 18 +++++++++++++++++-
+ 4 files changed, 62 insertions(+), 4 deletions(-)
+
+commit 5fc5698f0c5b2254d9c3d9a3bb7567dccdb3d6f3
+Merge: 05a3c78 c4985aa
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Thu Nov 16 21:48:44 2017 -0500
+
+    Merge pull request #6 from dw475/feature_4
+    
+    implemented state manager and modifed interface slightly
+
+commit c4985aadecc32e9e2cc0ab5a2e39ba3519f58ebe
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 16 21:47:46 2017 -0500
+
+    implemented state manager and modifed interface slightly
+
+ src/state_manager.ml  | 10 ++++++++++
+ src/state_manager.mli |  6 +++---
+ 2 files changed, 13 insertions(+), 3 deletions(-)
+
+commit 05a3c7818a084d9c7fea0d3b28c994420bb574db
+Merge: 596c600 d1f8c43
+Author: Daniel Weber <dw475@cornell.edu>
+Date:   Thu Nov 16 21:43:22 2017 -0500
+
+    Merge pull request #5 from dw475/feature_2
+    
+    Feature 2
+
+commit d1f8c432d654913404af35a830c7725efaead10f
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 16 21:42:16 2017 -0500
+
+    implemented keyboard layout.ml and added tests file
+
+ src/.merlin                       |  3 ++-
+ src/Makefile                      |  3 +++
+ src/_tags                         |  2 +-
+ src/keyboard_layout.ml            | 55 +++++++++++++++++++++++++++++++++++++++
+ src/standard_keyboard_layout.json |  4 +--
+ src/test.ml                       | 14 ++++++++++
+ 6 files changed, 77 insertions(+), 4 deletions(-)
+
+commit 1552d7c1c4fabb1d70ee5dd6e360cea3aec2b6da
+Merge: a97700c 596c600
+Author: David Zhang <davidzhang@dhcp-ccc-9397.redrover.cornell.edu>
+Date:   Wed Nov 15 11:21:36 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit a45ca416711c4b8ae8c594ec12e43706ad624937
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Nov 14 19:32:22 2017 -0500
+
+    added finishing touches to mli
+
+ src/Makefile          |  5 ++++-
+ src/gui.mli           |  3 +++
+ src/sound_manager.mli | 11 +++++++++++
+ 3 files changed, 18 insertions(+), 1 deletion(-)
+
+commit 596c6004f2476a2a413e22608b91dcf6a92bd451
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Nov 13 23:56:02 2017 -0500
+
+    added shift and enter keys, done with lines so the width looks odd
+
+ src/gui.ml | 43 +++++++++++++++++++++++++++++++++----------
+ 1 file changed, 33 insertions(+), 10 deletions(-)
+
+commit f751c0629c8ade067cb46beb5dcce2d10ecfeeec
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 13 21:58:16 2017 -0500
+
+    fixed compile issue
+
+ src/song.ml                       |  8 ++++----
+ src/sound.ml                      | 17 ++++++++---------
+ src/sound.mli                     |  8 ++++----
+ src/standard_keyboard_layout.json |  8 ++++----
+ 4 files changed, 20 insertions(+), 21 deletions(-)
+
+commit a97700cf5e6802a583adbe481e0dec6edb48414a
+Merge: 8c5a856 c9ee0f7
+Author: David Zhang <davidzhang@dhcp-mcfad-2761.redrover.cornell.edu>
+Date:   Mon Nov 13 21:58:01 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit c9ee0f7ba66f6e8e93d4cf9b5cd7ae4af1ad54d8
+Merge: 72ca471 d387ee2
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Nov 13 21:50:16 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 72ca4716cd3d9112cad51ee6bd2fe030ef86ef72
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Mon Nov 13 21:50:03 2017 -0500
+
+    added initial hardcoded keyboard
+
+ src/gui.ml | 72 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 64 insertions(+), 8 deletions(-)
+
+commit 8c5a8568f7c618c6441610fee389c710bbfb64c0
+Merge: ef75a1f d387ee2
+Author: David Zhang <davidzhang@dhcp-mcfad-2761.redrover.cornell.edu>
+Date:   Mon Nov 13 21:32:00 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit d387ee22e15cbafe38b7ab25543d2c4ba5832086
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 13 21:31:27 2017 -0500
+
+    separated state into its own module
+
+ src/input_event_manager.mli | 10 +---------
+ src/state_manager.mli       | 12 ++++++++++++
+ 2 files changed, 13 insertions(+), 9 deletions(-)
+
+commit 9b5e3b05a7b99a1f4513f3b85cbfc50182140e25
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 13 19:06:20 2017 -0500
+
+    added input manager mli
+
+ src/input_event_manager.mli | 21 +++++++++++++++++++++
+ src/sound_manager.ml        |  3 ++-
+ 2 files changed, 23 insertions(+), 1 deletion(-)
+
+commit 752b4f838719fd015364ebf8328623ad617aba08
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 13 18:55:12 2017 -0500
+
+    added keyboard mli comments and sample keyboard layout
+
+ src/keyboard.mli                  | 14 ++++++++++++++
+ src/standard_keyboard_layout.json | 10 ++++++++++
+ 2 files changed, 24 insertions(+)
+
+commit 5751f244d37a8cc32910f4388cd13c859dea1e09
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 13 18:42:33 2017 -0500
+
+    implemented sound manager
+
+ src/sound.ml          |  8 ++++-
+ src/sound.mli         |  9 ++++++
+ src/sound_manager.ml  | 89 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/sound_manager.mli | 13 +++-----
+ src/tsdl_wrapper.ml   | 12 ++-----
+ src/tsdl_wrapper.mli  |  3 --
+ 6 files changed, 113 insertions(+), 21 deletions(-)
+
+commit 9d2658727804587f4dba81806b0693ca7cfef9f1
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Mon Nov 13 17:53:05 2017 -0500
+
+    implemented song parser
+
+ src/.merlin         |   3 +-
+ src/_tags           |   2 +-
+ src/a0.wav          | Bin 0 -> 249934 bytes
+ src/eq.json         |  21 ++++++++++++++
+ src/main.ml         |   2 ++
+ src/song.ml         |  77 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/sound.ml        |  49 ++++++++++++++++-----------------
+ src/sound.mli       |   7 +++--
+ src/tsdl_wrapper.ml |  15 +++++++---
+ 9 files changed, 142 insertions(+), 34 deletions(-)
+
+commit ef75a1f562899c64d5386fa98db1308659265f0b
+Merge: 13967cf a2a6284
+Author: David Zhang <davidzhang@dhcp-mcfad-3806.redrover.cornell.edu>
+Date:   Sun Nov 12 19:22:44 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 13967cfa075de90a5034a04f5d88006014eefbac
+Author: David Zhang <davidzhang@dhcp-mcfad-3806.redrover.cornell.edu>
+Date:   Sun Nov 12 19:22:27 2017 -0500
+
+    update
+
+ audio_test/mac_install_deps.sh  |  0
+ audio_test/test.ml              | 24 ++++++++++++------------
+ audio_test/virtual_box_setup.sh |  0
+ src/gui.mli                     |  6 +++++-
+ 4 files changed, 17 insertions(+), 13 deletions(-)
+
+commit a2a628459d9153e712a99d756940b4fb9e36370a
+Merge: 0014df2 33d6f3c
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Nov 12 18:02:22 2017 -0500
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 0014df219e13e54bee297da9bdd4d1043abca78f
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Nov 12 18:02:07 2017 -0500
+
+    finished sound module
+
+ src/sound.ml  | 80 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ src/sound.mli | 20 +++++++++------
+ 2 files changed, 91 insertions(+), 9 deletions(-)
+
+commit 33d6f3cf553c7a2b0ed906500cdd25e4f00faa6b
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Sun Nov 12 18:02:06 2017 -0500
+
+    started keyboard font mess
+
+ src/agane.ttf       | Bin 0 -> 66416 bytes
+ src/gui.ml          |  79 +++++++++++++++++++++++++++++++++++++++-------------
+ src/tsdl_wrapper.ml |  38 ++++++++++++-------------
+ 3 files changed, 78 insertions(+), 39 deletions(-)
+
+commit 269778364505604095185c9264e7e56df1818446
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Nov 12 17:20:42 2017 -0500
+
+    pushed minor bug fixes
+
+ src/main.ml         |  2 +-
+ src/sound.ml        | 10 ++++++++++
+ src/tsdl_wrapper.ml | 23 ++++++++++++-----------
+ 3 files changed, 23 insertions(+), 12 deletions(-)
+
+commit 693b24aad85977bf58e252183b5692585b8b48d8
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Sun Nov 12 17:09:47 2017 -0500
+
+    added basic keyboard
+
+ src/gui.ml  | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ src/gui.mli |  4 +++-
+ src/main.ml |  5 +++--
+ 3 files changed, 53 insertions(+), 3 deletions(-)
+
+commit 49cb684326be2bdcc7016ae7026f6d34463c9aac
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Nov 12 16:42:45 2017 -0500
+
+    finished tsdl wrapper implementation
+
+ src/tsdl_wrapper.ml  | 88 ++++++++++++++++++++++++++++++++++++++++++++++++----
+ src/tsdl_wrapper.mli | 12 ++++---
+ 2 files changed, 90 insertions(+), 10 deletions(-)
+
+commit 572b67d5883a9b64c6d56f4266f99a86390dd823
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Nov 12 15:56:55 2017 -0500
+
+    started implementation of tsdl wrapper
+
+ audio_test/.merlin      |   3 +-
+ audio_test/test.ml      |   3 +-
+ src/.merlin             |   3 ++
+ src/Makefile            |   6 +++
+ src/_tags               |   3 ++
+ src/keyboard.mli        |  23 ++++------
+ src/keyboard_layout.mli |  23 ++++++++++
+ src/main.ml             |   4 ++
+ src/tsdl_wrapper.ml     | 110 ++++++++++++++++++++++++++++++++++++++++++++++++
+ src/tsdl_wrapper.mli    |  60 +++++++-------------------
+ 10 files changed, 176 insertions(+), 62 deletions(-)
+
+commit 5156caa3c353f9ac7a87475cd1523ea2bd6042bd
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sat Nov 11 02:17:42 2017 -0500
+
+    added mutexs and switched to while loop with polling.
+
+ audio_test/test.ml   | 61 +++++++++++++++++++++++++++++++---------------------
+ src/keyboard.mli     |  2 +-
+ src/tsdl_wrapper.mli | 44 ++++++++++++++++++++++++++++---------
+ 3 files changed, 71 insertions(+), 36 deletions(-)
+
+commit 5f4385c21abe293ddad61271f34542366263fa0a
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Fri Nov 10 18:35:09 2017 -0500
+
+    added some methods to the mli files
+
+ audio_test/test.ml    |  2 +-
+ src/keyboard.mli      | 18 +++++++++++++++++-
+ src/song.mli          | 13 ++++++++++++-
+ src/sound.mli         | 32 +++++++++++++++++++++++++++++++-
+ src/sound_manager.mli | 21 +++++++++++++++++++--
+ src/tsdl_wrapper.mli  | 41 ++++++++++++++++++++++++++++++++++++++++-
+ 6 files changed, 120 insertions(+), 7 deletions(-)
+
+commit fc51686697c6ccd50d421fad31ff39b4a447c1f7
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 9 21:52:15 2017 -0500
+
+    added base mli files
+
+ src/gui.mli           | 3 +++
+ src/keyboard.mli      | 3 +++
+ src/song.mli          | 9 +++++++++
+ src/sound.mli         | 4 ++++
+ src/sound_manager.mli | 3 +++
+ src/tsdl_wrapper.mli  | 4 ++++
+ 6 files changed, 26 insertions(+)
+
+commit b74f064c963734ed4161fef0736bc3987d1ebf4e
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 9 01:16:42 2017 -0500
+
+    added on mouse event test
+
+ audio_test/test.ml | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
+
+commit 8ab894faad65193ee3e9f439cca82c843fa192ba
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 9 00:28:32 2017 -0500
+
+    added some notes
+
+ audio_test/test.ml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 1dc7dc2a99a9ae439d2ce1d5bcbd9d0b783c9b5c
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Thu Nov 9 00:13:25 2017 -0500
+
+    added animated drawing
+
+ audio_test/draw.ml | 34 ++++++++++++++++++++++++++++++++++
+ audio_test/test.ml | 40 ++++++++++++++++++++++------------------
+ 2 files changed, 56 insertions(+), 18 deletions(-)
+
+commit 06cb0740ca32d8e7eadae028184b31a0285ed9a5
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Oct 29 02:37:20 2017 -0400
+
+    moved tsdl-ttf install to after source install
+
+ audio_test/virtual_box_setup.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit ffe919aa003f3fabb1936af95e2ad33055cb8cdc
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Oct 29 02:28:44 2017 -0400
+
+    dont require opengl for renderer
+
+ audio_test/test.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 43e22065cbc52f3693635c030947a5d4dff7d4b9
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Oct 29 02:28:05 2017 -0400
+
+    updated virtual box script
+
+ audio_test/virtual_box_setup.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit 960864a2fce983bf0049d4663e52b75fc5f96add
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Oct 29 02:14:41 2017 -0400
+
+    audio loading change and virtualbo setup script
+
+ audio_test/test.ml              |  4 ++--
+ audio_test/virtual_box_setup.sh | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 2 deletions(-)
+
+commit c76bdeadeba6545eec64f8a78f9b6de13dc05592
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Oct 24 20:08:22 2017 -0400
+
+    removed ttf install script and added mouse inputs
+
+ audio_test/linux_install_ttf_deps.sh | 17 -----------------
+ audio_test/test.ml                   |  4 +++-
+ 2 files changed, 3 insertions(+), 18 deletions(-)
+
+commit b26aa68ecd10e3441cef92910515ec58a52e245f
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Tue Oct 24 13:22:26 2017 -0400
+
+    added fonts and text rendering
+
+ audio_test/.merlin                   |   3 +-
+ audio_test/_tags                     |   2 +-
+ audio_test/agane.ttf                 | Bin 0 -> 66416 bytes
+ audio_test/linux_install_ttf_deps.sh |  17 ++++++++++
+ audio_test/test.ml                   |  60 ++++++++++++++++++++++++-----------
+ audio_test/ttf_install.sh            |   2 ++
+ 6 files changed, 63 insertions(+), 21 deletions(-)
+
+commit c9ce7154286e439bee72da1913b01393bee030bb
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Oct 22 17:56:05 2017 -0400
+
+    added install scripts
+
+ audio_test/{linux_install.sh => linux_install_deps.sh} | 0
+ audio_test/mac_install_deps.sh                         | 1 +
+ gtk_test/install.sh                                    | 1 +
+ gtk_test/mac_install_deps.sh                           | 1 +
+ 4 files changed, 3 insertions(+)
+
+commit 7402a21286b99857918b838e685740841bf19b82
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Sun Oct 22 17:18:37 2017 -0400
+
+    added linux install script for audio
+
+ audio_test/linux_install.sh | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+commit 9d3cb7326e3f1bec6439ffcbd72fa8b3b3b01cc8
+Merge: 97cb2b1 dc6c071
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Sun Oct 22 17:30:28 2017 -0400
+
+    Merge branch 'master' of https://github.coecis.cornell.edu/dw475/3110-final
+
+commit 97cb2b190c989afcf01c02bcea154c548d91057d
+Author: David Chu <davidchuyaya@gmail.com>
+Date:   Sun Oct 22 17:29:38 2017 -0400
+
+    Testing GTK+
+
+ .gitignore        |   2 +
+ gtk_test/.merlin  |   2 +
+ gtk_test/Makefile |   6 +++
+ gtk_test/_tags    |   1 +
+ gtk_test/graph.ml | 107 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ gtk_test/test.ml  |  45 +++++++++++++++++++++++
+ 6 files changed, 163 insertions(+)
+
+commit dc6c071bffdcedf8234d26598311d33eb9ea5434
+Author: sjb274 <sjb274@cornell.edu>
+Date:   Sat Oct 21 15:41:08 2017 -0400
+
+    added Graphics test (for utop), seems shitty
+
+ graphics_test/Makefile |  6 ++++++
+ graphics_test/_tags    |  3 +++
+ graphics_test/test.ml  | 28 ++++++++++++++++++++++++++++
+ 3 files changed, 37 insertions(+)
+
+commit 602130765d59884823c70008f7642ff50767d73e
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Fri Oct 20 01:26:26 2017 -0400
+
+    updated gitignore, added file reading test
+
+ .gitignore         |   2 ++
+ audio_test/a0.mp3  | Bin 0 -> 23822 bytes
+ audio_test/a0.wav  | Bin 0 -> 249934 bytes
+ audio_test/notes   |   3 +++
+ audio_test/test.ml |  53 +++++++++++++++++++++++++++++++++++++++++++----------
+ 5 files changed, 48 insertions(+), 10 deletions(-)
+
+commit f0828e997f5112164ba42f035077afe1ab51f73a
+Author: Daniel Weber <dantech88@yahoo.com>
+Date:   Wed Oct 18 21:23:50 2017 -0400
+
+    init audio test commit
+
+ audio_test/.merlin    |  2 ++
+ audio_test/Makefile   |  6 ++++
+ audio_test/_tags      |  3 ++
+ audio_test/install.sh |  5 +++
+ audio_test/test.ml    | 87 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 103 insertions(+)
